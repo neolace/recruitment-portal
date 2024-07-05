@@ -147,6 +147,10 @@ p {
   width: 12px;
   height: 0;
   transition: all .3s ease;
+
+  @media screen and (max-width: 992px) {
+    display: none;
+  }
 }
 ::-webkit-scrollbar-track {
   background: var(--color-surface-mixed-300);
