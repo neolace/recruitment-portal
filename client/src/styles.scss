@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 .theme-light {
   --color-primary-100: #3498db;
@@ -114,7 +115,7 @@
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Poppins", sans-serif!important;
 
   ::-moz-selection { /* Code for Firefox */
     color: #fff;
@@ -211,5 +212,50 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
   &:hover{
     background-color: var(--color-primary-100);
+  }
+}
+
+.see-more{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px 0;
+
+  .see-more-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-300);
+    font-weight: 550;
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 6px 20px;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    position: relative;
+    gap: 5px;
+  }
+  .see-more-btn:hover{
+    color: var(--color-primary-200);
+  }
+
+  .see-more-btn:after {
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: var(--color-primary-200);
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+  }
+  .see-more-btn:hover:after {
+    width: 100%;
+    left: 0;
   }
 }
