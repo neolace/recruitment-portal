@@ -68,3 +68,58 @@
     }
   }
 }
+
+.footer{
+  background-color: var(--color-secondary-300);
+
+  hr{
+    border: none;
+    height: 1px;
+    background-color: var(--color-surface-200);
+  }
+
+  p{
+    color: #eee;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .see-more-btn{
+    color: #eee;
+    white-space: nowrap;
+  }
+
+  a{
+    color: #ddd;
+    text-decoration: none;
+    transition: all 0.3s ease;
+
+    &:hover{
+      color: #fff;
+    }
+  }
+
+  .footer-top{
+    min-height: 120px;
+
+    .footer-top-left{
+      padding: 20px;
+      min-width: 30%;
+
+      .logo-lg{
+        max-width: 200px;
+
+        img{
+          width: 100%;
+        }
+      }
+    }
+
+    .footer-top-right{
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 10px;
+    }
+  }
+}
