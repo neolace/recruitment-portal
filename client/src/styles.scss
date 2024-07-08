@@ -144,8 +144,8 @@ p, ol, ul, li {
 
 .main-body {
   width: 100% !important;
-  min-height: calc(100vh - 70px);
-  height: calc(100vh - 70px);
+  min-height: 100vh;
+  height: 100vh;
   background-color: var(--color-surface-mixed-100);
   overflow-y: auto;
   overflow-x: hidden;
@@ -191,7 +191,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
-.btn-1{
+.btn-1, .btn-2{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -212,6 +212,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
   &:hover{
     background-color: var(--color-primary-100);
+  }
+}
+
+.btn-2{
+  background-color: var(--color-primary-600-opacity-3);
+  border: 1px solid var(--color-surface-mixed-300);
+  color: var(--color-primary-200);
+
+  &:hover{
+    color: #fff;
   }
 }
 

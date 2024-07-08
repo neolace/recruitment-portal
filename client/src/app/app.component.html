@@ -1,64 +1,6 @@
 <div [ngClass]="{'theme-light': !themeService.isDarkMode(), 'theme-dark': themeService.isDarkMode()}"
      style="max-height: 100vh;">
 
-  <div class="nav-bar sticky-top">
-    <div class="logo">
-      <img src="./assets/images/shared/logo-extended.png" alt="logo">
-    </div>
-    <div class="menu">
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid" style="justify-content: flex-end!important;">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                  aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav" style="justify-content: flex-end!important;">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/home" [class.active]="isActive('/home')">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/about" [class.active]="isActive('/about')">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/blog" [class.active]="isActive('/blog')">Blog</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Pages
-                </a>
-                <ul class="dropdown-menu">
-                  <a class="nav-link" routerLink="/references" [class.active]="isActive('/references')">References</a>
-                  <a class="nav-link" routerLink="/feedback" [class.active]="isActive('/feedback')">Feedback</a>
-                  <a class="nav-link" routerLink="/faq" [class.active]="isActive('/faq')">FAQ</a>
-                  <a class="nav-link" routerLink="/privacy-policy" [class.active]="isActive('/privacy-policy')">Privacy
-                    Policy</a>
-                  <a class="nav-link" routerLink="/terms" [class.active]="isActive('/terms')">Terms & Conditions</a>
-                </ul>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Location
-                </a>
-                <ul class="dropdown-menu">
-                  <li>1</li>
-                  <li>2</li>
-                  <li>3</li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/contact" [class.active]="isActive('/contact')">Contact</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/dashboard" [class.active]="isActive('/dashboard')">Dashboard</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </div>
-  </div>
-
   <div class="w-100 main-body">
     <button class="theme-btn" (click)="toggleTheme()" title="Theme">
       <img
@@ -66,6 +8,63 @@
         alt="theme" height="40" width="40">
     </button>
 
+    <div class="nav-bar sticky-top">
+      <div class="logo">
+        <img src="./assets/images/shared/logo-extended.png" alt="logo">
+      </div>
+      <div class="menu">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+          <div class="container-fluid" style="justify-content: flex-end!important;">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav" style="justify-content: flex-end!important;">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="/home" [class.active]="isActive('/home')">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="/about" [class.active]="isActive('/about')">About</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="/blog" [class.active]="isActive('/blog')">Blog</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Pages
+                  </a>
+                  <ul class="dropdown-menu">
+                    <a class="nav-link" routerLink="/references" [class.active]="isActive('/references')">References</a>
+                    <a class="nav-link" routerLink="/feedback" [class.active]="isActive('/feedback')">Feedback</a>
+                    <a class="nav-link" routerLink="/faq" [class.active]="isActive('/faq')">FAQ</a>
+                    <a class="nav-link" routerLink="/privacy-policy" [class.active]="isActive('/privacy-policy')">Privacy
+                      Policy</a>
+                    <a class="nav-link" routerLink="/terms" [class.active]="isActive('/terms')">Terms & Conditions</a>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Location
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="/contact" [class.active]="isActive('/contact')">Contact</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="/dashboard" [class.active]="isActive('/dashboard')">Dashboard</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
 
 
     <router-outlet></router-outlet>
