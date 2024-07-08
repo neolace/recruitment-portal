@@ -269,3 +269,385 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     left: 0;
   }
 }
+
+.top-banner{
+  min-height: max(380px, 60vh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+
+  .curved-div{
+    position: absolute;
+    width: calc(100% + 600px);
+    top: -70px;
+    left: -300px;
+    border-radius: 0 0 50% 50%;
+    height: 100%;
+    min-height: max(380px, 60vh);
+    overflow: hidden;
+    background-image: url("https://jobstack-shreethemes.vercel.app/static/media/bg.9f5fc6c84f7a4eb68e0c.jpg");
+    background-position: center top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 1;
+  }
+
+  .overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: var(--color-primary-200);
+    opacity: .7;
+    z-index: 2;
+  }
+
+  .banner-cont{
+    position: static;
+    z-index: 3;
+
+    h1{
+      color: #fff;
+      margin-bottom: 30px;
+    }
+
+    p{
+      font-weight: 450;
+      color: #d6d6d6;
+
+      span{
+        color: #fff;
+      }
+    }
+  }
+}
+
+.popular-jobs{
+  .card-1{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--color-surface-200);
+    border: 1px solid var(--color-surface-mixed-300);
+    -webkit-box-shadow: 0 0 2px 0 var(--color-box-shadow-100);
+    -moz-box-shadow: 0 0 2px 0 var(--color-box-shadow-100);
+    box-shadow: 0 0 2px 0 var(--color-box-shadow-100);
+    transition: all .3s ease-in-out;
+
+    hr{
+      background-color: var(--color-surface-mixed-300);
+      height: 1px;
+      margin: 0;
+      opacity: 1;
+      border: none;
+    }
+
+    .card-top, .card-content, .card-bottom{
+      padding: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-bottom{
+      padding: 8px 30px;
+      background-color: var(--color-primary-600-opacity-3);
+    }
+
+    .card-top{
+      .card-top-left, .card-top-right{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+      }
+
+      .card-top-left{
+        .logo-icon-wrapper{
+          width: 60px;
+          height: 60px;
+          border-radius: 8px;
+          border: 1px solid var(--color-surface-mixed-300);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all .3s ease-in-out;
+          padding: 5px;
+          -webkit-box-shadow: 0 1px 2px 0 var(--color-box-shadow-100);
+          -moz-box-shadow: 0 1px 2px 0 var(--color-box-shadow-100);
+          box-shadow: 0 1px 2px 0 var(--color-box-shadow-100);
+
+          .logo-icon{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img{
+              width: 100%;
+            }
+          }
+        }
+
+        .company-name{
+          font-size: 17px;
+          font-weight: 500;
+          color: var(--color-text-100);
+        }
+
+        .opens-ago{
+          font-size: 14px;
+          color: var(--color-text-400);
+        }
+      }
+
+      .card-top-right{
+        .visit-link-circle{
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--color-primary-200);
+          background-color: var(--color-primary-600-opacity-3);
+          transition: all .3s ease-in-out;
+          cursor: pointer;
+
+          i{
+            font-size: 16px;
+          }
+        }
+      }
+    }
+
+    .card-content{
+      .card-content-left{
+        .job-title{
+          font-size: 18px;
+          font-weight: 500;
+          color: var(--color-text-100);
+          cursor: pointer;
+          transition: all .3s ease-in-out;
+
+          &:hover{
+            color: var(--color-primary-200);
+          }
+        }
+
+        .open-positions{
+          font-size: 14px;
+          color: var(--color-text-400);
+        }
+      }
+    }
+
+    .card-bottom{
+      .card-bottom-left, .card-bottom-right{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        font-size: 16px;
+        color: var(--color-text-400);
+
+        i{
+          font-size: 18px;
+          margin-right: 5px;
+        }
+      }
+
+      .card-bottom-left{
+        i{
+          color: #3b82f6;
+        }
+      }
+    }
+
+    &:hover{
+      -webkit-box-shadow: 0 4px 14px 2px var(--color-box-shadow-100);
+      -moz-box-shadow: 0 4px 14px 2px var(--color-box-shadow-100);
+      box-shadow: 0 4px 14px 2px var(--color-box-shadow-100);
+      border-radius: 0;
+
+      .card-top{
+        .card-top-right{
+          .visit-link-circle{
+            background-color: var(--color-primary-200);
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}
+
+.card-3{
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--color-surface-mixed-300);
+  -webkit-box-shadow: 0 1px 20px 0 var(--color-box-shadow-100);
+  -moz-box-shadow: 0 1px 20px 0 var(--color-box-shadow-100);
+  box-shadow: 0 1px 20px 0 var(--color-box-shadow-100);
+  margin: 7vw 0;
+  min-height: 140px;
+  background-color: var(--color-surface-200);
+  overflow: hidden;
+  position: relative;
+
+  .card-content{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    padding: 20px 30px;
+
+    .title-2{
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--color-text-100);
+      margin-bottom: 20px;
+    }
+
+    p{
+      font-size: 14px;
+      color: var(--color-text-400);
+    }
+
+    .btn-1{
+      margin-right: 8px;
+    }
+    .btn-1, .btn-2{
+      white-space: nowrap;
+    }
+  }
+
+  .mail-icon{
+    transform: rotate(-45deg);
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 160px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+
+    svg{
+      width: 100%;
+      height: 100%;
+      stroke: var(--color-surface-mixed-600);
+      opacity: .2;
+    }
+  }
+
+  .pencil-icon{
+    transform: rotate(0);
+    position: absolute;
+    top: 5px;
+    right: -5px;
+    width: 160px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+
+    svg{
+      width: 100%;
+      height: 100%;
+      fill: var(--color-surface-mixed-600);
+      opacity: .2;
+    }
+  }
+} // bottom card
+
+.card-4-section{
+  .card-4{
+    width: 100%;
+    border-radius: 8px;
+    padding: 30px;
+    min-height: 140px;
+    background-color: var(--color-surface-200);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: .3s ease-in-out;
+    text-align: center;
+    gap: 10px;
+
+    .icon-wrapper{
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background-color: var(--color-primary-600-opacity-3);
+      border: 1px solid var(--color-surface-mixed-300);
+      transition: all .3s ease-in-out;
+
+      i{
+        color: var(--color-primary-200);
+      }
+    }
+
+    .card-4-title{
+      font-size: 20px;
+      color: var(--color-text-100);
+      font-weight: 450;
+      cursor: pointer;
+      transition: all .3s ease-in-out;
+
+      &:hover{
+        color: var(--color-primary-200);
+      }
+    }
+
+    .card-4-cont{
+      font-size: 14px;
+      color: var(--color-text-400);
+    }
+
+    .card-4-text-btn{
+      color: var(--color-text-100);
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: all .3s ease-in-out;
+
+      i{
+        margin-left: 8px;
+      }
+
+      &:hover{
+        color: var(--color-primary-200);
+      }
+    }
+
+    &:hover{
+      background-color: var(--color-primary-600-opacity-3);
+
+      .icon-wrapper{
+        background-color: var(--color-primary-200);
+
+        i{
+          color: #fff;
+        }
+      }
+    }
+  }
+}
