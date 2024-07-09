@@ -149,6 +149,7 @@ p, ol, ul, li {
   background-color: var(--color-surface-mixed-100);
   overflow-y: auto;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 ::-webkit-scrollbar {
