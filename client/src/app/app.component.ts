@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ThemeService} from "./services/theme.service";
 import {NavigationEnd, Router} from "@angular/router";
 
@@ -9,15 +9,23 @@ import {NavigationEnd, Router} from "@angular/router";
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit, AfterViewInit {
+  @ViewChild('navbarNav') navbarNav: ElementRef | any;
   title = 'SPARKC HR System';
 
-  constructor(public themeService: ThemeService, private router: Router) {}
+  constructor(public themeService: ThemeService, private router: Router, private renderer: Renderer2 ) {}
 
   ngOnInit() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Logic to update active class based on the current route
         this.updateActiveClass();
+
+        const mainBody = document.querySelector('.main-body');
+        if (mainBody) {
+          mainBody.scrollTop = 0;
+        } else {
+          window.scrollTo(0, 0);
+        }
       }
     });
   }
@@ -44,5 +52,12 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   isActive(s: string) {
     return this.router.url === s;
+  }
+
+  collapseNavbar() {
+    const navbar = this.navbarNav.nativeElement;
+    if (navbar.classList.contains('show')) {
+      this.renderer.removeClass(navbar, 'show');
+    }
   }
 }
