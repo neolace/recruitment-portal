@@ -9,6 +9,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { JobDetailsComponent } from './components/shared/job-details/job-details.component';
 import { JobComponent } from './components/job/job.component';
 import { JobApplyComponent } from './components/shared/job-apply/job-apply.component';
+import { JobPostComponent } from './components/shared/job-post/job-post.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { JobApplyComponent } from './components/shared/job-apply/job-apply.compo
     HomeComponent,
     JobDetailsComponent,
     JobComponent,
-    JobApplyComponent
+    JobApplyComponent,
+    JobPostComponent
   ],
     imports: [
         BrowserModule,
