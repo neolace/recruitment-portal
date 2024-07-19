@@ -10,6 +10,7 @@ import { JobDetailsComponent } from './components/shared/job-details/job-details
 import { JobComponent } from './components/job/job.component';
 import { JobApplyComponent } from './components/shared/job-apply/job-apply.component';
 import { JobPostComponent } from './components/shared/job-post/job-post.component';
+import { AboutComponent } from './components/about/about.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { JobPostComponent } from './components/shared/job-post/job-post.componen
     JobDetailsComponent,
     JobComponent,
     JobApplyComponent,
-    JobPostComponent
+    JobPostComponent,
+    AboutComponent
   ],
     imports: [
         BrowserModule,
