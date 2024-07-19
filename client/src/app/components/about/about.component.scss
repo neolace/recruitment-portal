@@ -145,3 +145,53 @@
     }
   }
 }
+
+.achievements{
+  padding: 12px;
+
+  .achievement{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 5px;
+
+    .achievement-score{
+      font-size: 36px;
+      font-weight: 500;
+      color: var(--color-text-100);
+    }
+
+    .achievement-title{
+      font-size: 16px;
+      color: var(--color-text-400);
+    }
+
+    @media screen and (max-width: 768px) {
+      margin-bottom: 12px;
+    }
+  }
+}
+
+.questions{
+
+  .q-icon{
+    width: 30px;
+    align-items: start;
+    display: flex;
+    margin-right: 8px;
+    color: var(--color-primary-200);
+    margin-top: 4px;
+
+    i{
+      font-size: 18px;
+    }
+  }
+
+  .q-title{
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-text-200);
+    margin-bottom: 6px;
+  }
+}
