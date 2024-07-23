@@ -4,8 +4,22 @@
   [zoom]="zoom"
   [center]="center"
   [options]="options"
-></google-map>
+>
+  <map-marker
+    #markerElem
+    *ngFor="let marker of markers"
+    [position]="marker.position"
+    [label]="marker.label"
+    [title]="marker.title"
+    [options]="marker.options"
+    (mapClick)="openInfo(markerElem, marker.info)"
+  >
+  </map-marker>
 
-<!-- Use custom zoom buttons -->
-<button (click)="zoomIn()">Zoom in</button>
-<button (click)="zoomOut()">Zoom out</button>
+  <map-info-window>{{ infoContent }}</map-info-window>
+
+  <div class="map-btns">
+    <button class="btn-1" (click)="zoomIn()">+</button>
+    <button class="btn-1" (click)="zoomOut()">-</button>
+  </div>
+</google-map>

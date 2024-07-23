@@ -1,0 +1,17 @@
+google-map{
+  position: relative;
+
+  .map-btns{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1;
+
+    .btn-1{
+      margin-right: 8px;
+    }
+  }
+}
