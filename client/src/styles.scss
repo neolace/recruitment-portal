@@ -716,3 +716,37 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
   }
 }
+
+// bootstrap dropdown
+.dropdown-menu{
+  .dropdown-item{
+    color: var(--color-text-100);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+
+    i{
+      color: var(--color-text-300);
+      font-size: 16px;
+    }
+
+    &:hover{
+      background-color: var(--color-primary-600);
+      color: var(--color-text-100);
+    }
+  }
+
+  .dropdown-divider{
+    border-color: var(--color-surface-mixed-300);
+  }
+}
+.dropdown-menu.show{
+  background-color: var(--color-surface-mixed-100);
+  border: 1px solid var(--color-surface-mixed-300);
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 2px 0 var(--color-box-shadow-100);
+  -moz-box-shadow: 0 0 2px 0 var(--color-box-shadow-100);
+  box-shadow: 0 0 2px 0 var(--color-box-shadow-100);
+}

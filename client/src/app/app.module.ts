@@ -13,6 +13,9 @@ import {JobPostComponent} from './components/shared/job-post/job-post.component'
 import {AboutComponent} from './components/about/about.component';
 import {GoogleMapsModule} from "@angular/google-maps";
 import { ContactComponent } from './components/contact/contact.component';
+import {MatMenuModule} from "@angular/material/menu";
+import {MatButtonModule} from "@angular/material/button";
+import { EmpProfileComponent } from './components/shared/emp-profile/emp-profile.component';
 
 @NgModule({
   declarations: [
@@ -23,14 +26,17 @@ import { ContactComponent } from './components/contact/contact.component';
     JobApplyComponent,
     JobPostComponent,
     AboutComponent,
-    ContactComponent
+    ContactComponent,
+    EmpProfileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatIconModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    MatMenuModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

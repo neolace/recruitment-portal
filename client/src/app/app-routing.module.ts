@@ -7,6 +7,7 @@ import {JobApplyComponent} from "./components/shared/job-apply/job-apply.compone
 import {JobPostComponent} from "./components/shared/job-post/job-post.component";
 import {AboutComponent} from "./components/about/about.component";
 import {ContactComponent} from "./components/contact/contact.component";
+import {EmpProfileComponent} from "./components/shared/emp-profile/emp-profile.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'job-details', component: JobDetailsComponent },
   { path: 'job-apply', component: JobApplyComponent },
   { path: 'job-post', component: JobPostComponent },
-  { path: 'contact', component: ContactComponent }
+  { path: 'contact', component: ContactComponent },
+  { path: 'candidate-profile', component: EmpProfileComponent },
 ];
 
 @NgModule({
