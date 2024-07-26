@@ -103,12 +103,97 @@
 
 .second-content{
   .left-side{
-    height: 1000px;
+    padding: 25px 25px 0;
+
+    h5{
+      margin: 24px 0;
+    }
+
+    p{
+      br{
+        display: block;
+        content: "";
+        margin-bottom: 10px;
+      }
+    }
+
+    .caption, .value{
+      font-size: 14px;
+      color: var(--color-text-300);
+      margin-bottom: 5px;
+    }
+
+    .progress{
+      height: 5px;
+      margin-bottom: 20px;
+
+      .progress-bar{
+        background-color: var(--color-primary-200);
+      }
+    }
+
+    .experience{
+      margin-bottom: 24px;
+
+      .org-wrapper{
+        width: 100%;
+        min-width: 60px;
+        max-width: 80px;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-bottom: 10px;
+
+        img{
+          width: 100%;
+        }
+      }
+
+      .year{
+        font-size: 16px;
+        color: var(--color-text-300);
+      }
+
+      .title{
+        font-size: 18px;
+        color: var(--color-text-200);
+      }
+      .location{
+        font-size: 14px;
+        color: var(--color-text-300);
+      }
+      .description{
+        font-size: 16px;
+        color: var(--color-text-300);
+      }
+    }
+
+    .contact-form-wrapper{
+      width: 100%;
+      .form-card-1{
+        max-width: 100%;
+        margin: 0;
+
+        h5{
+          width: 100%;
+          text-align: start;
+          margin-top: 0;
+        }
+        .form-wrapper{
+          gap: 20px 0;
+        }
+      }
+    }
   }
+
   .right-side{
     height: fit-content;
     position: sticky;
     top: 80px;
+
+    i{
+      font-size: 16px;
+    }
 
     .sub-card{
       p{
