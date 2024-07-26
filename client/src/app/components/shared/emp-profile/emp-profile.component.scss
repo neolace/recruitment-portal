@@ -182,6 +182,10 @@
         .form-wrapper{
           gap: 20px 0;
         }
+
+        @media screen and (max-width: 767px) {
+          margin-bottom: 20px;
+        }
       }
     }
   }

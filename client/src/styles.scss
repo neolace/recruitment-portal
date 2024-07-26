@@ -797,6 +797,113 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
+.employee-card{
+  width: 100%;
+  max-width: 600px;
+  padding: 25px;
+  border-radius: 8px;
+  background-color: var(--color-surface-200);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid var(--color-primary-600-opacity-6);
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 20px;
+
+  .top-rated{
+    width: 100px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-highlight-100);
+    color: #fff;
+    font-size: 10px;
+    transform: rotate(315deg);
+    position: absolute;
+    top: 10px;
+    left: -30px;
+    z-index: 1;
+
+    i{
+      font-size: 14px;
+    }
+  }
+
+  .favorite{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    cursor: pointer;
+
+    i{
+      color: var(--color-surface-400);
+      transition: all .3s ease-in-out;
+
+      &:hover{
+        color: var(--color-danger-200);
+      }
+    }
+  }
+
+  .profile-wrapper{
+    width: max(50px, 100px);
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .name{
+    color: var(--color-text-100);
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    transition: all .3s ease-in-out;
+
+    &:hover{
+      cursor: pointer;
+      color: var(--color-primary-200);
+    }
+  }
+  .title{
+    color: var(--color-text-300);
+    font-size: 14px;
+    text-align: center;
+  }
+  .keywords{
+    .key{
+      background-color: var(--color-primary-200);
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 25px;
+      font-size: 12px;
+    }
+  }
+
+  .caption{
+    color: var(--color-text-300);
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .value{
+    color: var(--color-text-100);
+    font-size: 16px;
+    text-align: center;
+  }
+}
+
 // bootstrap dropdown
 .dropdown-menu{
   .dropdown-item{
