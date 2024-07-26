@@ -100,3 +100,36 @@
     }
   }
 }
+
+.second-content{
+  .left-side{
+    height: 1000px;
+  }
+  .right-side{
+    height: fit-content;
+    position: sticky;
+    top: 80px;
+
+    .sub-card{
+      p{
+        margin: 0;
+        padding: 0;
+      }
+      i{
+        font-size: 32px;
+        color: var(--color-text-300);
+        margin-right: 10px;
+      }
+
+      .btn-1{
+        width: 100%;
+        color: #e6e6e6;
+
+        i{
+          color: #e6e6e6;
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}

@@ -717,6 +717,86 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
+.details-card-1{
+  width: 100%;
+  max-width: 600px;
+  padding: 25px;
+  border-radius: 8px;
+  background-color: var(--color-surface-mixed-300);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  border: 1px solid var(--color-primary-600-opacity-6);
+
+  h5{
+    color: var(--color-text-100);
+    text-align: start;
+    width: 100%;
+  }
+
+  .caption{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: var(--color-text-300);
+    text-align: start;
+  }
+
+  .value{
+    color: var(--color-text-100);
+    text-align: end;
+  }
+
+  .item-set{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+
+    .social-item{
+      width: 30px;
+      height: 30px;
+      border-radius: 5px;
+      background-color: var(--color-primary-600-opacity-3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .3s ease-in-out;
+      color: var(--color-text-300);
+      border: 2px solid var(--color-primary-600-opacity-9);
+
+      a{
+        color: var(--color-text-300);
+      }
+
+      &:hover{
+        background-color: var(--color-primary-200);
+        color: #fff;
+
+        a{
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .sub-card{
+    width: 100%;
+    border-radius: 5px;
+    background-color: var(--color-surface-200);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+}
+
 // bootstrap dropdown
 .dropdown-menu{
   .dropdown-item{
