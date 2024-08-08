@@ -1,6 +1,7 @@
 .top-content{
   position: relative;
   width: 100%;
+  margin-bottom: max(20px, 5vw);
 
   .cover-image{
     width: 100%;
@@ -64,6 +65,7 @@
 
 .form-card-1{
   max-width: 100%;
+  margin: 20px auto;
 
   .form-wrapper{
     gap: unset;
