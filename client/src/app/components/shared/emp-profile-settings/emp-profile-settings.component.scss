@@ -70,5 +70,10 @@
   .form-wrapper{
     gap: unset;
     row-gap: 20px;
+
+    span{
+      color: var(--color-text-200);
+      font-weight: 450;
+    }
   }
 }
