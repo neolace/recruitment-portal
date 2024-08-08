@@ -714,6 +714,50 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         background-color: var(--color-primary-100);
       }
     }
+
+    .input-group{
+      .input-group-text{
+        background-color: var(--color-surface-200);
+        border: 1px solid var(--color-surface-mixed-300);
+      }
+
+      #twitter{
+        svg{
+          fill: #4ac7ff;
+        }
+      }
+      #facebook{
+        svg{
+          fill: #3b5999;
+        }
+      }
+      #instagram{
+        svg{
+          stroke: #ff3b5a;
+
+          .in-dot{
+            fill: #6e30e4;
+          }
+          .in-circle{
+            stroke: #ff9118;
+          }
+        }
+      }
+      #linkedin{
+        svg{
+          fill: #007bee;
+        }
+      }
+      #github{
+        svg{
+          stroke: var(--color-text-100);
+        }
+      }
+
+      input{
+        border-left: none;
+      }
+    }
   }
 
   h5{
