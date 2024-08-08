@@ -16,6 +16,8 @@ import { ContactComponent } from './components/contact/contact.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
 import { EmpProfileComponent } from './components/shared/emp-profile/emp-profile.component';
+import { EmpProfileSettingsComponent } from './components/shared/emp-profile-settings/emp-profile-settings.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -27,17 +29,19 @@ import { EmpProfileComponent } from './components/shared/emp-profile/emp-profile
     JobPostComponent,
     AboutComponent,
     ContactComponent,
-    EmpProfileComponent
+    EmpProfileComponent,
+    EmpProfileSettingsComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatIconModule,
-    GoogleMapsModule,
-    MatMenuModule,
-    MatButtonModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatIconModule,
+        GoogleMapsModule,
+        MatMenuModule,
+        MatButtonModule,
+        ReactiveFormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

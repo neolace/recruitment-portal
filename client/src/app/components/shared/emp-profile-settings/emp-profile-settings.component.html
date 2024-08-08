@@ -1,0 +1,77 @@
+<div class="container my-3">
+  <div class="container">
+    <div class="top-content">
+      <div class="cover-image">
+        <img src="https://jobstack-shreethemes.vercel.app/static/media/bg5.634b5f6c21dce4640652.jpg" alt="cover">
+      </div>
+
+      <div class="profile-img">
+        <img src="https://jobstack-shreethemes.vercel.app/static/media/01.6ac85de7298319b1f8d5.jpg" alt="profile">
+      </div>
+
+      <div class="profile-info">
+        <p class="emp-name">John Doe</p>
+        <p class="position">Web Developer</p>
+      </div>
+    </div>
+
+    <div class="form-card-1">
+      <h5>Personal Detail :</h5>
+
+      <form action="">
+        <div class="row form-wrapper">
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="firstname">First Name</label>
+              <input type="text" class="form-control" id="firstname" placeholder="John">
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="lastname">Last Name</label>
+              <input type="text" class="form-control" id="lastname" placeholder="Doe">
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" class="form-control" id="email" placeholder="XwVpP@example.com">
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="occupation">Occupation</label>
+              <input type="text" class="form-control" id="occupation" placeholder="Web Developer">
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="location">Location</label>
+              <select class="form-control" id="location">
+                <option selected>Select</option>
+                <option *ngFor="let c of countriesSet" [value]="c.name">{{c.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="resume">Upload Resume</label>
+              <input type="file" class="form-control" id="resume">
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label for="intro">Intro</label>
+              <textarea class="form-control" id="intro" rows="5" placeholder="Your bio"></textarea>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <button type="submit" class="btn-1">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
