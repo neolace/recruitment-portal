@@ -192,7 +192,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
-.btn-1, .btn-2{
+.btn-1, .btn-2, .btn-3{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -223,6 +223,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
   &:hover{
     color: #fff;
+  }
+}
+
+.btn-3{
+  background-color: var(--color-danger-200);
+  color: #fff;
+
+  &:hover{
+    background-color: var(--color-danger-100);
   }
 }
 
@@ -763,6 +772,31 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   h5{
     width: 100%;
     text-align: left;
+  }
+
+  .notification-text{
+    margin: 0;
+  }
+  .form-check-input{
+    border: 1px solid var(--color-surface-mixed-300);
+  }
+  .form-check-input:checked{
+    background-color: var(--color-primary-200);
+    border-color: var(--color-primary-200);
+  }
+  .form-check-label{
+    color: var(--color-text-100);
+  }
+  .form-check{
+    gap: 5px;
+  }
+
+  hr{
+    width: 100%;
+    border: none;
+    height: 1px;
+    background-color: var(--color-surface-mixed-400);
+    margin: 0;
   }
 }
 
