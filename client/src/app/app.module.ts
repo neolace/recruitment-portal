@@ -18,6 +18,7 @@ import {MatButtonModule} from "@angular/material/button";
 import { EmpProfileComponent } from './components/shared/emp-profile/emp-profile.component';
 import { EmpProfileSettingsComponent } from './components/shared/emp-profile-settings/emp-profile-settings.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { LockScreenComponent } from './components/lock-screen/lock-screen.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     AboutComponent,
     ContactComponent,
     EmpProfileComponent,
-    EmpProfileSettingsComponent
+    EmpProfileSettingsComponent,
+    LockScreenComponent
   ],
     imports: [
         BrowserModule,

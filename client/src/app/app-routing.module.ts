@@ -9,6 +9,7 @@ import {AboutComponent} from "./components/about/about.component";
 import {ContactComponent} from "./components/contact/contact.component";
 import {EmpProfileComponent} from "./components/shared/emp-profile/emp-profile.component";
 import {EmpProfileSettingsComponent} from "./components/shared/emp-profile-settings/emp-profile-settings.component";
+import {LockScreenComponent} from "./components/lock-screen/lock-screen.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'candidate-profile', component: EmpProfileComponent },
   { path: 'candidate-profile-setting', component: EmpProfileSettingsComponent },
+  { path: 'locked', component: LockScreenComponent },
 ];
 
 @NgModule({
