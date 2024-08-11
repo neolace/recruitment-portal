@@ -19,6 +19,7 @@ import { EmpProfileComponent } from './components/shared/emp-profile/emp-profile
 import { EmpProfileSettingsComponent } from './components/shared/emp-profile-settings/emp-profile-settings.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { LockScreenComponent } from './components/lock-screen/lock-screen.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { LockScreenComponent } from './components/lock-screen/lock-screen.compon
     ContactComponent,
     EmpProfileComponent,
     EmpProfileSettingsComponent,
-    LockScreenComponent
+    LockScreenComponent,
+    LoginComponent
   ],
     imports: [
         BrowserModule,

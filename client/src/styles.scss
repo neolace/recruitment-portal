@@ -1020,3 +1020,80 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   -moz-box-shadow: 0 0 2px 0 var(--color-box-shadow-100);
   box-shadow: 0 0 2px 0 var(--color-box-shadow-100);
 }
+
+
+// lock screens
+.shared-background{
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  background-image: url("https://jobstack-shreethemes.vercel.app/static/media/bg3.b53090a36ed85cc017cd.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  .overlay{
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(rgba(0,0,0,0), #0f172ab3);
+    backdrop-filter: opacity(.8);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+  }
+
+  .content-holder{
+    width: 100vh;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    z-index: 2;
+
+    .form-card-1{
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .profile-wrapper{
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        overflow: hidden;
+
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      .logo{
+        width: 120px;
+
+        img{
+          width: 100%;
+        }
+      }
+
+      h5{
+        width: 100%;
+        text-align: center;
+      }
+
+      .title{
+        width: 100%;
+        text-align: left;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      width: 100%;
+    }
+  }
+}
