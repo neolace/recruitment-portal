@@ -1090,6 +1090,29 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         width: 100%;
         text-align: left;
       }
+
+      .link{
+        color: var(--color-text-300);
+        cursor: pointer;
+        text-decoration: none;
+
+        &:hover{
+          color: var(--color-text-200);
+        }
+      }
+
+      .navigation-text{
+        a{
+          color: var(--color-text-100);
+          cursor: pointer;
+          text-decoration: none;
+          font-weight: 500;
+
+          &:hover{
+            color: var(--color-text-200);
+          }
+        }
+      }
     }
 
     @media screen and (max-width: 768px) {
