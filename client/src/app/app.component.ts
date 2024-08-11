@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild, View
 import {ThemeService} from "./services/theme.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {LockScreenComponent} from "./components/lock-screen/lock-screen.component";
+import {LoginComponent} from "./components/login/login.component";
 
 @Component({
   selector: 'app-root',
@@ -67,6 +68,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   toggleCommonComponent(component: any) {
     if (component instanceof LockScreenComponent){
+      this.showNavbar = false;
+      this.showFooter = false;
+    } else if(component instanceof LoginComponent){
       this.showNavbar = false;
       this.showFooter = false;
     } else {
