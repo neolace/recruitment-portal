@@ -21,6 +21,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { LockScreenComponent } from './components/lock-screen/lock-screen.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { RegisterComponent } from './components/register/register.component';
     EmpProfileSettingsComponent,
     LockScreenComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ResetPasswordComponent
   ],
     imports: [
         BrowserModule,
