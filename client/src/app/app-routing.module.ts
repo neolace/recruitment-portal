@@ -12,6 +12,7 @@ import {EmpProfileSettingsComponent} from "./components/shared/emp-profile-setti
 import {LockScreenComponent} from "./components/lock-screen/lock-screen.component";
 import {LoginComponent} from "./components/login/login.component";
 import {RegisterComponent} from "./components/register/register.component";
+import {ResetPasswordComponent} from "./components/reset-password/reset-password.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'candidate-profile-setting', component: EmpProfileSettingsComponent },
   { path: 'locked', component: LockScreenComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'reset', component: ResetPasswordComponent },
   { path: 'register', component: RegisterComponent },
 ];
 
