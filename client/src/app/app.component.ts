@@ -3,6 +3,7 @@ import {ThemeService} from "./services/theme.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {LockScreenComponent} from "./components/lock-screen/lock-screen.component";
 import {LoginComponent} from "./components/login/login.component";
+import {RegisterComponent} from "./components/register/register.component";
 
 @Component({
   selector: 'app-root',
@@ -71,6 +72,9 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.showNavbar = false;
       this.showFooter = false;
     } else if(component instanceof LoginComponent){
+      this.showNavbar = false;
+      this.showFooter = false;
+    } else if(component instanceof RegisterComponent){
       this.showNavbar = false;
       this.showFooter = false;
     } else {
