@@ -22,6 +22,11 @@ import { LockScreenComponent } from './components/lock-screen/lock-screen.compon
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { FreeDashboardComponent } from './components/dashboards/free/free-dashboard/free-dashboard.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import { FreeMainDbComponent } from './components/dashboards/free/free-main-db/free-main-db.component';
 
 @NgModule({
   declarations: [
@@ -38,18 +43,23 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     LockScreenComponent,
     LoginComponent,
     RegisterComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    FreeDashboardComponent,
+    FreeMainDbComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatIconModule,
-        GoogleMapsModule,
-        MatMenuModule,
-        MatButtonModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    GoogleMapsModule,
+    MatMenuModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatSidenavModule,
+    MatExpansionModule,
+    MatTooltipModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
