@@ -3,6 +3,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+
+
 .theme-light {
   --color-primary-100: #3498db;
   --color-primary-200: #5faee3;
@@ -496,6 +498,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         }
       }
     }
+  }
+}
+
+.card-1{
+  width: 100%;
+  border-radius: 12px;
+  border: 3px solid var(--color-surface-mixed-300);
+  padding: 20px 30px;
+  margin: max(20px, 3vw) 0;
+
+  .title-1{
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-text-100);
   }
 }
 
@@ -1164,4 +1180,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 .mat-expansion-panel-header-description, .mat-expansion-indicator::after{
   color: var(--color-text-200);
+}
+
+// progress spinner
+.mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: var(--color-primary-500) !important;
 }

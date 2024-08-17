@@ -27,6 +27,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { FreeMainDbComponent } from './components/dashboards/free/free-main-db/free-main-db.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -47,19 +48,20 @@ import { FreeMainDbComponent } from './components/dashboards/free/free-main-db/f
     FreeDashboardComponent,
     FreeMainDbComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatIconModule,
-    GoogleMapsModule,
-    MatMenuModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatSidenavModule,
-    MatExpansionModule,
-    MatTooltipModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatIconModule,
+        GoogleMapsModule,
+        MatMenuModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatSidenavModule,
+        MatExpansionModule,
+        MatTooltipModule,
+        MatProgressSpinnerModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

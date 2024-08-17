@@ -1,0 +1,28 @@
+.h2-1{
+  color: var(--color-text-300);
+}
+
+.h2-2{
+  color: var(--color-text-100);
+  font-weight: 700;
+}
+
+.notification-area{
+  padding: max(20px, 3vw) 0;
+
+  .not-title-1, .not-title-2{
+    font-weight: 450;
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+
+  .not-title-1{
+    color: var(--color-primary-100);
+  }
+
+  .not-title-2{
+    margin-top: 20px;
+    color: var(--color-text-100);
+  }
+}
+
