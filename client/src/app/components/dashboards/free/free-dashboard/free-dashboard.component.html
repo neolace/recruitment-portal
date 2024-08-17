@@ -27,31 +27,10 @@
       <span>MENU</span>
       <div class="accordian">
         <mat-accordion>
-          <mat-expansion-panel expanded>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Tools
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <ul>
-              <li routerLink="/overview">Overview</li>
-              <li routerLink="/event-calendar">Event Calendar</li>
-              <li routerLink="/holiday-calendar">Holidays Calendar</li>
-            </ul>
-          </mat-expansion-panel>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Employee
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <ul>
-              <li>Profile</li>
-              <li routerLink="/feed">News Feed</li>
-              <li routerLink="/chat-list">Connections</li>
-              <li routerLink="/employee">Manage Employees</li>
-            </ul>
-          </mat-expansion-panel>
+          <ul>
+            <li routerLink="/dashboard/overview">Overview</li>
+            <li routerLink="/dashboard/business-profile">Business Profile</li>
+          </ul>
         </mat-accordion>
       </div>
       <div class="footer-tag">
@@ -64,46 +43,3 @@
     </mat-drawer-content>
   </mat-drawer-container>
 </div>
-
-<!--<div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"-->
-<!--     aria-labelledby="offcanvasWithBothOptionsLabel">-->
-<!--  <div class="offcanvas-header">-->
-<!--    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Notifications</h5>-->
-<!--    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>-->
-<!--  </div>-->
-<!--  <div class="offcanvas-body">-->
-<!--    <div class="notifications" *ngFor="let n of notifications | truncateComments: maxNotificationsDisplayed">-->
-<!--      <div class="w-100 notification" [routerLink]=n.router.toString() (click)="readNotification(n.id)"-->
-<!--           data-bs-dismiss="offcanvas" aria-label="Close">-->
-<!--        <p [ngStyle]="{'font-weight': n.status?'700':'normal'}">{{n.notification}}</p>-->
-<!--        <span><small>{{n.timestamp | timeAgo}}</small></span>-->
-<!--      </div>-->
-<!--      <div class="d-flex align-items-center">-->
-<!--        <button class="btn-2 me-1" [matTooltip]="n.status?'Mark as read':'Mark as unread'"-->
-<!--                (click)="readNotification(n.id)">-->
-<!--          <mat-icon>{{n.status ? 'visibility_off' : 'visibility'}}</mat-icon>-->
-<!--        </button>-->
-<!--        <button class="btn-2" matTooltip="Delete" (click)="deleteNotification(n.id)">-->
-<!--          <mat-icon>delete_forever</mat-icon>-->
-<!--        </button>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="d-flex align-items-center justify-content-between see-more"-->
-<!--         *ngIf="notifications.length>5">-->
-<!--      <div class="flex-1 w-100">-->
-<!--        <hr>-->
-<!--      </div>-->
-<!--      <button class="see-more-btn" (click)="toggleNotifications()">-->
-<!--        Show {{ showAllNotifications ? 'less' : 'all' }}</button>-->
-<!--      <div class="flex-1 w-100">-->
-<!--        <hr>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div *ngIf="notifications.length == 0">-->
-<!--      <div class="data-not-found">-->
-<!--        <h4>All caught up!</h4>-->
-<!--        <p>No new notifications found for you</p>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->

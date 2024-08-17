@@ -28,6 +28,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { FreeMainDbComponent } from './components/dashboards/free/free-main-db/free-main-db.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { BusinessProfileComponent } from './components/dashboards/free/business-profile/business-profile.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     RegisterComponent,
     ResetPasswordComponent,
     FreeDashboardComponent,
-    FreeMainDbComponent
+    FreeMainDbComponent,
+    BusinessProfileComponent
   ],
     imports: [
         BrowserModule,
