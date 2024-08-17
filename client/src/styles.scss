@@ -695,7 +695,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   box-shadow: 0 4px 6px -8px var(--color-box-shadow-100);
 
   .form-wrapper{
-    gap: 20px;
+    row-gap: 20px;
 
     label{
       color: var(--color-text-300);
