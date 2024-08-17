@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-free-main-db',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./free-main-db.component.scss']
 })
 export class FreeMainDbComponent {
-
+  progressValue = 50;
+  progressMode: ProgressSpinnerMode = 'determinate';
 }
