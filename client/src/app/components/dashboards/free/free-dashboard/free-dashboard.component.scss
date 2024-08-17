@@ -91,6 +91,21 @@
     .accordian{
       margin-bottom: 26px;
       overflow-y: auto;
+
+      ul{
+        list-style: none;
+        padding: 0 0 0 24px;
+        li{
+          padding: 10px 5px;
+          cursor: pointer;
+          color: var(--color-text-300);
+        }
+        li:hover{
+          background-color: var(--color-surface-mixed-400);
+          color: var(--color-text-100);
+          cursor: pointer;
+        }
+      }
     }
 
     .footer-tag{
