@@ -795,7 +795,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
   .form-check-input{
     border: 1px solid var(--color-surface-mixed-300);
-    width: auto!important;
+    //width: auto!important;
   }
   .form-check-input:checked{
     background-color: var(--color-primary-200);
