@@ -28,8 +28,9 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { FreeMainDbComponent } from './components/dashboards/free/free-main-db/free-main-db.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { BusinessProfileComponent } from './components/dashboards/free/business-profile/business-profile.component';
+import { BusinessProfileComponent } from './components/business-profile/business-profile.component';
 import { BusinessProfileSettingsComponent } from './components/dashboards/free/business-profile-settings/business-profile-settings.component';
+import { BusinessProfileMyComponent } from './components/dashboards/free/business-profile-my/business-profile-my.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { BusinessProfileSettingsComponent } from './components/dashboards/free/b
     FreeDashboardComponent,
     FreeMainDbComponent,
     BusinessProfileComponent,
-    BusinessProfileSettingsComponent
+    BusinessProfileSettingsComponent,
+    BusinessProfileMyComponent
   ],
     imports: [
         BrowserModule,

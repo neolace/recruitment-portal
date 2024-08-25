@@ -15,10 +15,13 @@ import {RegisterComponent} from "./components/register/register.component";
 import {ResetPasswordComponent} from "./components/reset-password/reset-password.component";
 import {FreeDashboardComponent} from "./components/dashboards/free/free-dashboard/free-dashboard.component";
 import {FreeMainDbComponent} from "./components/dashboards/free/free-main-db/free-main-db.component";
-import {BusinessProfileComponent} from "./components/dashboards/free/business-profile/business-profile.component";
+import {BusinessProfileComponent} from "./components/business-profile/business-profile.component";
 import {
   BusinessProfileSettingsComponent
 } from "./components/dashboards/free/business-profile-settings/business-profile-settings.component";
+import {
+  BusinessProfileMyComponent
+} from "./components/dashboards/free/business-profile-my/business-profile-my.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -31,6 +34,7 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'candidate-profile', component: EmpProfileComponent },
   { path: 'candidate-profile-setting', component: EmpProfileSettingsComponent },
+  { path: 'business-profile', component: BusinessProfileComponent },
   { path: 'locked', component: LockScreenComponent },
   { path: 'login', component: LoginComponent },
   { path: 'reset', component: ResetPasswordComponent },
@@ -38,7 +42,7 @@ const routes: Routes = [
   { path: 'dashboard', component: FreeDashboardComponent, children: [
       { path: '', redirectTo: '/dashboard/overview', pathMatch: 'full' },
       { path: 'overview', component: FreeMainDbComponent },
-      { path: 'business-profile', component: BusinessProfileComponent },
+      { path: 'business-profile-my', component: BusinessProfileMyComponent },
       { path: 'business-profile-settings', component: BusinessProfileSettingsComponent }
   ]}
 ];
