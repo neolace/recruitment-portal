@@ -80,9 +80,10 @@
 }
 
 .pricing-wrapper.recommended{
-  padding: unset;
+  padding: 0 0 25px 0;
 
   .ribbon{
+    height: 100%;
     padding: 5px;
     background-color: var(--color-primary-200);
     color: #fff;
@@ -94,6 +95,7 @@
     box-shadow: rgba(0, 0, 0, 0.15) 0 15px 25px, rgba(0, 0, 0, 0.05) 0 5px 10px;
   }
   .pricing-card{
+    height: calc(100% - 27px);
     background-color: var(--color-surface-mixed-200);
     border: 1px solid var(--color-surface-mixed-400);
     box-shadow: unset;

@@ -35,3 +35,6 @@ build/
 ### environments ###
 .env
 /client/src/environments/
+
+### temp assets ###
+/client/src/assets/temp/
