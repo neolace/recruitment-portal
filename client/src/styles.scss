@@ -1300,3 +1300,56 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-mdc-progress-spinner {
   --mdc-circular-progress-active-indicator-color: var(--color-primary-500) !important;
 }
+
+// accordion
+$accordion-icon-color: rgb(52, 152, 219);
+$accordion-icon-active-color: rgb(92, 81, 240);
+$accordion-button-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='#{$accordion-icon-color}' stroke-linecap='round' stroke-linejoin='round'><path d='M02 2L5 6L02 10'/></svg>");
+$accordion-button-active-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='#{$accordion-icon-active-color}' stroke-linecap='round' stroke-linejoin='round'><path d='M02 2L5 6L02 10'/></svg>");
+$accordion-icon-transform: rotate(-90deg);
+
+@function escape-svg($string) {
+  @return str-replace($string, '"', '\"');
+}
+
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+  @return $string;
+}
+
+.accordion{
+  margin: 12px 0;
+  --bs-accordion-border-color: var(--color-surface-mixed-100);
+  --bs-accordion-active-color: var(--color-text-100);
+  --bs-accordion-active-bg: var(--color-surface-mixed-100);
+  --bs-accordion-btn-focus-box-shadow: none;
+  --bs-accordion-btn-focus-border-color: transparent;
+  --bs-accordion-btn-icon: #{escape-svg($accordion-button-icon)};
+  --bs-accordion-btn-active-icon: #{escape-svg($accordion-button-active-icon)};
+  --bs-accordion-btn-icon-transform: #{$accordion-icon-transform};
+  --bs-accordion-btn-padding-y: 8px;
+  --bs-accordion-btn-padding-x: 12px;
+  --bs-accordion-body-padding-y: 5px;
+  --bs-accordion-body-padding-x: 20px;
+}
+.accordion-button{
+  color: var(--color-text-300);
+  background-color: var(--color-surface-mixed-100);
+  border: none;
+  outline: none;
+  border-radius: 0;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: Roboto, "Helvetica Neue", sans-serif !important;
+}
+.accordion-body{
+  color: var(--color-text-400);
+  background-color: var(--color-surface-mixed-100);
+  border: none;
+  outline: none;
+  border-radius: 0;
+  font-size: 14px;
+}
