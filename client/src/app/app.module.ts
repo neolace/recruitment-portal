@@ -31,6 +31,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { BusinessProfileComponent } from './components/business-profile/business-profile.component';
 import { BusinessProfileSettingsComponent } from './components/dashboards/free/business-profile-settings/business-profile-settings.component';
 import { BusinessProfileMyComponent } from './components/dashboards/free/business-profile-my/business-profile-my.component';
+import { PrisingComponent } from './components/prising/prising.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { BusinessProfileMyComponent } from './components/dashboards/free/busines
     FreeMainDbComponent,
     BusinessProfileComponent,
     BusinessProfileSettingsComponent,
-    BusinessProfileMyComponent
+    BusinessProfileMyComponent,
+    PrisingComponent
   ],
     imports: [
         BrowserModule,
