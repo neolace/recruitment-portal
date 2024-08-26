@@ -1304,8 +1304,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 // accordion
 $accordion-icon-color: rgb(52, 152, 219);
 $accordion-icon-active-color: rgb(92, 81, 240);
-$accordion-button-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='#{$accordion-icon-color}' stroke-linecap='round' stroke-linejoin='round'><path d='M02 2L5 6L02 10'/></svg>");
-$accordion-button-active-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='#{$accordion-icon-active-color}' stroke-linecap='round' stroke-linejoin='round'><path d='M02 2L5 6L02 10'/></svg>");
+$accordion-button-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='#{$accordion-icon-color}' stroke-linecap='round' stroke-linejoin='round'><path d='M02 3L5 7L02 11'/></svg>");
+$accordion-button-active-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='#{$accordion-icon-active-color}' stroke-linecap='round' stroke-linejoin='round'><path d='M02 3L5 7L02 11'/></svg>");
 $accordion-icon-transform: rotate(-90deg);
 
 @function escape-svg($string) {
@@ -1344,6 +1344,11 @@ $accordion-icon-transform: rotate(-90deg);
   font-size: 16px;
   font-weight: 500;
   font-family: Roboto, "Helvetica Neue", sans-serif !important;
+}
+.accordion-button:after {
+  order: -1; //swap order
+  margin-left: 0;
+  margin-right:0.3em; // just extra space between text and icon
 }
 .accordion-body{
   color: var(--color-text-400);
