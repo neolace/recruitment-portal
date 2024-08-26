@@ -1306,7 +1306,10 @@ $accordion-icon-color: rgb(52, 152, 219);
 $accordion-icon-active-color: rgb(92, 81, 240);
 $accordion-button-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='#{$accordion-icon-color}' stroke-linecap='round' stroke-linejoin='round'><path d='M02 3L5 7L02 11'/></svg>");
 $accordion-button-active-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='#{$accordion-icon-active-color}' stroke-linecap='round' stroke-linejoin='round'><path d='M02 3L5 7L02 11'/></svg>");
+$accordion-button-icon-plus: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='#{$accordion-icon-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><path d='M6,2 V12 M-2,7 H12'/></svg>");
+$accordion-button-icon-minus: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='#{$accordion-icon-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><path d='M-4,7 H12'/></svg>");
 $accordion-icon-transform: rotate(-90deg);
+$accordion-icon-transform2: rotate(180deg);
 
 @function escape-svg($string) {
   @return str-replace($string, '"', '\"');
@@ -1338,8 +1341,8 @@ $accordion-icon-transform: rotate(-90deg);
 .accordion-button{
   color: var(--color-text-300);
   background-color: var(--color-surface-mixed-100);
-  border: none;
-  outline: none;
+  border: none!important;
+  outline: none!important;
   border-radius: 0;
   font-size: 16px;
   font-weight: 500;
@@ -1353,8 +1356,35 @@ $accordion-icon-transform: rotate(-90deg);
 .accordion-body{
   color: var(--color-text-400);
   background-color: var(--color-surface-mixed-100);
-  border: none;
-  outline: none;
+  border: none!important;
+  outline: none!important;
   border-radius: 0;
   font-size: 14px;
+}
+
+.accordion.fq{
+  --bs-accordion-border-color: #0d1117;
+  --bs-accordion-active-color: #fff;
+  --bs-accordion-active-bg: #0d1117;
+  --bs-accordion-btn-icon: #{escape-svg($accordion-button-icon-plus)};
+  --bs-accordion-btn-active-icon: #{escape-svg($accordion-button-icon-minus)};
+  --bs-accordion-btn-icon-transform: #{$accordion-icon-transform2};
+  --bs-accordion-body-padding-y: 8px;
+  --bs-accordion-body-padding-x: 40px;
+  --bs-accordion-btn-padding-y: 12px;
+
+  .accordion-button{
+    color: #fff;
+    background-color: #0d1117;
+    font-size: 20px;
+    font-weight: 450;
+    font-family: sans-serif, "Poppins" !important;
+  }
+
+  .accordion-body{
+    color: #8d949c;
+    background-color: #0d1117;
+    font-size: 16px;
+    font-weight: 400;
+  }
 }
