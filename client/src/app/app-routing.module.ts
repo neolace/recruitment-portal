@@ -23,6 +23,7 @@ import {
   BusinessProfileMyComponent
 } from "./components/dashboards/free/business-profile-my/business-profile-my.component";
 import {PrisingComponent} from "./components/prising/prising.component";
+import {CompaniesComponent} from "./components/companies/companies.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'job-details', component: JobDetailsComponent },
   { path: 'job-apply', component: JobApplyComponent },
   { path: 'job-post', component: JobPostComponent },
+  { path: 'companies', component: CompaniesComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'pricing', component: PrisingComponent },
   { path: 'candidate-profile', component: EmpProfileComponent },

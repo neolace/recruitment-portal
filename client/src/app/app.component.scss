@@ -57,6 +57,30 @@
           .nav-link.active{
             color: var(--color-primary-300) !important;
           }
+          .dropdown-menu{
+            background-color: var(--color-surface-mixed-100) !important;
+            border: 1px solid var(--color-primary-600);
+          }
+        }
+      }
+
+      .dropdown-menu{
+        .dropdown-item{
+          color: var(--color-text-200) !important;
+          font-size: 14px;
+
+          &:hover{
+            color: var(--color-text-400) !important;
+          }
+        }
+
+        .dropdown-item.active{
+          color: #fff;
+          background-color: var(--color-primary-300) !important;
+        }
+
+        .dropdown-divider{
+          border-top: 1px solid var(--color-primary-300) !important;
         }
       }
     }
