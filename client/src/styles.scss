@@ -1134,6 +1134,52 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
+.spec-card-1{
+  border: 4px solid transparent;
+  border-radius: 20px;
+  background:
+    linear-gradient(135deg, var(--color-surface-mixed-100) 50%, rgba(138, 220, 225, .9)),
+    linear-gradient(to right, #64acff, #8adce1);
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+
+  width: 100%;
+  height: 100%;
+  min-height: 100px;
+  padding: max(20px, 3vw) max(30px, 5vw);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: max(30px, 3vw) 0;
+
+  .title{
+    font-size: 30px;
+    font-weight: 800;
+    background-image: linear-gradient(to right, #8adce1, #64acff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    text-align: left;
+    width: 100%;
+    max-width: 500px;
+
+    @media screen and (max-width: 600px) {
+      font-size: 40px;
+      line-height: 50px;
+    }
+  }
+
+  .sub-title{
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--color-text-300);
+    text-align: left;
+    width: 100%;
+  }
+}
+
 // bootstrap dropdown
 .dropdown-menu{
   .dropdown-item{
