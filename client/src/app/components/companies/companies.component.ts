@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-companies',
@@ -7,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class CompaniesComponent {
 
+  constructor(private router: Router) { }
+  moveToRegister() {
+    this.router.navigate(['/register'], {queryParams: {from: 'companies'}});
+  }
 }
