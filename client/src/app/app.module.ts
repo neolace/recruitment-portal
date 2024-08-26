@@ -32,6 +32,7 @@ import { BusinessProfileComponent } from './components/business-profile/business
 import { BusinessProfileSettingsComponent } from './components/dashboards/free/business-profile-settings/business-profile-settings.component';
 import { BusinessProfileMyComponent } from './components/dashboards/free/business-profile-my/business-profile-my.component';
 import { PrisingComponent } from './components/prising/prising.component';
+import { CompaniesComponent } from './components/companies/companies.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { PrisingComponent } from './components/prising/prising.component';
     BusinessProfileComponent,
     BusinessProfileSettingsComponent,
     BusinessProfileMyComponent,
-    PrisingComponent
+    PrisingComponent,
+    CompaniesComponent
   ],
     imports: [
         BrowserModule,
