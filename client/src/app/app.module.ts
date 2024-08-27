@@ -33,6 +33,7 @@ import { BusinessProfileSettingsComponent } from './components/dashboards/free/b
 import { BusinessProfileMyComponent } from './components/dashboards/free/business-profile-my/business-profile-my.component';
 import { PrisingComponent } from './components/prising/prising.component';
 import { CompaniesComponent } from './components/companies/companies.component';
+import { CompanyJobsComponent } from './components/company-jobs/company-jobs.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { CompaniesComponent } from './components/companies/companies.component';
     BusinessProfileSettingsComponent,
     BusinessProfileMyComponent,
     PrisingComponent,
-    CompaniesComponent
+    CompaniesComponent,
+    CompanyJobsComponent
   ],
     imports: [
         BrowserModule,
