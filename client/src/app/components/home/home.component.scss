@@ -519,7 +519,7 @@
           align-items: center;
           justify-content: center;
           color: var(--color-primary-200);
-          background-color: var(--color-primary-600-opacity-3);
+          background-color: var(--color-primary-600-opacity-9);
           transition: all .3s ease-in-out;
           cursor: pointer;
 
@@ -572,7 +572,7 @@
         align-items: center;
         justify-content: flex-start;
         font-size: 16px;
-        color: var(--color-text-400);
+        color: var(--color-text-300);
 
         i{
           font-size: 18px;
@@ -703,6 +703,16 @@
 
     @media screen and (max-width: 768px) {
       margin-bottom: 12px;
+    }
+  }
+}
+
+.spec-card-1{
+  .sub-title{
+    span{
+      color: var(--color-highlight-100);
+      font-weight: 550;
+      text-decoration: underline;
     }
   }
 }

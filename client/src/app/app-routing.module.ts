@@ -25,6 +25,7 @@ import {
 import {PrisingComponent} from "./components/prising/prising.component";
 import {CompaniesComponent} from "./components/companies/companies.component";
 import {CompanyJobsComponent} from "./components/company-jobs/company-jobs.component";
+import {CompanyJobsMyComponent} from "./components/dashboards/free/company-jobs-my/company-jobs-my.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -49,7 +50,8 @@ const routes: Routes = [
       { path: '', redirectTo: '/dashboard/overview', pathMatch: 'full' },
       { path: 'overview', component: FreeMainDbComponent },
       { path: 'business-profile-my', component: BusinessProfileMyComponent },
-      { path: 'business-profile-settings', component: BusinessProfileSettingsComponent }
+      { path: 'business-profile-settings', component: BusinessProfileSettingsComponent },
+      { path: 'company-jobs', component: CompanyJobsMyComponent }
   ]}
 ];
 
