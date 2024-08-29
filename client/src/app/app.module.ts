@@ -34,6 +34,7 @@ import { BusinessProfileMyComponent } from './components/dashboards/free/busines
 import { PrisingComponent } from './components/prising/prising.component';
 import { CompaniesComponent } from './components/companies/companies.component';
 import { CompanyJobsComponent } from './components/company-jobs/company-jobs.component';
+import { CompanyJobsMyComponent } from './components/dashboards/free/company-jobs-my/company-jobs-my.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { CompanyJobsComponent } from './components/company-jobs/company-jobs.com
     BusinessProfileMyComponent,
     PrisingComponent,
     CompaniesComponent,
-    CompanyJobsComponent
+    CompanyJobsComponent,
+    CompanyJobsMyComponent
   ],
     imports: [
         BrowserModule,
