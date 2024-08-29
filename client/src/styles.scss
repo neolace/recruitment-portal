@@ -37,6 +37,9 @@
   --color-secondary-400: #415a77;
   --color-secondary-500: #4b6a86;
   --color-secondary-600: #54718e;
+  --color-secondary-600-opacity-3: rgba(84, 113, 142, 0.3);
+  --color-secondary-600-opacity-6: rgba(84, 113, 142, 0.6);
+  --color-secondary-600-opacity-9: rgba(84, 113, 142, 0.9);
 
   --color-text-100: #000000;
   --color-text-200: #2c3e50;
@@ -89,6 +92,9 @@
   --color-secondary-400: #1e8449; /* Olive Green */
   --color-secondary-500: #196f3d; /* Dark Olive */
   --color-secondary-600: #145a32; /* Very Dark Olive */
+  --color-secondary-600-opacity-3: rgba(20, 90, 50, 0.3);
+  --color-secondary-600-opacity-6: rgba(20, 90, 50, 0.6);
+  --color-secondary-600-opacity-9: rgba(20, 90, 50, 0.9);
 
   --color-text-100: #e0e0e0; /* Light Gray */
   --color-text-200: #cccccc; /* Slightly Darker Gray */
@@ -191,6 +197,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
   p{
     max-width: 600px;
+    color: var(--color-secondary-400);
   }
 }
 
@@ -457,7 +464,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
         .open-positions{
           font-size: 14px;
-          color: var(--color-text-400);
+          color: var(--color-secondary-100);
         }
       }
     }
@@ -997,10 +1004,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       cursor: pointer;
       transition: all .3s ease-in-out;
       color: var(--color-text-300);
-      border: 2px solid var(--color-primary-600-opacity-9);
+      border: 2px solid var(--color-secondary-600-opacity-3);
 
       a{
-        color: var(--color-text-300);
+        color: var(--color-secondary-200);
       }
 
       &:hover{
@@ -1107,7 +1114,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
   }
   .title{
-    color: var(--color-text-300);
+    color: var(--color-secondary-300);
     font-size: 14px;
     text-align: center;
   }
