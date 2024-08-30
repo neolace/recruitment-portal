@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-pro-main-db',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class ProMainDbComponent {
 
+  progressValue = 50;
+  progressMode: ProgressSpinnerMode = 'determinate';
+
+  personalProgressValue = 90;
+  personalProgressMode: ProgressSpinnerMode = 'determinate';
 }

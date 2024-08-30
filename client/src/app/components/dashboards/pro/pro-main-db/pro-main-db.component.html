@@ -1,1 +1,65 @@
-<p>pro-main-db works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <h2 class="h2-1 mt-5">Hi,</h2>
+      <h2 class="h2-2">User Name</h2>
+
+      <div class="notification-area">
+        <div>
+          <p class="not-title-1">See what's new!</p>
+          <p>Currently you do not have any new notifications</p>
+        </div>
+        <div>
+          <p class="not-title-2">Older notifications</p>
+          <p>Currently you do not have any new notifications</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="w-100 d-flex align-items-center justify-content-end">
+        <div class="col col-lg-8">
+          <div class="card-1">
+            <div class="d-flex align-items-center justify-content-around justify-content-md-between">
+              <div>
+                <mat-progress-spinner
+                  class="progress-spinner"
+                  [mode]="progressMode"
+                  [value]="progressValue">
+                </mat-progress-spinner>
+              </div>
+              <div>
+                <div class="title-1">Business Profile Completion</div>
+                <p class="m-0">{{progressValue}}%</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-1">
+            <div class="d-flex align-items-center justify-content-around justify-content-md-between">
+              <div>
+                <mat-progress-spinner
+                  class="progress-spinner"
+                  [mode]="personalProgressMode"
+                  [value]="personalProgressValue">
+                </mat-progress-spinner>
+              </div>
+              <div>
+                <div class="title-1">Personal Profile Completion</div>
+                <p class="m-0">{{personalProgressValue}}%</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-100 d-flex align-items-center justify-content-end">
+        <div class="col col-lg-8">
+          <div class="card-1">
+            <div class="title-1">Latest Ads Posted</div>
+            <p>Currently you do not have any shared ads</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
