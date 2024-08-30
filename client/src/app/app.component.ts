@@ -6,6 +6,7 @@ import {LoginComponent} from "./components/login/login.component";
 import {RegisterComponent} from "./components/register/register.component";
 import {ResetPasswordComponent} from "./components/reset-password/reset-password.component";
 import {FreeDashboardComponent} from "./components/dashboards/free/free-dashboard/free-dashboard.component";
+import {ProDashboardComponent} from "./components/dashboards/pro/pro-dashboard/pro-dashboard.component";
 
 @Component({
   selector: 'app-root',
@@ -83,6 +84,9 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.showNavbar = false;
       this.showFooter = false;
     } else if(component instanceof FreeDashboardComponent){
+      this.showNavbar = false;
+      this.showFooter = false;
+    } else if(component instanceof ProDashboardComponent){
       this.showNavbar = false;
       this.showFooter = false;
     } else {
