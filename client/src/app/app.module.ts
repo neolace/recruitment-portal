@@ -35,6 +35,8 @@ import { PrisingComponent } from './components/prising/prising.component';
 import { CompaniesComponent } from './components/companies/companies.component';
 import { CompanyJobsComponent } from './components/company-jobs/company-jobs.component';
 import { CompanyJobsMyComponent } from './components/dashboards/free/company-jobs-my/company-jobs-my.component';
+import { ProDashboardComponent } from './components/dashboards/pro/pro-dashboard/pro-dashboard.component';
+import { ProMainDbComponent } from './components/dashboards/pro/pro-main-db/pro-main-db.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,9 @@ import { CompanyJobsMyComponent } from './components/dashboards/free/company-job
     PrisingComponent,
     CompaniesComponent,
     CompanyJobsComponent,
-    CompanyJobsMyComponent
+    CompanyJobsMyComponent,
+    ProDashboardComponent,
+    ProMainDbComponent
   ],
     imports: [
         BrowserModule,

@@ -26,6 +26,8 @@ import {PrisingComponent} from "./components/prising/prising.component";
 import {CompaniesComponent} from "./components/companies/companies.component";
 import {CompanyJobsComponent} from "./components/company-jobs/company-jobs.component";
 import {CompanyJobsMyComponent} from "./components/dashboards/free/company-jobs-my/company-jobs-my.component";
+import {ProDashboardComponent} from "./components/dashboards/pro/pro-dashboard/pro-dashboard.component";
+import {ProMainDbComponent} from "./components/dashboards/pro/pro-main-db/pro-main-db.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -49,6 +51,13 @@ const routes: Routes = [
   { path: 'dashboard', component: FreeDashboardComponent, children: [
       { path: '', redirectTo: '/dashboard/overview', pathMatch: 'full' },
       { path: 'overview', component: FreeMainDbComponent },
+      { path: 'business-profile-my', component: BusinessProfileMyComponent },
+      { path: 'business-profile-settings', component: BusinessProfileSettingsComponent },
+      { path: 'company-jobs', component: CompanyJobsMyComponent }
+  ]},
+  { path: 'pro', component: ProDashboardComponent, children: [
+      { path: '', redirectTo: '/pro/overview', pathMatch: 'full' },
+      { path: 'overview', component: ProMainDbComponent },
       { path: 'business-profile-my', component: BusinessProfileMyComponent },
       { path: 'business-profile-settings', component: BusinessProfileSettingsComponent },
       { path: 'company-jobs', component: CompanyJobsMyComponent }
