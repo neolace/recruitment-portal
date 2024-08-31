@@ -131,43 +131,6 @@
     </div>
   </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-md-5">
-        <div class="popular-2-left">
-          <div class="lg-img">
-            <img src="https://jobstack-shreethemes.vercel.app/static/media/ab01.016884c7bf778010e79c.jpg" alt="banner">
-
-            <div class="play-btn">
-              <i class="fa fa-play" aria-hidden="true"></i>
-            </div>
-
-            <div class="sm-img">
-              <img src="https://jobstack-shreethemes.vercel.app/static/media/ab02.f851a3dde08585493f97.jpg"
-                   alt="banner">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-7">
-        <div class="popular-2-right">
-          <h3>Millions of jobs.</h3>
-          <h3>Find the one that's right for you.</h3>
-          <div class="my-3">
-            <p>Search all the open positions on the web. Get your own personalized salary estimate. Read reviews on over
-              30000+ companies worldwide.</p>
-          </div>
-          <ul>
-            <li>Digital Marketing Solutions for Tomorrow</li>
-            <li>Our Talented & Experienced Marketing Agency</li>
-            <li>Create your own skin to match your brand</li>
-          </ul>
-          <button class="btn-1" routerLink="/contact"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact us</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="sub-topic-section">
     <h3>Popular Jobs</h3>
     <p>Search all the open positions on the web. Get your own personalized salary estimate. Read reviews on over 30000+
@@ -194,8 +157,8 @@
                 </div>
               </div>
               <div class="card-top-right">
-                <div class="visit-link-circle" routerLink="/job-details">
-                  <i class="material-icons">call_made</i>
+                <div class="visit-link-circle">
+                  <i class="material-icons" [ngClass]="heart?'liked':''">favorite_border</i>
                 </div>
               </div>
             </div>
@@ -203,7 +166,7 @@
             <div class="card-content">
               <div class="card-content-left">
                 <div class="d-flex flex-column align-items-start">
-                  <div class="job-title">Web Designer / Developer</div>
+                  <div class="job-title" routerLink="/job-details">Web Designer / Developer</div>
                   <div class="open-positions">Total Openings: 1</div>
                 </div>
               </div>
@@ -241,8 +204,8 @@
                 </div>
               </div>
               <div class="card-top-right">
-                <div class="visit-link-circle" routerLink="/job-details">
-                  <i class="material-icons">call_made</i>
+                <div class="visit-link-circle">
+                  <i class="material-icons">favorite_border</i>
                 </div>
               </div>
             </div>
@@ -250,7 +213,7 @@
             <div class="card-content">
               <div class="card-content-left">
                 <div class="d-flex flex-column align-items-start">
-                  <div class="job-title">Marketing Director</div>
+                  <div class="job-title" routerLink="/job-details">Marketing Director</div>
                   <div class="open-positions">Total Openings: 1</div>
                 </div>
               </div>
@@ -288,8 +251,8 @@
                 </div>
               </div>
               <div class="card-top-right">
-                <div class="visit-link-circle" routerLink="/job-details">
-                  <i class="material-icons">call_made</i>
+                <div class="visit-link-circle">
+                  <i class="material-icons">favorite_border</i>
                 </div>
               </div>
             </div>
@@ -297,7 +260,7 @@
             <div class="card-content">
               <div class="card-content-left">
                 <div class="d-flex flex-column align-items-start">
-                  <div class="job-title">Application Developer</div>
+                  <div class="job-title" routerLink="/job-details">Application Developer</div>
                   <div class="open-positions">Total Openings: 1</div>
                 </div>
               </div>
@@ -335,8 +298,8 @@
                 </div>
               </div>
               <div class="card-top-right">
-                <div class="visit-link-circle" routerLink="/job-details">
-                  <i class="material-icons">call_made</i>
+                <div class="visit-link-circle">
+                  <i class="material-icons">favorite_border</i>
                 </div>
               </div>
             </div>
@@ -344,7 +307,7 @@
             <div class="card-content">
               <div class="card-content-left">
                 <div class="d-flex flex-column align-items-start">
-                  <div class="job-title">Senior Product Designer</div>
+                  <div class="job-title" routerLink="/job-details">Senior Product Designer</div>
                   <div class="open-positions">Total Openings: 1</div>
                 </div>
               </div>
@@ -382,8 +345,8 @@
                 </div>
               </div>
               <div class="card-top-right">
-                <div class="visit-link-circle" routerLink="/job-details">
-                  <i class="material-icons">call_made</i>
+                <div class="visit-link-circle">
+                  <i class="material-icons">favorite_border</i>
                 </div>
               </div>
             </div>
@@ -391,7 +354,7 @@
             <div class="card-content">
               <div class="card-content-left">
                 <div class="d-flex flex-column align-items-start">
-                  <div class="job-title">Web Designer / Developer</div>
+                  <div class="job-title" routerLink="/job-details">Web Designer / Developer</div>
                   <div class="open-positions">Total Openings: 1</div>
                 </div>
               </div>
@@ -429,8 +392,8 @@
                 </div>
               </div>
               <div class="card-top-right">
-                <div class="visit-link-circle" routerLink="/job-details">
-                  <i class="material-icons">call_made</i>
+                <div class="visit-link-circle">
+                  <i class="material-icons">favorite_border</i>
                 </div>
               </div>
             </div>
@@ -438,7 +401,7 @@
             <div class="card-content">
               <div class="card-content-left">
                 <div class="d-flex flex-column align-items-start">
-                  <div class="job-title">PHP Developer</div>
+                  <div class="job-title" routerLink="/job-details">PHP Developer</div>
                   <div class="open-positions">Total Openings: 1</div>
                 </div>
               </div>
@@ -463,6 +426,43 @@
 
       <div class="see-more">
         <div class="see-more-btn" routerLink="/job">See More Jobs <i class="material-icons">arrow_right_alt</i></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <div class="popular-2-left">
+          <div class="lg-img">
+            <img src="https://jobstack-shreethemes.vercel.app/static/media/ab01.016884c7bf778010e79c.jpg" alt="banner">
+
+            <div class="play-btn">
+              <i class="fa fa-play" aria-hidden="true"></i>
+            </div>
+
+            <div class="sm-img">
+              <img src="https://jobstack-shreethemes.vercel.app/static/media/ab02.f851a3dde08585493f97.jpg"
+                   alt="banner">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-7">
+        <div class="popular-2-right">
+          <h3>Millions of jobs.</h3>
+          <h3>Find the one that's right for you.</h3>
+          <div class="my-3">
+            <p>Search all the open positions on the web. Get your own personalized salary estimate. Read reviews on over
+              30000+ companies worldwide.</p>
+          </div>
+          <ul>
+            <li>Digital Marketing Solutions for Tomorrow</li>
+            <li>Our Talented & Experienced Marketing Agency</li>
+            <li>Create your own skin to match your brand</li>
+          </ul>
+          <button class="btn-1" routerLink="/contact"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact us</button>
+        </div>
       </div>
     </div>
   </div>
