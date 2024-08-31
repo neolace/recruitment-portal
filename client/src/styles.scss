@@ -442,7 +442,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
           cursor: pointer;
 
           i{
-            font-size: 16px;
+            font-size: 20px;
+          }
+
+          .liked{
+            color: red;
           }
         }
       }

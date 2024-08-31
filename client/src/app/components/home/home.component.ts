@@ -8,6 +8,8 @@ import {Router} from "@angular/router";
 })
 export class HomeComponent {
 
+  heart: boolean = true; // test
+
   constructor(private router: Router) { }
   moveToRegister() {
     this.router.navigate(['/register'], {queryParams: {from: 'companies'}});
