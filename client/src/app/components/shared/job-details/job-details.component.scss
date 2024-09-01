@@ -4,6 +4,11 @@
   font-size: 18px;
 }
 
+.left-side{
+  position: sticky;
+  height: fit-content;
+  top: 80px;
+}
 .job-details-card{
   background-color: var(--color-surface-200);
   border-radius: 12px;
