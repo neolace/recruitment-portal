@@ -28,6 +28,7 @@ import {CompanyJobsComponent} from "./components/company-jobs/company-jobs.compo
 import {CompanyJobsMyComponent} from "./components/dashboards/free/company-jobs-my/company-jobs-my.component";
 import {ProDashboardComponent} from "./components/dashboards/pro/pro-dashboard/pro-dashboard.component";
 import {ProMainDbComponent} from "./components/dashboards/pro/pro-main-db/pro-main-db.component";
+import {EmpSavedJobsComponent} from "./components/shared/emp-saved-jobs/emp-saved-jobs.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -42,6 +43,7 @@ const routes: Routes = [
   { path: 'pricing', component: PrisingComponent },
   { path: 'candidate-profile', component: EmpProfileComponent },
   { path: 'candidate-profile-setting', component: EmpProfileSettingsComponent },
+  { path: 'my-jobs', component: EmpSavedJobsComponent },
   { path: 'business-profile', component: BusinessProfileComponent },
   { path: 'company-jobs', component: CompanyJobsComponent },
   { path: 'locked', component: LockScreenComponent },

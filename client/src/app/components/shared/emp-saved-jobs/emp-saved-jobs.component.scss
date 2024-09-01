@@ -1,0 +1,16 @@
+.top-banner{
+  min-height: max(350px, 50vh);
+}
+.card-1{
+  width: 100%;
+  background-color: var(--color-surface-100);
+  border-radius: 8px;
+  border: 1px solid var(--color-surface-mixed-500);
+  position: relative;
+  padding: 0;
+  color: var(--color-text-200);
+
+  .b-p{
+    font-weight: 450;
+  }
+}
