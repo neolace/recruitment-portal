@@ -37,6 +37,7 @@ import { CompanyJobsComponent } from './components/company-jobs/company-jobs.com
 import { CompanyJobsMyComponent } from './components/dashboards/free/company-jobs-my/company-jobs-my.component';
 import { ProDashboardComponent } from './components/dashboards/pro/pro-dashboard/pro-dashboard.component';
 import { ProMainDbComponent } from './components/dashboards/pro/pro-main-db/pro-main-db.component';
+import { EmpSavedJobsComponent } from './components/shared/emp-saved-jobs/emp-saved-jobs.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { ProMainDbComponent } from './components/dashboards/pro/pro-main-db/pro-
     CompanyJobsComponent,
     CompanyJobsMyComponent,
     ProDashboardComponent,
-    ProMainDbComponent
+    ProMainDbComponent,
+    EmpSavedJobsComponent
   ],
     imports: [
         BrowserModule,
