@@ -29,6 +29,18 @@ import {CompanyJobsMyComponent} from "./components/dashboards/free/company-jobs-
 import {ProDashboardComponent} from "./components/dashboards/pro/pro-dashboard/pro-dashboard.component";
 import {ProMainDbComponent} from "./components/dashboards/pro/pro-main-db/pro-main-db.component";
 import {EmpSavedJobsComponent} from "./components/shared/emp-saved-jobs/emp-saved-jobs.component";
+import {
+  EmpSavedJobsSavedComponent
+} from "./components/shared/emp-saved-jobs/emp-saved-jobs-saved/emp-saved-jobs-saved.component";
+import {
+  EmpSavedJobsInprogressComponent
+} from "./components/shared/emp-saved-jobs/emp-saved-jobs-inprogress/emp-saved-jobs-inprogress.component";
+import {
+  EmpSavedJobsAppliedComponent
+} from "./components/shared/emp-saved-jobs/emp-saved-jobs-applied/emp-saved-jobs-applied.component";
+import {
+  EmpSavedJobsArchivedComponent
+} from "./components/shared/emp-saved-jobs/emp-saved-jobs-archived/emp-saved-jobs-archived.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -43,7 +55,13 @@ const routes: Routes = [
   { path: 'pricing', component: PrisingComponent },
   { path: 'candidate-profile', component: EmpProfileComponent },
   { path: 'candidate-profile-setting', component: EmpProfileSettingsComponent },
-  { path: 'my-jobs', component: EmpSavedJobsComponent },
+  { path: 'my-jobs', component: EmpSavedJobsComponent, children: [
+      { path: '', redirectTo: '/my-jobs/saved', pathMatch: 'full' },
+      { path: 'saved', component: EmpSavedJobsSavedComponent },
+      { path: 'inprogress', component: EmpSavedJobsInprogressComponent },
+      { path: 'applied', component: EmpSavedJobsAppliedComponent },
+      { path: 'archived', component: EmpSavedJobsArchivedComponent }
+  ]},
   { path: 'business-profile', component: BusinessProfileComponent },
   { path: 'company-jobs', component: CompanyJobsComponent },
   { path: 'locked', component: LockScreenComponent },

@@ -1445,3 +1445,36 @@ $accordion-icon-transform2: rotate(180deg);
     font-weight: 400;
   }
 }
+
+// bootstrap nav tabs
+.nav-tabs-style-1{
+  background-color: transparent;
+  padding: 10px 20px;
+  justify-content: flex-start;
+
+  .nav-item{
+    .nav-link{
+      color: var(--color-text-300);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 20px;
+
+      span{
+        color: var(--color-text-300);
+        font-weight: 500;
+      }
+    }
+    .nav-link.active{
+      background-color: var(--color-primary-200);
+      color: white;
+      border: none;
+
+      span{
+        color: white;
+      }
+    }
+  }
+}
