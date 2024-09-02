@@ -21,7 +21,29 @@
       </div>
     </div>
     <div class="col-12 col-lg-6">
-      <div class="card-1"></div>
+      <div class="card-1">
+        <div class="py-3 px-4">
+          <h4>My Jobs</h4>
+        </div>
+        <ul class="nav nav-tabs nav-tabs-style-1">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" (click)="navigateBetweenTabs('saved')" [class.active]="isActive('saved')">Saved</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" (click)="navigateBetweenTabs('inprogress')" [class.active]="isActive('inprogress')">In progress</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" (click)="navigateBetweenTabs('applied')" [class.active]="isActive('applied')">Applied</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" (click)="navigateBetweenTabs('archived')" [class.active]="isActive('archived')">Archived</a>
+          </li>
+        </ul>
+
+        <div class="py-3 px-4">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
     </div>
     <div class="col-12 col-lg-4">
       <div class="card-1"></div>
