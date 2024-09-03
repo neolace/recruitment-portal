@@ -244,6 +244,28 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
+.category-btn{
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 550;
+  border-radius: 0 10px 10px 0;
+  padding: 20px 6px;
+  transition: all .3s ease-in-out;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  z-index: 10;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  background-color: var(--color-primary-200);
+}
+
 .see-more{
   width: 100%;
   display: flex;
@@ -1475,6 +1497,20 @@ $accordion-icon-transform2: rotate(180deg);
       span{
         color: white;
       }
+    }
+  }
+}
+
+// bootstrap offcanvas
+.offcanvas{
+  background-color: var(--color-surface-mixed-100);
+
+  .offcanvas-header{
+    .btn-close{
+      --bs-btn-close-color: var(--color-text-200);
+      background-image: url('/assets/imgs/shared/close.svg');
+      background-position: center center;
+      background-size: cover;
     }
   }
 }
