@@ -34,22 +34,35 @@
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="category">Categories</label>
-                <select class="form-control" id="category">
-                  <option>IT</option>
-                  <option>HR</option>
-                  <option>Marketing</option>
+                <select id="category" [(ngModel)]="selectedCategory" [ngModelOptions]="{standalone: true}" (change)="onCategoryChange()">
+                  <option value="IT">IT</option>
+                  <option value="HR">HR</option>
+                  <option value="Marketing">Marketing</option>
+                  <option value="Other">Other</option>
                 </select>
+                <div class="collapse" [ngClass]="{'show': isOtherCategorySelected}" id="otherCollapseCat">
+                  <div class="d-flex justify-content-end my-2">
+                    <input type="text" class="form-control" placeholder="Enter new category">
+                  </div>
+                </div>
               </div>
             </div>
 
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="jobType">Job Type</label>
-                <select class="form-control" id="jobType">
+                <select id="jobType" [(ngModel)]="selectedJobType" [ngModelOptions]="{standalone: true}" (change)="onJobTypeChange()">
                   <option>Web Developer</option>
                   <option>Full Stack Developer</option>
                   <option>Front End Developer</option>
+                  <option>Back End Developer</option>
+                  <option>Other</option>
                 </select>
+                <div class="collapse" [ngClass]="{'show': isOtherJobTypeSelected}" id="otherCollapseJob">
+                  <div class="d-flex justify-content-end my-2">
+                    <input type="text" class="form-control" placeholder="Enter new job type">
+                  </div>
+                </div>
               </div>
             </div>
           </div>

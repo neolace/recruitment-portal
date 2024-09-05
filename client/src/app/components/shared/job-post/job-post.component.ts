@@ -7,4 +7,16 @@ import { Component } from '@angular/core';
 })
 export class JobPostComponent {
 
+  selectedCategory: any = 'IT';
+  selectedJobType: any = 'Web Developer';
+  isOtherCategorySelected: boolean = false;
+  isOtherJobTypeSelected: boolean = false;
+
+  onCategoryChange(): void {
+    this.isOtherCategorySelected = this.selectedCategory === 'Other';
+  }
+
+  onJobTypeChange(): void {
+    this.isOtherJobTypeSelected = this.selectedJobType === 'Other';
+  }
 }

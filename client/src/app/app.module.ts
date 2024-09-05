@@ -17,7 +17,7 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
 import { EmpProfileComponent } from './components/shared/emp-profile/emp-profile.component';
 import { EmpProfileSettingsComponent } from './components/shared/emp-profile-settings/emp-profile-settings.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { LockScreenComponent } from './components/lock-screen/lock-screen.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -88,7 +88,8 @@ import { EmpSavedJobsArchivedComponent } from './components/shared/emp-saved-job
         MatSidenavModule,
         MatExpansionModule,
         MatTooltipModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        FormsModule
     ],
   providers: [],
   bootstrap: [AppComponent]
