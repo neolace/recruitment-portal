@@ -26,3 +26,15 @@
   }
 }
 
+.card-1{
+  margin: 10px 0;
+  padding: 20px;
+
+  .progress-spinner{
+    width: 70px!important;
+    height: 70px!important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

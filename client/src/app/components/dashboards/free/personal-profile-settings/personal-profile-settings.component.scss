@@ -1,0 +1,79 @@
+.top-content{
+  position: relative;
+  width: 100%;
+  margin-bottom: max(20px, 5vw);
+
+  .cover-image{
+    width: 100%;
+    max-height: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+    object-fit: cover;
+    object-position: center;
+
+    img{
+      width: 100%;
+    }
+  }
+
+  .profile-img{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -10px;
+    left: 30px;
+    border: 4px solid var(--color-surface-mixed-100);
+    overflow: hidden;
+    cursor: pointer;
+    object-fit: cover;
+    object-position: center;
+
+    img{
+      width: 100%;
+    }
+
+    @media screen and (max-width: 768px) {
+      left: 10px;
+    }
+  }
+
+  .profile-info{
+    padding: 10px 0 0 160px;
+
+    p{
+      margin: 0;
+      padding: 0;
+    }
+
+    .emp-name{
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--color-text-100);
+    }
+
+    .position{
+      font-size: 16px;
+      color: var(--color-text-300);
+    }
+
+    @media screen and (max-width: 768px) {
+      padding-left: 140px;
+    }
+  }
+}
+
+.form-card-1{
+  max-width: 100%;
+  margin: 20px auto;
+
+  .form-wrapper{
+    gap: unset;
+    row-gap: 20px;
+
+    span{
+      color: var(--color-text-200);
+      font-weight: 450;
+    }
+  }
+}

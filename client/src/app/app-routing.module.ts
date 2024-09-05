@@ -41,6 +41,12 @@ import {
 import {
   EmpSavedJobsArchivedComponent
 } from "./components/shared/emp-saved-jobs/emp-saved-jobs-archived/emp-saved-jobs-archived.component";
+import {
+  PersonalProfileMyComponent
+} from "./components/dashboards/free/personal-profile-my/personal-profile-my.component";
+import {
+  PersonalProfileSettingsComponent
+} from "./components/dashboards/free/personal-profile-settings/personal-profile-settings.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -71,6 +77,8 @@ const routes: Routes = [
   { path: 'dashboard', component: FreeDashboardComponent, children: [
       { path: '', redirectTo: '/dashboard/overview', pathMatch: 'full' },
       { path: 'overview', component: FreeMainDbComponent },
+      { path: 'personal-profile', component: PersonalProfileMyComponent },
+      { path: 'personal-profile-settings', component: PersonalProfileSettingsComponent },
       { path: 'business-profile-my', component: BusinessProfileMyComponent },
       { path: 'business-profile-settings', component: BusinessProfileSettingsComponent },
       { path: 'company-jobs', component: CompanyJobsMyComponent }
@@ -78,6 +86,8 @@ const routes: Routes = [
   { path: 'pro', component: ProDashboardComponent, children: [
       { path: '', redirectTo: '/pro/overview', pathMatch: 'full' },
       { path: 'overview', component: ProMainDbComponent },
+      { path: 'personal-profile', component: PersonalProfileMyComponent },
+      { path: 'personal-profile-settings', component: PersonalProfileSettingsComponent },
       { path: 'business-profile-my', component: BusinessProfileMyComponent },
       { path: 'business-profile-settings', component: BusinessProfileSettingsComponent },
       { path: 'company-jobs', component: CompanyJobsMyComponent }
