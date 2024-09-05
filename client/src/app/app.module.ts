@@ -42,6 +42,8 @@ import { EmpSavedJobsSavedComponent } from './components/shared/emp-saved-jobs/e
 import { EmpSavedJobsInprogressComponent } from './components/shared/emp-saved-jobs/emp-saved-jobs-inprogress/emp-saved-jobs-inprogress.component';
 import { EmpSavedJobsAppliedComponent } from './components/shared/emp-saved-jobs/emp-saved-jobs-applied/emp-saved-jobs-applied.component';
 import { EmpSavedJobsArchivedComponent } from './components/shared/emp-saved-jobs/emp-saved-jobs-archived/emp-saved-jobs-archived.component';
+import { PersonalProfileMyComponent } from './components/dashboards/free/personal-profile-my/personal-profile-my.component';
+import { PersonalProfileSettingsComponent } from './components/dashboards/free/personal-profile-settings/personal-profile-settings.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +76,9 @@ import { EmpSavedJobsArchivedComponent } from './components/shared/emp-saved-job
     EmpSavedJobsSavedComponent,
     EmpSavedJobsInprogressComponent,
     EmpSavedJobsAppliedComponent,
-    EmpSavedJobsArchivedComponent
+    EmpSavedJobsArchivedComponent,
+    PersonalProfileMyComponent,
+    PersonalProfileSettingsComponent
   ],
     imports: [
         BrowserModule,

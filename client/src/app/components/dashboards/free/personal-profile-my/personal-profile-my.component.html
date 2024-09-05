@@ -1,0 +1,451 @@
+<div class="container my-3">
+  <div class="container">
+    <div class="top-content">
+      <div class="cover-image">
+        <img src="https://jobstack-shreethemes.vercel.app/static/media/bg5.634b5f6c21dce4640652.jpg" alt="cover">
+      </div>
+
+      <div class="profile-img">
+        <img src="https://jobstack-shreethemes.vercel.app/static/media/01.6ac85de7298319b1f8d5.jpg" alt="profile">
+      </div>
+
+      <div class="profile-info">
+        <p class="emp-name">John Doe</p>
+        <p class="position">Web Developer</p>
+      </div>
+
+      <div class="profile-btn">
+        <button (click)="gotoSettings()"><i class="material-icons">settings</i></button>
+      </div>
+    </div>
+
+    <div class="row my-3 second-content">
+      <div class="col-12 col-md-6 col-lg-8 left-side">
+        <h5>Steven Townsend</h5>
+        <p>Obviously I'M Web Developer. Web Developer with over 3 years of experience. Experienced with all stages of
+          the development cycle for dynamic web projects. The as opposed to using 'Content here, content here', making
+          it look like readable English.<br>Data Structures and Algorithms are the heart of programming. Initially most
+          of the developers do not realize its importance but when you will start your career in software development,
+          you will find your code is either taking too much time or taking too much space.</p>
+
+        <h5>Skills :</h5>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="d-flex align-items-center justify-content-between w-100">
+              <div class="caption">WordPress</div>
+              <div class="value">80%</div>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0"
+                   aria-valuemax="100"></div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="d-flex align-items-center justify-content-between w-100">
+              <div class="caption">HTML</div>
+              <div class="value">90%</div>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0"
+                   aria-valuemax="100"></div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="d-flex align-items-center justify-content-between w-100">
+              <div class="caption">CSS</div>
+              <div class="value">85%</div>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0"
+                   aria-valuemax="100"></div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="d-flex align-items-center justify-content-between w-100">
+              <div class="caption">JavaScript</div>
+              <div class="value">70%</div>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0"
+                   aria-valuemax="100"></div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="d-flex align-items-center justify-content-between w-100">
+              <div class="caption">PHP</div>
+              <div class="value">75%</div>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0"
+                   aria-valuemax="100"></div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="d-flex align-items-center justify-content-between w-100">
+              <div class="caption">MySQL</div>
+              <div class="value">60%</div>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0"
+                   aria-valuemax="100"></div>
+            </div>
+          </div>
+        </div>
+
+        <h5>Experience :</h5>
+        <div class="row experience">
+          <div class="col-3 col-lg-2">
+            <div class="d-flex flex-column align-items-center justify-content-center">
+              <div class="org-wrapper">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkY0OUEwNkM5NjkzMTExRUM4OTgxRTA3ODBGMUQ0MDgyIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkY0OUEwNkNBNjkzMTExRUM4OTgxRTA3ODBGMUQ0MDgyIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RjQ5QTA2Qzc2OTMxMTFFQzg5ODFFMDc4MEYxRDQwODIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RjQ5QTA2Qzg2OTMxMTFFQzg5ODFFMDc4MEYxRDQwODIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6ObwqSAAAjS0lEQVR42uydWXBdSXnH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" alt="org">
+              </div>
+              <div class="year">
+                2019-22
+              </div>
+            </div>
+          </div>
+          <div class="col-9 col-lg-10">
+            <div class="d-flex flex-column align-items-start justify-content-center w-100 gap-2">
+              <div class="title">Full Stack Developer</div>
+              <div class="location">Shreethemes - India</div>
+              <div class="description">It seems that only fragments of the original text remain in the Lorem Ipsum texts
+                used today. One may speculate that over the course of time certain letters were added or deleted at
+                various positions within the text.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row experience">
+          <div class="col-3 col-lg-2">
+            <div class="d-flex flex-column align-items-center justify-content-center">
+              <div class="org-wrapper">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkY5Rjg4RjM3NjkzMTExRUNCRDVGODM3OTk5QTQ0RkE1IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkY5Rjg4RjM4NjkzMTExRUNCRDVGODM3OTk5QTQ0RkE1Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RjlGODhGMzU2OTMxMTFFQ0JENUY4Mzc5OTlBNDRGQTUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RjlGODhGMzY2OTMxMTFFQ0JENUY4Mzc5OTlBNDRGQTUiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4X6VZBAAAVWUlEQVR42uxdCZgcxXV+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" alt="org">
+              </div>
+              <div class="year">
+                2017-19
+              </div>
+            </div>
+          </div>
+          <div class="col-9 col-lg-10">
+            <div class="d-flex flex-column align-items-start justify-content-center w-100 gap-1">
+              <div class="title">Back-end Developer</div>
+              <div class="location">CircleCI - U.S.A.</div>
+              <div class="description">It seems that only fragments of the original text remain in the Lorem Ipsum texts
+                used today. One may speculate that over the course of time certain letters were added or deleted at
+                various positions within the text.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-wrapper">
+          <div class="form-card-1">
+            <h5>Contact Me:</h5>
+            <form action="">
+              <div class="row form-wrapper">
+                <div class="col-12 col-md-6">
+                  <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="John Doe">
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" class="form-control" id="email" placeholder="XwVpP@example.com">
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" class="form-control" id="subject" placeholder="Your Question">
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="comment">Comment</label>
+                    <textarea class="form-control" id="comment" rows="5" placeholder="Your Message"></textarea>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-group">
+                    <button type="submit" class="btn-1">Send Message</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-12 col-md-6 col-lg-4 right-side">
+        <div class="details-card-1">
+          <h5>Personal Detail:</h5>
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="caption"><i class="material-icons">mail_outline</i><span>Email:</span></div>
+            <div class="value">thomas@mail.com</div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="caption"><i class="material-icons">child_friendly</i><span>DOB:</span></div>
+            <div class="value">31st Dec, 1996</div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="caption"><i class="material-icons">home</i><span>Address:</span></div>
+            <div class="value">15 Razy street</div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="caption"><i class="material-icons">location_on</i><span>City:</span></div>
+            <div class="value">New York</div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="caption"><i class="material-icons">south_america</i><span>Country:</span></div>
+            <div class="value">USA</div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="caption"><i class="material-icons">dns</i><span>Postal Code:</span></div>
+            <div class="value">12345</div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="caption"><i class="material-icons">local_phone</i><span>Mobile:</span></div>
+            <div class="value">+1 123 456 789</div>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="caption">Social:</div>
+            <div class="item-set">
+              <div class="social-item">
+                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+              </div>
+              <div class="social-item">
+                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+              </div>
+              <div class="social-item">
+                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+              </div>
+              <div class="social-item">
+                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+              </div>
+              <div class="social-item">
+                <a href="#"><i class="fa fa-github" aria-hidden="true"></i></a>
+              </div>
+              <div class="social-item">
+                <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="sub-card">
+            <div class="d-flex align-items-center justify-content-start w-full">
+              <i class="fa fa-file-text-o" aria-hidden="true"></i>
+              <p>calvin-carlo-resume.pdf</p>
+            </div>
+            <button class="btn-1">
+              <i class="fa fa-download" aria-hidden="true"></i>
+              Download CV
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="employee-card">
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <span class="top-rated">
+              <i class="material-icons">star_border</i>
+            </span>
+            <span class="favorite">
+              <i class="material-icons">favorite</i>
+            </span>
+          </div>
+
+          <div class="profile-wrapper">
+            <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="profile" class="profile-img">
+          </div>
+
+          <div class="name">John Doe</div>
+          <div class="title">Web Designer</div>
+
+          <div class="keywords">
+            <div class="d-flex align-items-center justify-content-around w-100 gap-1">
+              <div class="key">HTML</div>
+              <div class="key">CSS</div>
+              <div class="key">JavaScript</div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-around w-100">
+            <div class="d-flex flex-column align-items-center justify-content-center">
+              <div class="caption">Salary:</div>
+              <div class="value">4k - 4.5k</div>
+            </div>
+            <div class="d-flex flex-column align-items-center justify-content-center">
+              <div class="caption">Experience:</div>
+              <div class="value">2 years</div>
+            </div>
+          </div>
+
+          <button class="btn-1">Profile</button>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="employee-card">
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <span class="top-rated">
+              <i class="material-icons">star_border</i>
+            </span>
+            <span class="favorite">
+              <i class="material-icons">favorite</i>
+            </span>
+          </div>
+
+          <div class="profile-wrapper">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="profile" class="profile-img">
+          </div>
+
+          <div class="name">Jane Doe</div>
+          <div class="title">Web Designer</div>
+
+          <div class="keywords">
+            <div class="d-flex align-items-center justify-content-around w-100 gap-1">
+              <div class="key">HTML</div>
+              <div class="key">CSS</div>
+              <div class="key">JavaScript</div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-around w-100">
+            <div class="d-flex flex-column align-items-center justify-content-center">
+              <div class="caption">Salary:</div>
+              <div class="value">4k - 4.5k</div>
+            </div>
+            <div class="d-flex flex-column align-items-center justify-content-center">
+              <div class="caption">Experience:</div>
+              <div class="value">2 years</div>
+            </div>
+          </div>
+
+          <button class="btn-1">Profile</button>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="employee-card">
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <span class="top-rated">
+              <i class="material-icons">star_border</i>
+            </span>
+            <span class="favorite">
+              <i class="material-icons">favorite</i>
+            </span>
+          </div>
+
+          <div class="profile-wrapper">
+            <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="profile" class="profile-img">
+          </div>
+
+          <div class="name">John Doe</div>
+          <div class="title">Web Designer</div>
+
+          <div class="keywords">
+            <div class="d-flex align-items-center justify-content-around w-100 gap-1">
+              <div class="key">HTML</div>
+              <div class="key">CSS</div>
+              <div class="key">JavaScript</div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-around w-100">
+            <div class="d-flex flex-column align-items-center justify-content-center">
+              <div class="caption">Salary:</div>
+              <div class="value">4k - 4.5k</div>
+            </div>
+            <div class="d-flex flex-column align-items-center justify-content-center">
+              <div class="caption">Experience:</div>
+              <div class="value">2 years</div>
+            </div>
+          </div>
+
+          <button class="btn-1">Profile</button>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="employee-card">
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <span class="top-rated">
+              <i class="material-icons">star_border</i>
+            </span>
+            <span class="favorite">
+              <i class="material-icons">favorite</i>
+            </span>
+          </div>
+
+          <div class="profile-wrapper">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="profile" class="profile-img">
+          </div>
+
+          <div class="name">Jane Doe</div>
+          <div class="title">Web Designer</div>
+
+          <div class="keywords">
+            <div class="d-flex align-items-center justify-content-around w-100 gap-1">
+              <div class="key">HTML</div>
+              <div class="key">CSS</div>
+              <div class="key">JavaScript</div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-around w-100">
+            <div class="d-flex flex-column align-items-center justify-content-center">
+              <div class="caption">Salary:</div>
+              <div class="value">4k - 4.5k</div>
+            </div>
+            <div class="d-flex flex-column align-items-center justify-content-center">
+              <div class="caption">Experience:</div>
+              <div class="value">2 years</div>
+            </div>
+          </div>
+
+          <button class="btn-1">Profile</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-3">
+      <div class="d-md-flex align-items-center justify-content-between card-content">
+        <div style="max-width: 600px">
+          <div class="title-2 mb-3">Explore a job now!</div>
+          <p>Search all the open positions on the web. Get your own personalized salary estimate. Read reviews on over
+            30000+ companies worldwide.</p>
+        </div>
+        <div class="d-flex align-items-center">
+          <button class="btn-1">Apply Now</button>
+          <button class="btn-2">Learn More</button>
+        </div>
+      </div>
+
+      <div class="mail-icon">
+        <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
+             stroke-linejoin="round"
+             class="lg:text-[150px] text-7xl text-black/5 dark:text-white/5 ltr:-rotate-45 rtl:rotate-45" height="1em"
+             width="1em" xmlns="http://www.w3.org/2000/svg">
+          <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+        </svg>
+      </div>
+      <div class="pencil-icon">
+        <svg stroke="currentColor" fill="none" stroke-width="0" viewBox="0 0 16 16"
+             class="lg:text-[150px] text-7xl text-black/5 dark:text-white/5 rtl:-rotate-90" height="1em" width="1em"
+             xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>

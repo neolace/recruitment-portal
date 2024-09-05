@@ -9,4 +9,7 @@ import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
 export class FreeMainDbComponent {
   progressValue = 50;
   progressMode: ProgressSpinnerMode = 'determinate';
+
+  personalProgressValue = 90;
+  personalProgressMode: ProgressSpinnerMode = 'determinate';
 }

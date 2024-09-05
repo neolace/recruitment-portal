@@ -20,4 +20,12 @@ export class BusinessProfileMyComponent implements OnInit {
     }
   }
 
+  goProfileSettings() {
+    if (this.router.url === '/dashboard/business-profile-my') {
+      this.router.navigate(['/dashboard/business-profile-settings']);
+    } else if (this.router.url === '/pro/business-profile-my') {
+      this.router.navigate(['/pro/business-profile-settings']);
+    }
+  }
+
 }

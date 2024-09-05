@@ -19,15 +19,33 @@
       <div class="w-100 d-flex align-items-center justify-content-end">
         <div class="col col-lg-8">
           <div class="card-1">
-            <div class="d-flex align-items-center justify-content-around">
-              <mat-progress-spinner
-                class="example-margin"
-                [mode]="progressMode"
-                [value]="progressValue">
-              </mat-progress-spinner>
+            <div class="d-flex align-items-center justify-content-around justify-content-md-between">
               <div>
-                <div class="title-1">Profile Completion</div>
+                <mat-progress-spinner
+                  class="progress-spinner"
+                  [mode]="progressMode"
+                  [value]="progressValue">
+                </mat-progress-spinner>
+              </div>
+              <div>
+                <div class="title-1">Business Profile Completion</div>
                 <p class="m-0">{{progressValue}}%</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-1">
+            <div class="d-flex align-items-center justify-content-around justify-content-md-between">
+              <div>
+                <mat-progress-spinner
+                  class="progress-spinner"
+                  [mode]="personalProgressMode"
+                  [value]="personalProgressValue">
+                </mat-progress-spinner>
+              </div>
+              <div>
+                <div class="title-1">Personal Profile Completion</div>
+                <p class="m-0">{{personalProgressValue}}%</p>
               </div>
             </div>
           </div>
