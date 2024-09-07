@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
+import {jobAdDataStrore} from "../../shared/data-store/JobAd-data-strore";
 
 @Component({
   selector: 'app-home',
@@ -9,6 +10,7 @@ import {Router} from "@angular/router";
 export class HomeComponent {
 
   heart: boolean = true; // test
+  jobAdDataStrore: any = jobAdDataStrore;
 
   constructor(private router: Router) { }
   moveToRegister() {
