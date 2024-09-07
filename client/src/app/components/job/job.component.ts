@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {jobAdDataStrore} from "../../shared/data-store/JobAd-data-strore";
 
 @Component({
   selector: 'app-job',
@@ -7,5 +8,6 @@ import { Component } from '@angular/core';
 })
 export class JobComponent {
 
-  heart: boolean = true; //test
+  heart: boolean = false; //test
+  jobAdDataStore: any = jobAdDataStrore;
 }
