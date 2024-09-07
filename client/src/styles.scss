@@ -1567,3 +1567,28 @@ $accordion-icon-transform2: rotate(180deg);
     }
   }
 }
+
+// bootstrap pagination
+.pagination{
+  .page-item{
+    .page-link{
+      color: var(--color-text-300);
+      background-color: var(--color-surface-mixed-200);
+      border: 1px solid var(--color-surface-mixed-300);
+      cursor: pointer;
+
+      &:hover{
+        background-color: var(--color-primary-600-opacity-3);
+        border-color: var(--color-primary-600);
+      }
+    }
+
+    &.active{
+      .page-link{
+        color: #fff;
+        background-color: var(--color-primary-200);
+        border-color: var(--color-primary-200);
+      }
+    }
+  }
+}

@@ -53,7 +53,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'job', component: JobComponent },
-  { path: 'job-details', component: JobDetailsComponent },
+  { path: 'job-details/:id', component: JobDetailsComponent },
   { path: 'job-apply', component: JobApplyComponent },
   { path: 'job-post', component: JobPostComponent },
   { path: 'companies', component: CompaniesComponent },

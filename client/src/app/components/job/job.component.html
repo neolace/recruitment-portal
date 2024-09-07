@@ -32,15 +32,13 @@
   <div class="container popular-jobs">
     <div class="container">
       <div class="row">
-        <div class="col-12 col-md-6 col-lg-4 mb-3" *ngFor="let p of jobAdDataStore; let i = index">
+        <div class="col-12 col-md-6 col-lg-4 mb-3" *ngFor="let p of paginatedJobAds; let i = index">
           <div class="card-1">
             <div class="card-top">
               <div class="card-top-left d-flex align-items-center">
                 <div class="logo-icon-wrapper">
                   <div class="logo-icon">
-                    <img
-                      [src]="p.companyLogo"
-                      alt="logo">
+                    <img [src]="p.companyLogo" alt="logo">
                   </div>
                 </div>
                 <div class="d-flex flex-column align-items-start justify-content-between">
@@ -50,7 +48,7 @@
               </div>
               <div class="card-top-right">
                 <div class="visit-link-circle">
-                  <i class="material-icons" [ngClass]="heart?'liked':''">favorite_border</i>
+                  <i class="material-icons" [ngClass]="heart ? 'liked' : ''">favorite_border</i>
                 </div>
               </div>
             </div>
@@ -58,7 +56,7 @@
             <div class="card-content">
               <div class="card-content-left">
                 <div class="d-flex flex-column align-items-start">
-                  <div class="job-title" routerLink="/job-details">{{p.title}}</div>
+                  <div class="job-title" routerLink="/job-details/{{p.id}}">{{p.title}}</div>
                   <div class="open-positions">Total Openings: {{p.totalOpenings}}</div>
                 </div>
               </div>
@@ -78,6 +76,25 @@
           </div>
         </div>
       </div>
+
+      <!-- Pagination -->
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [ngClass]="{ 'disabled': currentPage === 1 }">
+            <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" *ngFor="let page of pages" [ngClass]="{ 'active': currentPage === page }">
+            <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+          </li>
+          <li class="page-item" [ngClass]="{ 'disabled': currentPage === totalPages }">
+            <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 
