@@ -9,7 +9,7 @@ import {jobAdDataStrore} from "../../shared/data-store/JobAd-data-strore";
 })
 export class HomeComponent {
 
-  heart: boolean = true; // test
+  heart: boolean = false; // test
   jobAdDataStrore: any = jobAdDataStrore;
 
   constructor(private router: Router) { }

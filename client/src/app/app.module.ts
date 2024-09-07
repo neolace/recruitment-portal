@@ -45,6 +45,14 @@ import { EmpSavedJobsArchivedComponent } from './components/shared/emp-saved-job
 import { PersonalProfileMyComponent } from './components/dashboards/free/personal-profile-my/personal-profile-my.component';
 import { PersonalProfileSettingsComponent } from './components/dashboards/free/personal-profile-settings/personal-profile-settings.component';
 
+import { DateFormatPipe } from "./DTO/DateFormatPipe";
+import { HourMinuteFormatPipe } from "./DTO/HourMinuteFormatPipe";
+import { RoundFloats } from "./DTO/RoundFloats";
+import { TimeAgoPipe } from "./DTO/TimeAgoPipe";
+import { TimeFormatPipe } from "./DTO/TimeFormatPipe";
+import { TruncateCommentsPipe } from "./DTO/TruncateCommentsPipe";
+import { TruncatePipe } from "./DTO/TruncatePipe";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,7 +86,14 @@ import { PersonalProfileSettingsComponent } from './components/dashboards/free/p
     EmpSavedJobsAppliedComponent,
     EmpSavedJobsArchivedComponent,
     PersonalProfileMyComponent,
-    PersonalProfileSettingsComponent
+    PersonalProfileSettingsComponent,
+    DateFormatPipe,
+    HourMinuteFormatPipe,
+    RoundFloats,
+    TimeAgoPipe,
+    TimeFormatPipe,
+    TruncateCommentsPipe,
+    TruncatePipe
   ],
     imports: [
         BrowserModule,
