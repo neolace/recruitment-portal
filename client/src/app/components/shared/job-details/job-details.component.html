@@ -1,16 +1,16 @@
-<div class="top-banner">
-  <div class="curved-div">
+<div class="top-banner" *ngFor="let p of filterJobData()">
+  <div class="curved-div" [ngStyle]="{'background-image': p.jobBanner ? 'url(' + p.jobBanner + ')' : ''}">
     <div class="overlay"></div>
   </div>
 
   <div class="d-flex align-items-center justify-content-center flex-column w-100 h100 banner-cont">
-    <h1>Back-End Developer</h1>
-    <p>Job Stack > Job Details > <span>Backend Developer</span></p>
+    <h1>{{p.title}}</h1>
+    <p>Job Stack > Job Details > <span>{{p.title}}</span></p>
   </div>
 </div>
 
 <div class="container" style="max-width: clamp(320px, 90%, 1200px);">
-  <div class="row">
+  <div class="row" *ngFor="let j of filterJobData()">
     <div class="col-12 col-md-4 col-lg-3 left-side">
       <div class="job-details-card">
         <div class="job-details-card-top">
@@ -22,49 +22,49 @@
             <i class="material-icons">how_to_reg</i>
             <div class="d-flex flex-column">
               <p class="tag">Employee Type:</p>
-              <p class="tag-data">Full Time</p>
+              <p class="tag-data">{{j.employeeType}}</p>
             </div>
           </div>
           <div class="job-info-item">
             <i class="material-icons">location_pin</i>
             <div class="d-flex flex-column">
               <p class="tag">Location:</p>
-              <p class="tag-data">Australia</p>
+              <p class="tag-data">{{j.location}}</p>
             </div>
           </div>
           <div class="job-info-item">
             <i class="material-icons">personal_video</i>
             <div class="d-flex flex-column">
               <p class="tag">Job Type:</p>
-              <p class="tag-data">Web Designer / Developer</p>
+              <p class="tag-data">{{j.jobType}}</p>
             </div>
           </div>
           <div class="job-info-item">
             <i class="material-icons">cases</i>
             <div class="d-flex flex-column">
               <p class="tag">Experience:</p>
-              <p class="tag-data">2+ years</p>
+              <p class="tag-data">{{j.exShortDesc}}</p>
             </div>
           </div>
           <div class="job-info-item">
             <i class="material-icons">book</i>
             <div class="d-flex flex-column">
               <p class="tag">Qualifications:</p>
-              <p class="tag-data">MCA</p>
+              <p class="tag-data">{{j.eduShortDesc}}</p>
             </div>
           </div>
           <div class="job-info-item">
             <i class="material-icons">attach_money</i>
             <div class="d-flex flex-column">
               <p class="tag">Salary:</p>
-              <p class="tag-data">$4000 - $4500</p>
+              <p class="tag-data">${{j.minSalary}} - ${{j.maxSalary}}</p>
             </div>
           </div>
           <div class="job-info-item">
             <i class="material-icons">access_time</i>
             <div class="d-flex flex-column">
               <p class="tag">Date Posted:</p>
-              <p class="tag-data">28th Feb, 2023</p>
+              <p class="tag-data">{{j.datePosted | dateFormat}}</p>
             </div>
           </div>
           <hr>
@@ -82,34 +82,39 @@
       <div class="d-flex align-items-center justify-content-center w-100">
         <div class="job-description">
           <div class="title-1 mb-2">Job Description:</div>
-          <p>One disadvantage of Lorum Ipsum is that in Latin certain letters appear more frequently than others - which
-            creates a distinct visual impression. Moreover, in Latin only words at the beginning of sentences are
-            capitalized.</p>
-          <p>This means that Lorem Ipsum cannot accurately represent, for example, German, in which all nouns are
-            capitalized. Thus, Lorem Ipsum has only limited suitability as a visual filler for German texts. If the fill
-            text is intended to illustrate the characteristics of different typefaces.</p>
-          <p>It sometimes makes sense to select texts containing the various letters and symbols specific to the output
-            language.</p>
+          <p *ngFor="let d of j.description.split('\n')">{{d}}</p>
 
-          <div class="title-1 mb-2">Responsibilities and Duties:</div>
-          <ul>
-            <li>Participate in requirements analysisWrite clean, scalable code using C# and .NET frameworks</li>
-            <li>Test and deploy applications and systemsRevise, update, refactor and debug code</li>
-            <li>Improve existing software</li>
-            <li>Develop documentation throughout the software development life cycle (SDLC)</li>
-            <li>Serve as an expert on applications and provide technical support</li>
-          </ul>
+          <div *ngIf="j.responsibilities">
+            <div class="title-1 mb-2">Responsibilities and Duties:</div>
+            <ul *ngFor="let r of j.responsibilities.split('\n')">
+              <li>{{r}}</li>
+            </ul>
+          </div>
 
-          <div class="title-1 mb-2">Required Experience, Skills and Qualifications:</div>
-          <ul>
-            <li>Proven experience as a .NET Developer or Application Developer</li>
-            <li>good understanding of SQL and Relational Databases, specifically Microsoft SQL Server</li>
-            <li>Experience designing, developing and creating RESTful web services and APIs</li>
-            <li>Basic know how of Agile process and practices</li>
-            <li>Good understanding of object-oriented programming</li>
-            <li>Sound knowledge of application architecture and design</li>
-            <li>Excellent problem solving and analytical skills</li>
-          </ul>
+          <div *ngIf="j.requirements">
+            <div class="title-1 mb-2">Requirements:</div>
+            <ul *ngFor="let re of j.requirements.split('\n')">
+              <li>{{re}}</li>
+            </ul>
+          </div>
+          <div *ngIf="j.experience">
+            <div class="title-1 mb-2">Required Experience:</div>
+            <ul *ngFor="let ex of j.experience.split('\n')">
+              <li>{{ex}}</li>
+            </ul>
+          </div>
+          <div *ngIf="j.education">
+            <div class="title-1 mb-2">Required Qualifications:</div>
+            <ul *ngFor="let ed of j.education.split('\n')">
+              <li>{{ed}}</li>
+            </ul>
+          </div>
+          <div *ngIf="j.skills">
+            <div class="title-1 mb-2">Skills:</div>
+            <ul *ngFor="let sk of j.skills.split('\n')">
+              <li>{{sk}}</li>
+            </ul>
+          </div>
 
           <button class="btn-1" routerLink="/job-apply">Apply Now</button>
         </div>
