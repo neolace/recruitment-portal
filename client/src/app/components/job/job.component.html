@@ -13,12 +13,12 @@
         <div class="d-sm-flex align-items-center justify-content-center w-100">
           <div class="search-items">
             <i class="fa fa-briefcase" aria-hidden="true"></i>
-            <input type="text" placeholder="Search Jobs">
+            <input type="text" placeholder="Search Jobs" (keyup)="handleJobSearch($event.target)">
           </div>
           <div class="d-none d-sm-flex vr-line"></div>
           <div class="search-items">
             <i class="fa fa-map-marker" aria-hidden="true"></i>
-            <input type="text" placeholder="Location">
+            <input type="text" placeholder="Location" (keyup)="handleLocationSearch($event.target)">
           </div>
         </div>
         <button class="search-button">Search</button>
@@ -75,6 +75,8 @@
             </div>
           </div>
         </div>
+
+        <div class="not-found"></div>
       </div>
 
       <!-- Pagination -->
