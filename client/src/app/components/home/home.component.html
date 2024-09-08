@@ -91,14 +91,14 @@
   </div>
 
   <div class="container popular-categories">
-    <div class="row">
+    <div class="row" *ngFor="let j of filterJobs()">
       <div class="col-12 col-sm-6 col-md-3 mb-2">
         <div class="popular-item-wrapper">
           <div class="icon-wrapper">
             <i class="fa fa-gitlab" aria-hidden="true"></i>
           </div>
           <div class="job-title">Business Development</div>
-          <div class="job-count">10 Jobs</div>
+          <div class="job-count">{{j.businessDevelopmentJobs?j.businessDevelopmentJobs:0}} Jobs</div>
         </div>
       </div>
       <div class="col-12 col-sm-6 col-md-3 mb-2">
@@ -107,7 +107,7 @@
             <i class="fa fa-database" aria-hidden="true"></i>
           </div>
           <div class="job-title">Data Entry Operator</div>
-          <div class="job-count">10 Jobs</div>
+          <div class="job-count">{{j.dataEntryOperatorJobs?j.dataEntryOperatorJobs:0}} Jobs</div>
         </div>
       </div>
       <div class="col-12 col-sm-6 col-md-3 mb-2">
@@ -116,7 +116,7 @@
             <i class="fa fa-paint-brush" aria-hidden="true"></i>
           </div>
           <div class="job-title">Graphic Designer</div>
-          <div class="job-count">10 Jobs</div>
+          <div class="job-count">{{j.graphicDesignerJobs?j.graphicDesignerJobs:0}} Jobs</div>
         </div>
       </div>
       <div class="col-12 col-sm-6 col-md-3 mb-2">
@@ -125,7 +125,7 @@
             <i class="fa fa-code" aria-hidden="true"></i>
           </div>
           <div class="job-title">Web Developer</div>
-          <div class="job-count">10 Jobs</div>
+          <div class="job-count">{{j.webDeveloperJobs?j.webDeveloperJobs:0}} Jobs</div>
         </div>
       </div>
     </div>

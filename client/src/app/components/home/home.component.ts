@@ -18,6 +18,11 @@ export class HomeComponent {
   jobSearch: string = '';
   locationSearch: string = '';
 
+  webDeveloperJobs: number = 0;
+  graphicDesignerJobs: number = 0;
+  dataEntryOperatorJobs: number = 0;
+  businessDevelopmentJobs: number = 0;
+
   constructor(private router: Router) { }
   moveToRegister() {
     this.router.navigate(['/register'], {queryParams: {from: 'companies'}});
@@ -37,5 +42,21 @@ export class HomeComponent {
       this.router.navigate(['/job'], {queryParams: {jobSearch: this.jobSearch, locationSearch: this.locationSearch}});
       return;
     }
+  }
+
+  filterJobs():any[] {
+    this.webDeveloperJobs = this.jobAdDataStrore.filter((item:any) => item.title.toLowerCase().trim() === 'web developer').length;
+    this.graphicDesignerJobs = this.jobAdDataStrore.filter((item:any) => item.title.toLowerCase().trim() === 'graphic designer').length;
+    this.dataEntryOperatorJobs = this.jobAdDataStrore.filter((item:any) => item.title.toLowerCase().trim() === 'data entry operator').length;
+    this.businessDevelopmentJobs = this.jobAdDataStrore.filter((item:any) => item.title.toLowerCase().trim() === 'business development').length;
+
+    return [
+      {
+        webDeveloperJobs: this.webDeveloperJobs,
+        graphicDesignerJobs: this.graphicDesignerJobs,
+        dataEntryOperatorJobs: this.dataEntryOperatorJobs,
+        businessDevelopmentJobs: this.businessDevelopmentJobs
+      }
+    ]
   }
 }
