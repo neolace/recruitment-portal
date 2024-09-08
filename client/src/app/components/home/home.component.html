@@ -20,15 +20,15 @@
             <div class="d-sm-flex align-items-center justify-content-center w-100">
               <div class="search-items">
                 <i class="fa fa-briefcase" aria-hidden="true"></i>
-                <input type="text" placeholder="Search Jobs">
+                <input type="text" placeholder="Search Jobs" [(ngModel)]="jobSearch">
               </div>
               <div class="d-none d-sm-flex vr-line"></div>
               <div class="search-items">
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                <input type="text" placeholder="Location">
+                <input type="text" placeholder="Location" [(ngModel)]="locationSearch">
               </div>
             </div>
-            <button class="search-button">Search</button>
+            <button class="search-button" (click)="makeSearchQuery()">Search</button>
           </div>
         </div>
 
