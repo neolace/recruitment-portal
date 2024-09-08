@@ -13,12 +13,12 @@
         <div class="d-sm-flex align-items-center justify-content-center w-100">
           <div class="search-items">
             <i class="fa fa-building" aria-hidden="true"></i>
-            <input type="text" placeholder="Search Company">
+            <input type="text" placeholder="Search Company" (keyup)="handleCompanySearch($event.target)">
           </div>
           <div class="d-none d-sm-flex vr-line"></div>
           <div class="search-items">
             <i class="fa fa-map-marker" aria-hidden="true"></i>
-            <input type="text" placeholder="Location">
+            <input type="text" placeholder="Location" (keyup)="handleLocationSearch($event.target)">
           </div>
         </div>
         <button class="search-button">Search</button>
@@ -29,7 +29,7 @@
 </div>
 
 <div class="container">
-  <div class="spec-card-1">
+  <div class="spec-card-1" *ngIf="targetInput1 === undefined && targetInput2 === undefined">
     <div class="d-md-flex align-items-center justify-content-between w-100">
       <div>
         <div class="title">

@@ -10,6 +10,7 @@ import {companyDataStore} from "../../shared/data-store/company-data-store";
 export class CompaniesComponent implements OnInit{
 
   companyDataStore: any[] = [];
+  filteredCompanies: any[] = [];
   paginatedCompanies: any[] = []; // List of companies to show on the current page
   currentPage: number = 1;
   itemsPerPage: number = 8;  // how many items per page
@@ -19,27 +20,53 @@ export class CompaniesComponent implements OnInit{
   endPage: number = 5;
   pages: number[] = [];
 
+  targetInput1: any;
+  targetInput2: any;
+
   constructor(private router: Router) { }
 
   ngOnInit() {
     // Initialize the pagination
     this.companyDataStore = companyDataStore;
+    this.filteredCompanies = this.companyDataStore;
     this.totalPages = Math.ceil(this.companyDataStore.length / this.itemsPerPage);
     this.updatePaginationRange();
-    this.updatePaginatedJobAds();
+    this.updatePaginatedCompanies();
   }
 
-  updatePaginatedJobAds() {
+  filterCompanies(): void {
+    // Filter companies based on both inputs (title and location)
+    this.filteredCompanies = this.companyDataStore.filter((data: any) => {
+      const titleMatch = this.targetInput1 ? data.name.toLowerCase().includes(this.targetInput1.toLowerCase()) : true;
+      const locationMatch = this.targetInput2 ? data.location.toLowerCase().includes(this.targetInput2.toLowerCase()) : true;
+      return titleMatch && locationMatch;
+    });
+    this.totalPages = Math.ceil(this.filteredCompanies.length / this.itemsPerPage);
+    this.updatePaginationRange();
+    this.updatePaginatedCompanies();
+  }
+
+  handleCompanySearch(data: any): void {
+    this.targetInput1 = data.value;
+    this.filterCompanies();
+  }
+
+  handleLocationSearch(data: any): void {
+    this.targetInput2 = data.value;
+    this.filterCompanies();
+  }
+
+  updatePaginatedCompanies() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedCompanies = this.companyDataStore.slice(startIndex, endIndex);
+    this.paginatedCompanies = this.filteredCompanies.slice(startIndex, endIndex);
   }
 
   changePage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
       this.updatePaginationRange();
-      this.updatePaginatedJobAds();
+      this.updatePaginatedCompanies();
     }
   }
 
