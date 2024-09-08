@@ -23,6 +23,8 @@ export class CompaniesComponent implements OnInit{
   targetInput1: any;
   targetInput2: any;
 
+  isSearchResultNotFound: boolean = false;
+
   constructor(private router: Router) { }
 
   ngOnInit() {
@@ -41,6 +43,9 @@ export class CompaniesComponent implements OnInit{
       const locationMatch = this.targetInput2 ? data.location.toLowerCase().includes(this.targetInput2.toLowerCase()) : true;
       return titleMatch && locationMatch;
     });
+
+    this.isSearchResultNotFound = this.filteredCompanies.length === 0;
+
     this.totalPages = Math.ceil(this.filteredCompanies.length / this.itemsPerPage);
     this.updatePaginationRange();
     this.updatePaginatedCompanies();
