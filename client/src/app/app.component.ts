@@ -7,6 +7,7 @@ import {RegisterComponent} from "./components/register/register.component";
 import {ResetPasswordComponent} from "./components/reset-password/reset-password.component";
 import {FreeDashboardComponent} from "./components/dashboards/free/free-dashboard/free-dashboard.component";
 import {ProDashboardComponent} from "./components/dashboards/pro/pro-dashboard/pro-dashboard.component";
+import {commonSearchResults} from "./shared/data-store/common-search-results";
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   showNavbar = true;
   showFooter = true;
+
+  openSearchResults = false;
+  commonSearchResults: any[] = commonSearchResults;
+  filteredSearchResults: any[] = [];
+  targetInput: any;
 
   constructor(public themeService: ThemeService, private router: Router, private renderer: Renderer2 ) {}
 
@@ -92,6 +98,26 @@ export class AppComponent implements OnInit, AfterViewInit {
     } else {
       this.showNavbar = true;
       this.showFooter = true;
+    }
+  }
+
+  filterSearchResults(): any[]{
+    if (this.targetInput === undefined){
+      this.filteredSearchResults = this.commonSearchResults
+    }
+    return this.filteredSearchResults;
+  }
+
+  handleSearch(data: any) {
+    this.openSearchResults = !this.openSearchResults;
+    this.targetInput = data as HTMLInputElement;
+    const value = this.targetInput.value
+    if (value) {
+      this.filteredSearchResults = this.commonSearchResults.filter((data: any) =>
+        data.name.toLowerCase().includes(value.toLowerCase())
+      );
+    } else {
+      this.filteredSearchResults = this.commonSearchResults;
     }
   }
 }
