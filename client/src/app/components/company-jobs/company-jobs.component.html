@@ -27,24 +27,24 @@
 
   <div class="popular-jobs">
     <div class="row">
-      <div class="col-12 col-md-4 mb-3">
+      <div class="col-12 col-md-4 mb-3" *ngFor="let job of filterJobs()">
         <div class="card-1">
           <div class="card-top">
             <div class="card-top-left d-flex align-items-center">
               <div class="logo-icon-wrapper">
                 <div class="logo-icon">
                   <img
-                    src="https://jobstack-shreethemes.vercel.app/static/media/google-logo.28878765ba39f327cf3e.png"
-                    alt="logo">
+                    [src]="job.companyLogo"
+                    alt="{{job.companyName}}">
                 </div>
               </div>
               <div class="d-flex flex-column align-items-start justify-content-between">
-                <div class="company-name">Google</div>
-                <div class="opens-ago">2 days ago</div>
+                <div class="company-name">{{job.companyName}}</div>
+                <div class="opens-ago">{{job.datePosted | timeAgo}}</div>
               </div>
             </div>
             <div class="card-top-right">
-              <div class="visit-link-circle">
+              <div class="visit-link-circle" routerLink="/job-details/{{job.id}}">
                 <i class="material-icons">favorite_border</i>
               </div>
             </div>
@@ -53,108 +53,21 @@
           <div class="card-content">
             <div class="card-content-left">
               <div class="d-flex flex-column align-items-start">
-                <div class="job-title" routerLink="/job-details">Marketing Director</div>
-                <div class="open-positions">Total Openings: 1</div>
+                <div class="job-title" routerLink="/job-details/{{job.id}}">{{job.title}}</div>
+                <div class="open-positions">Total Openings: {{job.totalOpenings}}</div>
               </div>
             </div>
           </div>
           <hr>
           <div class="card-bottom">
-            <div class="card-bottom-left">
+            <div *ngIf="job.companyLevel != '1'"></div>
+            <div class="card-bottom-left" *ngIf="job.companyLevel == '1'">
               <i class="material-icons">verified</i>
               <span>Verified</span>
             </div>
             <div class="card-bottom-right">
               <i class="fa fa-map-marker" aria-hidden="true"></i>
-              <span>USA</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 mb-3">
-        <div class="card-1">
-          <div class="card-top">
-            <div class="card-top-left d-flex align-items-center">
-              <div class="logo-icon-wrapper">
-                <div class="logo-icon">
-                  <img
-                    src="https://jobstack-shreethemes.vercel.app/static/media/google-logo.28878765ba39f327cf3e.png"
-                    alt="logo">
-                </div>
-              </div>
-              <div class="d-flex flex-column align-items-start justify-content-between">
-                <div class="company-name">Google</div>
-                <div class="opens-ago">2 days ago</div>
-              </div>
-            </div>
-            <div class="card-top-right">
-              <div class="visit-link-circle">
-                <i class="material-icons">favorite_border</i>
-              </div>
-            </div>
-          </div>
-          <hr>
-          <div class="card-content">
-            <div class="card-content-left">
-              <div class="d-flex flex-column align-items-start">
-                <div class="job-title" routerLink="/job-details">Web Developer</div>
-                <div class="open-positions">Total Openings: 1</div>
-              </div>
-            </div>
-          </div>
-          <hr>
-          <div class="card-bottom">
-            <div class="card-bottom-left">
-              <i class="material-icons">verified</i>
-              <span>Verified</span>
-            </div>
-            <div class="card-bottom-right">
-              <i class="fa fa-map-marker" aria-hidden="true"></i>
-              <span>USA</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 mb-3">
-        <div class="card-1">
-          <div class="card-top">
-            <div class="card-top-left d-flex align-items-center">
-              <div class="logo-icon-wrapper">
-                <div class="logo-icon">
-                  <img
-                    src="https://jobstack-shreethemes.vercel.app/static/media/google-logo.28878765ba39f327cf3e.png"
-                    alt="logo">
-                </div>
-              </div>
-              <div class="d-flex flex-column align-items-start justify-content-between">
-                <div class="company-name">Google</div>
-                <div class="opens-ago">2 days ago</div>
-              </div>
-            </div>
-            <div class="card-top-right">
-              <div class="visit-link-circle">
-                <i class="material-icons">favorite_border</i>
-              </div>
-            </div>
-          </div>
-          <hr>
-          <div class="card-content">
-            <div class="card-content-left">
-              <div class="d-flex flex-column align-items-start">
-                <div class="job-title" routerLink="/job-details">Marketing Director</div>
-                <div class="open-positions">Total Openings: 1</div>
-              </div>
-            </div>
-          </div>
-          <hr>
-          <div class="card-bottom">
-            <div class="card-bottom-left">
-              <i class="material-icons">verified</i>
-              <span>Verified</span>
-            </div>
-            <div class="card-bottom-right">
-              <i class="fa fa-map-marker" aria-hidden="true"></i>
-              <span>USA</span>
+              <span>{{job.location}}</span>
             </div>
           </div>
         </div>

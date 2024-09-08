@@ -69,7 +69,7 @@ const routes: Routes = [
       { path: 'archived', component: EmpSavedJobsArchivedComponent }
   ]},
   { path: 'business-profile/:id', component: BusinessProfileComponent },
-  { path: 'company-jobs', component: CompanyJobsComponent },
+  { path: 'company-jobs/:id', component: CompanyJobsComponent },
   { path: 'locked', component: LockScreenComponent },
   { path: 'login', component: LoginComponent },
   { path: 'reset', component: ResetPasswordComponent },
