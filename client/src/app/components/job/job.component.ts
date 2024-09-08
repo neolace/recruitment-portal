@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { jobAdDataStrore } from '../../shared/data-store/JobAd-data-strore';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-job',
@@ -23,16 +24,26 @@ export class JobComponent implements OnInit {
   targetInput2: any;
 
   isSearchResultNotFound: boolean = false;
+  isClearButtonVisible: boolean = false;
 
-  constructor() { }
+  jobSearch: string = '';
+  locationSearch: string = '';
+
+  constructor(private route: ActivatedRoute ) { }
 
   ngOnInit() {
-    // Initialize the data and pagination
-    this.jobAdDataStore = jobAdDataStrore;
-    this.filteredJobAds = this.jobAdDataStore; // Initially, all jobs are shown
-    this.totalPages = Math.ceil(this.filteredJobAds.length / this.itemsPerPage);
-    this.updatePaginationRange();
-    this.updatePaginatedJobAds();
+    // Get query parameters from route
+    this.route.queryParams.subscribe(params => {
+      this.jobSearch = params['jobSearch'] || '';
+      this.locationSearch = params['locationSearch'] || '';
+
+      // Initialize the data and perform filtering based on query params
+      this.jobAdDataStore = jobAdDataStrore;
+      this.filterJobs(); // Apply filtering based on query params
+      this.totalPages = Math.ceil(this.filteredJobAds.length / this.itemsPerPage);
+      this.updatePaginationRange();
+      this.updatePaginatedJobAds();
+    });
   }
 
   filterJobs(): void {
@@ -40,10 +51,14 @@ export class JobComponent implements OnInit {
     this.filteredJobAds = this.jobAdDataStore.filter((data: any) => {
       const titleMatch = this.targetInput1 ? data.title.toLowerCase().includes(this.targetInput1.toLowerCase()) : true;
       const locationMatch = this.targetInput2 ? data.location.toLowerCase().includes(this.targetInput2.toLowerCase()) : true;
-      return titleMatch && locationMatch;
+      const titleMatchQuery = this.jobSearch ? data.title.toLowerCase().includes(this.jobSearch.toLowerCase()) : true;
+      const locationMatchQuery = this.locationSearch ? data.location.toLowerCase().includes(this.locationSearch.toLowerCase()) : true;
+      return titleMatch && locationMatch && titleMatchQuery && locationMatchQuery;
     });
 
     this.isSearchResultNotFound = this.filteredJobAds.length === 0;
+
+    this.isClearButtonVisible = !!(this.targetInput1 || this.targetInput2 || this.jobSearch || this.locationSearch);
 
     // Update pagination after filtering
     this.totalPages = Math.ceil(this.filteredJobAds.length / this.itemsPerPage);
@@ -60,6 +75,16 @@ export class JobComponent implements OnInit {
   handleLocationSearch(data: any): void {
     this.targetInput2 = data.value;
     this.filterJobs();
+  }
+
+  clearSearch() {
+    this.jobSearch = '';
+    this.locationSearch = '';
+    this.targetInput1 = '';
+    this.targetInput2 = '';
+    this.filteredJobAds = this.jobAdDataStore;
+    this.isClearButtonVisible = false;
+    this.updatePaginatedJobAds();
   }
 
   updatePaginatedJobAds() {

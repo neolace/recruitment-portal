@@ -21,7 +21,7 @@
             <input type="text" placeholder="Location" (keyup)="handleLocationSearch($event.target)">
           </div>
         </div>
-        <button class="search-button">Search</button>
+        <button class="search-button" (click)="isClearButtonVisible ? clearSearch():''">{{isClearButtonVisible ? 'Clear Filters' : 'Search'}}</button>
       </div>
     </div>
   </div>
