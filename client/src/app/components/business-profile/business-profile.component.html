@@ -1,6 +1,6 @@
-<div class="top-banner" style="overflow-x: hidden">
+<div class="top-banner" style="overflow-x: hidden" *ngFor="let c of filterCompanyData()">
   <div class="curved-div">
-    <div class="overlay"></div>
+    <div class="overlay" [ngStyle]="{'background-image': c.coverImage ? 'url(' + c.coverImage + ')' : ''}"></div>
   </div>
 
   <div class="container">
@@ -11,12 +11,12 @@
             <div class="right-cont">
               <div class="d-flex align-items-center mb-3 mb-sm-0">
                 <div class="company-logo">
-                  <img src="https://jobstack-shreethemes.vercel.app/static/media/google-logo.28878765ba39f327cf3e.png"
-                       alt="logo">
+                  <img [src]="c.logo"
+                       alt="{{c.name}}">
                 </div>
                 <div class="d-flex flex-column">
-                  <div class="company-name">Google</div>
-                  <div class="company-location"><i class="material-icons">location_on</i> France, Paris</div>
+                  <div class="company-name">{{c.name}}</div>
+                  <div class="company-location"><i class="material-icons">location_on</i> {{c.location}}</div>
                 </div>
               </div>
             </div>
@@ -32,53 +32,47 @@
 </div>
 
 <div class="container">
-  <div class="row my-3 second-content">
+  <div class="row my-3 second-content" *ngFor="let c of filterCompanyData()">
     <div class="col-12 col-md-6 col-lg-8 left-side">
-      <h5>Company Story</h5>
-      <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking
-        at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
-        opposed.<br>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of
-        classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at
-        Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem
-        Ipsum passage.</p>
+      <div *ngIf="c.companyStory">
+        <h5>Company Story</h5>
+        <p *ngFor="let s of c.companyStory.split('\n')">{{s}}</p>
+      </div>
 
       <div class="row row-gap-3">
-        <div class="col-12">
-          <img src="https://jobstack-shreethemes.vercel.app/static/media/1.f38e1a05405d75f20e1b.jpg" alt=""
-               class="org-img">
+        <div class="col-12" *ngIf="c.image1">
+          <img [src]="c.image1" alt="banner" class="org-img">
         </div>
-        <div class="col-12 col-sm-6">
-          <img src="https://jobstack-shreethemes.vercel.app/static/media/2.fd1b158a87d46ab2748f.jpg" alt=""
-               class="org-img">
+        <div class="col-12 col-sm-6" *ngIf="c.image2">
+          <img [src]="c.image2" alt="banner" class="org-img">
         </div>
-        <div class="col-12 col-sm-6">
-          <img src="https://jobstack-shreethemes.vercel.app/static/media/3.033d24950c4b1568d792.jpg" alt=""
-               class="org-img">
+        <div class="col-12 col-sm-6" *ngIf="c.image3">
+          <img [src]="c.image3" alt="banner" class="org-img">
         </div>
       </div>
 
       <h5>Vacancies</h5>
       <div class="popular-jobs">
         <div class="row">
-          <div class="col-12 col-lg-6 mb-3 mb-lg-0">
-            <div class="card-1" routerLink="/job-details">
+          <div class="col-12 col-lg-6 mb-3 mb-lg-0" *ngFor="let j of c.postedJobs | truncateComments: 2; let i = index">
+            <div class="card-1">
               <div class="card-top">
                 <div class="card-top-left d-flex align-items-center">
                   <div class="logo-icon-wrapper">
                     <div class="logo-icon">
                       <img
-                        src="https://jobstack-shreethemes.vercel.app/static/media/google-logo.28878765ba39f327cf3e.png"
-                        alt="logo">
+                        [src]="j.companyLogo"
+                        alt="{{j.companyName}}">
                     </div>
                   </div>
                   <div class="d-flex flex-column align-items-start justify-content-between">
-                    <div class="company-name">Google</div>
-                    <div class="opens-ago">2 days ago</div>
+                    <div class="company-name">{{j.companyName}}</div>
+                    <div class="opens-ago">{{j.datePosted | timeAgo}}</div>
                   </div>
                 </div>
                 <div class="card-top-right">
                   <div class="visit-link-circle">
-                    <i class="material-icons">call_made</i>
+                    <i class="material-icons" routerLink="/job-details/{{j.id}}">call_made</i>
                   </div>
                 </div>
               </div>
@@ -86,64 +80,21 @@
               <div class="card-content">
                 <div class="card-content-left">
                   <div class="d-flex flex-column align-items-start">
-                    <div class="job-title">Marketing Director</div>
-                    <div class="open-positions">Total Openings: 1</div>
+                    <div class="job-title" routerLink="/job-details/{{j.id}}">{{j.title}}</div>
+                    <div class="open-positions">Total Openings: {{j.totalOpenings}}</div>
                   </div>
                 </div>
               </div>
               <hr>
               <div class="card-bottom">
-                <div class="card-bottom-left">
+                <div *ngIf="j.companyLevel != '1'"></div>
+                <div class="card-bottom-left" *ngIf="j.companyLevel == '1'">
                   <i class="material-icons">verified</i>
                   <span>Verified</span>
                 </div>
                 <div class="card-bottom-right">
                   <i class="fa fa-map-marker" aria-hidden="true"></i>
-                  <span>USA</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-lg-6 mb-3 mb-lg-0">
-            <div class="card-1" routerLink="/job-details">
-              <div class="card-top">
-                <div class="card-top-left d-flex align-items-center">
-                  <div class="logo-icon-wrapper">
-                    <div class="logo-icon">
-                      <img
-                        src="https://jobstack-shreethemes.vercel.app/static/media/google-logo.28878765ba39f327cf3e.png"
-                        alt="logo">
-                    </div>
-                  </div>
-                  <div class="d-flex flex-column align-items-start justify-content-between">
-                    <div class="company-name">Google</div>
-                    <div class="opens-ago">2 days ago</div>
-                  </div>
-                </div>
-                <div class="card-top-right">
-                  <div class="visit-link-circle">
-                    <i class="material-icons">call_made</i>
-                  </div>
-                </div>
-              </div>
-              <hr>
-              <div class="card-content">
-                <div class="card-content-left">
-                  <div class="d-flex flex-column align-items-start">
-                    <div class="job-title">Web Developer</div>
-                    <div class="open-positions">Total Openings: 1</div>
-                  </div>
-                </div>
-              </div>
-              <hr>
-              <div class="card-bottom">
-                <div class="card-bottom-left">
-                  <i class="material-icons">verified</i>
-                  <span>Verified</span>
-                </div>
-                <div class="card-bottom-right">
-                  <i class="fa fa-map-marker" aria-hidden="true"></i>
-                  <span>USA</span>
+                  <span>{{j.location}}</span>
                 </div>
               </div>
             </div>
@@ -199,45 +150,48 @@
       <div class="details-card-1">
         <div class="d-flex align-items-center justify-content-between w-100">
           <div class="caption"><i class="material-icons">emoji_events</i><span>Founded:</span></div>
-          <div class="value">2003</div>
+          <div class="value">{{c.foundedDate}}</div>
         </div>
         <div class="d-flex align-items-center justify-content-between w-100">
           <div class="caption"><i class="material-icons">admin_panel_settings</i><span>Founder:</span></div>
-          <div class="value">Niklas Zennström</div>
+          <div class="value">{{c.founderName}}</div>
         </div>
         <div class="d-flex align-items-center justify-content-between w-100">
           <div class="caption"><i class="material-icons">business</i><span>Head Quarters:</span></div>
-          <div class="value">Luxembourg</div>
+          <div class="value">{{c.headquarters}}</div>
         </div>
         <div class="d-flex align-items-center justify-content-between w-100">
           <div class="caption"><i class="material-icons">manage_accounts</i><span>Number of Employees:</span></div>
-          <div class="value">788</div>
+          <div class="value">{{c.numberOfEmployees}}</div>
         </div>
         <div class="d-flex align-items-center justify-content-between w-100">
           <div class="caption"><i class="material-icons">language</i><span>Website:</span></div>
-          <div class="value">www.company.com</div>
+          <div class="value">{{c.website}}</div>
         </div>
 
         <div class="d-flex align-items-center justify-content-between w-100">
           <div class="caption">Social:</div>
           <div class="item-set">
-            <div class="social-item">
-              <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+            <div class="social-item" *ngIf="c.linkedin">
+              <a href="{{c.linkedin}}" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+            </div>
+            <div class="social-item" *ngIf="c.facebook">
+              <a href="{{c.facebook}}" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            </div>
+            <div class="social-item" *ngIf="c.instagram">
+              <a href="{{c.instagram}}" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+            </div>
+            <div class="social-item" *ngIf="c.twitter">
+              <a href="{{c.twitter}}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            </div>
+            <div class="social-item" *ngIf="c.github">
+              <a href="{{c.github}}" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+            </div>
+            <div class="social-item" *ngIf="c.youtube">
+              <a href="{{c.youtube}}" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
             </div>
             <div class="social-item">
-              <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-            </div>
-            <div class="social-item">
-              <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-            </div>
-            <div class="social-item">
-              <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-            </div>
-            <div class="social-item">
-              <a href="#"><i class="fa fa-github" aria-hidden="true"></i></a>
-            </div>
-            <div class="social-item">
-              <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+              <a href="mailto:{{c.contactEmail}}"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
             </div>
           </div>
         </div>

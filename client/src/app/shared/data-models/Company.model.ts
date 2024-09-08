@@ -5,6 +5,7 @@ export interface CompanyModel {
   companyStory?: any;
   companyLevel?: any;
   logo?: any;
+  coverImage?: any;
   location?: any;
   profileBanner?: any;
   image1?: any;
@@ -20,7 +21,6 @@ export interface CompanyModel {
   facebook?: any;
   instagram?: any;
   youtube?: any;
-  tiktok?: any;
   contactEmail?: any;
   contactNumber?: any;
   postedJobs?: any;
