@@ -22,6 +22,8 @@ export class JobComponent implements OnInit {
   targetInput1: any;
   targetInput2: any;
 
+  isSearchResultNotFound: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
@@ -40,6 +42,8 @@ export class JobComponent implements OnInit {
       const locationMatch = this.targetInput2 ? data.location.toLowerCase().includes(this.targetInput2.toLowerCase()) : true;
       return titleMatch && locationMatch;
     });
+
+    this.isSearchResultNotFound = this.filteredJobAds.length === 0;
 
     // Update pagination after filtering
     this.totalPages = Math.ceil(this.filteredJobAds.length / this.itemsPerPage);
