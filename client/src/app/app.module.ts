@@ -52,6 +52,7 @@ import { TimeAgoPipe } from "./DTO/TimeAgoPipe";
 import { TimeFormatPipe } from "./DTO/TimeFormatPipe";
 import { TruncateCommentsPipe } from "./DTO/TruncateCommentsPipe";
 import { TruncatePipe } from "./DTO/TruncatePipe";
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import { TruncatePipe } from "./DTO/TruncatePipe";
     TimeAgoPipe,
     TimeFormatPipe,
     TruncateCommentsPipe,
-    TruncatePipe
+    TruncatePipe,
+    PrivacyPolicyComponent
   ],
     imports: [
         BrowserModule,

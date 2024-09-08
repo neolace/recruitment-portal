@@ -47,6 +47,7 @@ import {
 import {
   PersonalProfileSettingsComponent
 } from "./components/dashboards/free/personal-profile-settings/personal-profile-settings.component";
+import {PrivacyPolicyComponent} from "./components/privacy-policy/privacy-policy.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -74,6 +75,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'reset', component: ResetPasswordComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'dashboard', component: FreeDashboardComponent, children: [
       { path: '', redirectTo: '/dashboard/overview', pathMatch: 'full' },
       { path: 'overview', component: FreeMainDbComponent },
