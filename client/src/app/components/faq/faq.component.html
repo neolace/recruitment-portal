@@ -1,0 +1,310 @@
+<div class="top-banner">
+  <div class="curved-div">
+    <div class="overlay"></div>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-center flex-column w-100 h100 banner-cont">
+    <h1>Frequently Asked Questions</h1>
+    <p>Talent Boozt > <span>FAQs</span></p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row my-3 faq-component-wrapper">
+    <div class="col-12 col-md-4 col-lg-3 left-side">
+      <div class="card-1">
+        <p><span (click)="navigateSection('buying')" #buying class="active">Buying Questions</span></p>
+        <p><span (click)="navigateSection('general')" #general>General Questions</span></p>
+        <p><span (click)="navigateSection('payments')" #payments>Payments Questions</span></p>
+        <p><span (click)="navigateSection('support')" #support>Support Questions</span></p>
+        <p><span (click)="navigateSection('other')" #other>Other Questions</span></p>
+      </div>
+    </div>
+    <div class="col-12 col-md-8 col-lg-9 right-side">
+      <div id="buying" #buyingSec>
+        <h5>Buying Questions</h5>
+
+        <div class="accordion faq" id="fq1">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#1fqOne" aria-expanded="false" aria-controls="1fqOne">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit?
+              </button>
+            </h2>
+            <div id="1fqOne" class="accordion-collapse collapse" data-bs-parent="#fq1">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur delectus est incidunt iusto nihil
+                quam quasi quibusdam. Reprehenderit, saepe, ullam!
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#1fqTwo" aria-expanded="false" aria-controls="1fqTwo">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, sed?
+              </button>
+            </h2>
+            <div id="1fqTwo" class="accordion-collapse collapse" data-bs-parent="#fq1">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias cumque distinctio incidunt iusto
+                laboriosam modi nisi quis rem repellat voluptatem?
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#1fqThree" aria-expanded="false" aria-controls="1fqThree">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias beatae dignissimos saepe?
+              </button>
+            </h2>
+            <div id="1fqThree" class="accordion-collapse collapse" data-bs-parent="#fq1">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid aspernatur commodi debitis doloremque
+                ipsum officiis quae quisquam reprehenderit repudiandae!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="general" #generalSec>
+        <h5>General Questions</h5>
+
+        <div class="accordion faq" id="fq2">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#2fqOne" aria-expanded="false" aria-controls="2fqOne">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit?
+              </button>
+            </h2>
+            <div id="2fqOne" class="accordion-collapse collapse" data-bs-parent="#fq2">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur delectus est incidunt iusto
+                nihil quam quasi quibusdam. Reprehenderit, saepe, ullam!
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#2fqTwo" aria-expanded="false" aria-controls="2fqTwo">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, sed?
+              </button>
+            </h2>
+            <div id="2fqTwo" class="accordion-collapse collapse" data-bs-parent="#fq2">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias cumque distinctio incidunt iusto
+                laboriosam modi nisi quis rem repellat voluptatem?
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#2fqThree" aria-expanded="false" aria-controls="2fqThree">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias beatae dignissimos saepe?
+              </button>
+            </h2>
+            <div id="2fqThree" class="accordion-collapse collapse" data-bs-parent="#fq2">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid aspernatur commodi debitis
+                doloremque ipsum officiis quae quisquam reprehenderit repudiandae!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="payments" #paymentsSec>
+        <h5>Payments Questions</h5>
+
+        <div class="accordion faq" id="fq3">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#3fqOne" aria-expanded="false" aria-controls="3fqOne">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit?
+              </button>
+            </h2>
+            <div id="3fqOne" class="accordion-collapse collapse" data-bs-parent="#fq3">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur delectus est incidunt iusto
+                nihil quam quasi quibusdam. Reprehenderit, saepe, ullam!
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#3fqTwo" aria-expanded="false" aria-controls="3fqTwo">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, sed?
+              </button>
+            </h2>
+            <div id="3fqTwo" class="accordion-collapse collapse" data-bs-parent="#fq3">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias cumque distinctio incidunt iusto
+                laboriosam modi nisi quis rem repellat voluptatem?
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#3fqThree" aria-expanded="false" aria-controls="3fqThree">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias beatae dignissimos saepe?
+              </button>
+            </h2>
+            <div id="3fqThree" class="accordion-collapse collapse" data-bs-parent="#fq3">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid aspernatur commodi debitis
+                doloremque ipsum officiis quae quisquam reprehenderit repudiandae!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="support" #supportSec>
+        <h5>Support Questions</h5>
+
+        <div class="accordion faq" id="fq4">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#4fqOne" aria-expanded="false" aria-controls="4fqOne">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit?
+              </button>
+            </h2>
+            <div id="4fqOne" class="accordion-collapse collapse" data-bs-parent="#fq4">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur delectus est incidunt iusto
+                nihil quam quasi quibusdam. Reprehenderit, saepe, ullam!
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#4fqTwo" aria-expanded="false" aria-controls="4fqTwo">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, sed?
+              </button>
+            </h2>
+            <div id="4fqTwo" class="accordion-collapse collapse" data-bs-parent="#fq4">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias cumque distinctio incidunt iusto
+                laboriosam modi nisi quis rem repellat voluptatem?
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#4fqThree" aria-expanded="false" aria-controls="4fqThree">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias beatae dignissimos saepe?
+              </button>
+            </h2>
+            <div id="4fqThree" class="accordion-collapse collapse" data-bs-parent="#fq4">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid aspernatur commodi debitis
+                doloremque ipsum officiis quae quisquam reprehenderit repudiandae!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="other" #otherSec>
+        <h5>Other Questions</h5>
+
+        <div class="accordion faq" id="fq5">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#5fqOne" aria-expanded="false" aria-controls="5fqOne">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit?
+              </button>
+            </h2>
+            <div id="5fqOne" class="accordion-collapse collapse" data-bs-parent="#fq5">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur delectus est incidunt iusto
+                nihil quam quasi quibusdam. Reprehenderit, saepe, ullam!
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#5fqTwo" aria-expanded="false" aria-controls="5fqTwo">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, sed?
+              </button>
+            </h2>
+            <div id="5fqTwo" class="accordion-collapse collapse" data-bs-parent="#fq5">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias cumque distinctio incidunt iusto
+                laboriosam modi nisi quis rem repellat voluptatem?
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#5fqThree" aria-expanded="false" aria-controls="5fqThree">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias beatae dignissimos saepe?
+              </button>
+            </h2>
+            <div id="5fqThree" class="accordion-collapse collapse" data-bs-parent="#fq5">
+              <div class="accordion-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid aspernatur commodi debitis
+                doloremque ipsum officiis quae quisquam reprehenderit repudiandae!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-3">
+    <div class="d-md-flex align-items-center justify-content-between card-content">
+      <div style="max-width: 600px">
+        <div class="title-2 mb-3">Explore a job now!</div>
+        <p>Search all the open positions on the web. Get your own personalized salary estimate. Read reviews on over
+          30000+ companies worldwide.</p>
+      </div>
+      <div class="d-flex align-items-center">
+        <button class="btn-1" routerLink="/job">Apply Now</button>
+        <button class="btn-2" routerLink="/learn-more-jobs">Learn More</button>
+      </div>
+    </div>
+
+    <div class="mail-icon">
+      <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
+           stroke-linejoin="round"
+           class="lg:text-[150px] text-7xl text-black/5 dark:text-white/5 ltr:-rotate-45 rtl:rotate-45" height="1em"
+           width="1em" xmlns="http://www.w3.org/2000/svg">
+        <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+      </svg>
+    </div>
+    <div class="pencil-icon">
+      <svg stroke="currentColor" fill="none" stroke-width="0" viewBox="0 0 16 16"
+           class="lg:text-[150px] text-7xl text-black/5 dark:text-white/5 rtl:-rotate-90" height="1em" width="1em"
+           xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"></path>
+      </svg>
+    </div>
+  </div>
+</div>

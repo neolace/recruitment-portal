@@ -56,6 +56,7 @@ import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-poli
 import { TermsConditionsComponent } from './components/terms-conditions/terms-conditions.component';
 import { JobsLearnMoreComponent } from './components/shared/jobs-learn-more/jobs-learn-more.component';
 import { UnderDevelopmentComponent } from './components/shared/under-development/under-development.component';
+import { FaqComponent } from './components/faq/faq.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import { UnderDevelopmentComponent } from './components/shared/under-development
     PrivacyPolicyComponent,
     TermsConditionsComponent,
     JobsLearnMoreComponent,
-    UnderDevelopmentComponent
+    UnderDevelopmentComponent,
+    FaqComponent
   ],
     imports: [
         BrowserModule,
