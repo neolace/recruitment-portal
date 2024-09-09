@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { jobAdDataStrore } from '../../shared/data-store/JobAd-data-strore';
 import {ActivatedRoute} from "@angular/router";
 
@@ -8,6 +8,8 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./job.component.scss']
 })
 export class JobComponent implements OnInit {
+  @ViewChild('jobSearchInput') jobSearchInput!: ElementRef;
+
   heart: boolean = false; //test
   jobAdDataStore: any[] = [];
   filteredJobAds: any[] = [];
@@ -113,5 +115,10 @@ export class JobComponent implements OnInit {
       this.endPage = this.totalPages;
     }
     this.pages = Array.from({ length: this.endPage - this.startPage + 1 }, (_, i) => i + this.startPage);
+  }
+
+  focusInput() {
+    this.jobSearchInput.nativeElement.focus();
+    document.body.scrollTop = 0;
   }
 }

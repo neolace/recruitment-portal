@@ -49,6 +49,7 @@ import {
 } from "./components/dashboards/free/personal-profile-settings/personal-profile-settings.component";
 import {PrivacyPolicyComponent} from "./components/privacy-policy/privacy-policy.component";
 import {TermsConditionsComponent} from "./components/terms-conditions/terms-conditions.component";
+import {JobsLearnMoreComponent} from "./components/shared/jobs-learn-more/jobs-learn-more.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -58,6 +59,7 @@ const routes: Routes = [
   { path: 'job-details/:id', component: JobDetailsComponent },
   { path: 'job-apply', component: JobApplyComponent },
   { path: 'job-post', component: JobPostComponent },
+  { path: 'learn-more-jobs', component: JobsLearnMoreComponent },
   { path: 'companies', component: CompaniesComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'pricing', component: PrisingComponent },

@@ -54,6 +54,8 @@ import { TruncateCommentsPipe } from "./DTO/TruncateCommentsPipe";
 import { TruncatePipe } from "./DTO/TruncatePipe";
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 import { TermsConditionsComponent } from './components/terms-conditions/terms-conditions.component';
+import { JobsLearnMoreComponent } from './components/shared/jobs-learn-more/jobs-learn-more.component';
+import { UnderDevelopmentComponent } from './components/shared/under-development/under-development.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +99,9 @@ import { TermsConditionsComponent } from './components/terms-conditions/terms-co
     TruncateCommentsPipe,
     TruncatePipe,
     PrivacyPolicyComponent,
-    TermsConditionsComponent
+    TermsConditionsComponent,
+    JobsLearnMoreComponent,
+    UnderDevelopmentComponent
   ],
     imports: [
         BrowserModule,
