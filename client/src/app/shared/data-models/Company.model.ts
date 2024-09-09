@@ -7,6 +7,7 @@ export interface CompanyModel {
   logo?: any;
   coverImage?: any;
   location?: any;
+  country?: any;
   profileBanner?: any;
   image1?: any;
   image2?: any;
