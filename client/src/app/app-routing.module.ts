@@ -50,6 +50,7 @@ import {
 import {PrivacyPolicyComponent} from "./components/privacy-policy/privacy-policy.component";
 import {TermsConditionsComponent} from "./components/terms-conditions/terms-conditions.component";
 import {JobsLearnMoreComponent} from "./components/shared/jobs-learn-more/jobs-learn-more.component";
+import {FaqComponent} from "./components/faq/faq.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -80,6 +81,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'terms-and-conditions', component: TermsConditionsComponent },
+  { path: 'faq', component: FaqComponent },
   { path: 'dashboard', component: FreeDashboardComponent, children: [
       { path: '', redirectTo: '/dashboard/overview', pathMatch: 'full' },
       { path: 'overview', component: FreeMainDbComponent },

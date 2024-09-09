@@ -1,0 +1,45 @@
+.faq-component-wrapper{
+  .left-side{
+    height: fit-content;
+    position: sticky;
+    top: 10px;
+
+    .card-1{
+      margin: 0;
+      border: 1px solid var(--color-surface-mixed-300);
+      background-color: var(--color-surface-200);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      p{
+        margin: 0;
+        padding: 0;
+
+        span{
+          color: var(--color-secondary-300);
+          font-weight: 450;
+          text-decoration: none;
+          transition: all .3s ease-in-out;
+
+          &:hover{
+            color: var(--color-primary-200);
+            cursor: pointer;
+          }
+        }
+        span.active{
+          color: var(--color-primary-200);
+        }
+      }
+    }
+  }
+
+  .right-side{
+    padding: 25px 25px 0;
+
+    h5{
+      margin-bottom: 20px;
+    }
+  }
+}
