@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {jobAdDataStrore} from "../../shared/data-store/JobAd-data-strore";
 import {companyDataStore} from "../../shared/data-store/company-data-store";
+import {ValueIncrementService} from "../../services/value-increment.service";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, AfterViewInit {
+  @ViewChild('achievementsSection') achievementsSection!: ElementRef;
 
   heart: boolean = false; // test
   jobAdDataStrore: any = jobAdDataStrore;
@@ -23,7 +25,43 @@ export class HomeComponent {
   dataEntryOperatorJobs: number = 0;
   businessDevelopmentJobs: number = 0;
 
-  constructor(private router: Router) { }
+  jobsAch: number = 1548;
+  branchesAch: number = 25;
+  countriesAch: number = 6;
+  jobsAchValue: number = 0;
+  branchesAchValue: number = 0;
+  countriesAchValue: number = 0;
+  observer!: IntersectionObserver;
+
+  constructor(private router: Router, private valueIncrementService: ValueIncrementService) { }
+
+  ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.setupIntersectionObserver()
+  }
+
+  setupIntersectionObserver() {
+    this.observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Element is in view, start the animation
+          this.incrementJobsValue(this.jobsAch, 0);
+          this.incrementBranchesValue(this.branchesAch, 50);
+          this.incrementCountriesValue(this.countriesAch, 100);
+          // Once the animation has started, we can stop observing this element
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    // Start observing the achievements section
+    if (this.achievementsSection) {
+      this.observer.observe(this.achievementsSection.nativeElement);
+    }
+  }
+
   moveToRegister() {
     this.router.navigate(['/register'], {queryParams: {from: 'companies'}});
   }
@@ -58,5 +96,23 @@ export class HomeComponent {
         businessDevelopmentJobs: this.businessDevelopmentJobs
       }
     ]
+  }
+
+  incrementJobsValue(targetValue: number, interval: number) {
+    this.valueIncrementService.incrementValue(targetValue, value => {
+      this.jobsAchValue = value;
+    }, interval);
+  }
+
+  incrementBranchesValue(targetValue: number, interval: number) {
+    this.valueIncrementService.incrementValue(targetValue, value => {
+      this.branchesAchValue = value;
+    }, interval);
+  }
+
+  incrementCountriesValue(targetValue: number, interval: number) {
+    this.valueIncrementService.incrementValue(targetValue, value => {
+      this.countriesAchValue = value;
+    }, interval);
   }
 }
