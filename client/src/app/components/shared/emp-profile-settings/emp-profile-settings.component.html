@@ -46,11 +46,8 @@
           </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
-              <label for="location">Location</label>
-              <select class="form-control" id="location">
-                <option selected>Select</option>
-                <option *ngFor="let c of countriesSet" [value]="c.name">{{c.name}}</option>
-              </select>
+              <label for="dob">Date of Birth</label>
+              <input type="date" class="form-control" id="dob">
             </div>
           </div>
           <div class="col-12 col-md-6">
@@ -103,13 +100,13 @@
         <div class="skill-set">
           <hr>
           <div class="row my-2">
-            <div class="col-12 col-md-6">
+            <div class="col-6">
               <p>HTML</p>
             </div>
-            <div class="col-12 col-md-3">
+            <div class="col-3">
               <p>90%</p>
             </div>
-            <div class="col-12 col-md-3">
+            <div class="col-3">
               <div class="d-flex align-items-center">
                 <button class="btn-2"><i class="material-icons">edit</i></button>
                 <button class="btn-3"><i class="material-icons">delete</i></button>
@@ -117,13 +114,13 @@
             </div>
           </div>
           <div class="row my-2">
-            <div class="col-12 col-md-6">
+            <div class="col-6">
               <p>HTML</p>
             </div>
-            <div class="col-12 col-md-3">
+            <div class="col-3">
               <p>90%</p>
             </div>
-            <div class="col-12 col-md-3">
+            <div class="col-3">
               <div class="d-flex align-items-center">
                 <button class="btn-2"><i class="material-icons">edit</i></button>
                 <button class="btn-3"><i class="material-icons">delete</i></button>
@@ -131,13 +128,13 @@
             </div>
           </div>
           <div class="row my-2">
-            <div class="col-12 col-md-6">
+            <div class="col-6">
               <p>HTML</p>
             </div>
-            <div class="col-12 col-md-3">
+            <div class="col-3">
               <p>90%</p>
             </div>
-            <div class="col-12 col-md-3">
+            <div class="col-3">
               <div class="d-flex align-items-center">
                 <button class="btn-2"><i class="material-icons">edit</i></button>
                 <button class="btn-3"><i class="material-icons">delete</i></button>
@@ -145,13 +142,13 @@
             </div>
           </div>
           <div class="row my-2">
-            <div class="col-12 col-md-6">
+            <div class="col-6">
               <p>HTML</p>
             </div>
-            <div class="col-12 col-md-3">
+            <div class="col-3">
               <p>90%</p>
             </div>
-            <div class="col-12 col-md-3">
+            <div class="col-3">
               <div class="d-flex align-items-center">
                 <button class="btn-2"><i class="material-icons">edit</i></button>
                 <button class="btn-3"><i class="material-icons">delete</i></button>
@@ -229,6 +226,33 @@
               <div class="form-group">
                 <label for="phone">Phone Number</label>
                 <input type="text" class="form-control" id="phone">
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="address">
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" class="form-control" id="city">
+              </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="form-group">
+                <label for="country">Country</label>
+                <select class="form-control" id="country">
+                  <option selected>Select</option>
+                  <option *ngFor="let c of countriesSet" [ngValue]="c.name">{{c.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="form-group">
+                <label for="zip">Zip Code</label>
+                <input type="text" class="form-control" id="zip">
               </div>
             </div>
             <div class="col-12">
