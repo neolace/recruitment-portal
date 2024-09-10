@@ -10,9 +10,34 @@
     overflow: hidden;
     object-fit: cover;
     object-position: center;
+    position: relative;
 
     img{
       width: 100%;
+    }
+
+    #cover-photo-edit[type="file"]{
+      display: none;
+    }
+    .photo-edit{
+      position: absolute;
+      z-index: 99;
+      bottom: 20px;
+      right: 40px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--color-surface-mixed-100);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border: none;
+      outline: none;
+
+      i{
+        color: var(--color-text-200);
+      }
     }
   }
 
@@ -35,6 +60,30 @@
 
     @media screen and (max-width: 768px) {
       left: 10px;
+    }
+
+    #profile-photo-edit[type="file"]{
+      display: none;
+    }
+    .photo-edit{
+      position: absolute;
+      z-index: 99;
+      bottom: 10px;
+      right: 10px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: var(--color-surface-mixed-100);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border: none;
+      outline: none;
+
+      i{
+        color: var(--color-text-200);
+      }
     }
   }
 
