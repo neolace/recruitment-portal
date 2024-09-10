@@ -57,6 +57,11 @@ import { TermsConditionsComponent } from './components/terms-conditions/terms-co
 import { JobsLearnMoreComponent } from './components/shared/jobs-learn-more/jobs-learn-more.component';
 import { UnderDevelopmentComponent } from './components/shared/under-development/under-development.component';
 import { FaqComponent } from './components/faq/faq.component';
+import {AngularFireAuthModule} from "@angular/fire/compat/auth";
+import {AngularFireStorageModule} from "@angular/fire/compat/storage";
+import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
+import {environment} from "../environments/environment";
+import {AngularFireModule} from "@angular/fire/compat";
 
 @NgModule({
   declarations: [
@@ -118,7 +123,11 @@ import { FaqComponent } from './components/faq/faq.component';
         MatExpansionModule,
         MatTooltipModule,
         MatProgressSpinnerModule,
-        FormsModule
+        FormsModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFirestoreModule,
+        AngularFireStorageModule,
+        AngularFireAuthModule
     ],
   providers: [],
   bootstrap: [AppComponent]
