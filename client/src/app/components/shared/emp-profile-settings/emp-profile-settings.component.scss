@@ -77,3 +77,29 @@
     }
   }
 }
+
+.skill-set{
+  width: 100%;
+
+  hr{
+    margin-bottom: 20px;
+  }
+
+  .btn-2{
+    i{
+      color: var(--color-text-200);
+    }
+  }
+
+  button{
+    width: fit-content;
+    padding: 5px;
+    margin: 3px;
+
+    i{
+      margin: 0;
+      padding: 0;
+      font-size: 16px;
+    }
+  }
+}
