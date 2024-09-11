@@ -64,8 +64,8 @@ const routes: Routes = [
   { path: 'companies', component: CompaniesComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'pricing', component: PrisingComponent },
-  { path: 'candidate-profile', component: EmpProfileComponent },
-  { path: 'candidate-profile-setting', component: EmpProfileSettingsComponent },
+  { path: 'candidate-profile', loadChildren: () => import('./components/shared/emp-profile/emp-profile.module').then(m => m.EmpProfileModule) },
+  { path: 'candidate-profile-setting', loadChildren: () => import('./components/shared/emp-profile-settings/emp-profile-settings.module').then(m => m.EmpProfileSettingsModule) },
   { path: 'my-jobs', component: EmpSavedJobsComponent, children: [
       { path: '', redirectTo: '/my-jobs/saved', pathMatch: 'full' },
       { path: 'saved', component: EmpSavedJobsSavedComponent },
@@ -99,7 +99,8 @@ const routes: Routes = [
       { path: 'business-profile-my', component: BusinessProfileMyComponent },
       { path: 'business-profile-settings', component: BusinessProfileSettingsComponent },
       { path: 'company-jobs', component: CompanyJobsMyComponent }
-  ]}
+  ]},
+  { path: 'candidate-profile-setting-test', loadChildren: () => import('./components/shared/emp-profile-settings-test/emp-profile-settings-test.module').then(m => m.EmpProfileSettingsTestModule) }
 ];
 
 @NgModule({
