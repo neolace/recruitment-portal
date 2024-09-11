@@ -5,7 +5,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {MatIconModule} from "@angular/material/icon";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {JobPostComponent} from './components/shared/job-post/job-post.component';
 import {GoogleMapsModule} from "@angular/google-maps";
 import { ContactComponent } from './components/contact/contact.component';
 import {MatMenuModule} from "@angular/material/menu";
@@ -37,14 +36,6 @@ import { EmpSavedJobsAppliedComponent } from './components/shared/emp-saved-jobs
 import { EmpSavedJobsArchivedComponent } from './components/shared/emp-saved-jobs/emp-saved-jobs-archived/emp-saved-jobs-archived.component';
 import { PersonalProfileMyComponent } from './components/dashboards/free/personal-profile-my/personal-profile-my.component';
 import { PersonalProfileSettingsComponent } from './components/dashboards/free/personal-profile-settings/personal-profile-settings.component';
-
-import { DateFormatPipe } from "./DTO/DateFormatPipe";
-import { HourMinuteFormatPipe } from "./DTO/HourMinuteFormatPipe";
-import { RoundFloats } from "./DTO/RoundFloats";
-import { TimeAgoPipe } from "./DTO/TimeAgoPipe";
-import { TimeFormatPipe } from "./DTO/TimeFormatPipe";
-import { TruncateCommentsPipe } from "./DTO/TruncateCommentsPipe";
-import { TruncatePipe } from "./DTO/TruncatePipe";
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 import { TermsConditionsComponent } from './components/terms-conditions/terms-conditions.component';
 import { JobsLearnMoreComponent } from './components/shared/jobs-learn-more/jobs-learn-more.component';
@@ -55,11 +46,11 @@ import {AngularFireStorageModule} from "@angular/fire/compat/storage";
 import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
 import {environment} from "../environments/environment";
 import {AngularFireModule} from "@angular/fire/compat";
+import {SharedPipesModule} from "./shared/modules/shared-pipes.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-    JobPostComponent,
     ContactComponent,
     LockScreenComponent,
     LoginComponent,
@@ -83,13 +74,6 @@ import {AngularFireModule} from "@angular/fire/compat";
     EmpSavedJobsArchivedComponent,
     PersonalProfileMyComponent,
     PersonalProfileSettingsComponent,
-    DateFormatPipe,
-    HourMinuteFormatPipe,
-    RoundFloats,
-    TimeAgoPipe,
-    TimeFormatPipe,
-    TruncateCommentsPipe,
-    TruncatePipe,
     PrivacyPolicyComponent,
     TermsConditionsComponent,
     JobsLearnMoreComponent,
@@ -113,7 +97,8 @@ import {AngularFireModule} from "@angular/fire/compat";
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule,
         AngularFireStorageModule,
-        AngularFireAuthModule
+        AngularFireAuthModule,
+        SharedPipesModule
     ],
   providers: [],
   bootstrap: [AppComponent]

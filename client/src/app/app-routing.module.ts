@@ -59,7 +59,7 @@ const routes: Routes = [
   { path: 'job', loadChildren: () => import('./components/job/job.module').then(m => m.JobModule) },
   { path: 'job-details/:id', loadChildren: () => import('./components/shared/job-details/job-details.module').then(m => m.JobDetailsModule) },
   { path: 'job-apply', loadChildren: () => import('./components/shared/job-apply/job-apply.module').then(m => m.JobApplyModule) },
-  { path: 'job-post', component: JobPostComponent },
+  { path: 'job-post', loadChildren: () => import('./components/shared/job-post/job-post.module').then(m => m.JobPostModule) },
   { path: 'learn-more-jobs', component: JobsLearnMoreComponent },
   { path: 'companies', component: CompaniesComponent },
   { path: 'contact', component: ContactComponent },
