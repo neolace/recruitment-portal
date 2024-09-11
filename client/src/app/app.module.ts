@@ -15,8 +15,6 @@ import {GoogleMapsModule} from "@angular/google-maps";
 import { ContactComponent } from './components/contact/contact.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
-import { EmpProfileComponent } from './components/shared/emp-profile/emp-profile.component';
-import { EmpProfileSettingsComponent } from './components/shared/emp-profile-settings/emp-profile-settings.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { LockScreenComponent } from './components/lock-screen/lock-screen.component';
 import { LoginComponent } from './components/login/login.component';
@@ -73,8 +71,6 @@ import {AngularFireModule} from "@angular/fire/compat";
     JobPostComponent,
     AboutComponent,
     ContactComponent,
-    EmpProfileComponent,
-    EmpProfileSettingsComponent,
     LockScreenComponent,
     LoginComponent,
     RegisterComponent,
