@@ -6,26 +6,17 @@ import {AppComponent} from './app.component';
 import {MatIconModule} from "@angular/material/icon";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {GoogleMapsModule} from "@angular/google-maps";
-import { ContactComponent } from './components/contact/contact.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { LockScreenComponent } from './components/lock-screen/lock-screen.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { FreeDashboardComponent } from './components/dashboards/free/free-dashboard/free-dashboard.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { FreeMainDbComponent } from './components/dashboards/free/free-main-db/free-main-db.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { BusinessProfileComponent } from './components/business-profile/business-profile.component';
 import { BusinessProfileSettingsComponent } from './components/dashboards/free/business-profile-settings/business-profile-settings.component';
 import { BusinessProfileMyComponent } from './components/dashboards/free/business-profile-my/business-profile-my.component';
-import { PrisingComponent } from './components/prising/prising.component';
-import { CompaniesComponent } from './components/companies/companies.component';
-import { CompanyJobsComponent } from './components/company-jobs/company-jobs.component';
 import { CompanyJobsMyComponent } from './components/dashboards/free/company-jobs-my/company-jobs-my.component';
 import { ProDashboardComponent } from './components/dashboards/pro/pro-dashboard/pro-dashboard.component';
 import { ProMainDbComponent } from './components/dashboards/pro/pro-main-db/pro-main-db.component';
@@ -38,8 +29,6 @@ import { PersonalProfileMyComponent } from './components/dashboards/free/persona
 import { PersonalProfileSettingsComponent } from './components/dashboards/free/personal-profile-settings/personal-profile-settings.component';
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 import { TermsConditionsComponent } from './components/terms-conditions/terms-conditions.component';
-import { JobsLearnMoreComponent } from './components/shared/jobs-learn-more/jobs-learn-more.component';
-import { UnderDevelopmentComponent } from './components/shared/under-development/under-development.component';
 import { FaqComponent } from './components/faq/faq.component';
 import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import {AngularFireStorageModule} from "@angular/fire/compat/storage";
@@ -51,19 +40,10 @@ import {SharedPipesModule} from "./shared/modules/shared-pipes.module";
 @NgModule({
   declarations: [
     AppComponent,
-    ContactComponent,
-    LockScreenComponent,
-    LoginComponent,
-    RegisterComponent,
-    ResetPasswordComponent,
     FreeDashboardComponent,
     FreeMainDbComponent,
-    BusinessProfileComponent,
     BusinessProfileSettingsComponent,
     BusinessProfileMyComponent,
-    PrisingComponent,
-    CompaniesComponent,
-    CompanyJobsComponent,
     CompanyJobsMyComponent,
     ProDashboardComponent,
     ProMainDbComponent,
@@ -76,8 +56,6 @@ import {SharedPipesModule} from "./shared/modules/shared-pipes.module";
     PersonalProfileSettingsComponent,
     PrivacyPolicyComponent,
     TermsConditionsComponent,
-    JobsLearnMoreComponent,
-    UnderDevelopmentComponent,
     FaqComponent
   ],
     imports: [
