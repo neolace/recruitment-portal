@@ -54,11 +54,11 @@ import {FaqComponent} from "./components/faq/faq.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'job', component: JobComponent },
-  { path: 'job-details/:id', component: JobDetailsComponent },
-  { path: 'job-apply', component: JobApplyComponent },
+  { path: 'home', loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule) },
+  { path: 'about', loadChildren: () => import('./components/about/about.module').then(m => m.AboutModule) },
+  { path: 'job', loadChildren: () => import('./components/job/job.module').then(m => m.JobModule) },
+  { path: 'job-details/:id', loadChildren: () => import('./components/shared/job-details/job-details.module').then(m => m.JobDetailsModule) },
+  { path: 'job-apply', loadChildren: () => import('./components/shared/job-apply/job-apply.module').then(m => m.JobApplyModule) },
   { path: 'job-post', component: JobPostComponent },
   { path: 'learn-more-jobs', component: JobsLearnMoreComponent },
   { path: 'companies', component: CompaniesComponent },
