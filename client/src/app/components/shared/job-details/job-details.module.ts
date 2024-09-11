@@ -2,16 +2,16 @@ import {NgModule} from "@angular/core";
 import {JobDetailsComponent} from "./job-details.component";
 import {CommonModule} from "@angular/common";
 import {JobDetailsRoutingModule} from "./job-details-routing.module";
-import {DateFormatPipe} from "../../../DTO/DateFormatPipe";
+import {SharedPipesModule} from "../../../shared/modules/shared-pipes.module";
 
 @NgModule({
   declarations: [
-    JobDetailsComponent,
-    DateFormatPipe
+    JobDetailsComponent
   ],
   imports: [
     CommonModule,
-    JobDetailsRoutingModule
+    JobDetailsRoutingModule,
+    SharedPipesModule
   ]
 })
 export class JobDetailsModule { }
