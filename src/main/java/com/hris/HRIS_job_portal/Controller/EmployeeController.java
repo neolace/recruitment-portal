@@ -14,9 +14,14 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @GetMapping("/getAll")
+    @GetMapping("/all")
     public List<EmployeeModel> getAllEmployees() {
         return employeeService.getAllEmployees();
+    }
+
+    @GetMapping("/getAll")
+    public List<EmployeeModel> getAllEmployees(@RequestParam int page, @RequestParam int size) {
+        return employeeService.getEmployeesPaginated(page, size);
     }
 
     @GetMapping("/get/{id}")
@@ -24,18 +29,13 @@ public class EmployeeController {
         return employeeService.getEmployee(id);
     }
 
-    @PostMapping("/update")
+    @PostMapping("/add")
+    public EmployeeModel addEmployee(@RequestBody EmployeeModel employee) {
+        return employeeService.addEmployee(employee);
+    }
+
+    @PutMapping("/update")
     public EmployeeModel updateEmployee(@RequestBody EmployeeModel employee) {
         return employeeService.updateEmployee(employee);
-    }
-
-    @PostMapping("/addSkills")
-    public EmployeeModel addSkills(@RequestBody EmployeeModel employee) {
-        return employeeService.addSkills(employee);
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public String deleteEmployee(@PathVariable String id) {
-        return employeeService.deleteEmployee(id);
     }
 }
