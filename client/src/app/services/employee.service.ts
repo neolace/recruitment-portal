@@ -30,7 +30,7 @@ export class EmployeeService {
   getEmployee(id: number) {
     return this.http.get<EmployeeModel[]>(this.baseUrl+'/employee/get/'+id).subscribe((data) => {
       this.employeeSubject.next(data);
-      this.cacheInitialized = true; // Mark cache as initialized
+      this.cacheInitialized = true;
     });
   }
 
