@@ -23,13 +23,12 @@ public class EmployeeModel {
     private String email;
     private String resume;
     private String intro;
-    private String skills;
-    private String experiences;
-    private String education;
-    private String contactInfo;
-    private String socialLinks;
-    private String accountNotifications;
-    private String marketingNotifications;
-    private String profileCompleted;
+    private String skills; //id
+    private String experiences; //id
+    private String education; //id
+    private String contactInfo; //id
+    private Object accountNotifications;
+    private Object marketingNotifications;
+    private Object profileCompleted;
     private String profileStatus;
 }
