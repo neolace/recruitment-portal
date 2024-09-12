@@ -22,3 +22,29 @@ public class EmpSkillsModel {
     @Field("skills")
     private List<EmpSkillsDTO> skills;
 }
+
+// {
+//    "employeeId":"1",
+//    "skills":[
+//      {
+//        "id":"1",
+//        "skill":"HTML",
+//        "percentage":"90"
+//      },
+//      {
+//        "id":"2",
+//        "skill":"CSS",
+//        "percentage":"80"
+//      },
+//      {
+//        "id":"3",
+//        "skill":"Javascript",
+//        "percentage":"70"
+//      },
+//      {
+//        "id":"4",
+//        "skill":"Angular",
+//        "percentage":"60"
+//      }
+//    ]
+//}

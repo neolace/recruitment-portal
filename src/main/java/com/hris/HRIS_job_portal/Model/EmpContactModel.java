@@ -25,3 +25,27 @@ public class EmpContactModel {
     @Field("social_links")
     private List<SocialLinksDTO> socialLinks;
 }
+
+// {
+//    "employeeId": "1",
+//    "contact": [
+//        {
+//            "phone": "1234567890",
+//            "email": "john.doe@example.com",
+//            "address": "123 Main St, Anytown USA",
+//            "city": "Anytown",
+//            "country": "USA",
+//            "zipCode": "12345",
+//            "website": "johndoe.com"
+//        }
+//    ],
+//    "socialLinks": [
+//        {
+//            "twitter": "johndoe",
+//            "facebook": "johndoe",
+//            "linkedin": "johndoe",
+//            "instagram": "johndoe",
+//            "github": "johndoe"
+//        }
+//    ]
+//}
