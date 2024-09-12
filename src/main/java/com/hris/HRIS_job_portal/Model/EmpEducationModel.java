@@ -22,3 +22,26 @@ public class EmpEducationModel {
     @Field("education")
     private List<EmpEducationDTO> education;
 }
+
+// {
+//    "education":[
+//      {
+//        "id":"1",
+//        "school":"University of California",
+//        "degree":"Bachelor of Science",
+//        "country":"USA",
+//        "startDate":"01/01/2024",
+//        "endDate":"Present",
+//        "description":"lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. \nlorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+//      },
+//      {
+//        "id":"2",
+//        "school":"University of California",
+//        "degree":"Bachelor of Science",
+//        "country":"USA",
+//        "startDate":"01/01/2024",
+//        "endDate":"Present",
+//        "description":"lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. \nlorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+//      }
+//    ]
+//}

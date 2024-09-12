@@ -22,3 +22,26 @@ public class EmpExperiencesModel {
     @Field("experiences")
     private List<EmpExperiencesDTO> experiences;
 }
+
+// {
+//    "experiences":[
+//      {
+//        "id":"1",
+//        "company":"Google",
+//        "position":"Software Engineer",
+//        "country":"USA",
+//        "startDate":"01/01/2024",
+//        "endDate":"Present",
+//        "description":"lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. \nlorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+//      },
+//      {
+//        "id":"2",
+//        "company":"Facebook",
+//        "position":"Software Engineer",
+//        "country":"USA",
+//        "startDate":"15/10/2018",
+//        "endDate":"11/02/2023",
+//        "description":"lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. \nlorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+//      }
+//    ]
+//}

@@ -32,3 +32,46 @@ public class EmployeeModel {
     private Object profileCompleted;
     private String profileStatus;
 }
+
+// {
+//    "firstname":"john",
+//    "lastname":"Doe",
+//    "occupation":"Web Developer",
+//    "image":"",
+//    "coverImage":"",
+//    "dob":"09/11/1999",
+//    "email":"johndoe@gmail.com",
+//    "resume":"",
+//    "intro":"lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. \nlorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam.",
+//    "skills":"",
+//    "experiences":"",
+//    "education":"",
+//    "contactInfo":"",
+//    "accountNotifications":{
+//      "mention": true,
+//      "follow": true,
+//      "shareActivity": true,
+//      "message": true
+//    },
+//    "marketingNotifications":{
+//      "promotion": true,
+//      "companyNews": true,
+//      "weeklyJobs": true,
+//      "unsubscribe": true
+//    },
+//    "profileCompleted":{
+//      "name": true,
+//      "email": true,
+//      "resume": true,
+//      "occupation": true,
+//      "profilePic": true,
+//      "coverPic": true,
+//      "intro": true,
+//      "skills": true,
+//      "experiences": true,
+//      "education": true,
+//      "contactInfo": true,
+//      "socialLinks": true
+//    },
+//    "profileStatus":""
+//}
