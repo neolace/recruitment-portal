@@ -11,6 +11,8 @@ import {
 } from "../../free/business-profile-settings/business-profile-settings.component";
 import {CompanyJobsMyComponent} from "../../free/company-jobs-my/company-jobs-my.component";
 import {NgModule} from "@angular/core";
+import {AdminProGuard} from "../../../../guards/admin-pro.guard";
+import {AuthGuard} from "../../../../guards/auth.guard";
 
 const routes: Routes = [
   {
@@ -18,12 +20,12 @@ const routes: Routes = [
     component: ProDashboardComponent,
     children: [
       { path: '', redirectTo: '/pro/overview', pathMatch: 'full' },
-      { path: 'overview', component: ProMainDbComponent },
-      { path: 'personal-profile', component: PersonalProfileMyComponent },
-      { path: 'personal-profile-settings', component: PersonalProfileSettingsComponent },
-      { path: 'business-profile-my', component: BusinessProfileMyComponent },
-      { path: 'business-profile-settings', component: BusinessProfileSettingsComponent },
-      { path: 'company-jobs', component: CompanyJobsMyComponent }
+      { path: 'overview', component: ProMainDbComponent, canActivate: [AdminProGuard, AuthGuard] },
+      { path: 'personal-profile', component: PersonalProfileMyComponent, canActivate: [AdminProGuard, AuthGuard] },
+      { path: 'personal-profile-settings', component: PersonalProfileSettingsComponent, canActivate: [AdminProGuard, AuthGuard] },
+      { path: 'business-profile-my', component: BusinessProfileMyComponent, canActivate: [AdminProGuard, AuthGuard] },
+      { path: 'business-profile-settings', component: BusinessProfileSettingsComponent, canActivate: [AdminProGuard, AuthGuard] },
+      { path: 'company-jobs', component: CompanyJobsMyComponent, canActivate: [AdminProGuard, AuthGuard] },
     ],
   }
 ];

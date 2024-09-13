@@ -5,6 +5,7 @@ import { EmpSavedJobsSavedComponent } from './emp-saved-jobs-saved/emp-saved-job
 import { EmpSavedJobsInprogressComponent } from './emp-saved-jobs-inprogress/emp-saved-jobs-inprogress.component';
 import { EmpSavedJobsAppliedComponent } from './emp-saved-jobs-applied/emp-saved-jobs-applied.component';
 import { EmpSavedJobsArchivedComponent } from './emp-saved-jobs-archived/emp-saved-jobs-archived.component';
+import {AuthGuard} from "../../../guards/auth.guard";
 
 const routes: Routes = [
   {
@@ -12,10 +13,10 @@ const routes: Routes = [
     component: EmpSavedJobsComponent,
     children: [
       { path: '', redirectTo: 'saved', pathMatch: 'full' },
-      { path: 'saved', component: EmpSavedJobsSavedComponent },
-      { path: 'inprogress', component: EmpSavedJobsInprogressComponent },
-      { path: 'applied', component: EmpSavedJobsAppliedComponent },
-      { path: 'archived', component: EmpSavedJobsArchivedComponent },
+      { path: 'saved', component: EmpSavedJobsSavedComponent, canActivate: [AuthGuard] },
+      { path: 'inprogress', component: EmpSavedJobsInprogressComponent, canActivate: [AuthGuard] },
+      { path: 'applied', component: EmpSavedJobsAppliedComponent, canActivate: [AuthGuard] },
+      { path: 'archived', component: EmpSavedJobsArchivedComponent, canActivate: [AuthGuard] },
     ],
   },
 ];
