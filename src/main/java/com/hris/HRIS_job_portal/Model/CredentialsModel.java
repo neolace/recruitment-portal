@@ -20,4 +20,5 @@ public class CredentialsModel {
     private String email;
     private String password;
     private String role;
+    private String userLevel; // Free, Pro
 }

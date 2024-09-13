@@ -17,6 +17,11 @@ public class CredentialsController {
         return credentialsService.addCredentials(credentials);
     }
 
+    @GetMapping("/getAll")
+    public Iterable<CredentialsModel> getAllCredentials() {
+        return credentialsService.getAllCredentials();
+    }
+
     @GetMapping("/get/{id}")
     public CredentialsModel getCredentials(@PathVariable String id) {
         return credentialsService.getCredentials(id);
@@ -25,6 +30,11 @@ public class CredentialsController {
     @GetMapping("/getByEmail/{email}")
     public CredentialsModel getCredentialsByEmail(@PathVariable String email) {
         return credentialsService.getCredentialsByEmail(email);
+    }
+
+    @GetMapping("/getByEmployeeId/{employeeId}")
+    public CredentialsModel getCredentialsByEmployeeId(@PathVariable String employeeId) {
+        return credentialsService.getCredentialsByEmployeeId(employeeId);
     }
 
     @PutMapping("/update/{employeeId}")

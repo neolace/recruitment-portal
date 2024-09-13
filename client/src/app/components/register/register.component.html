@@ -9,35 +9,35 @@
         </div>
         <h5 class="title">Sign up</h5>
 
-        <form action="">
+        <form [formGroup]="registerForm">
           <div class="row form-wrapper">
             <div class="col-12">
               <label for="name">Name:</label>
-              <input type="text" placeholder="John" id="name">
+              <input type="text" placeholder="John" id="name" formControlName="name">
             </div>
 
             <div class="col-12">
               <label for="email">Email:</label>
-              <input type="email" placeholder="example@example.com" id="email">
+              <input type="email" placeholder="example@example.com" id="email" formControlName="email">
             </div>
 
             <div class="col-12">
               <label for="password">Password:</label>
-              <input type="password" placeholder="Password:" id="password">
+              <input type="password" placeholder="Password:" id="password" formControlName="password">
             </div>
 
             <div class="col-12">
-              <p style="margin: 0">You are registered as a </p>
+              <p style="margin: 0">You are registered as a</p>
               <div class="d-flex align-items-center justify-content-around">
                 <div class="form-radio d-flex align-items-center">
-                  <input class="form-radio-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" [checked]="cCheck">
-                  <label class="form-radio-label" for="flexRadioDefault1">
+                  <input class="form-radio-input" type="radio" formControlName="role" value="candidate" id="candidateRadio">
+                  <label class="form-radio-label" for="candidateRadio">
                     Candidate
                   </label>
                 </div>
                 <div class="form-radio d-flex align-items-center">
-                  <input class="form-radio-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" [checked]="eCheck">
-                  <label class="form-radio-label" for="flexRadioDefault2">
+                  <input class="form-radio-input" type="radio" formControlName="role" value="employer" id="employerRadio">
+                  <label class="form-radio-label" for="employerRadio">
                     Employer
                   </label>
                 </div>
@@ -47,8 +47,8 @@
             <div class="col-12">
               <div class="d-sm-flex align-items-center justify-content-between">
                 <div class="form-check">
-                  <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault">
-                  <label class="form-check-label" for="flexCheckDefault">
+                  <input class="form-check-input me-2" type="checkbox" formControlName="termsCheck" id="termsCheck">
+                  <label class="form-check-label" for="termsCheck">
                     I accept <a href="">Terms and Conditions</a>
                   </label>
                 </div>
@@ -56,7 +56,7 @@
             </div>
 
             <div class="col-12">
-              <button class="btn-1 w-100">Register</button>
+              <button class="btn-1 w-100" [disabled]="!registerForm.get('termsCheck')?.value" (click)="registerUser()">Register</button>
             </div>
 
             <div class="col-12">
@@ -64,6 +64,7 @@
             </div>
           </div>
         </form>
+
       </div>
     </div>
   </div>
