@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {EmployeeModel} from "../shared/data-models/Employee.model";
-import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
-import {environment} from "../../environments/environment";
+import { EmployeeModel } from "../shared/data-models/Employee.model";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { BehaviorSubject, Observable } from "rxjs";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -13,78 +13,85 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
-  private employeeSubject = new BehaviorSubject<EmployeeModel[]>([]);
+  // BehaviorSubject to store the employee data
+  private employeeSubject = new BehaviorSubject<EmployeeModel | null>(null);
   employee$ = this.employeeSubject.asObservable();
+  private employeesSubject = new BehaviorSubject<EmployeeModel[] | null>(null);
+  employees$ = this.employeesSubject.asObservable();
+
   private cacheInitialized = false;
 
-  fetchEmployees(): Observable<EmployeeModel[]> {
+  // Fetch all employees with caching
+  fetchEmployees(): Observable<EmployeeModel[]>|any {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('username:password')
+    });
+
     if (!this.cacheInitialized) {
-      this.http.get<EmployeeModel[]>(this.baseUrl+'/employee/getAll').subscribe(data => {
-        this.employeeSubject.next(data);
-        this.cacheInitialized = true; // Mark cache as initialized
+      this.http.get<EmployeeModel[]>(`${this.baseUrl}/employee/getAll`, {headers}).subscribe(data => {
+        this.employeesSubject.next(data);
+        this.cacheInitialized = true; // Cache is initialized after the first fetch
+      });
+    }
+    return this.employees$;
+  }
+
+  // Get a single employee by ID, cache the result
+  getEmployee(id: any): Observable<EmployeeModel>|any {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('username:password')
+    });
+    if (!this.cacheInitialized) {
+      this.http.get<EmployeeModel>(`${this.baseUrl}/employee/get/${id}`, {headers}).subscribe(data => {
+        this.employeeSubject.next(data); // Cache the single employee data
+        this.cacheInitialized = true;
       });
     }
     return this.employee$;
   }
 
-  getEmployee(id: number) {
-    return this.http.get<EmployeeModel[]>(this.baseUrl+'/employee/get/'+id).subscribe((data) => {
-      this.employeeSubject.next(data);
-      this.cacheInitialized = true;
+  // Fetch all employee-related data asynchronously (from async batch API) with caching
+  fetchFullEmployee(id: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+
+    if (!this.cacheInitialized) {
+      this.http.get<any>(`${this.baseUrl}/batch/async/getEmployee/${id}`, {headers}).subscribe(data => {
+        this.employeeSubject.next(data); // Cache main employee data
+        // You can store other data (contact, education, etc.) separately if needed
+        this.cacheInitialized = true;
+      });
+    }
+    return this.employee$;
+  }
+
+  // Delete employee and invalidate cache
+  deleteEmployee(id: any) {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('username:password')
+    });
+
+    return this.http.delete(`${this.baseUrl}/employee/delete/${id}`, {headers}).subscribe(() => {
+      this.clearCache();  // Clear cache after deletion
+      this.fetchEmployees(); // Re-fetch all employees
     });
   }
 
-  deleteEmployee(id: number) {
-    return this.http.delete(this.baseUrl+'/employee/delete/'+id).subscribe(() => {
-      this.fetchEmployees();
+  // Update employee's personal details and refresh cache
+  updateEmployee(employee: EmployeeModel) {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('username:password')
+    });
+    return this.http.post(`${this.baseUrl}/employee/update` , employee, {headers}).subscribe(() => {
+      this.clearCache(); // Invalidate the cache
+      this.fetchFullEmployee(employee.id); // Refresh the cache after updating
     });
   }
 
-  updatePersonalDetails(employee: EmployeeModel){
-    return this.http.post(this.baseUrl+'/employee/update', employee).subscribe(() => {
-      this.fetchEmployees();
-    });
-  }
-
-  updateContactDetails(employee: EmployeeModel) {
-    return this.http.post(this.baseUrl+'/employee/updateContact', employee).subscribe(() => {
-      this.fetchEmployees();
-    });
-  }
-
-  addSkills(employee: EmployeeModel) {
-    return this.http.post(this.baseUrl+'/employee/addSkills', employee).subscribe(() => {
-      this.fetchEmployees();
-    });
-  }
-
-  addExperience(employee: EmployeeModel) {
-    return this.http.post(this.baseUrl+'/employee/addExperience', employee).subscribe(() => {
-      this.fetchEmployees();
-    });
-  }
-
-  addEducation(employee: EmployeeModel) {
-    return this.http.post(this.baseUrl+'/employee/addEducation', employee).subscribe(() => {
-      this.fetchEmployees();
-    });
-  }
-
-  addSocialLinks(employee: EmployeeModel) {
-    return this.http.post(this.baseUrl+'/employee/addSocialLinks', employee).subscribe(() => {
-      this.fetchEmployees();
-    });
-  }
-
-  addAccountNotifications(employee: EmployeeModel) {
-    return this.http.post(this.baseUrl+'/employee/addAccountNotifications', employee).subscribe(() => {
-      this.fetchEmployees();
-    });
-  }
-
-  addMarketingNotifications(employee: EmployeeModel) {
-    return this.http.post(this.baseUrl+'/employee/addMarketingNotifications', employee).subscribe(() => {
-      this.fetchEmployees();
-    });
+  // Clear cache
+  private clearCache() {
+    this.cacheInitialized = false;
+    this.employeeSubject.next(null);  // Clear the cached data
   }
 }

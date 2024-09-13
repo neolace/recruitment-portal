@@ -19,6 +19,7 @@ import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
 import {environment} from "../environments/environment";
 import {AngularFireModule} from "@angular/fire/compat";
 import {SharedPipesModule} from "./shared/modules/shared-pipes.module";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {SharedPipesModule} from "./shared/modules/shared-pipes.module";
         AngularFirestoreModule,
         AngularFireStorageModule,
         AngularFireAuthModule,
-        SharedPipesModule
+        SharedPipesModule,
+        HttpClientModule
     ],
   providers: [],
   bootstrap: [AppComponent]
