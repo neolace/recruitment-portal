@@ -9,16 +9,16 @@
         </div>
         <h5 class="title">Login</h5>
 
-        <form action="">
+        <form [formGroup]="loginForm">
           <div class="row form-wrapper">
             <div class="col-12">
               <label for="email">Email:</label>
-              <input type="email" placeholder="example@example.com" id="email">
+              <input type="email" placeholder="example@example.com" id="email" formControlName="email">
             </div>
 
             <div class="col-12">
               <label for="password">Password:</label>
-              <input type="password" placeholder="Password:" id="password">
+              <input type="password" placeholder="Password:" id="password" formControlName="password">
             </div>
 
             <div class="col-12">
@@ -35,7 +35,7 @@
             </div>
 
             <div class="col-12">
-              <button class="btn-1 w-100">login/sign in</button>
+              <button class="btn-1 w-100" (click)="loginUser()">login/sign in</button>
             </div>
 
             <div class="col-12">
