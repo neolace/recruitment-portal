@@ -4,13 +4,13 @@
       <div class="cover-image">
         <img src="https://jobstack-shreethemes.vercel.app/static/media/bg5.634b5f6c21dce4640652.jpg" alt="cover">
         <label for="cover-photo-edit" class="photo-edit"><i class="fas fa-camera"></i></label>
-        <input type="file" id="cover-photo-edit" (change)="uploadFile($event, 'portal/profilePics/' + employeeId)"/>
+        <input type="file" id="cover-photo-edit" (change)="uploadFile($event, 'portal/profilePics/' + employeeId, 'profile')"/>
       </div>
 
       <div class="profile-img">
         <img src="https://jobstack-shreethemes.vercel.app/static/media/01.6ac85de7298319b1f8d5.jpg" alt="profile">
         <label for="profile-photo-edit" class="photo-edit"><i class="fas fa-camera"></i></label>
-        <input type="file" id="profile-photo-edit" (change)="uploadFile($event, 'portal/coverPics/' + employeeId)"/>
+        <input type="file" id="profile-photo-edit" (change)="uploadFile($event, 'portal/coverPics/' + employeeId, 'cover')"/>
       </div>
 
       <div class="profile-info">
@@ -22,53 +22,53 @@
     <div class="form-card-1">
       <h5>Personal Detail :</h5>
 
-      <form action="">
+      <form [formGroup]="personalFormGroup">
         <div class="row form-wrapper">
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="firstname">First Name</label>
-              <input type="text" class="form-control" id="firstname" placeholder="John">
+              <input type="text" class="form-control" id="firstname" placeholder="John" formControlName="firstname">
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="lastname">Last Name</label>
-              <input type="text" class="form-control" id="lastname" placeholder="Doe">
+              <input type="text" class="form-control" id="lastname" placeholder="Doe" formControlName="lastname">
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="email">Email Address</label>
-              <input type="email" class="form-control" id="email" placeholder="XwVpP@example.com">
+              <input type="email" class="form-control" id="email" placeholder="XwVpP@example.com" formControlName="email">
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="occupation">Occupation</label>
-              <input type="text" class="form-control" id="occupation" placeholder="Web Developer">
+              <input type="text" class="form-control" id="occupation" placeholder="Web Developer" formControlName="occupation">
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="dob">Date of Birth</label>
-              <input type="date" class="form-control" id="dob">
+              <input type="date" class="form-control" id="dob" formControlName="dob">
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="resume">Upload Resume</label>
-              <input type="file" class="form-control" id="resume">
+              <input type="file" class="form-control" id="resume" (change)="uploadFile($event, 'portal/resumes/' + employeeId, 'resume')"/>
             </div>
           </div>
           <div class="col-12">
             <div class="form-group">
               <label for="intro">Intro</label>
-              <textarea class="form-control" id="intro" rows="5" placeholder="Your bio"></textarea>
+              <textarea class="form-control" id="intro" rows="5" placeholder="Your bio" formControlName="intro"></textarea>
             </div>
           </div>
           <div class="col-12">
             <div class="form-group">
-              <button type="submit" class="btn-1">Save Changes</button>
+              <button type="submit" class="btn-1" (click)="savePersonalDetails()">Save Changes</button>
             </div>
           </div>
         </div>
@@ -230,6 +230,12 @@
               <div class="form-group">
                 <label for="phone">Phone Number</label>
                 <input type="text" class="form-control" id="phone">
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label for="cemail">Email Address</label>
+                <input type="email" class="form-control" id="cemail">
               </div>
             </div>
             <div class="col-12">

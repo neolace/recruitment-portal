@@ -38,7 +38,14 @@ public class EmployeeService {
     public EmployeeModel updateEmployee(EmployeeModel employee) {
         Optional<EmployeeModel> employeeModel = employeeRepository.findById(employee.getId());
         if (employeeModel.isPresent()) {
-            employeeRepository.save(employee);
+            EmployeeModel existingEmployee = employeeModel.get();
+            existingEmployee.setFirstname(employee.getFirstname());
+            existingEmployee.setLastname(employee.getLastname());
+            existingEmployee.setEmail(employee.getEmail());
+            existingEmployee.setOccupation(employee.getOccupation());
+            existingEmployee.setDob(employee.getDob());
+            existingEmployee.setIntro(employee.getIntro());
+            employeeRepository.save(existingEmployee);
         }
         return employee;
     }
