@@ -17,10 +17,6 @@ export class AuthService {
     this.cookieService.set('organization',token, 60*60*24*7);
   }
 
-  public createDepartmentID(token:any){
-    this.cookieService.set('department', token, 60*60*24*7)
-  }
-
   public createLevel(token:any){
     this.cookieService.set('level', token, 60*60*24*7)
   }
@@ -29,15 +25,16 @@ export class AuthService {
     this.cookieService.set('admin-token',token,60*60*24*7);
   }
 
-  public logout(){
-    this.cookieService.delete('user-token-id');
-    this.cookieService.delete('organization');
-    this.cookieService.delete('department');
-    this.cookieService.delete('level');
+  public createProAdmin(token:string){
+    this.cookieService.set('pro-admin-token',token,60*60*24*7);
   }
 
-  public logoutAdmin(){
+  public logout(){
+    this.cookieService.delete('user-token-id');
+    this.cookieService.delete('pro-admin-token');
+    this.cookieService.delete('organization');
     this.cookieService.delete('admin-token');
+    this.cookieService.delete('level');
   }
 
   public isExists():boolean{
@@ -50,13 +47,14 @@ export class AuthService {
     return admin.length !== 0;
   }
 
+  public isProAdmin():boolean{
+    let proAdmin = this.cookieService.get('pro-admin-token');
+    return proAdmin.length !== 0;
+  }
+
   public isOrganization():boolean{
     let org = this.cookieService.get('organization');
     return org.length !== 0;
-  }
-
-  public userEmail() {
-    return this.cookieService.get('user-token').toString();
   }
 
   public userID() {
@@ -71,16 +69,8 @@ export class AuthService {
     return this.cookieService.get('organization').toString();
   }
 
-  public department() {
-    return this.cookieService.get('department').toString();
-  }
-
   public level() {
     return this.cookieService.get('level').toString();
-  }
-
-  public userProfile() {
-    return this.cookieService.get('profile-token').toString();
   }
 
   public acceptAllCookies() {
