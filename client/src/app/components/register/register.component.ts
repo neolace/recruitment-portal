@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CredentialService} from "../../services/credential.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,7 @@ export class RegisterComponent implements OnInit {
     termsCheck: new FormControl(false, [Validators.requiredTrue])
   });
 
-  constructor(private router: Router, private route: ActivatedRoute, private credentialService: CredentialService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private credentialService: CredentialService, private cookieService: AuthService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -47,8 +48,14 @@ export class RegisterComponent implements OnInit {
         }
         if (formData.role === 'candidate') {
           this.router.navigate(['/']);
+          this.cookieService.createUserID(response.employeeId);
+          this.cookieService.createLevel(response.userLevel);
         } else if (formData.role === 'employer') {
           this.router.navigate(['/dashboard']);
+          this.cookieService.createUserID(response.employeeId);
+          this.cookieService.createLevel(response.userLevel);
+          this.cookieService.createAdmin(response.email);
+          this.cookieService.createOrganizationID(response.organizationId);
         }
       }, error => {
         console.log(error);
