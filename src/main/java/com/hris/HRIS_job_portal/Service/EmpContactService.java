@@ -3,9 +3,11 @@ package com.hris.HRIS_job_portal.Service;
 import com.hris.HRIS_job_portal.Model.EmpContactModel;
 import com.hris.HRIS_job_portal.Repository.EmpContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class EmpContactService {
@@ -34,5 +36,12 @@ public class EmpContactService {
 
     public void deleteEmpContact(String employeeId) {
         empContactRepository.deleteByEmployeeId(employeeId);
+    }
+
+    @Async
+    public CompletableFuture<List<EmpContactModel>> getEmpContactByEmployeeIdAsync(String employeeId) {
+        // Fetch employees asynchronously
+        List<EmpContactModel> empContacts = getEmpContactByEmployeeId(employeeId);
+        return CompletableFuture.completedFuture(empContacts);
     }
 }

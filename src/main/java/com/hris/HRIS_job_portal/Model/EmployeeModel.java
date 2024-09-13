@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
@@ -16,10 +17,12 @@ public class EmployeeModel {
     private String id;
     private String firstname;
     private String lastname;
+    @Indexed
     private String occupation;
     private String image;
     private String coverImage;
     private String dob;
+    @Indexed(unique = true)
     private String email;
     private String resume;
     private String intro;

@@ -1,11 +1,14 @@
 package com.hris.HRIS_job_portal.Controller;
 
+import com.hris.HRIS_job_portal.Model.*;
 import com.hris.HRIS_job_portal.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/api/v2/batch")
@@ -36,4 +39,26 @@ public class BatchController {
         response.put("empExperiences", empExperiencesService.getEmpExperiencesByEmployeeId(id));
         return response;
     }
+
+    @GetMapping("/async/getEmployee/{id}")
+    public CompletableFuture<Map<String, Object>> getEmployeeAsync(@PathVariable String id) {
+        CompletableFuture<EmployeeModel> employeeFuture = employeeService.getEmployeeByIdAsync(id);
+        CompletableFuture<List<EmpContactModel>> contactFuture = empContactService.getEmpContactByEmployeeIdAsync(id);
+        CompletableFuture<List<EmpEducationModel>> educationFuture = empEducationService.getEmpEducationByEmployeeIdAsync(id);
+        CompletableFuture<List<EmpSkillsModel>> skillsFuture = empSkillsService.getEmpSkillsByEmployeeIdAsync(id);
+        CompletableFuture<List<EmpExperiencesModel>> experiencesFuture = empExperiencesService.getEmpExperiencesByEmployeeIdAsync(id);
+
+        // Wait for all async calls to complete
+        return CompletableFuture.allOf(employeeFuture, contactFuture, educationFuture, skillsFuture, experiencesFuture)
+                .thenApply(v -> {
+                    Map<String, Object> response = new HashMap<>();
+                    response.put("employee", employeeFuture.join());
+                    response.put("empContact", contactFuture.join());
+                    response.put("empEducation", educationFuture.join());
+                    response.put("empSkills", skillsFuture.join());
+                    response.put("empExperiences", experiencesFuture.join());
+                    return response;
+                });
+    }
+
 }
