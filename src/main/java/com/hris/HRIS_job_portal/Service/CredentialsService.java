@@ -35,12 +35,20 @@ public class CredentialsService {
         }
     }
 
+    public Iterable<CredentialsModel> getAllCredentials() {
+        return credentialsRepository.findAll();
+    }
+
     public CredentialsModel getCredentials(String employeeId) {
         return credentialsRepository.findByEmployeeId(employeeId);
     }
 
     public CredentialsModel getCredentialsByEmail(String email) {
         return credentialsRepository.findByEmail(email);
+    }
+
+    public CredentialsModel getCredentialsByEmployeeId(String employeeId) {
+        return credentialsRepository.findByEmployeeId(employeeId);
     }
 
     public CredentialsModel updateCredentials(String employeeId, CredentialsModel credentials) {
