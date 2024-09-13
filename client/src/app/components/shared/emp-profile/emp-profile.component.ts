@@ -9,26 +9,25 @@ import {EmployeeService} from "../../../services/employee.service";
 })
 export class EmpProfileComponent implements OnInit{
 
-  progressValue = 90;
+  progressValue = 8;
   progressMode: ProgressSpinnerMode = 'determinate';
 
   employee: any;
   employeeId: any = '66e31aa7217eb911ad764373';
-  loading: boolean = true;
+  loading: boolean = false;
 
   constructor(private employeeService: EmployeeService) {}
 
-  ngOnInit(): void {
-    this.getEmployee(this.employeeId);
+  async ngOnInit(): Promise<any> {
+    this.getEmployee(this.employeeId)
   }
 
   getEmployee(id: any) {
+    this.loading = true;
     this.employeeService.fetchFullEmployee(id).subscribe(
       (data) => {
         this.employee = data;
-        this.calculateProfileProgress(data?.employee);
-        console.log(data)
-        this.loading = false;
+        this.calculateProfileProgress(this.employee?.employee?.profileCompleted);
       },
       (error) => {
         console.error('Error fetching employee data', error);
@@ -38,6 +37,7 @@ export class EmpProfileComponent implements OnInit{
   }
 
   calculateProfileProgress(data: any) {
+    this.loading = false;
     if (!data) return;
     const profileCompletion = data.profileCompleted;
     const completionArray = Object.values(profileCompletion);

@@ -20,34 +20,29 @@ export class EmployeeService {
   employees$ = this.employeesSubject.asObservable();
 
   private cacheInitialized = false;
+  private employeesCacheInitialized = false;
 
   // Fetch all employees with caching
   fetchEmployees(): Observable<EmployeeModel[]>|any {
     const headers = new HttpHeaders({
-      'Authorization': 'Basic ' + btoa('username:password')
+      'Authorization': 'Basic ' + btoa('admin:password')
     });
 
-    if (!this.cacheInitialized) {
+    if (!this.employeesCacheInitialized) {
       this.http.get<EmployeeModel[]>(`${this.baseUrl}/employee/getAll`, {headers}).subscribe(data => {
         this.employeesSubject.next(data);
-        this.cacheInitialized = true; // Cache is initialized after the first fetch
+        this.employeesCacheInitialized = true; // Cache is initialized after the first fetch
       });
     }
     return this.employees$;
   }
 
-  // Get a single employee by ID, cache the result
-  getEmployee(id: any): Observable<EmployeeModel>|any {
+  // Get a single employee by ID, cannot cache because it's need to fetch other employee data
+  getEmployee(id: any): Observable<any> {
     const headers = new HttpHeaders({
-      'Authorization': 'Basic ' + btoa('username:password')
+      'Authorization': 'Basic ' + btoa('admin:password')
     });
-    if (!this.cacheInitialized) {
-      this.http.get<EmployeeModel>(`${this.baseUrl}/employee/get/${id}`, {headers}).subscribe(data => {
-        this.employeeSubject.next(data); // Cache the single employee data
-        this.cacheInitialized = true;
-      });
-    }
-    return this.employee$;
+    return this.http.get<EmployeeModel>(`${this.baseUrl}/employee/get/${id}`, {headers});
   }
 
   // Fetch all employee-related data asynchronously (from async batch API) with caching
@@ -69,7 +64,7 @@ export class EmployeeService {
   // Delete employee and invalidate cache
   deleteEmployee(id: any) {
     const headers = new HttpHeaders({
-      'Authorization': 'Basic ' + btoa('username:password')
+      'Authorization': 'Basic ' + btoa('admin:password')
     });
 
     return this.http.delete(`${this.baseUrl}/employee/delete/${id}`, {headers}).subscribe(() => {
@@ -79,19 +74,26 @@ export class EmployeeService {
   }
 
   // Update employee's personal details and refresh cache
-  updateEmployee(employee: EmployeeModel) {
+  updateEmployee(employee: EmployeeModel): Observable<any> {
     const headers = new HttpHeaders({
-      'Authorization': 'Basic ' + btoa('username:password')
+      'Authorization': 'Basic ' + btoa('admin:password')
     });
-    return this.http.post(`${this.baseUrl}/employee/update` , employee, {headers}).subscribe(() => {
+    this.http.put(`${this.baseUrl}/employee/update` , employee, {headers}).subscribe(data => {
       this.clearCache(); // Invalidate the cache
       this.fetchFullEmployee(employee.id); // Refresh the cache after updating
     });
+
+    return this.employees$;
   }
 
   // Clear cache
   private clearCache() {
     this.cacheInitialized = false;
-    this.employeeSubject.next(null);  // Clear the cached data
+    this.employeeSubject.next(null);
+  }
+
+  private clearEmployeesCache() {
+    this.employeesCacheInitialized = false;
+    this.employeesSubject.next(null);
   }
 }
