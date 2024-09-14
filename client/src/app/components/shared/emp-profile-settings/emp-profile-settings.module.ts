@@ -3,6 +3,7 @@ import {CommonModule} from "@angular/common";
 import {EmpProfileSettingsRoutingModule} from "./emp-profile-settings-routing.module";
 import {EmpProfileSettingsComponent} from "./emp-profile-settings.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {SharedComponentModule} from "../../../shared/modules/shared-component.module";
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         CommonModule,
         EmpProfileSettingsRoutingModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        SharedComponentModule
     ]
 })
 export class EmpProfileSettingsModule { }

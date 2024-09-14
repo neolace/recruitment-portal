@@ -10,24 +10,26 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {SharedComponentModule} from "../../../shared/modules/shared-component.module";
 
 @NgModule({
   declarations: [
     EmpProfileComponent
   ],
-  imports: [
-    CommonModule,
-    EmpProfileRoutingModule,
-    MatIconModule,
-    MatMenuModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatSidenavModule,
-    MatExpansionModule,
-    MatTooltipModule,
-    MatProgressSpinnerModule,
-    FormsModule
-  ],
+    imports: [
+        CommonModule,
+        EmpProfileRoutingModule,
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatSidenavModule,
+        MatExpansionModule,
+        MatTooltipModule,
+        MatProgressSpinnerModule,
+        FormsModule,
+        SharedComponentModule
+    ],
   providers: [],
 })
 export class EmpProfileModule { }

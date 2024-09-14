@@ -22,9 +22,9 @@ import {SharedPipesModule} from "./shared/modules/shared-pipes.module";
 import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+    declarations: [
+        AppComponent
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -46,8 +46,8 @@ import {HttpClientModule} from "@angular/common/http";
         SharedPipesModule,
         HttpClientModule
     ],
-  providers: [],
-  bootstrap: [AppComponent]
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }
