@@ -2,16 +2,16 @@ import {NgModule} from "@angular/core";
 import {JobsLearnMoreComponent} from "./jobs-learn-more.component";
 import {CommonModule} from "@angular/common";
 import {JobsLearnMoreRoutingModule} from "./jobs-learn-more-routing.module";
-import {UnderDevelopmentComponent} from "../under-development/under-development.component";
+import {SharedComponentModule} from "../../../shared/modules/shared-component.module";
 
 @NgModule({
   declarations: [
-    JobsLearnMoreComponent,
-    UnderDevelopmentComponent
+    JobsLearnMoreComponent
   ],
   imports: [
     CommonModule,
-    JobsLearnMoreRoutingModule
+    JobsLearnMoreRoutingModule,
+    SharedComponentModule
   ],
   exports: []
 })
