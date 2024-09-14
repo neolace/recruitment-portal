@@ -40,6 +40,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.setupIntersectionObserver()
+    const icons = document.querySelectorAll('.material-icons');
+    icons.forEach((icon) => {
+      icon.setAttribute('translate', 'no');
+    });
   }
 
   setupIntersectionObserver() {

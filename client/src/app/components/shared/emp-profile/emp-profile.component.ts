@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
 import {EmployeeService} from "../../../services/employee.service";
 
@@ -7,7 +7,7 @@ import {EmployeeService} from "../../../services/employee.service";
   templateUrl: './emp-profile.component.html',
   styleUrls: ['./emp-profile.component.scss']
 })
-export class EmpProfileComponent implements OnInit{
+export class EmpProfileComponent implements OnInit, AfterViewInit{
 
   progressValue = 8;
   progressMode: ProgressSpinnerMode = 'determinate';
@@ -20,6 +20,13 @@ export class EmpProfileComponent implements OnInit{
 
   async ngOnInit(): Promise<any> {
     this.getEmployee(this.employeeId)
+  }
+
+  ngAfterViewInit() {
+    const icons = document.querySelectorAll('.material-icons');
+    icons.forEach((icon) => {
+      icon.setAttribute('translate', 'no');
+    });
   }
 
   getEmployee(id: any) {

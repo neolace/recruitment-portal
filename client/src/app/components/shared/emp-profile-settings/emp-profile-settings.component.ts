@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {countries} from "../../../shared/data-store/countries";
 import {FileUploadService} from "../../../services/file-upload.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -10,7 +10,7 @@ import {ToastrService} from "ngx-toastr";
   templateUrl: './emp-profile-settings.component.html',
   styleUrls: ['./emp-profile-settings.component.scss']
 })
-export class EmpProfileSettingsComponent implements OnInit {
+export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
   countriesSet: any[] = countries
 
   employee: any
@@ -32,6 +32,13 @@ export class EmpProfileSettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEmployee(this.employeeId);
+  }
+
+  ngAfterViewInit() {
+    const icons = document.querySelectorAll('.material-icons');
+    icons.forEach((icon) => {
+      icon.setAttribute('translate', 'no');
+    });
   }
 
   getEmployee(id: any) {

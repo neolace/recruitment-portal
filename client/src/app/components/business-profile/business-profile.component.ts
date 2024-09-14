@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {companyDataStore} from "../../shared/data-store/company-data-store";
 
@@ -7,7 +7,7 @@ import {companyDataStore} from "../../shared/data-store/company-data-store";
   templateUrl: './business-profile.component.html',
   styleUrls: ['./business-profile.component.scss']
 })
-export class BusinessProfileComponent implements OnInit{
+export class BusinessProfileComponent implements OnInit, AfterViewInit{
 
   companyDataStore: any = companyDataStore;
   filteredCompanyDataStore: any[] = [];
@@ -18,6 +18,13 @@ export class BusinessProfileComponent implements OnInit{
   ngOnInit(): void {
     this.companyId = this.router.url.split('/')[2];
     this.filterCompanyData();
+  }
+
+  ngAfterViewInit() {
+    const icons = document.querySelectorAll('.material-icons');
+    icons.forEach((icon) => {
+      icon.setAttribute('translate', 'no');
+    });
   }
 
   filterCompanyData(): any[] {

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {companyDataStore} from "../../shared/data-store/company-data-store";
 
@@ -7,7 +7,7 @@ import {companyDataStore} from "../../shared/data-store/company-data-store";
   templateUrl: './companies.component.html',
   styleUrls: ['./companies.component.scss']
 })
-export class CompaniesComponent implements OnInit{
+export class CompaniesComponent implements OnInit, AfterViewInit{
 
   companyDataStore: any[] = [];
   filteredCompanies: any[] = [];
@@ -34,6 +34,13 @@ export class CompaniesComponent implements OnInit{
     this.totalPages = Math.ceil(this.companyDataStore.length / this.itemsPerPage);
     this.updatePaginationRange();
     this.updatePaginatedCompanies();
+  }
+
+  ngAfterViewInit() {
+    const icons = document.querySelectorAll('.material-icons');
+    icons.forEach((icon) => {
+      icon.setAttribute('translate', 'no');
+    });
   }
 
   filterCompanies(): void {
