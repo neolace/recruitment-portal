@@ -20,6 +20,7 @@ import {environment} from "../environments/environment";
 import {AngularFireModule} from "@angular/fire/compat";
 import {SharedPipesModule} from "./shared/modules/shared-pipes.module";
 import {HttpClientModule} from "@angular/common/http";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
     declarations: [
@@ -44,7 +45,13 @@ import {HttpClientModule} from "@angular/common/http";
         AngularFireStorageModule,
         AngularFireAuthModule,
         SharedPipesModule,
-        HttpClientModule
+        HttpClientModule,
+        ToastrModule.forRoot({
+          positionClass: 'toast-bottom-right',
+          preventDuplicates: true,
+          maxOpened: 3,
+          timeOut: 5000,
+        })
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -14,7 +14,7 @@ import {SharedComponentModule} from "../../../shared/modules/shared-component.mo
         EmpProfileSettingsRoutingModule,
         FormsModule,
         ReactiveFormsModule,
-        SharedComponentModule
+        SharedComponentModule,
     ]
 })
 export class EmpProfileSettingsModule { }

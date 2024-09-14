@@ -3,15 +3,15 @@
     <div *ngIf="loading"><app-page-loading></app-page-loading></div>
     <div class="top-content">
       <div class="cover-image">
-        <img src="https://jobstack-shreethemes.vercel.app/static/media/bg5.634b5f6c21dce4640652.jpg" alt="cover">
+        <img [src]="employee?.employee.coverImage?employee.employee.coverImage:'./assets/imgs/shared/default_cover.webp'" alt="cover">
         <label for="cover-photo-edit" class="photo-edit"><i class="fas fa-camera"></i></label>
-        <input type="file" id="cover-photo-edit" (change)="uploadFile($event, 'portal/profilePics/' + employeeId, 'profile')"/>
+        <input type="file" accept="image/*" id="cover-photo-edit" (change)="uploadFile($event, 'portal/coverPics/' + employeeId, 'cover')"/>
       </div>
 
       <div class="profile-img">
-        <img src="https://jobstack-shreethemes.vercel.app/static/media/01.6ac85de7298319b1f8d5.jpg" alt="profile">
+        <img [src]="employee?.employee.image?employee.employee.image:'./assets/imgs/shared/default_emp_dp.svg'" alt="profile">
         <label for="profile-photo-edit" class="photo-edit"><i class="fas fa-camera"></i></label>
-        <input type="file" id="profile-photo-edit" (change)="uploadFile($event, 'portal/coverPics/' + employeeId, 'cover')"/>
+        <input type="file" accept="image/*" id="profile-photo-edit" (change)="uploadFile($event, 'portal/profilePics/' + employeeId, 'profile')"/>
       </div>
 
       <div class="profile-info">

@@ -50,6 +50,36 @@ public class EmployeeService {
         return employee;
     }
 
+    public EmployeeModel updateProfilePic(EmployeeModel employee) {
+        Optional<EmployeeModel> employeeModel = employeeRepository.findById(employee.getId());
+        if (employeeModel.isPresent()) {
+            EmployeeModel existingEmployee = employeeModel.get();
+            existingEmployee.setImage(employee.getImage());
+            employeeRepository.save(existingEmployee);
+        }
+        return employee;
+    }
+
+    public EmployeeModel updateCoverPic(EmployeeModel employee) {
+        Optional<EmployeeModel> employeeModel = employeeRepository.findById(employee.getId());
+        if (employeeModel.isPresent()) {
+            EmployeeModel existingEmployee = employeeModel.get();
+            existingEmployee.setCoverImage(employee.getCoverImage());
+            employeeRepository.save(existingEmployee);
+        }
+        return employee;
+    }
+
+    public EmployeeModel updateResume(EmployeeModel employee) {
+        Optional<EmployeeModel> employeeModel = employeeRepository.findById(employee.getId());
+        if (employeeModel.isPresent()) {
+            EmployeeModel existingEmployee = employeeModel.get();
+            existingEmployee.setResume(employee.getResume());
+            employeeRepository.save(existingEmployee);
+        }
+        return employee;
+    }
+
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
