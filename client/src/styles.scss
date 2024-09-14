@@ -1672,3 +1672,15 @@ $accordion-icon-transform3: rotate(270deg);
     }
   }
 }
+
+.translated-ltr{
+  .mat-typography{
+    top: 0 !important;
+    width: 100%;
+
+    .VIpgJd-ZVi9od-ORHb-OEVmcd.skiptranslate{
+      top: unset;
+      bottom: 0;
+    }
+  }
+}

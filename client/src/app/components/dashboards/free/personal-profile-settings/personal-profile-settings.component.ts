@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import {countries} from "../../../../shared/data-store/countries";
 
 @Component({
@@ -6,7 +6,14 @@ import {countries} from "../../../../shared/data-store/countries";
   templateUrl: './personal-profile-settings.component.html',
   styleUrls: ['./personal-profile-settings.component.scss']
 })
-export class PersonalProfileSettingsComponent {
+export class PersonalProfileSettingsComponent implements AfterViewInit{
 
   countriesSet: any[] = countries
+
+  ngAfterViewInit() {
+    const icons = document.querySelectorAll('.material-icons');
+    icons.forEach((icon) => {
+      icon.setAttribute('translate', 'no');
+    });
+  }
 }

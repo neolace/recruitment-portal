@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { jobAdDataStrore } from '../../shared/data-store/JobAd-data-strore';
 import {ActivatedRoute} from "@angular/router";
 
@@ -7,7 +7,7 @@ import {ActivatedRoute} from "@angular/router";
   templateUrl: './job.component.html',
   styleUrls: ['./job.component.scss']
 })
-export class JobComponent implements OnInit {
+export class JobComponent implements OnInit, AfterViewInit {
   @ViewChild('jobSearchInput') jobSearchInput!: ElementRef;
 
   heart: boolean = false; //test
@@ -45,6 +45,13 @@ export class JobComponent implements OnInit {
       this.totalPages = Math.ceil(this.filteredJobAds.length / this.itemsPerPage);
       this.updatePaginationRange();
       this.updatePaginatedJobAds();
+    });
+  }
+
+  ngAfterViewInit() {
+    const icons = document.querySelectorAll('.material-icons');
+    icons.forEach((icon) => {
+      icon.setAttribute('translate', 'no');
     });
   }
 

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {GoogleMap, MapInfoWindow, MapMarker} from "@angular/google-maps";
 
 @Component({
@@ -6,7 +6,7 @@ import {GoogleMap, MapInfoWindow, MapMarker} from "@angular/google-maps";
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss']
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent implements OnInit, AfterViewInit {
   @ViewChild(GoogleMap, { static: false }) map: GoogleMap | any;
   @ViewChild(MapInfoWindow, { static: false }) info: MapInfoWindow | any;
 
@@ -44,6 +44,13 @@ export class ContactComponent implements OnInit {
       lat: 6.918604,
       lng: 79.865564,
     };
+  }
+
+  ngAfterViewInit() {
+    const icons = document.querySelectorAll('.material-icons');
+    icons.forEach((icon) => {
+      icon.setAttribute('translate', 'no');
+    });
   }
 
   zoomIn() {

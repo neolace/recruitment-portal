@@ -1,11 +1,11 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-faq',
   templateUrl: './faq.component.html',
   styleUrls: ['./faq.component.scss']
 })
-export class FaqComponent {
+export class FaqComponent implements AfterViewInit{
 @ViewChild('buying') buying!: ElementRef;
 @ViewChild('general') general!: ElementRef;
 @ViewChild('payments') payments!: ElementRef;
@@ -16,6 +16,13 @@ export class FaqComponent {
 @ViewChild('paymentsSec') paymentsSec!: ElementRef;
 @ViewChild('supportSec') supportSec!: ElementRef;
 @ViewChild('otherSec') otherSec!: ElementRef;
+
+ngAfterViewInit() {
+  const icons = document.querySelectorAll('.material-icons');
+  icons.forEach((icon) => {
+    icon.setAttribute('translate', 'no');
+  });
+}
 
   navigateSection(section: string) {
     switch (section) {

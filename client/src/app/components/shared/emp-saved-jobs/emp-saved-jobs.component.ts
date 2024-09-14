@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
@@ -6,7 +6,7 @@ import {NavigationEnd, Router} from "@angular/router";
   templateUrl: './emp-saved-jobs.component.html',
   styleUrls: ['./emp-saved-jobs.component.scss']
 })
-export class EmpSavedJobsComponent implements OnInit {
+export class EmpSavedJobsComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router) {}
 
@@ -18,6 +18,14 @@ export class EmpSavedJobsComponent implements OnInit {
       }
     });
   }
+
+  ngAfterViewInit() {
+    const icons = document.querySelectorAll('.material-icons');
+    icons.forEach((icon) => {
+      icon.setAttribute('translate', 'no');
+    });
+  }
+
   navigateBetweenTabs(path: string) {
     this.router.navigate([`/my-jobs/${path}/`]);
   }

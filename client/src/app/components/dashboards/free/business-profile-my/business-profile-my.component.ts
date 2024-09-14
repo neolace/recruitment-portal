@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -6,10 +6,17 @@ import {ActivatedRoute, Router} from "@angular/router";
   templateUrl: './business-profile-my.component.html',
   styleUrls: ['./business-profile-my.component.scss']
 })
-export class BusinessProfileMyComponent implements OnInit {
+export class BusinessProfileMyComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router, private route: ActivatedRoute) { }
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit() {
+    const icons = document.querySelectorAll('.material-icons');
+    icons.forEach((icon) => {
+      icon.setAttribute('translate', 'no');
+    });
   }
 
   goSeeJobs() {

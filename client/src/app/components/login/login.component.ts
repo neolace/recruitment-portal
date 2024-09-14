@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CredentialService} from "../../services/credential.service";
 import {Router} from "@angular/router";
@@ -9,7 +9,7 @@ import {AuthService} from "../../services/auth.service";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements AfterViewInit {
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -18,6 +18,12 @@ export class LoginComponent {
 
   constructor(private router: Router, private credentialService: CredentialService, private cookieService: AuthService) { }
 
+  ngAfterViewInit() {
+    const icons = document.querySelectorAll('.material-icons');
+    icons.forEach((icon) => {
+      icon.setAttribute('translate', 'no');
+    });
+  }
 
   loginUser() {
     if (this.loginForm.valid) {

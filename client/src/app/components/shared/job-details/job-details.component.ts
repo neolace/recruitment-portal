@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {jobAdDataStrore} from "../../../shared/data-store/JobAd-data-strore";
 import {Router} from "@angular/router";
 
@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
   templateUrl: './job-details.component.html',
   styleUrls: ['./job-details.component.scss']
 })
-export class JobDetailsComponent implements OnInit{
+export class JobDetailsComponent implements OnInit, AfterViewInit{
 
   jobDataStore: any = jobAdDataStrore;
   filteredJobDataStore: any[] = [];
@@ -19,6 +19,13 @@ export class JobDetailsComponent implements OnInit{
   ngOnInit(): void {
     this.jobPostId = this.router.url.split('/')[2];
     this.filterJobData();
+  }
+
+  ngAfterViewInit() {
+    const icons = document.querySelectorAll('.material-icons');
+    icons.forEach((icon) => {
+      icon.setAttribute('translate', 'no');
+    });
   }
 
   filterJobData(): any[] {

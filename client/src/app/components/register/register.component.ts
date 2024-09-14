@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CredentialService} from "../../services/credential.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -9,7 +9,7 @@ import {AuthService} from "../../services/auth.service";
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, AfterViewInit {
 
   registerForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -28,6 +28,13 @@ export class RegisterComponent implements OnInit {
       } else {
         this.registerForm.patchValue({ role: 'candidate' });
       }
+    });
+  }
+
+  ngAfterViewInit() {
+    const icons = document.querySelectorAll('.material-icons');
+    icons.forEach((icon) => {
+      icon.setAttribute('translate', 'no');
     });
   }
 
