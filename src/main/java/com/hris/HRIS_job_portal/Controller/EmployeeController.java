@@ -38,4 +38,19 @@ public class EmployeeController {
     public EmployeeModel updateEmployee(@RequestBody EmployeeModel employee) {
         return employeeService.updateEmployee(employee);
     }
+
+    @PutMapping("/update/updateProfilePic")
+    public EmployeeModel updateProfilePic(@RequestBody EmployeeModel employee) {
+        return employeeService.updateProfilePic(employee);
+    }
+
+    @PutMapping("/update/updateCoverPic")
+    public EmployeeModel updateCoverPic(@RequestBody EmployeeModel employee) {
+        return employeeService.updateCoverPic(employee);
+    }
+
+    @PutMapping("/update/updateResume")
+    public EmployeeModel updateResume(@RequestBody EmployeeModel employee) {
+        return employeeService.updateResume(employee);
+    }
 }

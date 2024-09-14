@@ -86,6 +86,42 @@ export class EmployeeService {
     return this.employees$;
   }
 
+  updateProfilePic(employee: EmployeeModel): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    this.http.put(`${this.baseUrl}/employee/update/updateProfilePic` , employee, {headers}).subscribe(data => {
+      this.clearCache(); // Invalidate the cache
+      this.fetchFullEmployee(employee.id); // Refresh the cache after updating
+    });
+
+    return this.employees$;
+  }
+
+  updateCoverPic(employee: EmployeeModel): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    this.http.put(`${this.baseUrl}/employee/update/updateCoverPic` , employee, {headers}).subscribe(data => {
+      this.clearCache(); // Invalidate the cache
+      this.fetchFullEmployee(employee.id); // Refresh the cache after updating
+    });
+
+    return this.employees$;
+  }
+
+  updateResume(employee: EmployeeModel): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    this.http.put(`${this.baseUrl}/employee/update/updateResume` , employee, {headers}).subscribe(data => {
+      this.clearCache(); // Invalidate the cache
+      this.fetchFullEmployee(employee.id); // Refresh the cache after updating
+    });
+
+    return this.employees$;
+  }
+
   // Clear cache
   private clearCache() {
     this.cacheInitialized = false;

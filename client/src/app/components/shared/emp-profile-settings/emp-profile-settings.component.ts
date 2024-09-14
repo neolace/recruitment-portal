@@ -3,6 +3,7 @@ import {countries} from "../../../shared/data-store/countries";
 import {FileUploadService} from "../../../services/file-upload.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EmployeeService} from "../../../services/employee.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-emp-profile-settings',
@@ -27,7 +28,7 @@ export class EmpProfileSettingsComponent implements OnInit {
     intro: new FormControl('')
   });
 
-  constructor(private fileUploadService: FileUploadService, private employeeService: EmployeeService ) { }
+  constructor(private fileUploadService: FileUploadService, private employeeService: EmployeeService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getEmployee(this.employeeId);
@@ -42,8 +43,8 @@ export class EmpProfileSettingsComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        console.error('Error fetching employee data', error);
         this.loading = false;
+        this.errorMessage('Something went wrong! Please try again', 'Error');
       }
     );
   }
@@ -72,31 +73,96 @@ export class EmpProfileSettingsComponent implements OnInit {
     }).subscribe((data) => {
       this.getEmployee(this.employeeId);
       this.loading = false;
+      this.successMessage('Personal details updated successfully', 'Success');
     }, (error) => {
-      console.error('Error updating employee data', error);
       this.loading = false;
+      this.errorMessage('Something went wrong. Please try again', 'Error');
     });
   }
 
   uploadFile(event: any, filePath: string, location: string) {
     const file = event.target.files[0];
+    const maxFileSize = 2 * 1024 * 1024;
+    const allowedFileTypes = ['image/png', 'image/jpeg', 'application/pdf'];
     if (file) {
+      if (file.size > maxFileSize) {
+        this.warningMessage('File size exceeds the maximum limit of 2MB.', 'Warning');
+        return;
+      }
+      if (!allowedFileTypes.includes(file.type)) {
+        this.warningMessage('Only PNG, JPEG, and PDF files are allowed.', 'Warning');
+        return;
+      }
+      this.loading = true;
       this.fileUploadService.uploadFile(filePath, file).subscribe(url => {
         this.downloadURL = url;
         switch (location) {
           case 'resume':
-            // update resume
+            this.employeeService.updateResume({
+              id: this.employeeId,
+              resume: this.downloadURL
+            }).subscribe((data) => {
+              this.getEmployee(this.employeeId);
+              this.loading = false;
+              this.successMessage('Resume uploaded successfully.', 'Success');
+            }, (error) => {
+              this.loading = false;
+              this.errorMessage('Something went wrong. Please try again.', 'Error');
+            })
             break;
           case 'cover':
-            // update cover
+            this.employeeService.updateCoverPic({
+              id: this.employeeId,
+              coverImage: this.downloadURL
+            }).subscribe((data) => {
+              this.getEmployee(this.employeeId);
+              this.loading = false;
+              this.successMessage('Cover image uploaded successfully.', 'Success');
+            }, (error) => {
+              this.loading = false;
+              this.errorMessage('Something went wrong. Please try again.', 'Error');
+            })
             break;
           case 'profile':
-            // update profile
+            this.employeeService.updateProfilePic({
+              id: this.employeeId,
+              image: this.downloadURL
+            }).subscribe((data) => {
+              this.getEmployee(this.employeeId);
+              this.loading = false;
+              this.successMessage('Profile image uploaded successfully.', 'Success');
+            }, (error) => {
+              this.loading = false;
+              this.errorMessage('Something went wrong. Please try again.', 'Error');
+            })
             break;
           default:
             break;
         }
       });
     }
+  }
+
+  successMessage(msg: string, title: string) {
+    this.toastr.success(msg, title,{
+      progressBar: true,
+      progressAnimation: 'increasing',
+      closeButton: true,
+    });
+  }
+
+  errorMessage(msg: string, title: string) {
+    this.toastr.error(msg, title,{
+      progressBar: true,
+      progressAnimation: 'decreasing',
+      closeButton: true,
+    });
+  }
+
+  warningMessage(msg: string, title: string) {
+    this.toastr.warning(msg, title,{
+      progressBar: true,
+      progressAnimation: 'decreasing',
+    });
   }
 }
