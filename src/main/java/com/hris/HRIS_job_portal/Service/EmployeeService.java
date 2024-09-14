@@ -47,6 +47,18 @@ public class EmployeeService {
             existingEmployee.setOccupation(employee.getOccupation());
             existingEmployee.setDob(employee.getDob());
             existingEmployee.setIntro(employee.getIntro());
+
+            // Handle null profileCompleted
+            Map<String, Boolean> profileCompleted = (Map<String, Boolean>) existingEmployee.getProfileCompleted();
+            if (profileCompleted == null) {
+                profileCompleted = new HashMap<>(); // Initialize if null
+            }
+
+            // Update profileCompleted
+            profileCompleted.put("occupation", employee.getOccupation() != null && !employee.getOccupation().isEmpty());
+            profileCompleted.put("intro", employee.getIntro() != null && !employee.getIntro().isEmpty());
+            existingEmployee.setProfileCompleted(profileCompleted);
+
             employeeRepository.save(existingEmployee);
         }
         return employee;
@@ -78,6 +90,17 @@ public class EmployeeService {
         if (employeeModel.isPresent()) {
             EmployeeModel existingEmployee = employeeModel.get();
             existingEmployee.setCoverImage(employee.getCoverImage());
+
+            // Handle null profileCompleted
+            Map<String, Boolean> profileCompleted = (Map<String, Boolean>) existingEmployee.getProfileCompleted();
+            if (profileCompleted == null) {
+                profileCompleted = new HashMap<>(); // Initialize if null
+            }
+
+            // Update coverPic in profileCompleted
+            profileCompleted.put("coverPic", employee.getCoverImage() != null && !employee.getCoverImage().isEmpty());
+            existingEmployee.setProfileCompleted(profileCompleted);
+
             employeeRepository.save(existingEmployee);
         }
         return employee;
@@ -88,6 +111,17 @@ public class EmployeeService {
         if (employeeModel.isPresent()) {
             EmployeeModel existingEmployee = employeeModel.get();
             existingEmployee.setResume(employee.getResume());
+
+            // Handle null profileCompleted
+            Map<String, Boolean> profileCompleted = (Map<String, Boolean>) existingEmployee.getProfileCompleted();
+            if (profileCompleted == null) {
+                profileCompleted = new HashMap<>(); // Initialize if null
+            }
+
+            // Update resume in profileCompleted
+            profileCompleted.put("resume", employee.getResume() != null && !employee.getResume().isEmpty());
+            existingEmployee.setProfileCompleted(profileCompleted);
+
             employeeRepository.save(existingEmployee);
         }
         return employee;
