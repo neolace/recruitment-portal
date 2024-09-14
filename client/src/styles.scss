@@ -1057,6 +1057,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     align-items: center;
     justify-content: center;
     gap: 10px;
+
+    a{
+      text-decoration: none;
+    }
   }
 }
 

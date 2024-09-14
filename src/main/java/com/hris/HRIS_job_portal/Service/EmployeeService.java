@@ -8,7 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -55,6 +57,17 @@ public class EmployeeService {
         if (employeeModel.isPresent()) {
             EmployeeModel existingEmployee = employeeModel.get();
             existingEmployee.setImage(employee.getImage());
+
+            // Handle null profileCompleted
+            Map<String, Boolean> profileCompleted = (Map<String, Boolean>) existingEmployee.getProfileCompleted();
+            if (profileCompleted == null) {
+                profileCompleted = new HashMap<>(); // Initialize if null
+            }
+
+            // Update profilePic in profileCompleted
+            profileCompleted.put("profilePic", employee.getImage() != null && !employee.getImage().isEmpty());
+            existingEmployee.setProfileCompleted(profileCompleted);
+
             employeeRepository.save(existingEmployee);
         }
         return employee;

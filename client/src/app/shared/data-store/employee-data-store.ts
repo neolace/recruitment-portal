@@ -6,11 +6,11 @@ export var employeeDataStore: EmployeeModel[] = [
     firstname:"john",
     lastname:"Doe",
     occupation:"Web Developer",
-    image:"", // base64 image
-    coverImage:"", // base64 image
+    image:"", // firebase URL
+    coverImage:"", // firebase URL
     dob:"09/11/1999",
     email:"johndoe@gmail.com",
-    resume:"", // base64 content
+    resume:"", // firebase URL
     intro:"lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. \nlorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam.",
     skills:[
       {

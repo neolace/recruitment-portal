@@ -7,6 +7,8 @@ import com.hris.HRIS_job_portal.Repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -27,6 +29,22 @@ public class CredentialsService {
             emp.setFirstname(credentials.getFirstname());
             emp.setLastname(credentials.getLastname());
             emp.setEmail(credentials.getEmail());
+
+            Map<String, Boolean> profileCompleted = new HashMap<>();
+            profileCompleted.put("name", true);
+            profileCompleted.put("email", true);
+            profileCompleted.put("resume", false);
+            profileCompleted.put("occupation", false);
+            profileCompleted.put("profilePic", false);
+            profileCompleted.put("coverPic", false);
+            profileCompleted.put("intro", false);
+            profileCompleted.put("skills", false);
+            profileCompleted.put("experiences", false);
+            profileCompleted.put("education", false);
+            profileCompleted.put("contactInfo", false);
+            profileCompleted.put("socialLinks", false);
+            emp.setProfileCompleted(profileCompleted);
+
             EmployeeModel savedEmp = employeeRepository.save(emp);
 
             credentials.setEmployeeId(savedEmp.getId());
