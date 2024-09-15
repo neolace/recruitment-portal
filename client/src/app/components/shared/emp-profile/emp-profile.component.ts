@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
 import {EmployeeService} from "../../../services/employee.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-emp-profile',
@@ -15,6 +16,12 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
   employee: any;
   employeeId: any = '66e31aa7217eb911ad764373'; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
   loading: boolean = false;
+
+  serverError: boolean = false;
+  notFound: boolean = false;
+  forbidden: boolean = false;
+  corsError: boolean = false;
+  unexpectedError: boolean = false;
 
   constructor(private employeeService: EmployeeService) {}
 
@@ -36,8 +43,22 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
         this.employee = data;
         this.calculateProfileProgress(this.employee?.employee);
       },
-      (error) => {
-        console.error('Error fetching employee data', error);
+      (error: HttpErrorResponse) => {
+        console.log('Error object:', error);  // Log the entire error object for debugging
+
+        // Check for different error types
+        if (error.status === 404) {
+          this.notFound = true;
+        } else if (error.status === 500) {
+          this.serverError = true;
+        } else if (error.status === 0) {
+          this.corsError = true;
+        } else if (error.status === 403) {
+          this.forbidden = true;
+        } else {
+          this.unexpectedError = true;
+        }
+
         this.loading = false;
       }
     );

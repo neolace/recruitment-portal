@@ -4,12 +4,18 @@ import {FailedToLoadDataComponent} from "../../components/shared/failed-to-load-
 import {RouterLink} from "@angular/router";
 import {PageLoadingComponent} from "../../components/shared/page-loading/page-loading.component";
 import {NgIf} from "@angular/common";
+import {ResultNotFoundComponent} from "../../components/shared/result-not-found/result-not-found.component";
+import {NetworkErrorComponent} from "../../components/shared/network-error/network-error.component";
+import {ForbiddenComponent} from "../../components/shared/forbidden/forbidden.component";
 
 @NgModule({
   declarations: [
     UnderDevelopmentComponent,
     FailedToLoadDataComponent,
-    PageLoadingComponent
+    PageLoadingComponent,
+    ResultNotFoundComponent,
+    NetworkErrorComponent,
+    ForbiddenComponent
   ],
   imports: [
     RouterLink,
@@ -18,7 +24,10 @@ import {NgIf} from "@angular/common";
   exports: [
     UnderDevelopmentComponent,
     FailedToLoadDataComponent,
-    PageLoadingComponent
+    PageLoadingComponent,
+    ResultNotFoundComponent,
+    NetworkErrorComponent,
+    ForbiddenComponent
   ]
 })
 export class SharedComponentModule { }
