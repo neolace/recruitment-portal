@@ -493,7 +493,16 @@
     </div>
   </div>
 
-  <div *ngIf="!loading && !employee">
+  <div *ngIf="!loading && serverError">
     <app-failed-to-load-data></app-failed-to-load-data>
+  </div>
+  <div *ngIf="notFound && !employee?.employee">
+    <app-result-not-found></app-result-not-found>
+  </div>
+  <div *ngIf="corsError">
+    <app-network-error></app-network-error>
+  </div>
+  <div *ngIf="forbidden && !employee?.employee || unexpectedError">
+    <app-forbidden></app-forbidden>
   </div>
 </div>

@@ -4,6 +4,8 @@ import {FileUploadService} from "../../../services/file-upload.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EmployeeService} from "../../../services/employee.service";
 import {ToastrService} from "ngx-toastr";
+import {HttpErrorResponse} from "@angular/common/http";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-emp-profile-settings',
@@ -13,9 +15,15 @@ import {ToastrService} from "ngx-toastr";
 export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
   countriesSet: any[] = countries
 
-  employee: any
-  employeeId: any = '66e5a9836f5a4f722e9e97cf'
+  employee: any;
+  employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
   loading: boolean = false;
+
+  serverError: boolean = false;
+  notFound: boolean = false;
+  forbidden: boolean = false;
+  corsError: boolean = false;
+  unexpectedError: boolean = false;
 
   downloadURL?: any;
 
@@ -28,9 +36,10 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
     intro: new FormControl('')
   });
 
-  constructor(private fileUploadService: FileUploadService, private employeeService: EmployeeService, private toastr: ToastrService) { }
+  constructor(private fileUploadService: FileUploadService, private employeeService: EmployeeService, private toastr: ToastrService, private cookieService: AuthService) { }
 
   ngOnInit(): void {
+    this.employeeId = this.cookieService.userID();
     this.getEmployee(this.employeeId);
   }
 
@@ -49,9 +58,19 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
         this.patchValuesToPersonalForm();
         this.loading = false;
       },
-      (error) => {
+      (error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          this.notFound = true;
+        } else if (error.status === 500) {
+          this.serverError = true;
+        } else if (error.status === 0) {
+          this.corsError = true;
+        } else if (error.status === 403) {
+          this.forbidden = true;
+        } else {
+          this.unexpectedError = true;
+        }
         this.loading = false;
-        this.errorMessage('Something went wrong! Please try again', 'Error');
       }
     );
   }

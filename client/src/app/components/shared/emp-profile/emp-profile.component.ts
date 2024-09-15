@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
 import {EmployeeService} from "../../../services/employee.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-emp-profile',
@@ -14,7 +15,7 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
   progressMode: ProgressSpinnerMode = 'determinate';
 
   employee: any;
-  employeeId: any = '66e31aa7217eb911ad764373'; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
+  employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
   loading: boolean = false;
 
   serverError: boolean = false;
@@ -23,9 +24,10 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
   corsError: boolean = false;
   unexpectedError: boolean = false;
 
-  constructor(private employeeService: EmployeeService) {}
+  constructor(private employeeService: EmployeeService, private cookieService: AuthService) {}
 
   async ngOnInit(): Promise<any> {
+    this.employeeId = this.cookieService.userID();
     this.getEmployee(this.employeeId)
   }
 
@@ -44,8 +46,6 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
         this.calculateProfileProgress(this.employee?.employee);
       },
       (error: HttpErrorResponse) => {
-        console.log('Error object:', error);  // Log the entire error object for debugging
-
         // Check for different error types
         if (error.status === 404) {
           this.notFound = true;
