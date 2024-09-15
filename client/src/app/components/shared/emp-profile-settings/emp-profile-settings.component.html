@@ -96,7 +96,8 @@
             </div>
             <div class="col-12 col-md-6 col-lg-3">
               <div class="form-group d-flex align-items-end w-100 h-100">
-                <button type="submit" class="btn-1" (click)="editSkills?editSkill():saveSkills()">{{editSkills ? 'Update' : 'Add'}}</button>
+                <button type="submit" class="btn-1" translate="no" (click)="editSkills?editSkill():saveSkills()">{{editSkills ? 'Update' : 'Add'}}</button>
+                <i class="material-icons ml-2" *ngIf="editSkills" style="color:var(--color-text-300); cursor: pointer" translate="no" (click)="clear('skills')">close</i>
               </div>
             </div>
           </div>
@@ -114,8 +115,8 @@
               </div>
               <div class="col-3">
                 <div class="d-flex align-items-center">
-                  <button class="btn-2"><i class="material-icons" (click)="patchValuesToSkillsForm(s)">edit</i></button>
-                  <button class="btn-3"><i class="material-icons" (click)="deleteSkill(s.id)">delete</i></button>
+                  <button class="btn-2"><i class="material-icons" translate="no" (click)="patchValuesToSkillsForm(s)">edit</i></button>
+                  <button class="btn-3"><i class="material-icons" translate="no" (click)="deleteSkill(s.id)">delete</i></button>
                 </div>
               </div>
             </div>
@@ -125,59 +126,82 @@
       <div class="form-card-1 justify-content-start">
         <h5>Add Experiences :</h5>
 
-        <form action="">
+        <form [formGroup]="experienceFormGroup">
           <div class="row form-wrapper">
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="ExOccupation">Occupation</label>
-                <input type="text" class="form-control" id="ExOccupation">
+                <input type="text" class="form-control" id="ExOccupation" formControlName="occupation">
               </div>
             </div>
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="ExCountry">Country</label>
-                <input type="text" class="form-control" id="ExCountry">
+                <input type="text" class="form-control" id="ExCountry" formControlName="country">
               </div>
             </div>
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="ExOrg">Organization</label>
-                <input type="text" class="form-control" id="ExOrg">
+                <input type="text" class="form-control" id="ExOrg" formControlName="company">
               </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
               <div class="form-group">
                 <label for="ExStart">Start</label>
-                <input type="text" class="form-control" id="ExStart">
+                <input type="number" class="form-control" id="ExStart" formControlName="start">
               </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
               <div class="form-group">
                 <label for="ExEnd">End</label>
-                <input type="text" class="form-control" id="ExEnd">
+                <input type="number" class="form-control" id="ExEnd" formControlName="end">
               </div>
             </div>
             <div class="col-12">
               <div class="form-group">
                 <label for="ExDesc">Short Description</label>
-                <input type="text" class="form-control" id="ExDesc">
+                <input type="text" class="form-control" id="ExDesc" formControlName="description">
               </div>
             </div>
             <div class="col-12">
               <div class="d-flex align-items-center justify-content-between w-100">
                 <div class="d-flex align-items-center justify-content-between">
                   <div class="form-check me-2">
-                    <input class="form-check-input" type="checkbox" value="" id="ExPresent">
+                    <input class="form-check-input" type="checkbox" value="" id="ExPresent" formControlName="currentCheck">
                   </div>
                   <p class="notification-text">I'm currently working here.</p>
                 </div>
                 <div class="form-group">
-                  <button type="submit" class="btn-1">Add</button>
+                  <div class="d-flex align-items-center">
+                    <button type="submit" (click)="editExperiences?editExperience() : saveExperience()" class="btn-1">{{editExperiences ? 'Update' : 'Add'}}</button>
+                    <i class="material-icons ml-2" *ngIf="editExperiences" style="color:var(--color-text-300); cursor: pointer" translate="no" (click)="clear('experience')">close</i>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </form>
+
+        <div class="experience-set" *ngIf="employee?.empExperiences.length > 0">
+          <hr>
+          <div *ngFor="let se of employee?.empExperiences;">
+            <div class="row my-2" *ngFor="let e of se.experiences; index as i">
+              <div class="col-6">
+                <p>{{e.company}}</p>
+              </div>
+              <div class="col-3">
+                <p>{{e.position}}</p>
+              </div>
+              <div class="col-3">
+                <div class="d-flex align-items-center">
+                  <button class="btn-2"><i class="material-icons" translate="no" (click)="patchValuesToExperienceForm(e)">edit</i></button>
+                  <button class="btn-3"><i class="material-icons" translate="no" (click)="deleteExperience(e.id)">delete</i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 

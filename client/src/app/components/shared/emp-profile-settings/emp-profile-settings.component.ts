@@ -27,6 +27,8 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
 
   editSkills: boolean = false;
   editSkillId: any;
+  editExperiences: boolean = false;
+  editExperienceId: any;
 
   downloadURL?: any;
 
@@ -42,6 +44,16 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
   skillsFormGroup = new FormGroup({
     skill: new FormControl('', [Validators.required]),
     percentage: new FormControl('', [Validators.required])
+  });
+
+  experienceFormGroup = new FormGroup({
+    occupation: new FormControl('', [Validators.required]),
+    country: new FormControl('', [Validators.required]),
+    company: new FormControl('', [Validators.required, Validators.email]),
+    start: new FormControl('', [Validators.required]),
+    end: new FormControl(''),
+    currentCheck: new FormControl(false),
+    description: new FormControl('', [Validators.required])
   });
 
   constructor(private fileUploadService: FileUploadService, private employeeService: EmployeeService, private toastr: ToastrService, private cookieService: AuthService) {
@@ -126,7 +138,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
         percentage: this.skillsFormGroup.get('percentage')?.value
       }]
     }).subscribe((data) => {
-      this.skillsFormGroup.reset();
+      this.clear('skills');
       this.getEmployee(this.employeeId);
       this.loading = false;
       this.successMessage('Skill added successfully', 'Success');
@@ -151,14 +163,11 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
       skill: this.skillsFormGroup.get('skill')?.value,
       percentage: this.skillsFormGroup.get('percentage')?.value
     }).subscribe((data) => {
-      this.skillsFormGroup.reset();
+      this.clear('skills');
       this.getEmployee(this.employeeId);
-      this.editSkills = false;
-      this.editSkillId = '';
       this.successMessage('Skill updated successfully', 'Success');
     }, (error) => {
-      this.editSkills = false;
-      this.editSkillId = '';
+      this.clear('skills');
       this.errorMessage('Something went wrong. Please try again', 'Error');
     });
   }
@@ -169,6 +178,73 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
       this.skillsFormGroup.get('skill')?.setValue(skill.skill);
       this.skillsFormGroup.get('percentage')?.setValue(skill.percentage);
       this.editSkillId = skill.id;
+    }
+  }
+
+  saveExperience() {
+    this.loading = true;
+    const ex: any[] = [{
+      id: this.generateRandomId(),
+      company: this.experienceFormGroup.get('company')?.value,
+      position: this.experienceFormGroup.get('occupation')?.value,
+      country: this.experienceFormGroup.get('country')?.value,
+      startDate: this.experienceFormGroup.get('start')?.value,
+      endDate: this.experienceFormGroup.get('currentCheck')?.value ? 'Present' : this.experienceFormGroup.get('end')?.value,
+      description: this.experienceFormGroup.get('description')?.value
+    }];
+    this.employeeService.addExperience({
+      employeeId: this.employeeId,
+      experiences: ex
+    }).subscribe((data) => {
+      this.clear('experience');
+      this.getEmployee(this.employeeId);
+      this.loading = false;
+      this.successMessage('Experience updated successfully', 'Success');
+    }, (error) => {
+      this.loading = false;
+      this.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  deleteExperience(experienceId: string) {
+    this.employeeService.deleteExperience(this.employeeId, experienceId).subscribe((data) => {
+      this.getEmployee(this.employeeId);
+      this.successMessage('Experience deleted successfully', 'Success');
+    }, (error) => {
+      this.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  editExperience() {
+    this.employeeService.editExperience(this.employeeId, {
+      id: this.editExperienceId,
+      company: this.experienceFormGroup.get('company')?.value,
+      position: this.experienceFormGroup.get('occupation')?.value,
+      country: this.experienceFormGroup.get('country')?.value,
+      startDate: this.experienceFormGroup.get('start')?.value,
+      endDate: this.experienceFormGroup.get('currentCheck')?.value ? 'Present' : this.experienceFormGroup.get('end')?.value,
+      description: this.experienceFormGroup.get('description')?.value
+    }).subscribe((data) => {
+      this.clear('experience');
+      this.getEmployee(this.employeeId);
+      this.successMessage('Experience updated successfully', 'Success');
+    }, (error) => {
+      this.clear('experience');
+      this.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  patchValuesToExperienceForm(experience: any) {
+    this.editExperiences = true;
+    if (this.employee) {
+      this.experienceFormGroup.get('company')?.setValue(experience.company);
+      this.experienceFormGroup.get('occupation')?.setValue(experience.position);
+      this.experienceFormGroup.get('country')?.setValue(experience.country);
+      this.experienceFormGroup.get('start')?.setValue(experience.startDate);
+      this.experienceFormGroup.get('end')?.setValue(experience.endDate);
+      this.experienceFormGroup.get('description')?.setValue(experience.description);
+      this.experienceFormGroup.get('currentCheck')?.setValue(experience.endDate === 'Present');
+      this.editExperienceId = experience.id;
     }
   }
 
@@ -260,5 +336,22 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
       progressBar: true,
       progressAnimation: 'decreasing',
     });
+  }
+
+  clear(form: string) {
+    switch (form) {
+      case 'skills':
+        this.skillsFormGroup.reset();
+        this.editSkills = false;
+        this.editSkillId = '';
+        break;
+      case 'experience':
+        this.experienceFormGroup.reset();
+        this.editExperiences = false;
+        this.editExperienceId = '';
+        break;
+      default:
+        break;
+    }
   }
 }

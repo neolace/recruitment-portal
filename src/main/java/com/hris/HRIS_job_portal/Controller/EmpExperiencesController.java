@@ -1,5 +1,6 @@
 package com.hris.HRIS_job_portal.Controller;
 
+import com.hris.HRIS_job_portal.DTO.EmpExperiencesDTO;
 import com.hris.HRIS_job_portal.Model.EmpExperiencesModel;
 import com.hris.HRIS_job_portal.Service.EmpExperiencesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,18 @@ public class EmpExperiencesController {
         return empExperiencesService.updateEmpExperiences(id, empExperiences);
     }
 
+    @PutMapping("/edit-single/{employeeId}")
+    public EmpExperiencesModel updateEmpExperience(@PathVariable String employeeId, @RequestBody EmpExperiencesDTO empExperiences) {
+        return empExperiencesService.editEmpExperience(employeeId, empExperiences);
+    }
+
     @DeleteMapping("/delete/{employeeId}")
     public void deleteEmpExperiences(@PathVariable String employeeId) {
         empExperiencesService.deleteEmpExperiences(employeeId);
+    }
+
+    @DeleteMapping("/delete-single/{employeeId}/{experienceId}")
+    public void deleteEmpExperiences(@PathVariable String employeeId, @PathVariable String experienceId) {
+        empExperiencesService.deleteEmpExperience(employeeId, experienceId);
     }
 }
