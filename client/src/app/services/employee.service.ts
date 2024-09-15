@@ -144,18 +144,34 @@ export class EmployeeService {
     )
   }
 
-  deleteEmpSkill(employeeId: any, skillId: any): Observable<any> {
+  deleteSkill(employeeId: string, skillId: string): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:password')
     });
-    return this.http.delete(`${this.baseUrl}/emp_skills/delete/${employeeId}/${skillId}`, {headers}).pipe(
+    return this.http.delete(`${this.baseUrl}/emp_skills/delete-single/${employeeId}/${skillId}`, { headers }).pipe(
       tap((data) => {
         this.clearCache(); // Invalidate the cache
         this.fetchFullEmployee(employeeId); // Refresh the cache after updating
       }),
       catchError((error) => {
         return throwError(error); // Re-throw the error so that the component can handle it
-      }))
+      })
+    );
+  }
+
+  editSkill(employeeId: string, updatedSkill: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.put(`${this.baseUrl}/emp_skills/edit-single/${employeeId}`, updatedSkill, { headers }).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullEmployee(employeeId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    );
   }
 
   // Clear cache

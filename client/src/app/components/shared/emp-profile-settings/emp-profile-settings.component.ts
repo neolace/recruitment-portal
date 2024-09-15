@@ -25,6 +25,9 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
   corsError: boolean = false;
   unexpectedError: boolean = false;
 
+  editSkills: boolean = false;
+  editSkillId: any;
+
   downloadURL?: any;
 
   personalFormGroup = new FormGroup({
@@ -41,7 +44,8 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
     percentage: new FormControl('', [Validators.required])
   });
 
-  constructor(private fileUploadService: FileUploadService, private employeeService: EmployeeService, private toastr: ToastrService, private cookieService: AuthService) { }
+  constructor(private fileUploadService: FileUploadService, private employeeService: EmployeeService, private toastr: ToastrService, private cookieService: AuthService) {
+  }
 
   ngOnInit(): void {
     this.employeeId = this.cookieService.userID();
@@ -132,6 +136,42 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
     });
   }
 
+  deleteSkill(skillId: string) {
+    this.employeeService.deleteSkill(this.employeeId, skillId).subscribe((data) => {
+      this.getEmployee(this.employeeId);
+      this.successMessage('Skill deleted successfully', 'Success');
+    }, (error) => {
+      this.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  editSkill() {
+    this.employeeService.editSkill(this.employeeId, {
+      id: this.editSkillId,
+      skill: this.skillsFormGroup.get('skill')?.value,
+      percentage: this.skillsFormGroup.get('percentage')?.value
+    }).subscribe((data) => {
+      this.skillsFormGroup.reset();
+      this.getEmployee(this.employeeId);
+      this.editSkills = false;
+      this.editSkillId = '';
+      this.successMessage('Skill updated successfully', 'Success');
+    }, (error) => {
+      this.editSkills = false;
+      this.editSkillId = '';
+      this.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  patchValuesToSkillsForm(skill: any) {
+    this.editSkills = true;
+    if (this.employee) {
+      this.skillsFormGroup.get('skill')?.setValue(skill.skill);
+      this.skillsFormGroup.get('percentage')?.setValue(skill.percentage);
+      this.editSkillId = skill.id;
+    }
+  }
+
   uploadFile(event: any, filePath: string, location: string) {
     const file = event.target.files[0];
     const maxFileSize = 2 * 1024 * 1024;
@@ -200,7 +240,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
   }
 
   successMessage(msg: string, title: string) {
-    this.toastr.success(msg, title,{
+    this.toastr.success(msg, title, {
       progressBar: true,
       progressAnimation: 'increasing',
       closeButton: true,
@@ -208,7 +248,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
   }
 
   errorMessage(msg: string, title: string) {
-    this.toastr.error(msg, title,{
+    this.toastr.error(msg, title, {
       progressBar: true,
       progressAnimation: 'decreasing',
       closeButton: true,
@@ -216,7 +256,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
   }
 
   warningMessage(msg: string, title: string) {
-    this.toastr.warning(msg, title,{
+    this.toastr.warning(msg, title, {
       progressBar: true,
       progressAnimation: 'decreasing',
     });

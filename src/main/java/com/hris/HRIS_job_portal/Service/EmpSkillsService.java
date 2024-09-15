@@ -88,6 +88,58 @@ public class EmpSkillsService {
         empSkillsRepository.deleteByEmployeeId(employeeId);
     }
 
+    public EmpSkillsModel deleteEmpSkill(String employeeId, String skillId) {
+        // Find all EmpSkillsModel records by employeeId
+        List<EmpSkillsModel> empSkillsList = empSkillsRepository.findByEmployeeId(employeeId);
+
+        if (!empSkillsList.isEmpty()) {
+            // Use the first EmpSkillsModel if it exists (assuming only one entry should exist)
+            EmpSkillsModel empSkillsModel = empSkillsList.get(0);
+
+            List<EmpSkillsDTO> skills = empSkillsModel.getSkills();
+            if (skills != null) {
+                // Remove the skill with the given skillId
+                skills.removeIf(skill -> skill.getId().equals(skillId));
+                empSkillsModel.setSkills(skills);
+
+                // Save the updated EmpSkillsModel to the repository
+                empSkillsRepository.save(empSkillsModel);
+            }
+
+            return empSkillsModel;
+        }
+        throw new RuntimeException("Skills not found for employeeId: " + employeeId);
+    }
+
+    public EmpSkillsModel editEmpSkill(String employeeId, EmpSkillsDTO updatedSkill) {
+        // Find all EmpSkillsModel records by employeeId
+        List<EmpSkillsModel> empSkillsList = empSkillsRepository.findByEmployeeId(employeeId);
+
+        if (!empSkillsList.isEmpty()) {
+            // Use the first EmpSkillsModel if it exists (assuming only one entry should exist)
+            EmpSkillsModel empSkillsModel = empSkillsList.get(0);
+
+            List<EmpSkillsDTO> skills = empSkillsModel.getSkills();
+            if (skills != null) {
+                // Find the skill by its id and update its values
+                for (EmpSkillsDTO skill : skills) {
+                    if (skill.getId().equals(updatedSkill.getId())) {
+                        skill.setSkill(updatedSkill.getSkill());
+                        skill.setPercentage(updatedSkill.getPercentage());
+                        break;
+                    }
+                }
+                empSkillsModel.setSkills(skills);
+
+                // Save the updated EmpSkillsModel to the repository
+                empSkillsRepository.save(empSkillsModel);
+            }
+
+            return empSkillsModel;
+        }
+        throw new RuntimeException("Skills not found for employeeId: " + employeeId);
+    }
+
     @Async
     public CompletableFuture<List<EmpSkillsModel>> getEmpSkillsByEmployeeIdAsync(String employeeId) {
         // Fetch employees asynchronously

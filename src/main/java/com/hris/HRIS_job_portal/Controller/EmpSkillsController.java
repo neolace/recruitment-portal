@@ -1,5 +1,6 @@
 package com.hris.HRIS_job_portal.Controller;
 
+import com.hris.HRIS_job_portal.DTO.EmpSkillsDTO;
 import com.hris.HRIS_job_portal.Model.EmpSkillsModel;
 import com.hris.HRIS_job_portal.Service.EmpSkillsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,18 @@ public class EmpSkillsController {
         return empSkillsService.updateEmpSkills(id, empSkills);
     }
 
+    @PutMapping("/edit-single/{employeeId}")
+    public EmpSkillsModel updateEmpSkill(@PathVariable String employeeId, @RequestBody EmpSkillsDTO empSkills) {
+        return empSkillsService.editEmpSkill(employeeId, empSkills);
+    }
+
     @DeleteMapping("/delete/{employeeId}")
     public void deleteEmpSkills(@PathVariable String employeeId) {
         empSkillsService.deleteEmpSkills(employeeId);
+    }
+
+    @DeleteMapping("/delete-single/{employeeId}/{skillId}")
+    public void deleteEmpSkills(@PathVariable String employeeId, @PathVariable String skillId) {
+        empSkillsService.deleteEmpSkill(employeeId, skillId);
     }
 }
