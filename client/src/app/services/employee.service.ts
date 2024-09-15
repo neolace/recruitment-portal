@@ -174,6 +174,51 @@ export class EmployeeService {
     );
   }
 
+  addExperience(experience: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.post(`${this.baseUrl}/emp_experiences/add` , experience, {headers}).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullEmployee(experience.employeeId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    )
+  }
+
+  deleteExperience(employeeId: string, experienceId: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.delete(`${this.baseUrl}/emp_experiences/delete-single/${employeeId}/${experienceId}`, { headers }).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullEmployee(employeeId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    );
+  }
+
+  editExperience(employeeId: string, updatedExperience: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.put(`${this.baseUrl}/emp_experiences/edit-single/${employeeId}`, updatedExperience, { headers }).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullEmployee(employeeId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    );
+  }
+
   // Clear cache
   private clearCache() {
     this.cacheInitialized = false;

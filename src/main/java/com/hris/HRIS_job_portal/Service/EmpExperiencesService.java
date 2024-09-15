@@ -74,6 +74,52 @@ public class EmpExperiencesService {
         empExperiencesRepository.deleteByEmployeeId(employeeId);
     }
 
+    public EmpExperiencesModel deleteEmpExperience(String employeeId, String experienceId) {
+        List<EmpExperiencesModel> empExperiencesList = empExperiencesRepository.findByEmployeeId(employeeId);
+        if (!empExperiencesList.isEmpty()) {
+            EmpExperiencesModel empExperiencesModel = empExperiencesList.get(0);
+            List<EmpExperiencesDTO> experiences = empExperiencesModel.getExperiences();
+            if (experiences != null) {
+                experiences.removeIf(experience -> experience.getId().equals(experienceId));
+                empExperiencesModel.setExperiences(experiences);
+
+                empExperiencesRepository.save(empExperiencesModel);
+            }
+
+            return empExperiencesModel;
+        }
+        throw new RuntimeException("Experiences not found for employeeId: " + employeeId);
+    }
+
+    public EmpExperiencesModel editEmpExperience(String employeeId, EmpExperiencesDTO updatedExperience) {
+        List<EmpExperiencesModel> empExperiencesList = empExperiencesRepository.findByEmployeeId(employeeId);
+        if (!empExperiencesList.isEmpty()) {
+            EmpExperiencesModel empExperiencesModel = empExperiencesList.get(0);
+            List<EmpExperiencesDTO> experiences = empExperiencesModel.getExperiences();
+
+            if (experiences != null) {
+                for (EmpExperiencesDTO experience : experiences) {
+                    if (experience.getId().equals(updatedExperience.getId())) {
+                        experience.setCompany(updatedExperience.getCompany());
+                        experience.setCompanyLogo(updatedExperience.getCompanyLogo());
+                        experience.setPosition(updatedExperience.getPosition());
+                        experience.setCountry(updatedExperience.getCountry());
+                        experience.setStartDate(updatedExperience.getStartDate());
+                        experience.setEndDate(updatedExperience.getEndDate());
+                        experience.setDescription(updatedExperience.getDescription());
+                        break;
+                    }
+                }
+                empExperiencesModel.setExperiences(experiences);
+
+                empExperiencesRepository.save(empExperiencesModel);
+            }
+
+            return empExperiencesModel;
+        }
+        throw new RuntimeException("Experiences not found for employeeId: " + employeeId);
+    }
+
     @Async
     public CompletableFuture<List<EmpExperiencesModel>> getEmpExperiencesByEmployeeIdAsync(String employeeId) {
         // Fetch employees asynchronously
