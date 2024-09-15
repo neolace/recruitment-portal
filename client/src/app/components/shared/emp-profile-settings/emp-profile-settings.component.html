@@ -15,8 +15,8 @@
       </div>
 
       <div class="profile-info">
-        <p class="emp-name">John Doe</p>
-        <p class="position">Web Developer</p>
+        <p class="emp-name">{{employee?.employee?.firstname}} {{employee?.employee?.lastname}}</p>
+        <p class="position">{{employee?.employee?.occupation?employee?.employee?.occupation:'Not Provided'}}</p>
       </div>
     </div>
 
@@ -148,13 +148,13 @@
             </div>
             <div class="col-12 col-md-6 col-lg-3">
               <div class="form-group">
-                <label for="ExStart">Start</label>
+                <label for="ExStart">Start Year</label>
                 <input type="number" class="form-control" id="ExStart" formControlName="start">
               </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
               <div class="form-group">
-                <label for="ExEnd">End</label>
+                <label for="ExEnd">End Year</label>
                 <input type="number" class="form-control" id="ExEnd" formControlName="end">
               </div>
             </div>
@@ -209,36 +209,36 @@
       <div class="form-card-1">
         <h5>Contact Info :</h5>
 
-        <form action="">
+        <form [formGroup]="contactFormGroup">
           <div class="row form-wrapper">
             <div class="col-12">
               <div class="form-group">
                 <label for="phone">Phone Number</label>
-                <input type="text" class="form-control" id="phone">
+                <input type="text" class="form-control" id="phone" formControlName="phone">
               </div>
             </div>
             <div class="col-12">
               <div class="form-group">
                 <label for="cemail">Email Address</label>
-                <input type="email" class="form-control" id="cemail">
+                <input type="email" class="form-control" id="cemail" formControlName="email">
               </div>
             </div>
             <div class="col-12">
               <div class="form-group">
                 <label for="address">Address</label>
-                <input type="text" class="form-control" id="address">
+                <input type="text" class="form-control" id="address" formControlName="address">
               </div>
             </div>
             <div class="col-12 col-lg-6">
               <div class="form-group">
                 <label for="city">City</label>
-                <input type="text" class="form-control" id="city">
+                <input type="text" class="form-control" id="city" formControlName="city">
               </div>
             </div>
             <div class="col-6 col-lg-3">
               <div class="form-group">
                 <label for="country">Country</label>
-                <select class="form-control" id="country">
+                <select class="form-control" id="country" formControlName="country">
                   <option selected>Select</option>
                   <option *ngFor="let c of countriesSet" [ngValue]="c.name">{{c.name}}</option>
                 </select>
@@ -247,18 +247,18 @@
             <div class="col-6 col-lg-3">
               <div class="form-group">
                 <label for="zip">Zip Code</label>
-                <input type="text" class="form-control" id="zip">
+                <input type="text" class="form-control" id="zip" formControlName="zip">
               </div>
             </div>
             <div class="col-12">
               <div class="form-group">
                 <label for="website">Web Site</label>
-                <input type="text" class="form-control" id="website">
+                <input type="text" class="form-control" id="website" formControlName="website">
               </div>
             </div>
             <div class="col-12">
               <div class="form-group">
-                <button type="submit" class="btn-1">Add</button>
+                <button type="submit" class="btn-1" (click)="editContactId?updateContact(editContactId) : addContact()">{{editContactId ? 'Update' : 'Add'}}</button>
               </div>
             </div>
           </div>
@@ -299,7 +299,7 @@
 
     <div class="form-card-1">
       <h5>Social Media :</h5>
-      <form action="">
+      <form [formGroup]="socialFormGroup">
         <div class="row form-wrapper">
           <div class="col-12 col-md-4">
             <span>Twitter</span>
@@ -313,7 +313,7 @@
     fill-rule="evenodd"/>
 </svg>
               </span>
-              <input type="text" class="form-control" placeholder="Twitter URL" aria-describedby="twitter" style="width: auto">
+              <input type="text" class="form-control" placeholder="Twitter URL" aria-describedby="twitter" style="width: auto" formControlName="twitter">
             </div>
             <label for="twitter">Add your Twitter account URL</label>
           </div>
@@ -330,7 +330,7 @@
     d="M14.874,11.167 L14.262,14.207 C14.062,15.208 13.100,15.992 12.072,15.992 L10.000,15.992 L10.000,30.000 C10.000,31.104 9.159,32.000 8.049,32.000 L5.030,32.000 C3.920,32.000 3.017,31.102 3.017,29.999 L3.017,15.992 L2.011,15.992 C0.901,15.992 -0.002,15.095 -0.002,13.991 L-0.002,10.990 C-0.002,9.887 0.901,8.989 2.011,8.989 L3.017,8.989 L3.017,6.003 C3.017,2.716 5.693,0.041 8.994,0.013 C9.015,0.012 9.033,0.001 9.055,0.001 L13.081,0.001 C13.636,0.001 14.000,0.448 14.000,1.000 L14.000,6.000 C14.000,6.553 13.636,7.004 13.081,7.004 L10.061,7.004 L10.060,8.989 L13.079,8.989 C13.645,8.989 14.167,9.228 14.509,9.644 C14.852,10.059 14.985,10.615 14.874,11.167 ZM9.092,10.990 C9.078,10.991 9.067,10.998 9.053,10.998 L9.053,10.998 C8.497,10.997 8.046,10.549 8.047,9.997 L8.047,9.990 C8.047,9.990 8.047,9.990 8.047,9.990 C8.047,9.990 8.047,9.990 8.047,9.990 L8.049,6.003 C8.049,5.450 8.499,5.003 9.055,5.003 L12.074,5.003 L12.074,2.002 L9.094,2.002 C9.077,2.002 9.063,2.011 9.045,2.011 C6.831,2.011 5.030,3.802 5.030,6.003 L5.030,10.005 C5.030,10.558 4.579,11.006 4.023,11.006 C3.996,11.006 3.973,10.992 3.946,10.990 L2.011,10.990 L2.011,13.991 L4.023,13.991 C4.579,13.991 5.030,14.439 5.030,14.992 C5.030,15.044 5.008,15.088 5.000,15.138 L5.000,30.000 L8.049,29.999 L8.049,15.002 C8.049,14.998 8.047,14.995 8.047,14.992 C8.047,14.439 8.497,13.991 9.053,13.991 L12.072,13.991 C12.145,13.991 12.275,13.886 12.288,13.816 L12.857,10.990 L9.092,10.990 Z"/>
 </svg>
               </span>
-              <input type="text" class="form-control" placeholder="Facebook URL" aria-describedby="facebook" style="width: auto">
+              <input type="text" class="form-control" placeholder="Facebook URL" aria-describedby="facebook" style="width: auto" formControlName="facebook">
             </div>
             <label for="facebook">Add your Facebook account URL</label>
           </div>
@@ -348,7 +348,7 @@
   <circle class="in-dot" cx="135" cy="57" r="9"/>
 </svg>
               </span>
-              <input type="text" class="form-control" placeholder="Instagram URL" aria-describedby="instagram" style="width: auto">
+              <input type="text" class="form-control" placeholder="Instagram URL" aria-describedby="instagram" style="width: auto" formControlName="instagram">
             </div>
             <label for="instagram">Add your Instagram account URL</label>
           </div>
@@ -365,7 +365,7 @@
     fill-rule="evenodd"/>
 </svg>
               </span>
-              <input type="text" class="form-control" placeholder="LinkedIn URL" aria-describedby="linkedin" style="width: auto">
+              <input type="text" class="form-control" placeholder="LinkedIn URL" aria-describedby="linkedin" style="width: auto" formControlName="linkedin">
             </div>
             <label for="linkedin">Add your LinkedIn account URL</label>
           </div>
@@ -387,7 +387,7 @@
         stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
               </span>
-              <input type="text" class="form-control" placeholder="GitHub URL" aria-describedby="github" style="width: auto">
+              <input type="text" class="form-control" placeholder="GitHub URL" aria-describedby="github" style="width: auto" formControlName="github">
             </div>
             <label for="github">Add your GitHub account URL</label>
           </div>

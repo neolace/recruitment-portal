@@ -1,6 +1,7 @@
 package com.hris.HRIS_job_portal.Service;
 
 import com.hris.HRIS_job_portal.DTO.EmpContactDTO;
+import com.hris.HRIS_job_portal.DTO.SocialLinksDTO;
 import com.hris.HRIS_job_portal.Model.EmpContactModel;
 import com.hris.HRIS_job_portal.Model.EmployeeModel;
 import com.hris.HRIS_job_portal.Repository.EmpContactRepository;
@@ -52,8 +53,43 @@ public class EmpContactService {
             if (profileCompleted == null) {
                 profileCompleted = new HashMap<>();
             }
-            profileCompleted.put("contactInfo", empContactModel.getContact() != null && !empContactModel.getContact().isEmpty());
-            profileCompleted.put("socialLinks", empContactModel.getSocialLinks() != null && !empContactModel.getSocialLinks().isEmpty());
+            profileCompleted.put("contactInfo", true);
+            existingEmployee.setProfileCompleted(profileCompleted);
+
+            employeeRepository.save(existingEmployee);
+        }
+        return empContactModel;
+    }
+
+    public EmpContactModel AddEmpSocialLinks(EmpContactModel empContact) {
+        List<EmpContactModel> empContactList = empContactRepository.findByEmployeeId(empContact.getEmployeeId());
+        EmpContactModel empContactModel;
+
+        if (!empContactList.isEmpty()) {
+            empContactModel = empContactList.get(0);
+            List<SocialLinksDTO> socialLinks = empContactModel.getSocialLinks();
+            if (socialLinks == null) {
+                socialLinks = new ArrayList<>();
+            }
+            socialLinks.addAll(empContact.getSocialLinks());
+            empContactModel.setSocialLinks(socialLinks);
+        } else {
+            empContactModel = empContactRepository.save(empContact);
+        }
+
+        empContactRepository.save(empContactModel);
+
+        Optional<EmployeeModel> employeeModel = employeeRepository.findById(empContact.getEmployeeId());
+        if (employeeModel.isPresent()) {
+            EmployeeModel existingEmployee = employeeModel.get();
+            existingEmployee.setContactInfo(empContactModel.getId());
+
+            Map<String, Boolean> profileCompleted = (Map<String, Boolean>) existingEmployee.getProfileCompleted();
+            if (profileCompleted == null) {
+                profileCompleted = new HashMap<>();
+            }
+
+            profileCompleted.put("socialLinks", true);
             existingEmployee.setProfileCompleted(profileCompleted);
 
             employeeRepository.save(existingEmployee);
