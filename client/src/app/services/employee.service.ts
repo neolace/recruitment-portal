@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EmployeeModel } from "../shared/data-models/Employee.model";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import { BehaviorSubject, Observable } from "rxjs";
+import {BehaviorSubject, catchError, Observable, tap, throwError} from "rxjs";
 import { environment } from "../../environments/environment";
 
 @Injectable({
@@ -51,14 +51,23 @@ export class EmployeeService {
       'Authorization': 'Basic ' + btoa('admin:password')
     });
 
-    if (!this.cacheInitialized) {
-      this.http.get<any>(`${this.baseUrl}/batch/async/getEmployee/${id}`, {headers}).subscribe(data => {
-        this.employeeSubject.next(data); // Cache main employee data
-        // You can store other data (contact, education, etc.) separately if needed
-        this.cacheInitialized = true;
-      });
+    // Use the cache if initialized
+    if (this.cacheInitialized) {
+      return this.employee$; // Return the cached employee data as observable
     }
-    return this.employee$;
+
+    // Fetch from API and cache
+    return this.http.get<any>(`${this.baseUrl}/batch/async/getEmployee/${id}`, { headers }).pipe(
+      tap((data) => {
+        this.employeeSubject.next(data); // Cache main employee data
+        this.cacheInitialized = true;
+      }),
+      catchError((error) => {
+        // Handle any caching or logging inside the service if needed
+        console.error('Error in service:', error);
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    );
   }
 
   // Delete employee and invalidate cache

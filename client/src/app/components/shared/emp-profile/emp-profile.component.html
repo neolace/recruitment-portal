@@ -1,7 +1,7 @@
 <div class="container my-3">
   <div class="container">
     <div *ngIf="loading"><app-page-loading></app-page-loading></div>
-    <div *ngIf="!loading && employee">
+    <div *ngIf="!loading && employee?.employee">
       <div class="top-content">
         <div class="cover-image">
           <img [src]="employee.employee.coverImage?employee.employee.coverImage:'./assets/imgs/shared/default_cover.webp'" alt="cover">
@@ -430,8 +430,17 @@
         </div>
       </div>
     </div>
-    <div *ngIf="!loading && !employee">
+    <div *ngIf="!loading && serverError">
       <app-failed-to-load-data></app-failed-to-load-data>
+    </div>
+    <div *ngIf="notFound && !employee?.employee">
+      <app-result-not-found></app-result-not-found>
+    </div>
+    <div *ngIf="corsError">
+      <app-network-error></app-network-error>
+    </div>
+    <div *ngIf="forbidden && !employee?.employee || unexpectedError">
+      <app-forbidden></app-forbidden>
     </div>
   </div>
 </div>

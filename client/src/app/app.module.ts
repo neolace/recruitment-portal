@@ -23,38 +23,38 @@ import {HttpClientModule} from "@angular/common/http";
 import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
-    declarations: [
-        AppComponent
-    ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatIconModule,
-        GoogleMapsModule,
-        MatMenuModule,
-        MatButtonModule,
-        ReactiveFormsModule,
-        MatSidenavModule,
-        MatExpansionModule,
-        MatTooltipModule,
-        MatProgressSpinnerModule,
-        FormsModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFirestoreModule,
-        AngularFireStorageModule,
-        AngularFireAuthModule,
-        SharedPipesModule,
-        HttpClientModule,
-        ToastrModule.forRoot({
-          positionClass: 'toast-bottom-right',
-          preventDuplicates: true,
-          maxOpened: 3,
-          timeOut: 5000,
-        })
-    ],
-    providers: [],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    GoogleMapsModule,
+    MatMenuModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatSidenavModule,
+    MatExpansionModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireAuthModule,
+    SharedPipesModule,
+    HttpClientModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      maxOpened: 3,
+      timeOut: 5000,
+    })
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
