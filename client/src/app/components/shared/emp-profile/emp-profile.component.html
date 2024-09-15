@@ -150,7 +150,7 @@
           </div>
 
           <div class="details-card-1">
-            <h5>Personal Detail:</h5>
+            <h5>Contact Detail:</h5>
             <div *ngIf="employee?.empContact?.length <= 0" class="w-100">
               <p>Not Provided</p>
             </div>
@@ -188,7 +188,7 @@
                 </div>
               </div>
 
-              <div class="w-100" *ngIf="pd.socialLinks.length > 0">
+              <div class="w-100" *ngIf="pd?.socialLinks?.length > 0">
                 <div *ngIf="pd.socialLinks.length > 0" class="my-4">
                   <div *ngFor="let s of pd.socialLinks">
                     <div class="d-flex align-items-center justify-content-between w-100">

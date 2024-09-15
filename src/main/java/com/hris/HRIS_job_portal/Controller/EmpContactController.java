@@ -24,6 +24,11 @@ public class EmpContactController {
         return empContactService.addEmpContact(empContact);
     }
 
+    @PostMapping("/add-social")
+    public EmpContactModel addSocialLinks(@RequestBody EmpContactModel socialLinks) {
+        return empContactService.AddEmpSocialLinks(socialLinks);
+    }
+
     @PutMapping("/update/{id}")
     public EmpContactModel updateEmpContact(@PathVariable String id, @RequestBody EmpContactModel empContact) {
         return empContactService.updateEmpContact(id, empContact);

@@ -29,6 +29,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
   editSkillId: any;
   editExperiences: boolean = false;
   editExperienceId: any;
+  editContactId: any = null;
 
   downloadURL?: any;
 
@@ -56,6 +57,24 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
     description: new FormControl('', [Validators.required])
   });
 
+  contactFormGroup = new FormGroup({
+    phone: new FormControl(''),
+    email: new FormControl(''),
+    address: new FormControl(''),
+    city: new FormControl(''),
+    country: new FormControl(''),
+    zip: new FormControl(''),
+    website: new FormControl(''),
+  });
+
+  socialFormGroup = new FormGroup({
+    facebook: new FormControl(''),
+    twitter: new FormControl(''),
+    instagram: new FormControl(''),
+    linkedin: new FormControl(''),
+    github: new FormControl(''),
+  });
+
   constructor(private fileUploadService: FileUploadService, private employeeService: EmployeeService, private toastr: ToastrService, private cookieService: AuthService) {
   }
 
@@ -78,6 +97,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
         this.employee = data;
         console.log(this.employee);
         this.patchValuesToPersonalForm();
+        this.patchValuesToContactForm();
         this.loading = false;
       },
       (error: HttpErrorResponse) => {
@@ -105,6 +125,22 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
       this.personalFormGroup.get('occupation')?.setValue(this.employee?.employee?.occupation);
       this.personalFormGroup.get('dob')?.setValue(this.employee?.employee?.dob);
       this.personalFormGroup.get('intro')?.setValue(this.employee?.employee?.intro);
+    }
+  }
+
+  patchValuesToContactForm() {
+    if (this.employee?.empContact) {
+      this.employee?.empContact.forEach((contact: any) => {
+        this.contactFormGroup.get('phone')?.setValue(contact?.contact[0]?.phone);
+        this.contactFormGroup.get('email')?.setValue(contact?.contact[0]?.email);
+        this.contactFormGroup.get('address')?.setValue(contact?.contact[0]?.address);
+        this.contactFormGroup.get('city')?.setValue(contact?.contact[0]?.city);
+        this.contactFormGroup.get('country')?.setValue(contact?.contact[0]?.country);
+        this.contactFormGroup.get('zip')?.setValue(contact?.contact[0]?.zipCode);
+        this.contactFormGroup.get('website')?.setValue(contact?.contact[0]?.website);
+        this.editContactId = contact.contact[0].id;
+        console.log(this.editContactId)
+      })
     }
   }
 
@@ -248,6 +284,59 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
     }
   }
 
+  addContact() {
+    this.loading = true;
+    const contact: any[] = [{
+      id: this.generateRandomId(),
+      phone: this.contactFormGroup.get('phone')?.value,
+      email: this.contactFormGroup.get('email')?.value,
+      address: this.contactFormGroup.get('address')?.value,
+      city: this.contactFormGroup.get('city')?.value,
+      country: this.contactFormGroup.get('country')?.value,
+      zipCode: this.contactFormGroup.get('zip')?.value,
+      website: this.contactFormGroup.get('website')?.value
+    }];
+    this.employeeService.addContact({
+      employeeId: this.employeeId,
+      contact: contact
+    }).subscribe((data) => {
+      this.clear('contact');
+      this.getEmployee(this.employeeId);
+      this.loading = false;
+      this.successMessage('Contact updated successfully', 'Success');
+    }, (error) => {
+      this.loading = false;
+      this.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  updateContact(id: any) {
+    this.loading = true;
+    const contact: any[] = [{
+      id: id,
+      phone: this.contactFormGroup.get('phone')?.value,
+      email: this.contactFormGroup.get('email')?.value,
+      address: this.contactFormGroup.get('address')?.value,
+      city: this.contactFormGroup.get('city')?.value,
+      country: this.contactFormGroup.get('country')?.value,
+      zipCode: this.contactFormGroup.get('zip')?.value,
+      website: this.contactFormGroup.get('website')?.value
+    }];
+    this.employeeService.addContact({
+      employeeId: this.employeeId,
+      contact: contact
+    }).subscribe((data) => {
+      this.clear('contact');
+      this.getEmployee(this.employeeId);
+      this.loading = false;
+      this.successMessage('Contact updated successfully', 'Success');
+    }, (error) => {
+      this.clear('contact');
+      this.loading = false;
+      this.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
   uploadFile(event: any, filePath: string, location: string) {
     const file = event.target.files[0];
     const maxFileSize = 2 * 1024 * 1024;
@@ -349,6 +438,9 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
         this.experienceFormGroup.reset();
         this.editExperiences = false;
         this.editExperienceId = '';
+        break;
+      case 'contact':
+        this.contactFormGroup.reset();
         break;
       default:
         break;

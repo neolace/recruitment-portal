@@ -83,4 +83,6 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
     const completed = completionArray.filter((item: any) => item === true).length;
     this.progressValue = Math.round((completed / total) * 100);
   }
+
+    protected readonly length = length;
 }
