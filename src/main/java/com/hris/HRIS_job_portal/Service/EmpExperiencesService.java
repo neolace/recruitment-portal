@@ -1,5 +1,6 @@
 package com.hris.HRIS_job_portal.Service;
 
+import com.hris.HRIS_job_portal.DTO.EmpExperiencesDTO;
 import com.hris.HRIS_job_portal.Model.EmpExperiencesModel;
 import com.hris.HRIS_job_portal.Model.EmployeeModel;
 import com.hris.HRIS_job_portal.Repository.EmpExperiencesRepository;
@@ -8,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -28,16 +26,31 @@ public class EmpExperiencesService {
     }
 
     public EmpExperiencesModel addEmpExperiences(EmpExperiencesModel empExperiences) {
-        Optional<EmployeeModel> employeeModel = employeeRepository.findById(empExperiences.getEmployeeId());
-        EmpExperiencesModel empExperiencesModel = empExperiencesRepository.save(empExperiences);
+        List<EmpExperiencesModel> empExperiencesList = empExperiencesRepository.findByEmployeeId(empExperiences.getEmployeeId());
+        EmpExperiencesModel empExperiencesModel;
 
+        if (!empExperiencesList.isEmpty()) {
+            empExperiencesModel = empExperiencesList.get(0);
+            List<EmpExperiencesDTO> experiences = empExperiencesModel.getExperiences();
+            if (experiences == null) {
+                experiences = new ArrayList<>();
+            }
+            experiences.addAll(empExperiences.getExperiences());
+            empExperiencesModel.setExperiences(experiences);
+        } else {
+            empExperiencesModel = empExperiencesRepository.save(empExperiences);
+        }
+
+        empExperiencesRepository.save(empExperiencesModel);
+
+        Optional<EmployeeModel> employeeModel = employeeRepository.findById(empExperiences.getEmployeeId());
         if (employeeModel.isPresent()) {
             EmployeeModel existingEmployee = employeeModel.get();
             existingEmployee.setExperiences(empExperiencesModel.getId());
 
             Map<String, Boolean> profileCompleted = (Map<String, Boolean>) existingEmployee.getProfileCompleted();
             if (profileCompleted == null) {
-                profileCompleted = new HashMap<>(); // Initialize if null
+                profileCompleted = new HashMap<>();
             }
             profileCompleted.put("experiences", true);
             existingEmployee.setProfileCompleted(profileCompleted);

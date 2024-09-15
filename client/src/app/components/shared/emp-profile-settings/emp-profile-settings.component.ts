@@ -36,6 +36,11 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
     intro: new FormControl('')
   });
 
+  skillsFormGroup = new FormGroup({
+    skill: new FormControl('', [Validators.required]),
+    percentage: new FormControl('', [Validators.required])
+  });
+
   constructor(private fileUploadService: FileUploadService, private employeeService: EmployeeService, private toastr: ToastrService, private cookieService: AuthService) { }
 
   ngOnInit(): void {
@@ -55,6 +60,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
     this.employeeService.fetchFullEmployee(id).subscribe(
       (data) => {
         this.employee = data;
+        console.log(this.employee);
         this.patchValuesToPersonalForm();
         this.loading = false;
       },
@@ -99,7 +105,27 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
     }).subscribe((data) => {
       this.getEmployee(this.employeeId);
       this.loading = false;
-      this.successMessage('Personal details updated successfully', 'Success');
+      this.successMessage('Personal details updated successfully! Please refresh the page.', 'Success');
+    }, (error) => {
+      this.loading = false;
+      this.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  saveSkills() {
+    this.loading = true;
+    this.employeeService.addSkills({
+      employeeId: this.employeeId,
+      skills: [{
+        id: this.generateRandomId(),
+        skill: this.skillsFormGroup.get('skill')?.value,
+        percentage: this.skillsFormGroup.get('percentage')?.value
+      }]
+    }).subscribe((data) => {
+      this.skillsFormGroup.reset();
+      this.getEmployee(this.employeeId);
+      this.loading = false;
+      this.successMessage('Skill added successfully', 'Success');
     }, (error) => {
       this.loading = false;
       this.errorMessage('Something went wrong. Please try again', 'Error');
@@ -167,6 +193,10 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
         }
       });
     }
+  }
+
+  generateRandomId(): string {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   }
 
   successMessage(msg: string, title: string) {

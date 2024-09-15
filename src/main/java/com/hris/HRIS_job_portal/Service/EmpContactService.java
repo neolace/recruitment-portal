@@ -1,5 +1,6 @@
 package com.hris.HRIS_job_portal.Service;
 
+import com.hris.HRIS_job_portal.DTO.EmpContactDTO;
 import com.hris.HRIS_job_portal.Model.EmpContactModel;
 import com.hris.HRIS_job_portal.Model.EmployeeModel;
 import com.hris.HRIS_job_portal.Repository.EmpContactRepository;
@@ -8,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -28,16 +26,31 @@ public class EmpContactService {
     }
 
     public EmpContactModel addEmpContact(EmpContactModel empContact) {
-        Optional<EmployeeModel> employeeModel = employeeRepository.findById(empContact.getEmployeeId());
-        EmpContactModel empContactModel = empContactRepository.save(empContact);
+        List<EmpContactModel> empContactList = empContactRepository.findByEmployeeId(empContact.getEmployeeId());
+        EmpContactModel empContactModel;
 
+        if (!empContactList.isEmpty()) {
+            empContactModel = empContactList.get(0);
+            List<EmpContactDTO> contacts = empContactModel.getContact();
+            if (contacts == null) {
+                contacts = new ArrayList<>();
+            }
+            contacts.addAll(empContact.getContact());
+            empContactModel.setContact(contacts);
+        } else {
+            empContactModel = empContactRepository.save(empContact);
+        }
+
+        empContactRepository.save(empContactModel);
+
+        Optional<EmployeeModel> employeeModel = employeeRepository.findById(empContact.getEmployeeId());
         if (employeeModel.isPresent()) {
             EmployeeModel existingEmployee = employeeModel.get();
             existingEmployee.setContactInfo(empContactModel.getId());
 
             Map<String, Boolean> profileCompleted = (Map<String, Boolean>) existingEmployee.getProfileCompleted();
             if (profileCompleted == null) {
-                profileCompleted = new HashMap<>(); // Initialize if null
+                profileCompleted = new HashMap<>();
             }
             profileCompleted.put("contactInfo", empContactModel.getContact() != null && !empContactModel.getContact().isEmpty());
             profileCompleted.put("socialLinks", empContactModel.getSocialLinks() != null && !empContactModel.getSocialLinks().isEmpty());

@@ -80,83 +80,43 @@
       <div class="form-card-1 justify-content-start">
         <h5>Add Skills :</h5>
 
-        <form action="">
+        <form [formGroup]="skillsFormGroup">
           <div class="row form-wrapper">
             <div class="col-12 col-lg-6">
               <div class="form-group">
                 <label for="skill">Skill</label>
-                <input type="text" class="form-control" id="skill">
+                <input type="text" class="form-control" id="skill" formControlName="skill">
               </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
               <div class="form-group">
                 <label for="skillPer">Percentage</label>
-                <input type="text" class="form-control" id="skillPer">
+                <input type="text" class="form-control" id="skillPer" formControlName="percentage">
               </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
               <div class="form-group d-flex align-items-end w-100 h-100">
-                <button type="submit" class="btn-1">Add</button>
+                <button type="submit" class="btn-1" (click)="saveSkills()">Add</button>
               </div>
             </div>
           </div>
         </form>
 
-        <div class="skill-set">
+        <div class="skill-set" *ngIf="employee?.empSkills.length > 0">
           <hr>
-          <div class="row my-2">
-            <div class="col-6">
-              <p>HTML</p>
-            </div>
-            <div class="col-3">
-              <p>90%</p>
-            </div>
-            <div class="col-3">
-              <div class="d-flex align-items-center">
-                <button class="btn-2"><i class="material-icons">edit</i></button>
-                <button class="btn-3"><i class="material-icons">delete</i></button>
+          <div *ngFor="let ss of employee?.empSkills;">
+            <div class="row my-2" *ngFor="let s of ss.skills; index as i">
+              <div class="col-6">
+                <p>{{s.skill}}</p>
               </div>
-            </div>
-          </div>
-          <div class="row my-2">
-            <div class="col-6">
-              <p>HTML</p>
-            </div>
-            <div class="col-3">
-              <p>90%</p>
-            </div>
-            <div class="col-3">
-              <div class="d-flex align-items-center">
-                <button class="btn-2"><i class="material-icons">edit</i></button>
-                <button class="btn-3"><i class="material-icons">delete</i></button>
+              <div class="col-3">
+                <p>{{s.percentage}}%</p>
               </div>
-            </div>
-          </div>
-          <div class="row my-2">
-            <div class="col-6">
-              <p>HTML</p>
-            </div>
-            <div class="col-3">
-              <p>90%</p>
-            </div>
-            <div class="col-3">
-              <div class="d-flex align-items-center">
-                <button class="btn-2"><i class="material-icons">edit</i></button>
-                <button class="btn-3"><i class="material-icons">delete</i></button>
-              </div>
-            </div>
-          </div>
-          <div class="row my-2">
-            <div class="col-6">
-              <p>HTML</p>
-            </div>
-            <div class="col-3">
-              <p>90%</p>
-            </div>
-            <div class="col-3">
-              <div class="d-flex align-items-center">
-                <button class="btn-2"><i class="material-icons">edit</i></button>
-                <button class="btn-3"><i class="material-icons">delete</i></button>
+              <div class="col-3">
+                <div class="d-flex align-items-center">
+                  <button class="btn-2"><i class="material-icons">edit</i></button>
+                  <button class="btn-3"><i class="material-icons">delete</i></button>
+                </div>
               </div>
             </div>
           </div>

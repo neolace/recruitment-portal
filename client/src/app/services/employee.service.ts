@@ -63,8 +63,6 @@ export class EmployeeService {
         this.cacheInitialized = true;
       }),
       catchError((error) => {
-        // Handle any caching or logging inside the service if needed
-        console.error('Error in service:', error);
         return throwError(error); // Re-throw the error so that the component can handle it
       })
     );
@@ -129,6 +127,35 @@ export class EmployeeService {
     });
 
     return this.employees$;
+  }
+
+  addSkills(skills: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.post(`${this.baseUrl}/emp_skills/add` , skills, {headers}).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullEmployee(skills.employeeId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    )
+  }
+
+  deleteEmpSkill(employeeId: any, skillId: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.delete(`${this.baseUrl}/emp_skills/delete/${employeeId}/${skillId}`, {headers}).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullEmployee(employeeId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      }))
   }
 
   // Clear cache
