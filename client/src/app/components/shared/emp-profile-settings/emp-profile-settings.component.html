@@ -96,7 +96,7 @@
             </div>
             <div class="col-12 col-md-6 col-lg-3">
               <div class="form-group d-flex align-items-end w-100 h-100">
-                <button type="submit" class="btn-1" (click)="saveSkills()">Add</button>
+                <button type="submit" class="btn-1" (click)="editSkills?editSkill():saveSkills()">{{editSkills ? 'Update' : 'Add'}}</button>
               </div>
             </div>
           </div>
@@ -114,8 +114,8 @@
               </div>
               <div class="col-3">
                 <div class="d-flex align-items-center">
-                  <button class="btn-2"><i class="material-icons">edit</i></button>
-                  <button class="btn-3"><i class="material-icons">delete</i></button>
+                  <button class="btn-2"><i class="material-icons" (click)="patchValuesToSkillsForm(s)">edit</i></button>
+                  <button class="btn-3"><i class="material-icons" (click)="deleteSkill(s.id)">delete</i></button>
                 </div>
               </div>
             </div>
