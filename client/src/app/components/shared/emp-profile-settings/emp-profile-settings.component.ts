@@ -30,6 +30,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
   editExperiences: boolean = false;
   editExperienceId: any;
   editContactId: any = null;
+  editSocialLinksId: any = null;
 
   downloadURL?: any;
 
@@ -95,9 +96,9 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
     this.employeeService.fetchFullEmployee(id).subscribe(
       (data) => {
         this.employee = data;
-        console.log(this.employee);
         this.patchValuesToPersonalForm();
         this.patchValuesToContactForm();
+        this.patchValuesToSocialForm();
         this.loading = false;
       },
       (error: HttpErrorResponse) => {
@@ -139,7 +140,19 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
         this.contactFormGroup.get('zip')?.setValue(contact?.contact[0]?.zipCode);
         this.contactFormGroup.get('website')?.setValue(contact?.contact[0]?.website);
         this.editContactId = contact.contact[0].id;
-        console.log(this.editContactId)
+      })
+    }
+  }
+
+  patchValuesToSocialForm() {
+    if (this.employee?.empContact) {
+      this.employee?.empContact.forEach((social: any) => {
+        this.socialFormGroup.get('facebook')?.setValue(social?.socialLinks[0]?.facebook);
+        this.socialFormGroup.get('twitter')?.setValue(social?.socialLinks[0]?.twitter);
+        this.socialFormGroup.get('instagram')?.setValue(social?.socialLinks[0]?.instagram);
+        this.socialFormGroup.get('linkedin')?.setValue(social?.socialLinks[0]?.linkedin);
+        this.socialFormGroup.get('github')?.setValue(social?.socialLinks[0]?.github);
+        this.editSocialLinksId = social.socialLinks[0].id;
       })
     }
   }
@@ -328,6 +341,51 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
       this.successMessage('Contact updated successfully', 'Success');
     }, (error) => {
       this.clear('contact');
+      this.loading = false;
+      this.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  addSocial() {
+    this.loading = true;
+    const social: any[] = [{
+      id: this.generateRandomId(),
+      facebook: this.socialFormGroup.get('facebook')?.value,
+      twitter: this.socialFormGroup.get('twitter')?.value,
+      linkedin: this.socialFormGroup.get('linkedin')?.value,
+      instagram: this.socialFormGroup.get('instagram')?.value,
+      github: this.socialFormGroup.get('github')?.value
+    }];
+    this.employeeService.addSocial({
+      employeeId: this.employeeId,
+      socialLinks: social
+    }).subscribe((data) => {
+      this.clear('social');
+      this.getEmployee(this.employeeId);
+      this.loading = false;
+      this.successMessage('Social updated successfully', 'Success');
+    }, (error) => {
+      this.loading = false;
+      this.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  updateSocial(id: any) {
+    this.loading = true;
+    this.employeeService.editSocial(this.employeeId, {
+      id: id,
+      facebook: this.socialFormGroup.get('facebook')?.value,
+      twitter: this.socialFormGroup.get('twitter')?.value,
+      linkedin: this.socialFormGroup.get('linkedin')?.value,
+      instagram: this.socialFormGroup.get('instagram')?.value,
+      github: this.socialFormGroup.get('github')?.value
+    }).subscribe((data) => {
+      this.clear('social');
+      this.getEmployee(this.employeeId);
+      this.loading = false;
+      this.successMessage('Social updated successfully', 'Success');
+    }, (error) => {
+      this.clear('social');
       this.loading = false;
       this.errorMessage('Something went wrong. Please try again', 'Error');
     });
