@@ -14,7 +14,7 @@ import {ToastrService} from "ngx-toastr";
 })
 export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('achievementsSection') achievementsSection!: ElementRef;
-  
+
   jobAdDataStrore: any = jobAdDataStrore;
 
   companyDataStore: any = companyDataStore;

@@ -3,7 +3,6 @@ import { jobAdDataStrore } from '../../shared/data-store/JobAd-data-strore';
 import {ActivatedRoute} from "@angular/router";
 import {EmployeeService} from "../../services/employee.service";
 import {AuthService} from "../../services/auth.service";
-import {HttpErrorResponse} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
