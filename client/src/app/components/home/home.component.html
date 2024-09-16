@@ -157,8 +157,8 @@
                 </div>
               </div>
               <div class="card-top-right">
-                <div class="visit-link-circle">
-                  <i class="material-icons" [ngClass]="heart?'liked':''">favorite_border</i>
+                <div class="visit-link-circle" (click)="userSavedIds.includes(p.id) ? removeFav(p.id) :saveFav(p.id)">
+                  <i class="material-icons" [ngClass]="userSavedIds.includes(p.id) ? 'liked' : ''">favorite_border</i>
                 </div>
               </div>
             </div>

@@ -1,5 +1,6 @@
 package com.hris.HRIS_job_portal.Controller;
 
+import com.hris.HRIS_job_portal.DTO.FavJobDTO;
 import com.hris.HRIS_job_portal.Model.EmployeeModel;
 import com.hris.HRIS_job_portal.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,20 @@ public class EmployeeController {
     @PutMapping("/update/updateResume")
     public EmployeeModel updateResume(@RequestBody EmployeeModel employee) {
         return employeeService.updateResume(employee);
+    }
+
+    @PutMapping("/save-job/{empId}")
+    public EmployeeModel saveJob(@PathVariable String empId, @RequestBody FavJobDTO jobDto) {
+        return employeeService.saveFavoriteJob(empId, jobDto);
+    }
+
+    @PutMapping("/remove-job/{empId}/{jobId}")
+    public EmployeeModel deleteJob(@PathVariable String empId, @PathVariable String jobId) {
+        return employeeService.removeFavoriteJob(empId, jobId);
+    }
+
+    @PutMapping("/update/saved-job/status/{empId}")
+    public EmployeeModel changeFavoriteJobStatus(@PathVariable String empId, @RequestBody FavJobDTO jobDto) {
+        return employeeService.changeFavoriteJobStatus(empId, jobDto);
     }
 }

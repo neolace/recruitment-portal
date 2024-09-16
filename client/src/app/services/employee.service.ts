@@ -279,6 +279,51 @@ export class EmployeeService {
     );
   }
 
+  saveFavJobs(employeeId: string, favJobs: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.put(`${this.baseUrl}/employee/save-job/${employeeId}`, favJobs, { headers }).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullEmployee(employeeId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    );
+  }
+
+  removeFavJobs(employeeId: string, jobId: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.put(`${this.baseUrl}/employee/remove-job/${employeeId}/${jobId}`,[], { headers }).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullEmployee(employeeId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    );
+  }
+
+  editFavJobStatus(employeeId: string, favJob: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.put(`${this.baseUrl}/employee/update/saved-job/status/${employeeId}`, favJob, { headers }).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullEmployee(employeeId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    );
+  }
+
   // Clear cache
   private clearCache() {
     this.cacheInitialized = false;

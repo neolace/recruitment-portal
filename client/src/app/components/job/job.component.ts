@@ -1,6 +1,10 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { jobAdDataStrore } from '../../shared/data-store/JobAd-data-strore';
 import {ActivatedRoute} from "@angular/router";
+import {EmployeeService} from "../../services/employee.service";
+import {AuthService} from "../../services/auth.service";
+import {HttpErrorResponse} from "@angular/common/http";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-job',
@@ -10,7 +14,6 @@ import {ActivatedRoute} from "@angular/router";
 export class JobComponent implements OnInit, AfterViewInit {
   @ViewChild('jobSearchInput') jobSearchInput!: ElementRef;
 
-  heart: boolean = false; //test
   jobAdDataStore: any[] = [];
   filteredJobAds: any[] = [];
   paginatedJobAds: any[] = []; // List of jobs to show on the current page
@@ -31,9 +34,14 @@ export class JobComponent implements OnInit, AfterViewInit {
   jobSearch: string = '';
   locationSearch: string = '';
 
-  constructor(private route: ActivatedRoute ) { }
+  employee: any;
+  employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
+  userSavedIds: any[] = [];
+
+  constructor(private route: ActivatedRoute, private employeeService: EmployeeService, private cookieService: AuthService, private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.employeeId = this.cookieService.userID();
     // Get query parameters from route
     this.route.queryParams.subscribe(params => {
       this.jobSearch = params['jobSearch'] || '';
@@ -46,6 +54,20 @@ export class JobComponent implements OnInit, AfterViewInit {
       this.updatePaginationRange();
       this.updatePaginatedJobAds();
     });
+
+    this.getEmployee(this.employeeId);
+  }
+
+  getEmployee(id: any) {
+    this.employeeService.fetchFullEmployee(id).subscribe(
+      (data) => {
+        this.employee = data;
+        this.userSavedIds = this.employee.employee.savedJobs.map((job: any) => job.jobId);
+      },
+      (error: any) => {
+        this.warningMessage('Please Login First to Apply Jobs', 'Reminder');
+      }
+    );
   }
 
   ngAfterViewInit() {
@@ -127,5 +149,49 @@ export class JobComponent implements OnInit, AfterViewInit {
   focusInput() {
     this.jobSearchInput.nativeElement.focus();
     document.body.scrollTop = 0;
+  }
+
+  saveFav(id: string) {
+    this.employeeService.saveFavJobs(this.employeeId, {
+      jobId: id,
+      status: 'saved'
+    }).subscribe((data) => {
+      this.getEmployee(this.employeeId);
+      this.successMessage('Job Saved Successfully', 'Success');
+    }, (error: any) => {
+      this.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  removeFav(id: string) {
+    this.employeeService.removeFavJobs(this.employeeId, id).subscribe((data) => {
+      this.getEmployee(this.employeeId);
+      this.successMessage('Job Removed Successfully', 'Success');
+    }, (error: any) => {
+      this.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  successMessage(msg: string, title: string) {
+    this.toastr.success(msg, title, {
+      progressBar: true,
+      progressAnimation: 'increasing',
+      closeButton: true,
+    });
+  }
+
+  errorMessage(msg: string, title: string) {
+    this.toastr.error(msg, title, {
+      progressBar: true,
+      progressAnimation: 'decreasing',
+      closeButton: true,
+    });
+  }
+
+  warningMessage(msg: string, title: string) {
+    this.toastr.warning(msg, title, {
+      progressBar: true,
+      progressAnimation: 'decreasing',
+    });
   }
 }
