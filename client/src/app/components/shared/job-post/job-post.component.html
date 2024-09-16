@@ -10,6 +10,35 @@
 </div>
 
 <div class="container">
+  <div>
+    <h5>At least You have to provide the following details in your business profile to unlock this form.</h5>
+    <div class="d-flex align-items-center justify-content-center w-100 my-5 px-5">
+      <div class="check-ball" [ngClass]="cname?'active':''" title="Company Name">
+        <i class="material-icons">check</i>
+        <div class="tag">Company Name</div>
+      </div>
+      <div class="check-line"></div>
+      <div class="check-ball" [ngClass]="cemail?'active':''" title="Company Email">
+        <i class="material-icons">check</i>
+        <div class="tag">Company Email</div>
+      </div>
+      <div class="check-line"></div>
+      <div class="check-ball" [ngClass]="cphone?'active':''" title="Company Phone">
+        <i class="material-icons">check</i>
+        <div class="tag">Company Phone</div>
+      </div>
+      <div class="check-line"></div>
+      <div class="check-ball" [ngClass]="chq?'active':''" title="Head Quarter">
+        <i class="material-icons">check</i>
+        <div class="tag">Head Quarter</div>
+      </div>
+      <div class="check-line"></div>
+      <div class="check-ball ready" [ngClass]="formLocked?'':'active'" title="Ready to go">
+        <i class="material-icons">{{formLocked?'lock_outline':'lock_open'}}</i>
+        <div class="tag">Ready to go</div>
+      </div>
+    </div>
+  </div>
   <div class="d-flex align-items-center justify-content-center w-100">
 
     <div class="form-card-1">
@@ -159,7 +188,7 @@
 
           <div class="col-12">
             <div class="form-group">
-              <button type="submit" class="btn-1">Post Now</button>
+              <button type="submit" [disabled]="formLocked" class="btn-1">Post Now</button>
             </div>
           </div>
         </div>

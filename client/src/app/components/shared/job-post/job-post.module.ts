@@ -8,11 +8,11 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
   declarations: [
     JobPostComponent
   ],
-  imports: [
-    CommonModule,
-    JobPostRoutingModule,
-    FormsModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        JobPostRoutingModule,
+        FormsModule,
+        ReactiveFormsModule
+    ]
 })
 export class JobPostModule { }
