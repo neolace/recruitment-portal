@@ -27,6 +27,7 @@ const routes: Routes = [
       { path: 'business-profile-settings', component: BusinessProfileSettingsComponent, canActivate: [AdminProGuard, AuthGuard] },
       { path: 'company-jobs', component: CompanyJobsMyComponent, canActivate: [AdminProGuard, AuthGuard] },
     ],
+    canActivate: [AdminProGuard, AuthGuard]
   }
 ];
 

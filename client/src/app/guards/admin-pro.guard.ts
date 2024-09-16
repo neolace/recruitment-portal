@@ -13,7 +13,7 @@ export class AdminProGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    if(this.cookieService.level() == '0' || this.cookieService.level() == '2'){
+    if(this.cookieService.level() == '0' || this.cookieService.level() == '3'){
       return true;
     }
     else{

@@ -312,7 +312,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
 
   updateContact(id: any) {
     this.loading = true;
-    const contact: any[] = [{
+    this.employeeService.editContact(this.employeeId, {
       id: id,
       phone: this.contactFormGroup.get('phone')?.value,
       email: this.contactFormGroup.get('email')?.value,
@@ -321,10 +321,6 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
       country: this.contactFormGroup.get('country')?.value,
       zipCode: this.contactFormGroup.get('zip')?.value,
       website: this.contactFormGroup.get('website')?.value
-    }];
-    this.employeeService.addContact({
-      employeeId: this.employeeId,
-      contact: contact
     }).subscribe((data) => {
       this.clear('contact');
       this.getEmployee(this.employeeId);

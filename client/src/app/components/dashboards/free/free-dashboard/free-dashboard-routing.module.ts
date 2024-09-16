@@ -23,6 +23,7 @@ const routes: Routes = [
       { path: 'business-profile-settings', component: BusinessProfileSettingsComponent, canActivate: [AdminGuard] },
       { path: 'company-jobs', component: CompanyJobsMyComponent, canActivate: [AdminGuard] },
     ],
+    canActivate: [AdminGuard, AuthGuard]
   }
 ];
 
