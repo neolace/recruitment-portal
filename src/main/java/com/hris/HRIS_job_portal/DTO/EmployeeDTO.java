@@ -19,8 +19,10 @@ public class EmployeeDTO {
     private String experiences; //id
     private String education; //id
     private String contactInfo; //id
+    private Object savedJobs; //ids
     private Object accountNotifications;
     private Object marketingNotifications;
     private Object profileCompleted;
     private String profileStatus;
+    private String companyId;
 }
