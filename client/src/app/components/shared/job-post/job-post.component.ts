@@ -60,6 +60,7 @@ export class JobPostComponent implements AfterViewInit, OnInit {
       (data) => {
         this.employee = data;
         this.getCompany(this.employee?.employee?.companyId);
+        this.loading = false;
       },
       (error: HttpErrorResponse) => {
         // Check for different error types

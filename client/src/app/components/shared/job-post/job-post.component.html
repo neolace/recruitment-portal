@@ -10,6 +10,7 @@
 </div>
 
 <div class="container">
+  <div *ngIf="loading"><app-page-loading></app-page-loading></div>
   <div>
     <h5>At least You have to provide the following details in your business profile to unlock this form.</h5>
     <div class="d-flex align-items-center justify-content-center w-100 my-5 px-5">
@@ -194,5 +195,17 @@
         </div>
       </form>
     </div>
+  </div>
+  <div *ngIf="!loading && serverError">
+    <app-failed-to-load-data></app-failed-to-load-data>
+  </div>
+  <div *ngIf="notFound && !employee?.employee">
+    <app-result-not-found></app-result-not-found>
+  </div>
+  <div *ngIf="corsError">
+    <app-network-error></app-network-error>
+  </div>
+  <div *ngIf="forbidden && !employee?.employee || unexpectedError">
+    <app-forbidden></app-forbidden>
   </div>
 </div>
