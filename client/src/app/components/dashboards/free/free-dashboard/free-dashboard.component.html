@@ -10,8 +10,20 @@
   <div class="d-flex align-items-center justify-content-around">
     <div class="main-bar-profile-tag">
       <div class="d-flex align-items-center">
-        <div class="profile-pic me-md-3">
-          <img src="https://jobstack-shreethemes.vercel.app/static/media/google-logo.28878765ba39f327cf3e.png" alt="profile">
+        <div class="ms-2 dropdown">
+          <div class="profile-pic me-md-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://jobstack-shreethemes.vercel.app/static/media/05.a7ab2c82813cb95da9d6.jpg"
+                 alt="profile">
+          </div>
+
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" routerLink="/candidate-profile"><i class="material-icons">perm_identity</i> Profile</a></li>
+            <li><a class="dropdown-item" routerLink="/my-jobs"><i class="material-icons">assignment</i> My Jobs</a></li>
+            <li><a class="dropdown-item" routerLink="/candidate-profile-setting"><i class="material-icons">settings</i> Setting</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" routerLink="/locked"><i class="material-icons">lock</i> Lock Screen</a></li>
+            <li><a class="dropdown-item"><i class="material-icons">logout</i> Logout</a></li>
+          </ul>
         </div>
         <div class="d-none d-md-flex flex-column justify-content-between profile-tag">
           <h6>User Name</h6>
