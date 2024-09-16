@@ -1,11 +1,15 @@
 package com.hris.HRIS_job_portal.Model;
 
+import com.hris.HRIS_job_portal.DTO.FavJobDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,7 +34,8 @@ public class EmployeeModel {
     private String experiences; //id
     private String education; //id
     private String contactInfo; //id
-    private Object savedJobs; //ids
+    @Field("savedJobs")
+    private List<FavJobDTO> savedJobs;
     private Object accountNotifications;
     private Object marketingNotifications;
     private Object profileCompleted;

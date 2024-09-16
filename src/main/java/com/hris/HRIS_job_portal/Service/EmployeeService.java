@@ -1,5 +1,6 @@
 package com.hris.HRIS_job_portal.Service;
 
+import com.hris.HRIS_job_portal.DTO.FavJobDTO;
 import com.hris.HRIS_job_portal.Model.EmployeeModel;
 import com.hris.HRIS_job_portal.Repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -19,6 +17,10 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     public List<EmployeeModel> getAllEmployees() {
         return employeeRepository.findAll();
@@ -127,8 +129,56 @@ public class EmployeeService {
         return employee;
     }
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeModel saveFavoriteJob(String empId, FavJobDTO jobDTO) {
+        Optional<EmployeeModel> employeeModel = employeeRepository.findById(empId);
+        if (employeeModel.isPresent()) {
+            EmployeeModel employee = employeeModel.get();
+            List<FavJobDTO> favJobs = employee.getSavedJobs();
+            if (favJobs == null) {
+                favJobs = new ArrayList<>();
+            }
+            favJobs.add(jobDTO);
+            employee.setSavedJobs(favJobs);
+            return employeeRepository.save(employee);
+        } else {
+            throw new RuntimeException("Employee not found for id: " + empId);
+        }
+    }
+
+    public EmployeeModel removeFavoriteJob(String empId, String jobId) {
+        Optional<EmployeeModel> employeeModel = employeeRepository.findById(empId);
+        if (employeeModel.isPresent()) {
+            EmployeeModel employee = employeeModel.get();
+            List<FavJobDTO> favJobs = employee.getSavedJobs();
+            if (favJobs == null) {
+                favJobs = new ArrayList<>();
+            }
+            favJobs.removeIf(job -> job.getJobId().equals(jobId));
+            employee.setSavedJobs(favJobs);
+            return employeeRepository.save(employee);
+        } else {
+            throw new RuntimeException("Employee not found for id: " + empId);
+        }
+    }
+
+    public EmployeeModel changeFavoriteJobStatus(String empId, FavJobDTO jobDto) {
+        Optional<EmployeeModel> employeeModel = employeeRepository.findById(empId);
+        if (employeeModel.isPresent()) {
+            EmployeeModel employee = employeeModel.get();
+            List<FavJobDTO> favJobs = employee.getSavedJobs();
+            if (favJobs == null) {
+                favJobs = new ArrayList<>();
+            }
+            for (FavJobDTO favJob : favJobs) {
+                if (favJob.getJobId().equals(jobDto.getJobId())) {
+                    favJob.setStatus(jobDto.getStatus());
+                    return employeeRepository.save(employee);
+                }
+            }
+        } else {
+            throw new RuntimeException("Employee not found for id: " + empId);
+        }
+        return null;
     }
 
     @Async
