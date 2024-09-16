@@ -1,5 +1,7 @@
 package com.hris.HRIS_job_portal.Controller;
 
+import com.hris.HRIS_job_portal.DTO.EmpContactDTO;
+import com.hris.HRIS_job_portal.DTO.SocialLinksDTO;
 import com.hris.HRIS_job_portal.Model.EmpContactModel;
 import com.hris.HRIS_job_portal.Service.EmpContactService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,16 @@ public class EmpContactController {
     @PostMapping("/add-social")
     public EmpContactModel addSocialLinks(@RequestBody EmpContactModel socialLinks) {
         return empContactService.AddEmpSocialLinks(socialLinks);
+    }
+
+    @PutMapping("/update-contact/{employeeId}")
+    public EmpContactModel updateEmpContact(@PathVariable String employeeId, @RequestBody EmpContactDTO empContact) {
+        return empContactService.editEmpContact(employeeId, empContact);
+    }
+
+    @PutMapping("/update-social/{employeeId}")
+    public EmpContactModel updateSocialLinks(@PathVariable String employeeId, @RequestBody SocialLinksDTO socialLinks) {
+        return empContactService.editEmpSocialLinks(employeeId, socialLinks);
     }
 
     @PutMapping("/update/{id}")

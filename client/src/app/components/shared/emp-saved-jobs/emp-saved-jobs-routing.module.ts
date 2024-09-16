@@ -18,6 +18,7 @@ const routes: Routes = [
       { path: 'applied', component: EmpSavedJobsAppliedComponent, canActivate: [AuthGuard] },
       { path: 'archived', component: EmpSavedJobsArchivedComponent, canActivate: [AuthGuard] },
     ],
+    canActivate: [AuthGuard],
   },
 ];
 

@@ -61,6 +61,36 @@ public class EmpContactService {
         return empContactModel;
     }
 
+    public EmpContactModel editEmpContact(String employeeId, EmpContactDTO updatedContact) {
+        List<EmpContactModel> empContactsList = empContactRepository.findByEmployeeId(employeeId);
+
+        if (!empContactsList.isEmpty()) {
+            EmpContactModel empContactsModel = empContactsList.get(0);
+
+            List<EmpContactDTO> contacts = empContactsModel.getContact();
+            if (contacts != null) {
+                for (EmpContactDTO contact : contacts) {
+                    if (contact.getId().equals(updatedContact.getId())) {
+                        contact.setPhone(updatedContact.getPhone());
+                        contact.setEmail(updatedContact.getEmail());
+                        contact.setAddress(updatedContact.getAddress());
+                        contact.setCity(updatedContact.getCity());
+                        contact.setCountry(updatedContact.getCountry());
+                        contact.setZipCode(updatedContact.getZipCode());
+                        contact.setWebsite(updatedContact.getWebsite());
+                        break;
+                    }
+                }
+                empContactsModel.setContact(contacts);
+
+                empContactRepository.save(empContactsModel);
+            }
+
+            return empContactsModel;
+        }
+        throw new RuntimeException("Contacts not found for employeeId: " + employeeId);
+    }
+
     public EmpContactModel AddEmpSocialLinks(EmpContactModel empContact) {
         List<EmpContactModel> empContactList = empContactRepository.findByEmployeeId(empContact.getEmployeeId());
         EmpContactModel empContactModel;
@@ -95,6 +125,34 @@ public class EmpContactService {
             employeeRepository.save(existingEmployee);
         }
         return empContactModel;
+    }
+
+    public EmpContactModel editEmpSocialLinks(String employeeId, SocialLinksDTO updatedSocialLinks) {
+        List<EmpContactModel> empContactsList = empContactRepository.findByEmployeeId(employeeId);
+
+        if (!empContactsList.isEmpty()) {
+            EmpContactModel empContactsModel = empContactsList.get(0);
+
+            List<SocialLinksDTO> links = empContactsModel.getSocialLinks();
+            if (links != null) {
+                for (SocialLinksDTO link : links) {
+                    if (link.getId().equals(updatedSocialLinks.getId())) {
+                        link.setFacebook(updatedSocialLinks.getFacebook());
+                        link.setTwitter(updatedSocialLinks.getTwitter());
+                        link.setLinkedin(updatedSocialLinks.getLinkedin());
+                        link.setGithub(updatedSocialLinks.getGithub());
+                        link.setInstagram(updatedSocialLinks.getInstagram());
+                        break;
+                    }
+                }
+                empContactsModel.setSocialLinks(links);
+
+                empContactRepository.save(empContactsModel);
+            }
+
+            return empContactsModel;
+        }
+        throw new RuntimeException("Contacts not found for employeeId: " + employeeId);
     }
 
     public EmpContactModel updateEmpContact(String id, EmpContactModel empContact) {
