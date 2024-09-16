@@ -29,7 +29,7 @@ export class JobPostComponent implements AfterViewInit, OnInit {
   cemail: any = '';
   cphone: any = '';
   chq: any = '';
-  formLocked: boolean = false;
+  formLocked: boolean = true;
 
   constructor(private employeeService: EmployeeService, private cookieService: AuthService) {
   }
