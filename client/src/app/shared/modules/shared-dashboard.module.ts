@@ -13,6 +13,10 @@ import {
   BusinessProfileSettingsComponent
 } from "../../components/dashboards/free/business-profile-settings/business-profile-settings.component";
 import {CompanyJobsMyComponent} from "../../components/dashboards/free/company-jobs-my/company-jobs-my.component";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {RouterLink} from "@angular/router";
+import {SharedComponentModule} from "./shared-component.module";
 
 
 
@@ -25,7 +29,12 @@ import {CompanyJobsMyComponent} from "../../components/dashboards/free/company-j
     CompanyJobsMyComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    MatProgressSpinnerModule,
+    ReactiveFormsModule,
+    RouterLink,
+    SharedComponentModule
   ],
   exports: [
     PersonalProfileMyComponent,

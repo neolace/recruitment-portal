@@ -39,14 +39,14 @@ export class LoginComponent implements AfterViewInit {
             this.cookieService.createLevel(response.userLevel);
             this.router.navigate(['/']);
           } else if (response.role === 'employer') {
-            if (response.userLevel === "1") {
+            if (response.userLevel === "2") {
               this.cookieService.createUserID(response.employeeId);
               this.cookieService.createAdmin(response.email);
               this.cookieService.createOrganizationID(response.organizationId);
               this.cookieService.createLevel(response.userLevel);
               this.router.navigate(['/dashboard']);
             }
-            else if (response.userLevel === "2") {
+            else if (response.userLevel === "3") {
               this.cookieService.createUserID(response.employeeId);
               this.cookieService.createProAdmin(response.email);
               this.cookieService.createOrganizationID(response.organizationId);
