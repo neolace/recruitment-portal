@@ -8,6 +8,7 @@ import {ResetPasswordComponent} from "./components/reset-password/reset-password
 import {FreeDashboardComponent} from "./components/dashboards/free/free-dashboard/free-dashboard.component";
 import {ProDashboardComponent} from "./components/dashboards/pro/pro-dashboard/pro-dashboard.component";
 import {commonSearchResults} from "./shared/data-store/common-search-results";
+import {AuthService} from "./services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -27,7 +28,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   filteredSearchResults: any[] = [];
   targetInput: any;
 
-  constructor(public themeService: ThemeService, private router: Router, private renderer: Renderer2 ) {}
+  constructor(public themeService: ThemeService, private router: Router, private renderer: Renderer2, private cookieService: AuthService) {}
 
   ngOnInit() {
     this.router.events.subscribe(event => {
@@ -123,5 +124,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     } else {
       this.filteredSearchResults = this.commonSearchResults;
     }
+  }
+
+  logout() {
+    this.cookieService.logout()
+    this.router.navigate(['/login']);
   }
 }
