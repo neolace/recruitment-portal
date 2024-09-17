@@ -79,4 +79,33 @@ export class EmpSavedJobsSavedComponent implements AfterViewInit{
       progressAnimation: 'decreasing',
     });
   }
+
+  isExpired(savedJobs:any, id:any, expiryDate: any) {
+    const currentDate = new Date().getTime();
+    const jobExpiryDate = new Date(expiryDate).getTime();
+
+    const job = savedJobs.find((j: any) => j.jobId === id);
+    if (job.status === 'Expired') {
+      if (currentDate < jobExpiryDate) {
+        this.employeeService.editFavJobStatus(this.employeeId, {
+          jobId: id,
+          status: 'Saved'
+        })
+        return false;
+      }
+      return true;
+    } else {
+      if (currentDate > jobExpiryDate) {
+        this.employeeService.editFavJobStatus(this.employeeId, {
+          jobId: id,
+          status: 'Expired'
+        }).subscribe((data) => {
+          this.getEmployee(this.employeeId);
+        })
+        return true;
+      }
+    }
+
+    return false;
+  }
 }
