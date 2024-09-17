@@ -13,15 +13,15 @@
           </div>
         </div>
         <div class="d-flex flex-sm-column align-items-start align-items-sm-end justify-content-between mt-2 mt-sm-0">
-          <div class="status-tag">
-            saved
+          <div class="status-tag" [ngClass]="{'expired': isExpired(employee?.employee?.savedJobs, j.id, j.expiryDate)}">
+            {{isExpired(employee?.employee?.savedJobs, j.id, j.expiryDate) ? 'Expired' : 'Saved'}}
           </div>
-          <p class="exp-date">{{j.expiryDate | date}}</p>
+          <p class="exp-date" [ngClass]="{'expired': isExpired(employee?.employee?.savedJobs, j.id, j.expiryDate)}">{{j.expiryDate | date}}</p>
         </div>
       </div>
       <hr>
       <div class="d-flex align-items-center justify-content-end w-100 gap-2 py-2 px-3">
-        <button class="btn-1" routerLink="/job-details/{{j.id}}">View Details</button>
+        <button class="btn-1" *ngIf="!isExpired(employee?.employee?.savedJobs, j.id, j.expiryDate)" routerLink="/job-details/{{j.id}}">View Details</button>
         <button class="btn-3" (click)="removeFav(j.id)">Remove</button>
       </div>
     </div>
