@@ -3,6 +3,7 @@ import {jobAdDataStrore} from "../../../../shared/data-store/JobAd-data-strore";
 import {EmployeeService} from "../../../../services/employee.service";
 import {AuthService} from "../../../../services/auth.service";
 import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-emp-saved-jobs-saved',
@@ -17,7 +18,10 @@ export class EmpSavedJobsSavedComponent implements AfterViewInit{
 
   jobAdDataStore: any[] = jobAdDataStrore; //for test
   filteredJobs: any[] = []; //for test
-  constructor(private employeeService: EmployeeService, private cookieService: AuthService, private toastr: ToastrService ) { }
+  constructor(private employeeService: EmployeeService,
+              private cookieService: AuthService,
+              private toastr: ToastrService,
+              private router: Router ) { }
 
   ngAfterViewInit(): void {
     const icons = document.querySelectorAll('.material-icons');
@@ -35,7 +39,7 @@ export class EmpSavedJobsSavedComponent implements AfterViewInit{
     this.employeeService.fetchFullEmployee(id).subscribe(
       (data) => {
         this.employee = data;
-        this.userSavedIds = this.employee.employee.savedJobs.map((job: any) => job.jobId);
+        this.userSavedIds = this.employee.employee.savedJobs.filter((item: any) => item.status === 'saved' || item.status === 'expired').map((job: any) => job.jobId);
       },
       (error: any) => {
         this.warningMessage('Please Login First to Apply Jobs', 'Reminder');
@@ -83,13 +87,16 @@ export class EmpSavedJobsSavedComponent implements AfterViewInit{
   isExpired(savedJobs:any, id:any, expiryDate: any) {
     const currentDate = new Date().getTime();
     const jobExpiryDate = new Date(expiryDate).getTime();
+    const route = this.router.url.split('/')[2];
 
     const job = savedJobs.find((j: any) => j.jobId === id);
-    if (job.status === 'Expired') {
-      if (currentDate < jobExpiryDate) {
+    if (job.status === 'expired') {
+      if (currentDate < jobExpiryDate && route === 'saved') {
         this.employeeService.editFavJobStatus(this.employeeId, {
           jobId: id,
-          status: 'Saved'
+          status: 'saved'
+        }).subscribe((data) => {
+          this.getEmployee(this.employeeId);
         })
         return false;
       }
@@ -98,7 +105,7 @@ export class EmpSavedJobsSavedComponent implements AfterViewInit{
       if (currentDate > jobExpiryDate) {
         this.employeeService.editFavJobStatus(this.employeeId, {
           jobId: id,
-          status: 'Expired'
+          status: 'expired'
         }).subscribe((data) => {
           this.getEmployee(this.employeeId);
         })
