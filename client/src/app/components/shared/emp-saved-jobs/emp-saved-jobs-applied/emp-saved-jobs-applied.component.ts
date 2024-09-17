@@ -3,6 +3,7 @@ import {EmployeeService} from "../../../../services/employee.service";
 import {AuthService} from "../../../../services/auth.service";
 import {ToastrService} from "ngx-toastr";
 import {jobAdDataStrore} from "../../../../shared/data-store/JobAd-data-strore";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-emp-saved-jobs-applied',
@@ -16,7 +17,11 @@ export class EmpSavedJobsAppliedComponent implements AfterViewInit, OnInit {
   userSavedIds: any[] = [];
 
   jobAdDataStore: any[] = jobAdDataStrore; //for test
-  constructor(private employeeService: EmployeeService, private cookieService: AuthService, private toastr: ToastrService ) { }
+  filteredJobs: any[] = []; //for test
+  constructor(private employeeService: EmployeeService,
+              private cookieService: AuthService,
+              private toastr: ToastrService,
+              private router: Router ) { }
 
   ngAfterViewInit(): void {
     const icons = document.querySelectorAll('.material-icons');
@@ -34,7 +39,7 @@ export class EmpSavedJobsAppliedComponent implements AfterViewInit, OnInit {
     this.employeeService.fetchFullEmployee(id).subscribe(
       (data) => {
         this.employee = data;
-        this.userSavedIds = this.employee.employee.savedJobs.map((job: any) => job.jobId);
+        this.userSavedIds = this.employee.employee.savedJobs.filter((item: any) => item.status === 'applied' || item.status === 'expired').map((job: any) => job.jobId);
       },
       (error: any) => {
         this.warningMessage('Please Login First to Apply Jobs', 'Reminder');
@@ -43,7 +48,17 @@ export class EmpSavedJobsAppliedComponent implements AfterViewInit, OnInit {
   }
 
   filterJobs():any[] {
-    return this.jobAdDataStore.filter((job: any) => this.userSavedIds.includes(job.JobId) && job.status === 'applied' || job.status === 'expired');
+    this.filteredJobs = this.jobAdDataStore.filter((job: any) => this.userSavedIds.includes(job.id));
+    return this.filteredJobs;
+  }
+
+  removeFav(id: string) {
+    this.employeeService.removeFavJobs(this.employeeId, id).subscribe((data) => {
+      this.getEmployee(this.employeeId);
+      this.successMessage('Job Removed Successfully', 'Success');
+    }, (error: any) => {
+      this.errorMessage('Something went wrong. Please try again', 'Error');
+    });
   }
 
   successMessage(msg: string, title: string) {
@@ -67,5 +82,37 @@ export class EmpSavedJobsAppliedComponent implements AfterViewInit, OnInit {
       progressBar: true,
       progressAnimation: 'decreasing',
     });
+  }
+
+  isExpired(savedJobs:any, id:any, expiryDate: any) {
+    const currentDate = new Date().getTime();
+    const jobExpiryDate = new Date(expiryDate).getTime();
+    const route = this.router.url.split('/')[2];
+
+    const job = savedJobs.find((j: any) => j.jobId === id);
+    if (job.status === 'expired') {
+      if (currentDate < jobExpiryDate && route === 'applied') {
+        this.employeeService.editFavJobStatus(this.employeeId, {
+          jobId: id,
+          status: 'applied'
+        }).subscribe((data) => {
+          this.getEmployee(this.employeeId);
+        })
+        return false;
+      }
+      return true;
+    } else {
+      if (currentDate > jobExpiryDate) {
+        this.employeeService.editFavJobStatus(this.employeeId, {
+          jobId: id,
+          status: 'expired'
+        }).subscribe((data) => {
+          this.getEmployee(this.employeeId);
+        })
+        return true;
+      }
+    }
+
+    return false;
   }
 }

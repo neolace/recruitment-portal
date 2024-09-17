@@ -25,7 +25,7 @@ export var jobAdDataStrore: JobAdModel[] = [
     minSalary: "3000",
     maxSalary: "4000",
     datePosted: "Sat Sep 07 2024 07:42:48 GMT+0000",
-    expiryDate: "Sat Sep 21 2024 07:42:48 GMT+0000",
+    expiryDate: "Sat Sep 11 2024 07:42:48 GMT+0000",
     url: "https://www.facebook.com",
   },
   {
