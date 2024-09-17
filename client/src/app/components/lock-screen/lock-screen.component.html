@@ -9,15 +9,15 @@
         </div>
         <h5>Jenny Jimenez</h5>
 
-        <form action="">
+        <form [formGroup]="unlockForm">
           <div class="row form-wrapper">
             <div class="col-12">
               <label for="password">Password:</label>
-              <input type="password" placeholder="Enter Password" id="password">
+              <input type="password" placeholder="Enter Password" id="password" formControlName="password">
             </div>
 
             <div class="col-12">
-              <button class="btn-1 w-100">login/sign up</button>
+              <button class="btn-1 w-100" (click)="unlockUser()">unlock</button>
             </div>
           </div>
         </form>
