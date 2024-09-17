@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
   canActivate(
       route: ActivatedRouteSnapshot,
       state: RouterStateSnapshot): boolean {
-    if(this.cookieService.isExists()){
+    if(this.cookieService.isExists() && !this.cookieService.isLocked()){
       return true;
     }
     else{
@@ -22,5 +22,5 @@ export class AuthGuard implements CanActivate {
       return false;
     }
   }
-  
+
 }

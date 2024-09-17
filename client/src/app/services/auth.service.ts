@@ -73,6 +73,19 @@ export class AuthService {
     return this.cookieService.get('level').toString();
   }
 
+  public lock() {
+    return this.cookieService.set('locked', 'true');
+  }
+
+  public unlock() {
+    return this.cookieService.delete('locked');
+  }
+
+  public isLocked() {
+    let locked = this.cookieService.get('locked');
+    return locked.length !== 0;
+  }
+
   public acceptAllCookies() {
     this.cookieService.set('cookies-accepted', 'true', 60*60*24*20);
   }
