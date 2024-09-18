@@ -267,29 +267,29 @@
       <div class="form-card-1">
         <h5>Change Password :</h5>
 
-        <form action="">
+        <form [formGroup]="changePassForm">
           <div class="row form-wrapper">
             <div class="col-12">
               <div class="form-group">
                 <label for="old-password">Old Password</label>
-                <input type="password" class="form-control" id="old-password">
+                <input type="password" class="form-control" id="old-password" formControlName="oldPass">
               </div>
             </div>
             <div class="col-12">
               <div class="form-group">
                 <label for="new-password">New Password</label>
-                <input type="password" class="form-control" id="new-password">
+                <input type="password" class="form-control" id="new-password" formControlName="newPass">
               </div>
             </div>
             <div class="col-12">
               <div class="form-group">
                 <label for="confirm-password">Confirm Password</label>
-                <input type="password" class="form-control" id="confirm-password">
+                <input type="password" class="form-control" id="confirm-password" formControlName="confirmPass">
               </div>
             </div>
             <div class="col-12">
               <div class="form-group">
-                <button type="submit" class="btn-1">Save Password</button>
+                <button type="submit" (click)="changePass()" class="btn-1">Save Password</button>
               </div>
             </div>
           </div>
