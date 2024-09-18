@@ -400,69 +400,73 @@
       </form>
     </div>
 
-    <div class="form-card-1">
-      <h5>Account Notifications :</h5>
-      <div class="d-flex align-items-center justify-content-between w-100">
-        <p class="notification-text">When someone mentions me</p>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="mention">
+    <form [formGroup]="aNotificationsForm">
+      <div class="form-card-1">
+        <h5>Account Notifications :</h5>
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <p class="notification-text">When someone mentions me</p>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="mention" formControlName="mention">
+          </div>
         </div>
-      </div>
-      <hr>
-      <div class="d-flex align-items-center justify-content-between w-100">
-        <p class="notification-text">When someone follows me</p>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="follow" checked>
+        <hr>
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <p class="notification-text">When someone follows me</p>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="follow" formControlName="follow">
+          </div>
         </div>
-      </div>
-      <hr>
-      <div class="d-flex align-items-center justify-content-between w-100">
-        <p class="notification-text">When shares my activity</p>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="share">
+        <hr>
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <p class="notification-text">When shares my activity</p>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="share" formControlName="share">
+          </div>
         </div>
-      </div>
-      <hr>
-      <div class="d-flex align-items-center justify-content-between w-100">
-        <p class="notification-text">When someone messages me</p>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="message">
+        <hr>
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <p class="notification-text">When someone messages me</p>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="message" formControlName="message">
+          </div>
         </div>
+        <br>
       </div>
-      <br>
-    </div>
+    </form>
 
-    <div class="form-card-1">
-      <h5>Marketing Notifications :</h5>
-      <div class="d-flex align-items-center justify-content-between w-100">
-        <p class="notification-text">There is a sale or promotion</p>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="promotion">
+    <form [formGroup]="mNotificationsForm">
+      <div class="form-card-1">
+        <h5>Marketing Notifications :</h5>
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <p class="notification-text">There is a sale or promotion</p>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="promotion" formControlName="promotion">
+          </div>
         </div>
-      </div>
-      <hr>
-      <div class="d-flex align-items-center justify-content-between w-100">
-        <p class="notification-text">Company news</p>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="company-news">
+        <hr>
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <p class="notification-text">Company news</p>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="company-news" formControlName="companyNews">
+          </div>
         </div>
-      </div>
-      <hr>
-      <div class="d-flex align-items-center justify-content-between w-100">
-        <p class="notification-text">Weekly jobs</p>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="jobs" checked>
+        <hr>
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <p class="notification-text">Weekly jobs</p>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="jobs" formControlName="jobs">
+          </div>
         </div>
-      </div>
-      <hr>
-      <div class="d-flex align-items-center justify-content-between w-100">
-        <p class="notification-text">Unsubscribe News</p>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="unsubscribe" checked>
+        <hr>
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <p class="notification-text">Unsubscribe News</p>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="unsubscribe" formControlName="unsubscribe">
+          </div>
         </div>
+        <br>
       </div>
-      <br>
-    </div>
+    </form>
 
     <div class="form-card-1">
       <h5 class="text-danger">Delete Account :</h5>

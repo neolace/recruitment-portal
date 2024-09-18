@@ -40,6 +40,11 @@ public class EmployeeController {
         return employeeService.updateEmployee(employee);
     }
 
+    @PutMapping("/update/notifications")
+    public EmployeeModel updateNotifications(@RequestBody EmployeeModel employee) {
+        return employeeService.updateNotifications(employee);
+    }
+
     @PutMapping("/update/updateProfilePic")
     public EmployeeModel updateProfilePic(@RequestBody EmployeeModel employee) {
         return employeeService.updateProfilePic(employee);

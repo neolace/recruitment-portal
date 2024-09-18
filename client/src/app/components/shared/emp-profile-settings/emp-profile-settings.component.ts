@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {countries} from "../../../shared/data-store/countries";
 import {FileUploadService} from "../../../services/file-upload.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -13,7 +13,7 @@ import {CredentialService} from "../../../services/credential.service";
   templateUrl: './emp-profile-settings.component.html',
   styleUrls: ['./emp-profile-settings.component.scss']
 })
-export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
+export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDestroy{
   countriesSet: any[] = countries
 
   employee: any;
@@ -83,6 +83,20 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
     confirmPass: new FormControl('', [Validators.required])
   });
 
+  aNotificationsForm = new FormGroup({
+    mention: new FormControl(false),
+    follow: new FormControl(false),
+    share: new FormControl(false),
+    message: new FormControl(false)
+  });
+
+  mNotificationsForm = new FormGroup({
+    promotion: new FormControl(false),
+    companyNews: new FormControl(false),
+    jobs: new FormControl(false),
+    unsubscribe: new FormControl(false)
+  });
+
   constructor(private fileUploadService: FileUploadService,
               private employeeService: EmployeeService,
               private credentialService: CredentialService,
@@ -102,6 +116,10 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
     });
   }
 
+  ngOnDestroy() {
+    this.updateNotifications()
+  }
+
   getEmployee(id: any) {
     this.loading = true;
     this.employeeService.fetchFullEmployee(id).subscribe(
@@ -110,6 +128,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
         this.patchValuesToPersonalForm();
         this.patchValuesToContactForm();
         this.patchValuesToSocialForm();
+        this.patchNotifications(data?.employee?.accountNotifications, data?.employee?.marketingNotifications);
         this.loading = false;
       },
       (error: HttpErrorResponse) => {
@@ -442,6 +461,42 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
     } else {
       this.loading = false;
       this.errorMessage('Please fill all the required fields', 'Error');
+    }
+  }
+
+  updateNotifications() {
+    this.employeeService.updateNotifications({
+      id: this.employeeId,
+      accountNotifications: {
+        mention: this.aNotificationsForm.get('mention')?.value,
+        follow: this.aNotificationsForm.get('follow')?.value,
+        shareActivity: this.aNotificationsForm.get('share')?.value,
+        message: this.aNotificationsForm.get('message')?.value
+      },
+      marketingNotifications: {
+        promotion: this.mNotificationsForm.get('promotion')?.value,
+        companyNews: this.mNotificationsForm.get('companyNews')?.value,
+        weeklyJobs: this.mNotificationsForm.get('jobs')?.value,
+        unsubscribe: this.mNotificationsForm.get('unsubscribe')?.value
+      }
+    }).subscribe((data) => {
+      this.getEmployee(this.employeeId);
+      this.successMessage('All applied changes are visible after refresh', 'Success');
+    })
+  }
+
+  patchNotifications(account:any, marketing:any) {
+    if (account){
+      this.aNotificationsForm.get('mention')?.patchValue(account.mention);
+      this.aNotificationsForm.get('follow')?.patchValue(account.follow);
+      this.aNotificationsForm.get('share')?.patchValue(account.shareActivity);
+      this.aNotificationsForm.get('message')?.patchValue(account.message);
+    }
+    if (marketing){
+      this.mNotificationsForm.get('promotion')?.patchValue(marketing.promotion);
+      this.mNotificationsForm.get('companyNews')?.patchValue(marketing.companyNews);
+      this.mNotificationsForm.get('jobs')?.patchValue(marketing.weeklyJobs);
+      this.mNotificationsForm.get('unsubscribe')?.patchValue(marketing.unsubscribe);
     }
   }
 
