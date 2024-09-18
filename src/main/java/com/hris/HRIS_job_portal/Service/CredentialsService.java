@@ -70,7 +70,7 @@ public class CredentialsService {
     }
 
     public CredentialsModel updateCredentials(String employeeId, CredentialsModel credentials) {
-        Optional<CredentialsModel> optionalCredentials = credentialsRepository.findById(employeeId);
+        Optional<CredentialsModel> optionalCredentials = credentialsRepository.findById(credentials.getId());
         if (optionalCredentials.isPresent()) {
             CredentialsModel credentials1 = optionalCredentials.get();
             credentials1.setEmployeeId(employeeId);

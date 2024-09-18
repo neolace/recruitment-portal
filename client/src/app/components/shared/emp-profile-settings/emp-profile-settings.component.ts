@@ -6,6 +6,7 @@ import {EmployeeService} from "../../../services/employee.service";
 import {ToastrService} from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
 import {AuthService} from "../../../services/auth.service";
+import {CredentialService} from "../../../services/credential.service";
 
 @Component({
   selector: 'app-emp-profile-settings',
@@ -76,7 +77,17 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
     github: new FormControl(''),
   });
 
-  constructor(private fileUploadService: FileUploadService, private employeeService: EmployeeService, private toastr: ToastrService, private cookieService: AuthService) {
+  changePassForm = new FormGroup({
+    oldPass: new FormControl('', [Validators.required]),
+    newPass: new FormControl('', [Validators.required]),
+    confirmPass: new FormControl('', [Validators.required])
+  });
+
+  constructor(private fileUploadService: FileUploadService,
+              private employeeService: EmployeeService,
+              private credentialService: CredentialService,
+              private toastr: ToastrService,
+              private cookieService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -391,6 +402,49 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
     });
   }
 
+  changePass() {
+    this.loading = true;
+    if (this.changePassForm.valid) {
+      this.credentialService.fetchCredentialByEmployeeId(this.employeeId).subscribe((data) => {
+        if (data) {
+          if (data.password === this.changePassForm.get('oldPass')?.value) {
+            if (this.changePassForm.get('newPass')?.value === this.changePassForm.get('confirmPass')?.value) {
+              this.credentialService.updateCredential(this.employeeId, {
+                id:data.id,
+                employeeId:this.employeeId,
+                firstname:data.firstname,
+                lastname:data.lastname,
+                email:data.email,
+                password:this.changePassForm.get('confirmPass')?.value,
+                role:data.role,
+                userLevel:data.userLevel
+              }).subscribe((data) => {
+                this.clear('changePass');
+                this.loading = false;
+                this.successMessage('Password updated successfully', 'Success');
+              }, (error) => {
+                this.loading = false;
+                this.errorMessage('Something went wrong. Please try again', 'Error');
+              });
+            } else {
+              this.loading = false;
+              this.errorMessage('Passwords do not match', 'Error');
+            }
+          } else {
+            this.loading = false;
+            this.errorMessage('Old password is incorrect', 'Error');
+          }
+        }
+      }, (error) => {
+        this.loading = false;
+        this.errorMessage('Something went wrong. Please try again', 'Error');
+      })
+    } else {
+      this.loading = false;
+      this.errorMessage('Please fill all the required fields', 'Error');
+    }
+  }
+
   uploadFile(event: any, filePath: string, location: string) {
     const file = event.target.files[0];
     const maxFileSize = 2 * 1024 * 1024;
@@ -495,6 +549,9 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit {
         break;
       case 'contact':
         this.contactFormGroup.reset();
+        break;
+      case 'changePass':
+        this.changePassForm.reset();
         break;
       default:
         break;
