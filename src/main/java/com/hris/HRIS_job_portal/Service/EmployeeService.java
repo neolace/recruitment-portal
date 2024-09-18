@@ -1,7 +1,9 @@
 package com.hris.HRIS_job_portal.Service;
 
 import com.hris.HRIS_job_portal.DTO.FavJobDTO;
+import com.hris.HRIS_job_portal.Model.CredentialsModel;
 import com.hris.HRIS_job_portal.Model.EmployeeModel;
+import com.hris.HRIS_job_portal.Repository.CredentialsRepository;
 import com.hris.HRIS_job_portal.Repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +19,9 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private CredentialsRepository credentialsRepository;
 
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
@@ -196,6 +201,19 @@ public class EmployeeService {
             throw new RuntimeException("Employee not found for id: " + empId);
         }
         return null;
+    }
+
+    public void deleteEmployee(String id) {
+        Optional<EmployeeModel> employeeModel = employeeRepository.findById(id);
+        Optional<CredentialsModel> credentialsModel = credentialsRepository.findByEmployeeId(id);
+        if (employeeModel.isPresent() && credentialsModel.isPresent()) {
+            EmployeeModel employee = employeeModel.get();
+            CredentialsModel credentials = credentialsModel.get();
+            employeeRepository.delete(employee);
+            credentialsRepository.delete(credentials);
+        } else {
+            throw new RuntimeException("Employee not found for id: " + id);
+        }
     }
 
     @Async

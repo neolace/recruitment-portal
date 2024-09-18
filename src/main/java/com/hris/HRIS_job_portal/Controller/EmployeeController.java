@@ -74,4 +74,9 @@ public class EmployeeController {
     public EmployeeModel changeFavoriteJobStatus(@PathVariable String empId, @RequestBody FavJobDTO jobDto) {
         return employeeService.changeFavoriteJobStatus(empId, jobDto);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteEmployee(@PathVariable String id) {
+        employeeService.deleteEmployee(id);
+    }
 }

@@ -57,7 +57,7 @@ public class CredentialsService {
         return credentialsRepository.findAll();
     }
 
-    public CredentialsModel getCredentials(String employeeId) {
+    public Optional<CredentialsModel> getCredentials(String employeeId) {
         return credentialsRepository.findByEmployeeId(employeeId);
     }
 
@@ -65,7 +65,7 @@ public class CredentialsService {
         return credentialsRepository.findByEmail(email);
     }
 
-    public CredentialsModel getCredentialsByEmployeeId(String employeeId) {
+    public Optional<CredentialsModel> getCredentialsByEmployeeId(String employeeId) {
         return credentialsRepository.findByEmployeeId(employeeId);
     }
 

@@ -5,6 +5,8 @@ import com.hris.HRIS_job_portal.Service.CredentialsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/v2/portal_credentials")
 public class CredentialsController {
@@ -23,7 +25,7 @@ public class CredentialsController {
     }
 
     @GetMapping("/get/{id}")
-    public CredentialsModel getCredentials(@PathVariable String id) {
+    public Optional<CredentialsModel> getCredentials(@PathVariable String id) {
         return credentialsService.getCredentials(id);
     }
 
@@ -33,7 +35,7 @@ public class CredentialsController {
     }
 
     @GetMapping("/getByEmployeeId/{employeeId}")
-    public CredentialsModel getCredentialsByEmployeeId(@PathVariable String employeeId) {
+    public Optional<CredentialsModel> getCredentialsByEmployeeId(@PathVariable String employeeId) {
         return credentialsService.getCredentialsByEmployeeId(employeeId);
     }
 

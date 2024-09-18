@@ -7,6 +7,7 @@ import {ToastrService} from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
 import {AuthService} from "../../../services/auth.service";
 import {CredentialService} from "../../../services/credential.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-emp-profile-settings',
@@ -101,6 +102,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
               private employeeService: EmployeeService,
               private credentialService: CredentialService,
               private toastr: ToastrService,
+              private router: Router,
               private cookieService: AuthService) {
   }
 
@@ -498,6 +500,16 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
       this.mNotificationsForm.get('jobs')?.patchValue(marketing.weeklyJobs);
       this.mNotificationsForm.get('unsubscribe')?.patchValue(marketing.unsubscribe);
     }
+  }
+
+  deleteEmployee() {
+    this.loading = true;
+    this.employeeService.deleteEmployee(this.employeeId).subscribe((data) => {
+      console.log(data);
+      this.warningMessage('Account deleted permanently', 'Success');
+    })
+    this.cookieService.logout()
+    this.router.navigate(['/']);
   }
 
   uploadFile(event: any, filePath: string, location: string) {
