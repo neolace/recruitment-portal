@@ -93,6 +93,17 @@ export class EmployeeService {
     return this.employees$;
   }
 
+  updateNotifications(employee: EmployeeModel): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    this.http.put(`${this.baseUrl}/employee/update/notifications` , employee, {headers}).subscribe(data => {
+
+    });
+
+    return this.employees$;
+  }
+
   updateProfilePic(employee: EmployeeModel): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:password')

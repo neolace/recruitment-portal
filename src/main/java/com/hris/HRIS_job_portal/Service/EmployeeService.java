@@ -66,6 +66,23 @@ public class EmployeeService {
         return employee;
     }
 
+    public EmployeeModel updateNotifications(EmployeeModel employee) {
+        Optional<EmployeeModel> employeeModel = employeeRepository.findById(employee.getId());
+        if (employeeModel.isPresent()) {
+            EmployeeModel existingEmployee = employeeModel.get();
+            if (existingEmployee.getAccountNotifications() == null) {
+                existingEmployee.setAccountNotifications(new HashMap<>());
+            }
+            if (existingEmployee.getMarketingNotifications() == null) {
+                existingEmployee.setMarketingNotifications(new HashMap<>());
+            }
+            existingEmployee.setAccountNotifications(employee.getAccountNotifications());
+            existingEmployee.setMarketingNotifications(employee.getMarketingNotifications());
+            employeeRepository.save(existingEmployee);
+        }
+        return employee;
+    }
+
     public EmployeeModel updateProfilePic(EmployeeModel employee) {
         Optional<EmployeeModel> employeeModel = employeeRepository.findById(employee.getId());
         if (employeeModel.isPresent()) {
