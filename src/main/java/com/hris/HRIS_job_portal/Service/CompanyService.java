@@ -3,9 +3,11 @@ package com.hris.HRIS_job_portal.Service;
 import com.hris.HRIS_job_portal.Model.CompanyModel;
 import com.hris.HRIS_job_portal.Repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class CompanyService {
@@ -26,5 +28,17 @@ public class CompanyService {
 
     public CompanyModel addCompany(CompanyModel company) {
         return companyRepository.save(company);
+    }
+
+    @Async
+    public CompletableFuture<List<CompanyModel>> getAllCompaniesAsync() {
+        List<CompanyModel> companies = getAllCompanies();
+        return CompletableFuture.completedFuture(companies);
+    }
+
+    @Async
+    public CompletableFuture<CompanyModel> getCompanyByIdAsync(String id) {
+        CompanyModel company = getCompany(id);
+        return CompletableFuture.completedFuture(company);
     }
 }
