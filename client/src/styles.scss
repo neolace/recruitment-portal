@@ -1684,3 +1684,20 @@ $accordion-icon-transform3: rotate(270deg);
     }
   }
 }
+
+.mat-typography.modal-open{
+  .modal-backdrop{
+    display: none !important;
+  }
+  .modal-content{
+    border: 1px solid var(--color-secondary-200);
+    background-color: var(--color-surface-mixed-200);
+    color: var(--color-text-200);
+
+    .modal-header.btn-close{
+      color: var(--color-text-200);
+      outline: none;
+      border: none;
+    }
+  }
+}
