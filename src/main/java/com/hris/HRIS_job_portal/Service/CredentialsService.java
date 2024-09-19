@@ -1,7 +1,9 @@
 package com.hris.HRIS_job_portal.Service;
 
+import com.hris.HRIS_job_portal.Model.CompanyModel;
 import com.hris.HRIS_job_portal.Model.CredentialsModel;
 import com.hris.HRIS_job_portal.Model.EmployeeModel;
+import com.hris.HRIS_job_portal.Repository.CompanyRepository;
 import com.hris.HRIS_job_portal.Repository.CredentialsRepository;
 import com.hris.HRIS_job_portal.Repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class CredentialsService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private CompanyRepository companyRepository;
 
     public CredentialsModel addCredentials(CredentialsModel credentials) {
         Optional<CredentialsModel> optionalCredentials = Optional.ofNullable(credentialsRepository.findByEmail(credentials.getEmail()));
@@ -44,6 +49,31 @@ public class CredentialsService {
             profileCompleted.put("contactInfo", false);
             profileCompleted.put("socialLinks", false);
             emp.setProfileCompleted(profileCompleted);
+
+            if (credentials.getUserLevel().equals("2")) {
+                CompanyModel cmp = new CompanyModel();
+
+                Map<String, Boolean> cmpProfileCompleted = new HashMap<>();
+                cmpProfileCompleted.put("name", false);
+                cmpProfileCompleted.put("email", false);
+                cmpProfileCompleted.put("logo", false);
+                cmpProfileCompleted.put("coverPic", false);
+                cmpProfileCompleted.put("image1", false);
+                cmpProfileCompleted.put("image2", false);
+                cmpProfileCompleted.put("image3", false);
+                cmpProfileCompleted.put("story", false);
+                cmpProfileCompleted.put("founderName", false);
+                cmpProfileCompleted.put("foundedDate", false);
+                cmpProfileCompleted.put("location", false);
+                cmpProfileCompleted.put("numberOfEmployees", false);
+                cmpProfileCompleted.put("website", false);
+                cmpProfileCompleted.put("socialLinks", false);
+
+                cmp.setProfileCompleted(cmpProfileCompleted);
+
+                CompanyModel savedCmp = companyRepository.save(cmp);
+                emp.setCompanyId(savedCmp.getId());
+            }
 
             EmployeeModel savedEmp = employeeRepository.save(emp);
 

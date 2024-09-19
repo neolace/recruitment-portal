@@ -37,4 +37,8 @@ public class CompanyModel {
     private String isVerified;
     private String followers;
     private String following;
+    private Object accountNotifications;
+    private Object marketingNotifications;
+    private Object profileCompleted;
+    private String profileStatus;
 }
