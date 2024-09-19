@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -28,6 +31,96 @@ public class CompanyService {
 
     public CompanyModel addCompany(CompanyModel company) {
         return companyRepository.save(company);
+    }
+
+    public CompanyModel updateLogoPic(CompanyModel company) {
+        Optional<CompanyModel> companyModel = companyRepository.findById(company.getId());
+        if (companyModel.isPresent()) {
+            CompanyModel existingCompany = companyModel.get();
+            existingCompany.setLogo(company.getLogo());
+
+            Map<String, Boolean> profileCompleted = (Map<String, Boolean>) existingCompany.getProfileCompleted();
+            if (profileCompleted == null) {
+                profileCompleted = new HashMap<>(); // Initialize if null
+            }
+            profileCompleted.put("logo", company.getLogo() != null && !company.getLogo().isEmpty());
+            existingCompany.setProfileCompleted(profileCompleted);
+
+            return companyRepository.save(existingCompany);
+        }
+        return null;
+    }
+
+    public CompanyModel updateCoverPic(CompanyModel company) {
+        Optional<CompanyModel> companyModel = companyRepository.findById(company.getId());
+        if (companyModel.isPresent()) {
+            CompanyModel existingCompany = companyModel.get();
+            existingCompany.setProfileBanner(company.getProfileBanner());
+
+            Map<String, Boolean> profileCompleted = (Map<String, Boolean>) existingCompany.getProfileCompleted();
+            if (profileCompleted == null) {
+                profileCompleted = new HashMap<>(); // Initialize if null
+            }
+            profileCompleted.put("coverPic", company.getProfileBanner() != null && !company.getProfileBanner().isEmpty());
+            existingCompany.setProfileCompleted(profileCompleted);
+
+            return companyRepository.save(existingCompany);
+        }
+        return null;
+    }
+
+    public CompanyModel updateThumb1Pic(CompanyModel company) {
+        Optional<CompanyModel> companyModel = companyRepository.findById(company.getId());
+        if (companyModel.isPresent()) {
+            CompanyModel existingCompany = companyModel.get();
+            existingCompany.setImage1(company.getImage1());
+
+            Map<String, Boolean> profileCompleted = (Map<String, Boolean>) existingCompany.getProfileCompleted();
+            if (profileCompleted == null) {
+                profileCompleted = new HashMap<>(); // Initialize if null
+            }
+            profileCompleted.put("image1", company.getImage1() != null && !company.getImage1().isEmpty());
+            existingCompany.setProfileCompleted(profileCompleted);
+
+            return companyRepository.save(existingCompany);
+        }
+        return null;
+    }
+
+    public CompanyModel updateThumb2Pic(CompanyModel company) {
+        Optional<CompanyModel> companyModel = companyRepository.findById(company.getId());
+        if (companyModel.isPresent()) {
+            CompanyModel existingCompany = companyModel.get();
+            existingCompany.setImage2(company.getImage2());
+
+            Map<String, Boolean> profileCompleted = (Map<String, Boolean>) existingCompany.getProfileCompleted();
+            if (profileCompleted == null) {
+                profileCompleted = new HashMap<>(); // Initialize if null
+            }
+            profileCompleted.put("image2", company.getImage2() != null && !company.getImage2().isEmpty());
+            existingCompany.setProfileCompleted(profileCompleted);
+
+            return companyRepository.save(existingCompany);
+        }
+        return null;
+    }
+
+    public CompanyModel updateThumb3Pic(CompanyModel company) {
+        Optional<CompanyModel> companyModel = companyRepository.findById(company.getId());
+        if (companyModel.isPresent()) {
+            CompanyModel existingCompany = companyModel.get();
+            existingCompany.setImage3(company.getImage3());
+
+            Map<String, Boolean> profileCompleted = (Map<String, Boolean>) existingCompany.getProfileCompleted();
+            if (profileCompleted == null) {
+                profileCompleted = new HashMap<>(); // Initialize if null
+            }
+            profileCompleted.put("image3", company.getImage3() != null && !company.getImage3().isEmpty());
+            existingCompany.setProfileCompleted(profileCompleted);
+
+            return companyRepository.save(existingCompany);
+        }
+        return null;
     }
 
     @Async

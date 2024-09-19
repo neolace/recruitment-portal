@@ -115,7 +115,7 @@ export class EmployeeService {
       this.fetchFullEmployee(employee.id); // Refresh the cache after updating
     });
 
-    return this.employees$;
+    return this.employee$;
   }
 
   updateCoverPic(employee: EmployeeModel): Observable<any> {
@@ -127,7 +127,7 @@ export class EmployeeService {
       this.fetchFullEmployee(employee.id); // Refresh the cache after updating
     });
 
-    return this.employees$;
+    return this.employee$;
   }
 
   updateResume(employee: EmployeeModel): Observable<any> {
@@ -139,7 +139,7 @@ export class EmployeeService {
       this.fetchFullEmployee(employee.id); // Refresh the cache after updating
     });
 
-    return this.employees$;
+    return this.employee$;
   }
 
   addSkills(skills: any): Observable<any> {

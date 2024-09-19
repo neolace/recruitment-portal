@@ -49,7 +49,7 @@ export class LoginComponent implements AfterViewInit {
             if (response.userLevel === "2") {
               this.cookieService.createUserID(response.employeeId);
               this.cookieService.createAdmin(response.email);
-              this.cookieService.createOrganizationID(response.organizationId);
+              this.cookieService.createOrganizationID(response.companyId);
               this.cookieService.createLevel(response.userLevel);
               this.cookieService.unlock();
               this.router.navigate(['/dashboard']);
@@ -57,7 +57,7 @@ export class LoginComponent implements AfterViewInit {
             else if (response.userLevel === "3") {
               this.cookieService.createUserID(response.employeeId);
               this.cookieService.createProAdmin(response.email);
-              this.cookieService.createOrganizationID(response.organizationId);
+              this.cookieService.createOrganizationID(response.companyId);
               this.cookieService.createLevel(response.userLevel);
               this.cookieService.unlock();
               this.router.navigate(['/pro']);

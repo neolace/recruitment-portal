@@ -1,7 +1,7 @@
 <div *ngIf="loading"><app-page-loading></app-page-loading></div>
 <div>
-  <div class="top-banner" [ngStyle]="{'background-image': company?.compan?.profileBanner ? 'url(' + company?.compan?.profileBanner + ')' : ''}" style="overflow-x: hidden">
-    <div class="curved-div">
+  <div class="top-banner" style="overflow-x: hidden">
+    <div class="curved-div" [ngStyle]="{'background-image': company?.company?.profileBanner ? 'url(' + company?.company?.profileBanner + ')' : ''}">
       <div class="overlay"></div>
     </div>
 
@@ -117,12 +117,12 @@
 <div *ngIf="!loading && serverError">
   <app-failed-to-load-data></app-failed-to-load-data>
 </div>
-<div *ngIf="notFound && !employee?.employee">
+<div *ngIf="notFound && !company?.company">
   <app-result-not-found></app-result-not-found>
 </div>
 <div *ngIf="corsError">
   <app-network-error></app-network-error>
 </div>
-<div *ngIf="forbidden && !employee?.employee || unexpectedError">
+<div *ngIf="forbidden && !company?.company || unexpectedError">
   <app-forbidden></app-forbidden>
 </div>

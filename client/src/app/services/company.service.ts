@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {BehaviorSubject, Observable, tap} from "rxjs";
+import {CompanyModel} from "../shared/data-models/Company.model";
 
 @Injectable({
   providedIn: 'root'
@@ -57,5 +58,75 @@ export class CompanyService {
         this.cacheInitialized = true; // Cache is initialized after the first fetch
       })
     );
+  }
+
+  updateLogoPic(company: CompanyModel): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    this.http.put(`${this.baseUrl}/company/update/updateLogo` , company, {headers}).subscribe(data => {
+      this.clearCache(); // Invalidate the cache
+      this.fetchFullCompany(company.id); // Refresh the cache after updating
+    });
+
+    return this.company$;
+  }
+
+  updateCoverPic(company: CompanyModel): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    this.http.put(`${this.baseUrl}/company/update/updateCover` , company, {headers}).subscribe(data => {
+      this.clearCache(); // Invalidate the cache
+      this.fetchFullCompany(company.id); // Refresh the cache after updating
+    });
+
+    return this.company$;
+  }
+
+  updateThumb1Pic(company: CompanyModel): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    this.http.put(`${this.baseUrl}/company/update/updateThumb1` , company, {headers}).subscribe(data => {
+      this.clearCache(); // Invalidate the cache
+      this.fetchFullCompany(company.id); // Refresh the cache after updating
+    });
+
+    return this.company$;
+  }
+
+  updateThumb2Pic(company: CompanyModel): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    this.http.put(`${this.baseUrl}/company/update/updateThumb2` , company, {headers}).subscribe(data => {
+      this.clearCache(); // Invalidate the cache
+      this.fetchFullCompany(company.id); // Refresh the cache after updating
+    });
+
+    return this.company$;
+  }
+
+  updateThumb3Pic(company: CompanyModel): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    this.http.put(`${this.baseUrl}/company/update/updateThumb3` , company, {headers}).subscribe(data => {
+      this.clearCache(); // Invalidate the cache
+      this.fetchFullCompany(company.id); // Refresh the cache after updating
+    });
+
+    return this.company$;
+  }
+
+  private clearCache() {
+    this.cacheInitialized = false;
+    this.companySubject.next(null);
+  }
+
+  clearCompaniesCache() {
+    this.companiesCacheInitialized = false;
+    this.companiesSubject.next(null);
   }
 }

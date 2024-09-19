@@ -15,6 +15,7 @@ public class CredentialsModel {
     @Id
     private String id;
     private String employeeId;
+    private String companyId;
     private String firstname;
     private String lastname;
     private String email;

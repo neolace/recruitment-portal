@@ -66,7 +66,7 @@
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="logo">Upload Logo (preferred size: 200x200)</label>
-              <input type="file" class="form-control" id="logo">
+              <input type="file" accept="image/*" class="form-control" id="logo" (change)="uploadFile($event, 'portal/companies/' + companyId + '/logo', 'logo')">
             </div>
           </div>
           <div class="col-12">
@@ -91,25 +91,26 @@
         <div class="row form-wrapper">
           <div class="col-12">
             <div class="form-group">
+              <label for="cover">Upload Cover Image</label>
+              <input type="file" class="form-control" id="cover"  (change)="uploadFile($event, 'portal/companies/' + companyId + '/cover', 'cover')">
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
               <label for="thumb1">Upload Main Thumbnail</label>
-              <input type="file" class="form-control" id="thumb1">
+              <input type="file" class="form-control" id="thumb1"  (change)="uploadFile($event, 'portal/companies/' + companyId + '/t-1', 'thumb1')">
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="thumb2">Upload Second Thumbnail</label>
-              <input type="file" class="form-control" id="thumb2">
+              <input type="file" class="form-control" id="thumb2" (change)="uploadFile($event, 'portal/companies/' + companyId + '/t-2', 'thumb2')">
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="thumb3">Upload Third Thumbnail</label>
-              <input type="file" class="form-control" id="thumb3">
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="form-group">
-              <button type="submit" class="btn-1">Save Changes</button>
+              <input type="file" class="form-control" id="thumb3" (change)="uploadFile($event, 'portal/companies/' + companyId + '/t-3', 'thumb3')">
             </div>
           </div>
         </div>
