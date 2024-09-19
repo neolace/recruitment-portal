@@ -3,11 +3,11 @@ import {countries} from "../../../../shared/data-store/countries";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {FileUploadService} from "../../../../services/file-upload.service";
 import {EmployeeService} from "../../../../services/employee.service";
-import {ToastrService} from "ngx-toastr";
 import {AuthService} from "../../../../services/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {CredentialService} from "../../../../services/credential.service";
 import {Router} from "@angular/router";
+import {AlertsService} from "../../../../services/alerts.service";
 
 @Component({
   selector: 'app-personal-profile-settings',
@@ -101,7 +101,7 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
 
   constructor(private fileUploadService: FileUploadService,
               private employeeService: EmployeeService,
-              private toastr: ToastrService,
+              private alertService: AlertsService,
               private credentialService: CredentialService,
               private router: Router,
               private cookieService: AuthService) {
@@ -203,10 +203,10 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
     }).subscribe((data) => {
       this.getEmployee(this.employeeId);
       this.loading = false;
-      this.successMessage('Personal details updated successfully! Please refresh the page.', 'Success');
+      this.alertService.successMessage('Personal details updated successfully! Please refresh the page.', 'Success');
     }, (error) => {
       this.loading = false;
-      this.errorMessage('Something went wrong. Please try again', 'Error');
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
     });
   }
 
@@ -223,19 +223,19 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
       this.clear('skills');
       this.getEmployee(this.employeeId);
       this.loading = false;
-      this.successMessage('Skill added successfully', 'Success');
+      this.alertService.successMessage('Skill added successfully', 'Success');
     }, (error) => {
       this.loading = false;
-      this.errorMessage('Something went wrong. Please try again', 'Error');
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
     });
   }
 
   deleteSkill(skillId: string) {
     this.employeeService.deleteSkill(this.employeeId, skillId).subscribe((data) => {
       this.getEmployee(this.employeeId);
-      this.successMessage('Skill deleted successfully', 'Success');
+      this.alertService.successMessage('Skill deleted successfully', 'Success');
     }, (error) => {
-      this.errorMessage('Something went wrong. Please try again', 'Error');
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
     });
   }
 
@@ -247,10 +247,10 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
     }).subscribe((data) => {
       this.clear('skills');
       this.getEmployee(this.employeeId);
-      this.successMessage('Skill updated successfully', 'Success');
+      this.alertService.successMessage('Skill updated successfully', 'Success');
     }, (error) => {
       this.clear('skills');
-      this.errorMessage('Something went wrong. Please try again', 'Error');
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
     });
   }
 
@@ -281,19 +281,19 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
       this.clear('experience');
       this.getEmployee(this.employeeId);
       this.loading = false;
-      this.successMessage('Experience updated successfully', 'Success');
+      this.alertService.successMessage('Experience updated successfully', 'Success');
     }, (error) => {
       this.loading = false;
-      this.errorMessage('Something went wrong. Please try again', 'Error');
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
     });
   }
 
   deleteExperience(experienceId: string) {
     this.employeeService.deleteExperience(this.employeeId, experienceId).subscribe((data) => {
       this.getEmployee(this.employeeId);
-      this.successMessage('Experience deleted successfully', 'Success');
+      this.alertService.successMessage('Experience deleted successfully', 'Success');
     }, (error) => {
-      this.errorMessage('Something went wrong. Please try again', 'Error');
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
     });
   }
 
@@ -309,10 +309,10 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
     }).subscribe((data) => {
       this.clear('experience');
       this.getEmployee(this.employeeId);
-      this.successMessage('Experience updated successfully', 'Success');
+      this.alertService.successMessage('Experience updated successfully', 'Success');
     }, (error) => {
       this.clear('experience');
-      this.errorMessage('Something went wrong. Please try again', 'Error');
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
     });
   }
 
@@ -349,10 +349,10 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
       this.clear('contact');
       this.getEmployee(this.employeeId);
       this.loading = false;
-      this.successMessage('Contact updated successfully', 'Success');
+      this.alertService.successMessage('Contact updated successfully', 'Success');
     }, (error) => {
       this.loading = false;
-      this.errorMessage('Something went wrong. Please try again', 'Error');
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
     });
   }
 
@@ -371,11 +371,11 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
       this.clear('contact');
       this.getEmployee(this.employeeId);
       this.loading = false;
-      this.successMessage('Contact updated successfully', 'Success');
+      this.alertService.successMessage('Contact updated successfully', 'Success');
     }, (error) => {
       this.clear('contact');
       this.loading = false;
-      this.errorMessage('Something went wrong. Please try again', 'Error');
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
     });
   }
 
@@ -396,10 +396,10 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
       this.clear('social');
       this.getEmployee(this.employeeId);
       this.loading = false;
-      this.successMessage('Social updated successfully', 'Success');
+      this.alertService.successMessage('Social updated successfully', 'Success');
     }, (error) => {
       this.loading = false;
-      this.errorMessage('Something went wrong. Please try again', 'Error');
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
     });
   }
 
@@ -416,11 +416,11 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
       this.clear('social');
       this.getEmployee(this.employeeId);
       this.loading = false;
-      this.successMessage('Social updated successfully', 'Success');
+      this.alertService.successMessage('Social updated successfully', 'Success');
     }, (error) => {
       this.clear('social');
       this.loading = false;
-      this.errorMessage('Something went wrong. Please try again', 'Error');
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
     });
   }
 
@@ -443,27 +443,27 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
               }).subscribe((data) => {
                 this.clear('changePass');
                 this.loading = false;
-                this.successMessage('Password updated successfully', 'Success');
+                this.alertService.successMessage('Password updated successfully', 'Success');
               }, (error) => {
                 this.loading = false;
-                this.errorMessage('Something went wrong. Please try again', 'Error');
+                this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
               });
             } else {
               this.loading = false;
-              this.errorMessage('Passwords do not match', 'Error');
+              this.alertService.errorMessage('Passwords do not match', 'Error');
             }
           } else {
             this.loading = false;
-            this.errorMessage('Old password is incorrect', 'Error');
+            this.alertService.errorMessage('Old password is incorrect', 'Error');
           }
         }
       }, (error) => {
         this.loading = false;
-        this.errorMessage('Something went wrong. Please try again', 'Error');
+        this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
       })
     } else {
       this.loading = false;
-      this.errorMessage('Please fill all the required fields', 'Error');
+      this.alertService.errorMessage('Please fill all the required fields', 'Error');
     }
   }
 
@@ -484,7 +484,7 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
       }
     }).subscribe((data) => {
       this.getEmployee(this.employeeId);
-      this.successMessage('All applied changes are visible after refresh', 'Success');
+      this.alertService.successMessage('All applied changes are visible after refresh', 'Success');
     })
   }
 
@@ -506,7 +506,7 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
   deleteEmployee() {
     this.loading = true;
     this.employeeService.deleteEmployee(this.employeeId).subscribe((data) => {
-      this.warningMessage('Account deleted permanently', 'Success');
+      this.alertService.warningMessage('Account deleted permanently', 'Success');
     })
     this.cookieService.logout()
     this.router.navigate(['/']);
@@ -518,11 +518,11 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
     const allowedFileTypes = ['image/png', 'image/jpeg', 'application/pdf'];
     if (file) {
       if (file.size > maxFileSize) {
-        this.warningMessage('File size exceeds the maximum limit of 2MB.', 'Warning');
+        this.alertService.warningMessage('File size exceeds the maximum limit of 2MB.', 'Warning');
         return;
       }
       if (!allowedFileTypes.includes(file.type)) {
-        this.warningMessage('Only PNG, JPEG, and PDF files are allowed.', 'Warning');
+        this.alertService.warningMessage('Only PNG, JPEG, and PDF files are allowed.', 'Warning');
         return;
       }
       this.loading = true;
@@ -536,10 +536,10 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
             }).subscribe((data) => {
               this.getEmployee(this.employeeId);
               this.loading = false;
-              this.successMessage('Resume uploaded successfully.', 'Success');
+              this.alertService.successMessage('Resume uploaded successfully.', 'Success');
             }, (error) => {
               this.loading = false;
-              this.errorMessage('Something went wrong. Please try again.', 'Error');
+              this.alertService.errorMessage('Something went wrong. Please try again.', 'Error');
             })
             break;
           case 'cover':
@@ -549,10 +549,10 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
             }).subscribe((data) => {
               this.getEmployee(this.employeeId);
               this.loading = false;
-              this.successMessage('Cover image uploaded successfully.', 'Success');
+              this.alertService.successMessage('Cover image uploaded successfully.', 'Success');
             }, (error) => {
               this.loading = false;
-              this.errorMessage('Something went wrong. Please try again.', 'Error');
+              this.alertService.errorMessage('Something went wrong. Please try again.', 'Error');
             })
             break;
           case 'profile':
@@ -562,10 +562,10 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
             }).subscribe((data) => {
               this.getEmployee(this.employeeId);
               this.loading = false;
-              this.successMessage('Profile image uploaded successfully.', 'Success');
+              this.alertService.successMessage('Profile image uploaded successfully.', 'Success');
             }, (error) => {
               this.loading = false;
-              this.errorMessage('Something went wrong. Please try again.', 'Error');
+              this.alertService.errorMessage('Something went wrong. Please try again.', 'Error');
             })
             break;
           default:
@@ -577,29 +577,6 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
 
   generateRandomId(): string {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-  }
-
-  successMessage(msg: string, title: string) {
-    this.toastr.success(msg, title, {
-      progressBar: true,
-      progressAnimation: 'increasing',
-      closeButton: true,
-    });
-  }
-
-  errorMessage(msg: string, title: string) {
-    this.toastr.error(msg, title, {
-      progressBar: true,
-      progressAnimation: 'decreasing',
-      closeButton: true,
-    });
-  }
-
-  warningMessage(msg: string, title: string) {
-    this.toastr.warning(msg, title, {
-      progressBar: true,
-      progressAnimation: 'decreasing',
-    });
   }
 
   clear(form: string) {

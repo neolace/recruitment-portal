@@ -3,7 +3,7 @@ import { jobAdDataStrore } from '../../shared/data-store/JobAd-data-strore';
 import {ActivatedRoute} from "@angular/router";
 import {EmployeeService} from "../../services/employee.service";
 import {AuthService} from "../../services/auth.service";
-import {ToastrService} from "ngx-toastr";
+import {AlertsService} from "../../services/alerts.service";
 
 @Component({
   selector: 'app-job',
@@ -37,7 +37,10 @@ export class JobComponent implements OnInit, AfterViewInit {
   employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
   userSavedIds: any[] = [];
 
-  constructor(private route: ActivatedRoute, private employeeService: EmployeeService, private cookieService: AuthService, private toastr: ToastrService) { }
+  constructor(private route: ActivatedRoute,
+              private employeeService: EmployeeService,
+              private cookieService: AuthService,
+              private alertService: AlertsService) { }
 
   ngOnInit() {
     this.employeeId = this.cookieService.userID();
@@ -64,7 +67,7 @@ export class JobComponent implements OnInit, AfterViewInit {
         this.userSavedIds = this.employee.employee.savedJobs.map((job: any) => job.jobId);
       },
       (error: any) => {
-        this.warningMessage('Please Login First to Apply Jobs', 'Reminder');
+        this.alertService.warningMessage('Please Login First to Apply Jobs', 'Reminder');
       }
     );
   }
@@ -156,41 +159,18 @@ export class JobComponent implements OnInit, AfterViewInit {
       status: 'saved'
     }).subscribe((data) => {
       this.getEmployee(this.employeeId);
-      this.successMessage('Job Saved Successfully', 'Success');
+      this.alertService.successMessage('Job Saved Successfully', 'Success');
     }, (error: any) => {
-      this.errorMessage('Something went wrong. Please try again', 'Error');
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
     });
   }
 
   removeFav(id: string) {
     this.employeeService.removeFavJobs(this.employeeId, id).subscribe((data) => {
       this.getEmployee(this.employeeId);
-      this.successMessage('Job Removed Successfully', 'Success');
+      this.alertService.successMessage('Job Removed Successfully', 'Success');
     }, (error: any) => {
-      this.errorMessage('Something went wrong. Please try again', 'Error');
-    });
-  }
-
-  successMessage(msg: string, title: string) {
-    this.toastr.success(msg, title, {
-      progressBar: true,
-      progressAnimation: 'increasing',
-      closeButton: true,
-    });
-  }
-
-  errorMessage(msg: string, title: string) {
-    this.toastr.error(msg, title, {
-      progressBar: true,
-      progressAnimation: 'decreasing',
-      closeButton: true,
-    });
-  }
-
-  warningMessage(msg: string, title: string) {
-    this.toastr.warning(msg, title, {
-      progressBar: true,
-      progressAnimation: 'decreasing',
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
     });
   }
 }
