@@ -1,28 +1,106 @@
-<div class="top-banner" style="overflow-x: hidden">
-  <div class="curved-div">
-    <div class="overlay"></div>
+<div *ngIf="loading"><app-page-loading></app-page-loading></div>
+<div>
+  <div class="top-banner" [ngStyle]="{'background-image': company?.compan?.profileBanner ? 'url(' + company?.compan?.profileBanner + ')' : ''}" style="overflow-x: hidden">
+    <div class="curved-div">
+      <div class="overlay"></div>
+    </div>
+
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-center w-100 position-relative">
+        <div class="org-top-card">
+          <div class="d-md-flex align-items-center justify-content-center">
+            <div class="d-sm-flex align-items-center justify-content-between w-100">
+              <div class="right-cont">
+                <div class="d-flex align-items-center mb-3 mb-sm-0">
+                  <div class="company-logo">
+                    <img [src]="company?.company?.logo ? company?.company?.logo : './assets/imgs/shared/default_org_logo.svg'"
+                         alt="logo">
+                  </div>
+                  <div class="d-flex flex-column">
+                    <div class="company-name">{{company?.company?.name ? company?.company?.name : 'Not Provided'}}</div>
+                    <div class="company-location"><i class="material-icons">location_on</i> {{company?.company?.location ? company?.company?.location : 'Not Provided'}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="left-cont">
+                <button class="btn-1" (click)="goProfileSettings()">Edit</button>
+                <button class="btn-2" (click)="goSeeJobs()">See Jobs</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="container">
-    <div class="d-flex align-items-center justify-content-center w-100 position-relative">
-      <div class="org-top-card">
-        <div class="d-md-flex align-items-center justify-content-center">
-          <div class="d-sm-flex align-items-center justify-content-between w-100">
-            <div class="right-cont">
-              <div class="d-flex align-items-center mb-3 mb-sm-0">
-                <div class="company-logo">
-                  <img src="https://jobstack-shreethemes.vercel.app/static/media/google-logo.28878765ba39f327cf3e.png"
-                       alt="logo">
-                </div>
-                <div class="d-flex flex-column">
-                  <div class="company-name">Google</div>
-                  <div class="company-location"><i class="material-icons">location_on</i> France, Paris</div>
-                </div>
+    <div class="row my-3 second-content">
+      <div class="col-12 col-md-6 col-lg-8 left-side">
+        <div *ngIf="company?.company?.story">
+          <h5>Company Story</h5>
+          <p *ngFor="let s of company?.company?.story.split('\n')">{{s}}</p>
+        </div>
+
+        <div class="row row-gap-3">
+          <div class="col-12" *ngIf="company?.company?.image1">
+            <img [src]="company?.company?.image1" alt="main image"
+                 class="org-img">
+          </div>
+          <div class="col-12 col-sm-6" *ngIf="company?.company?.image2">
+            <img [src]="company?.company?.image2" alt="second image"
+                 class="org-img">
+          </div>
+          <div class="col-12 col-sm-6" *ngIf="company?.company?.image3">
+            <img [src]="company?.company?.image3" alt="third image"
+                 class="org-img">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4 right-side">
+        <div class="details-card-1">
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="caption"><i class="material-icons">emoji_events</i><span>Founded:</span></div>
+            <div class="value">2003</div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="caption"><i class="material-icons">admin_panel_settings</i><span>Founder:</span></div>
+            <div class="value">Niklas Zennström</div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="caption"><i class="material-icons">business</i><span>Head Quarters:</span></div>
+            <div class="value">Luxembourg</div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="caption"><i class="material-icons">manage_accounts</i><span>Number of Employees:</span></div>
+            <div class="value">788</div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="caption"><i class="material-icons">language</i><span>Website:</span></div>
+            <div class="value">www.company.com</div>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="caption">Social:</div>
+            <div class="item-set">
+              <div class="social-item">
+                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
               </div>
-            </div>
-            <div class="left-cont">
-              <button class="btn-1" (click)="goProfileSettings()">Edit</button>
-              <button class="btn-2" (click)="goSeeJobs()">See Jobs</button>
+              <div class="social-item">
+                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+              </div>
+              <div class="social-item">
+                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+              </div>
+              <div class="social-item">
+                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+              </div>
+              <div class="social-item">
+                <a href="#"><i class="fa fa-github" aria-hidden="true"></i></a>
+              </div>
+              <div class="social-item">
+                <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+              </div>
             </div>
           </div>
         </div>
@@ -31,80 +109,15 @@
   </div>
 </div>
 
-<div class="container">
-  <div class="row my-3 second-content">
-    <div class="col-12 col-md-6 col-lg-8 left-side">
-      <h5>Company Story</h5>
-      <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking
-        at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
-        opposed.<br>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of
-        classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at
-        Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem
-        Ipsum passage.</p>
-
-      <div class="row row-gap-3">
-        <div class="col-12">
-          <img src="https://jobstack-shreethemes.vercel.app/static/media/1.f38e1a05405d75f20e1b.jpg" alt=""
-               class="org-img">
-        </div>
-        <div class="col-12 col-sm-6">
-          <img src="https://jobstack-shreethemes.vercel.app/static/media/2.fd1b158a87d46ab2748f.jpg" alt=""
-               class="org-img">
-        </div>
-        <div class="col-12 col-sm-6">
-          <img src="https://jobstack-shreethemes.vercel.app/static/media/3.033d24950c4b1568d792.jpg" alt=""
-               class="org-img">
-        </div>
-      </div>
-    </div>
-
-    <div class="col-12 col-md-6 col-lg-4 right-side">
-      <div class="details-card-1">
-        <div class="d-flex align-items-center justify-content-between w-100">
-          <div class="caption"><i class="material-icons">emoji_events</i><span>Founded:</span></div>
-          <div class="value">2003</div>
-        </div>
-        <div class="d-flex align-items-center justify-content-between w-100">
-          <div class="caption"><i class="material-icons">admin_panel_settings</i><span>Founder:</span></div>
-          <div class="value">Niklas Zennström</div>
-        </div>
-        <div class="d-flex align-items-center justify-content-between w-100">
-          <div class="caption"><i class="material-icons">business</i><span>Head Quarters:</span></div>
-          <div class="value">Luxembourg</div>
-        </div>
-        <div class="d-flex align-items-center justify-content-between w-100">
-          <div class="caption"><i class="material-icons">manage_accounts</i><span>Number of Employees:</span></div>
-          <div class="value">788</div>
-        </div>
-        <div class="d-flex align-items-center justify-content-between w-100">
-          <div class="caption"><i class="material-icons">language</i><span>Website:</span></div>
-          <div class="value">www.company.com</div>
-        </div>
-
-        <div class="d-flex align-items-center justify-content-between w-100">
-          <div class="caption">Social:</div>
-          <div class="item-set">
-            <div class="social-item">
-              <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-            </div>
-            <div class="social-item">
-              <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-            </div>
-            <div class="social-item">
-              <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-            </div>
-            <div class="social-item">
-              <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-            </div>
-            <div class="social-item">
-              <a href="#"><i class="fa fa-github" aria-hidden="true"></i></a>
-            </div>
-            <div class="social-item">
-              <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div *ngIf="!loading && serverError">
+  <app-failed-to-load-data></app-failed-to-load-data>
+</div>
+<div *ngIf="notFound && !employee?.employee">
+  <app-result-not-found></app-result-not-found>
+</div>
+<div *ngIf="corsError">
+  <app-network-error></app-network-error>
+</div>
+<div *ngIf="forbidden && !employee?.employee || unexpectedError">
+  <app-forbidden></app-forbidden>
 </div>

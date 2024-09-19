@@ -4,6 +4,7 @@ import {AuthService} from "../../../../services/auth.service";
 import {ToastrService} from "ngx-toastr";
 import {jobAdDataStrore} from "../../../../shared/data-store/JobAd-data-strore";
 import {Router} from "@angular/router";
+import {AlertsService} from "../../../../services/alerts.service";
 
 @Component({
   selector: 'app-emp-saved-jobs-applied',
@@ -20,7 +21,7 @@ export class EmpSavedJobsAppliedComponent implements AfterViewInit, OnInit {
   filteredJobs: any[] = []; //for test
   constructor(private employeeService: EmployeeService,
               private cookieService: AuthService,
-              private toastr: ToastrService,
+              private alertService: AlertsService,
               private router: Router ) { }
 
   ngAfterViewInit(): void {
@@ -42,7 +43,7 @@ export class EmpSavedJobsAppliedComponent implements AfterViewInit, OnInit {
         this.userSavedIds = this.employee.employee.savedJobs.filter((item: any) => item.status === 'applied' || item.status === 'expired').map((job: any) => job.jobId);
       },
       (error: any) => {
-        this.warningMessage('Please Login First to Apply Jobs', 'Reminder');
+        this.alertService.warningMessage('Please Login First to Apply Jobs', 'Reminder');
       }
     );
   }
@@ -55,32 +56,9 @@ export class EmpSavedJobsAppliedComponent implements AfterViewInit, OnInit {
   removeFav(id: string) {
     this.employeeService.removeFavJobs(this.employeeId, id).subscribe((data) => {
       this.getEmployee(this.employeeId);
-      this.successMessage('Job Removed Successfully', 'Success');
+      this.alertService.successMessage('Job Removed Successfully', 'Success');
     }, (error: any) => {
-      this.errorMessage('Something went wrong. Please try again', 'Error');
-    });
-  }
-
-  successMessage(msg: string, title: string) {
-    this.toastr.success(msg, title, {
-      progressBar: true,
-      progressAnimation: 'increasing',
-      closeButton: true,
-    });
-  }
-
-  errorMessage(msg: string, title: string) {
-    this.toastr.error(msg, title, {
-      progressBar: true,
-      progressAnimation: 'decreasing',
-      closeButton: true,
-    });
-  }
-
-  warningMessage(msg: string, title: string) {
-    this.toastr.warning(msg, title, {
-      progressBar: true,
-      progressAnimation: 'decreasing',
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
     });
   }
 

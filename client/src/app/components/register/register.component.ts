@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {CredentialService} from "../../services/credential.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
+import {AlertsService} from "../../services/alerts.service";
 
 @Component({
   selector: 'app-register',
@@ -19,7 +20,11 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     termsCheck: new FormControl(false, [Validators.requiredTrue])
   });
 
-  constructor(private router: Router, private route: ActivatedRoute, private credentialService: CredentialService, private cookieService: AuthService) { }
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private credentialService: CredentialService,
+              private alertService: AlertsService,
+              private cookieService: AuthService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -50,7 +55,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         userLevel: formData.role === 'candidate' ? "1" : "2",
       }).subscribe((response: any) => {
         if (!response) {
-          console.log("User already exists or something went wrong");
+          this.alertService.errorMessage('User already exists or an unexpected error has occurred', 'Unexpected Error');
           return;
         }
         if (formData.role === 'candidate') {
@@ -65,10 +70,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
           this.cookieService.createOrganizationID(response.organizationId);
         }
       }, error => {
-        console.log(error);
+        this.alertService.errorMessage('User already exists or an unexpected error has occurred', 'Unexpected Error');
       });
     } else {
-      console.log("Form is invalid");
+      this.alertService.errorMessage('Please fill in all required fields', 'Missing Fields');
     }
   }
 }

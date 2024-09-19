@@ -3,7 +3,7 @@ import {AuthService} from "../../services/auth.service";
 import {CredentialService} from "../../services/credential.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
+import {AlertsService} from "../../services/alerts.service";
 
 @Component({
   selector: 'app-lock-screen',
@@ -20,7 +20,7 @@ export class LockScreenComponent implements AfterViewInit, OnInit{
   constructor(private cookieService: AuthService,
               private credentialService: CredentialService,
               private router: Router,
-              private toastr: ToastrService ) {}
+              private alertService: AlertsService ) {}
 
   ngOnInit() {
     this.cookieService.lock();
@@ -40,38 +40,15 @@ export class LockScreenComponent implements AfterViewInit, OnInit{
         if (this.unlockForm.valid) {
           if (this.unlockForm.value.password === response.password) {
             this.cookieService.unlock();
-            this.successMessage('Profile Unlocked!', 'Success');
+            this.alertService.successMessage('Profile Unlocked!', 'Success');
             this.router.navigate(['/']);
           } else {
-            this.errorMessage('Wrong Password', 'Error');
+            this.alertService.errorMessage('Wrong Password', 'Error');
           }
         } else {
-          this.errorMessage('Please Enter Your Password', 'Error');
+          this.alertService.errorMessage('Please Enter Your Password', 'Error');
         }
       }
-    });
-  }
-
-  successMessage(msg: string, title: string) {
-    this.toastr.success(msg, title, {
-      progressBar: true,
-      progressAnimation: 'increasing',
-      closeButton: true,
-    });
-  }
-
-  errorMessage(msg: string, title: string) {
-    this.toastr.error(msg, title, {
-      progressBar: true,
-      progressAnimation: 'decreasing',
-      closeButton: true,
-    });
-  }
-
-  warningMessage(msg: string, title: string) {
-    this.toastr.warning(msg, title, {
-      progressBar: true,
-      progressAnimation: 'decreasing',
     });
   }
 }
