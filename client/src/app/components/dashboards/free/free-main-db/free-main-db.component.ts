@@ -3,6 +3,7 @@ import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
 import {EmployeeService} from "../../../../services/employee.service";
 import {AuthService} from "../../../../services/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {CompanyService} from "../../../../services/company.service";
 
 @Component({
   selector: 'app-free-main-db',
@@ -18,6 +19,8 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
 
   employee: any;
   employeeId: any;
+  company: any;
+  companyId: any;
   loading: boolean = false;
   serverError: boolean = false;
   notFound: boolean = false;
@@ -31,7 +34,9 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
   chq: any = '';
   formLocked: boolean = true;
 
-  constructor(private employeeService: EmployeeService, private cookieService: AuthService ) {}
+  constructor(private employeeService: EmployeeService,
+              private companyService: CompanyService,
+              private cookieService: AuthService ) {}
 
   async ngOnInit(): Promise<any> {
     this.employeeId = this.cookieService.userID();
@@ -50,7 +55,8 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
     this.employeeService.fetchFullEmployee(id).subscribe(
       (data) => {
         this.employee = data;
-        this.calculateProfileProgress(this.employee?.employee);
+        this.calculateProfileProgress(this.employee?.employee, 'employer');
+        this.getCompany(this.employee?.employee?.companyId);
       },
       (error: HttpErrorResponse) => {
         // Check for different error types
@@ -71,23 +77,61 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
     );
   }
 
-  calculateProfileProgress(data: any) {
+  getCompany(id: any) {
+    this.companyService.fetchFullCompany(id).subscribe(
+      (data) => {
+        this.company = data;
+        this.calculateProfileProgress(data?.company, 'company');
+        this.cname = this.company?.company?.name;
+        this.cemail = this.company?.company?.contactEmail;
+        this.cphone = this.company?.company?.contactNumber;
+        this.chq = this.company?.company?.location;
+        if (this.cname && this.cemail && this.cphone && this.chq) {
+          this.formLocked = false;
+        }
+        this.loading = false;
+      },
+      (error: HttpErrorResponse) => {
+        // Check for different error types
+        if (error.status === 404) {
+          this.notFound = true;
+        } else if (error.status === 500) {
+          this.serverError = true;
+        } else if (error.status === 0) {
+          this.corsError = true;
+        } else if (error.status === 403) {
+          this.forbidden = true;
+        } else {
+          this.unexpectedError = true;
+        }
+        this.loading = false;
+      }
+    )
+  }
+
+  calculateProfileProgress(data: any, who: any) {
     this.loading = false;
     if (!data || !data.profileCompleted) {
-      this.personalProgressValue = 0; // Or any other default value
+      this.progressValue = 0;
+      this.personalProgressValue = 0;
       return;
     }
 
     const profileCompletion = data.profileCompleted;
     if (typeof profileCompletion !== 'object' || profileCompletion === null) {
       // Handle case where profileCompletion is not an object or is null
-      this.personalProgressValue = 0; // Or any other default value
+      this.progressValue = 0;
+      this.personalProgressValue = 0;
       return;
     }
 
     const completionArray = Object.values(profileCompletion);
     const total = completionArray.length;
     const completed = completionArray.filter((item: any) => item === true).length;
-    this.personalProgressValue = Math.round((completed / total) * 100);
+    if (who === 'employer') {
+      this.personalProgressValue = Math.round((completed / total) * 100);
+    } else if (who === 'company') {
+      this.progressValue = Math.round((completed / total) * 100);
+    }
   }
 }
