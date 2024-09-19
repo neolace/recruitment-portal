@@ -18,6 +18,8 @@ export class BusinessProfileMyComponent implements OnInit, AfterViewInit {
   companyId: any;
   company: any;
 
+  progressValue: number = 0;
+
   loading: boolean = false;
 
   serverError: boolean = false;
@@ -61,7 +63,7 @@ export class BusinessProfileMyComponent implements OnInit, AfterViewInit {
     this.companyService.fetchFullCompany(id).subscribe(
       (data) => {
         this.company = data;
-        console.log(this.company)
+        this.calculateProgress(data?.company)
         this.loading = false;
       },
       (error: HttpErrorResponse) => {
@@ -80,6 +82,26 @@ export class BusinessProfileMyComponent implements OnInit, AfterViewInit {
         this.loading = false;
       }
     )
+  }
+
+  calculateProgress(data: any) {
+    this.loading = false;
+    if (!data || !data.profileCompleted) {
+      this.progressValue = 0; // Or any other default value
+      return;
+    }
+
+    const profileCompletion = data.profileCompleted;
+    if (typeof profileCompletion !== 'object' || profileCompletion === null) {
+      // Handle case where profileCompletion is not an object or is null
+      this.progressValue = 0; // Or any other default value
+      return;
+    }
+
+    const completionArray = Object.values(profileCompletion);
+    const total = completionArray.length;
+    const completed = completionArray.filter((item: any) => item === true).length;
+    this.progressValue = Math.round((completed / total) * 100);
   }
 
   goSeeJobs() {
