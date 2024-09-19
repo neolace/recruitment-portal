@@ -35,6 +35,9 @@ public class BatchController {
     @Autowired
     private CompanyService companyService;
 
+    @Autowired
+    private CmpSocialService cmpSocialService;
+
     @GetMapping("/getEmployee/{id}")
     public Map<String, Object> getEmployee(@PathVariable String id) {
         Map<String, Object> response = new HashMap<>();
@@ -70,7 +73,8 @@ public class BatchController {
     @GetMapping("/getCompany/{id}")
     public Map<String, Object> getCompany(@PathVariable String id) {
         Map<String, Object> response = new HashMap<>();
-        response.put("cmpPostedJobs", cmpPostedJobsService.getCmpPostedJobsByCompanyId(id));
+        response.put("postedJobs", cmpPostedJobsService.getCmpPostedJobsByCompanyId(id));
+        response.put("socials", cmpSocialService.getCmpSocialsByCompanyId(id));
         response.put("company", companyService.getCompany(id));
         return response;
     }
@@ -79,11 +83,13 @@ public class BatchController {
     public CompletableFuture<Map<String, Object>> getCompanyAsync(@PathVariable String id) {
         CompletableFuture<List<CmpPostedJobsModel>> cmpPostedJobsFuture = cmpPostedJobsService.getCmpPostedJobsByCompanyIdAsync(id);
         CompletableFuture<CompanyModel> companyFuture = companyService.getCompanyByIdAsync(id);
+        CompletableFuture<List<CmpSocialModel>> cmpSocialsFuture = cmpSocialService.getCmpSocialsByCompanyIdAsync(id);
         // Wait for all async calls to complete
         return CompletableFuture.allOf(cmpPostedJobsFuture, companyFuture)
                 .thenApply(v -> {
                     Map<String, Object> response = new HashMap<>();
                     response.put("postedJobs", cmpPostedJobsFuture.join());
+                    response.put("socials", cmpSocialsFuture.join());
                     response.put("company", companyFuture.join());
                     return response;
                 });

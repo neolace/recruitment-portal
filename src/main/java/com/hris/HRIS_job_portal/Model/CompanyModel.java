@@ -29,11 +29,7 @@ public class CompanyModel {
     private String headquarters;
     private String numberOfEmployees;
     private String website;
-    private String linkedin;
-    private String twitter;
-    private String facebook;
-    private String instagram;
-    private String youtube;
+    private String socialLinks; //id
     private String contactEmail;
     private String contactNumber;
     private String postedJobs; //id
