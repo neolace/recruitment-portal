@@ -111,7 +111,36 @@ export var companyDataStore: CompanyModel[] = [
     joinedDate: "Sat Sep 21 2024 07:42:48 GMT+0000",
     isVerified: "verified",
     followers: 10000,
-    following: 230
+    following: 230,
+    accountNotifications:{
+      mention: true,
+      follow: true,
+      shareActivity: true,
+      message: true
+    },
+    marketingNotifications:{
+      promotion: true,
+      companyNews: true,
+      weeklyJobs: true,
+      unsubscribe: true
+    },
+    profileCompleted:{
+      name: true,
+      email: true,
+      logo: true,
+      coverPic: true,
+      image1: true,
+      image2: true,
+      image3: true,
+      story: true,
+      founderName: true,
+      foundedDate: true,
+      location: true,
+      numberOfEmployees: true,
+      website: true,
+      socialLinks: true
+    },
+    profileStatus:""
   },
   {
     id: "2",
@@ -141,7 +170,36 @@ export var companyDataStore: CompanyModel[] = [
     joinedDate: "Sat Sep 21 2024 07:42:48 GMT+0000",
     isVerified: "verified",
     followers: 12000,
-    following: 150
+    following: 150,
+    accountNotifications:{
+      mention: true,
+      follow: true,
+      shareActivity: true,
+      message: true
+    },
+    marketingNotifications:{
+      promotion: true,
+      companyNews: true,
+      weeklyJobs: true,
+      unsubscribe: true
+    },
+    profileCompleted:{
+      name: true,
+      email: true,
+      logo: true,
+      coverPic: true,
+      image1: true,
+      image2: true,
+      image3: true,
+      story: true,
+      founderName: true,
+      foundedDate: true,
+      location: true,
+      numberOfEmployees: true,
+      website: true,
+      socialLinks: true
+    },
+    profileStatus:""
   },
   {
     id: "3",
@@ -171,7 +229,36 @@ export var companyDataStore: CompanyModel[] = [
     joinedDate: "Sat Sep 21 2024 07:42:48 GMT+0000",
     isVerified: "verified",
     followers: 10000,
-    following: 230
+    following: 230,
+    accountNotifications:{
+      mention: true,
+      follow: true,
+      shareActivity: true,
+      message: true
+    },
+    marketingNotifications:{
+      promotion: true,
+      companyNews: true,
+      weeklyJobs: true,
+      unsubscribe: true
+    },
+    profileCompleted:{
+      name: true,
+      email: true,
+      logo: true,
+      coverPic: true,
+      image1: true,
+      image2: true,
+      image3: true,
+      story: true,
+      founderName: true,
+      foundedDate: true,
+      location: true,
+      numberOfEmployees: true,
+      website: true,
+      socialLinks: true
+    },
+    profileStatus:""
   },
   {
     id: "4",
@@ -201,7 +288,36 @@ export var companyDataStore: CompanyModel[] = [
     joinedDate: "Sat Sep 21 2024 07:42:48 GMT+0000",
     isVerified: "verified",
     followers: 10000,
-    following: 230
+    following: 230,
+    accountNotifications:{
+      mention: true,
+      follow: true,
+      shareActivity: true,
+      message: true
+    },
+    marketingNotifications:{
+      promotion: true,
+      companyNews: true,
+      weeklyJobs: true,
+      unsubscribe: true
+    },
+    profileCompleted:{
+      name: true,
+      email: true,
+      logo: true,
+      coverPic: true,
+      image1: true,
+      image2: true,
+      image3: true,
+      story: true,
+      founderName: true,
+      foundedDate: true,
+      location: true,
+      numberOfEmployees: true,
+      website: true,
+      socialLinks: true
+    },
+    profileStatus:""
   },
   {
     id: "5",
@@ -231,7 +347,36 @@ export var companyDataStore: CompanyModel[] = [
     joinedDate: "Sat Sep 21 2024 07:42:48 GMT+0000",
     isVerified: "verified",
     followers: 10000,
-    following: 230
+    following: 230,
+    accountNotifications:{
+      mention: true,
+      follow: true,
+      shareActivity: true,
+      message: true
+    },
+    marketingNotifications:{
+      promotion: true,
+      companyNews: true,
+      weeklyJobs: true,
+      unsubscribe: true
+    },
+    profileCompleted:{
+      name: true,
+      email: true,
+      logo: true,
+      coverPic: true,
+      image1: true,
+      image2: true,
+      image3: true,
+      story: true,
+      founderName: true,
+      foundedDate: true,
+      location: true,
+      numberOfEmployees: true,
+      website: true,
+      socialLinks: true
+    },
+    profileStatus:""
   },
   {
     id: "6",
@@ -261,7 +406,36 @@ export var companyDataStore: CompanyModel[] = [
     joinedDate: "Sat Sep 21 2024 07:42:48 GMT+0000",
     isVerified: "verified",
     followers: 10000,
-    following: 230
+    following: 230,
+    accountNotifications:{
+      mention: true,
+      follow: true,
+      shareActivity: true,
+      message: true
+    },
+    marketingNotifications:{
+      promotion: true,
+      companyNews: true,
+      weeklyJobs: true,
+      unsubscribe: true
+    },
+    profileCompleted:{
+      name: true,
+      email: true,
+      logo: true,
+      coverPic: true,
+      image1: true,
+      image2: true,
+      image3: true,
+      story: true,
+      founderName: true,
+      foundedDate: true,
+      location: true,
+      numberOfEmployees: true,
+      website: true,
+      socialLinks: true
+    },
+    profileStatus:""
   },
   {
     id: "7",
@@ -291,7 +465,36 @@ export var companyDataStore: CompanyModel[] = [
     joinedDate: "Sat Sep 21 2024 07:42:48 GMT+0000",
     isVerified: "verified",
     followers: 10000,
-    following: 230
+    following: 230,
+    accountNotifications:{
+      mention: true,
+      follow: true,
+      shareActivity: true,
+      message: true
+    },
+    marketingNotifications:{
+      promotion: true,
+      companyNews: true,
+      weeklyJobs: true,
+      unsubscribe: true
+    },
+    profileCompleted:{
+      name: true,
+      email: true,
+      logo: true,
+      coverPic: true,
+      image1: true,
+      image2: true,
+      image3: true,
+      story: true,
+      founderName: true,
+      foundedDate: true,
+      location: true,
+      numberOfEmployees: true,
+      website: true,
+      socialLinks: true
+    },
+    profileStatus:""
   },
   {
     id: "8",
@@ -321,6 +524,35 @@ export var companyDataStore: CompanyModel[] = [
     joinedDate: "Sat Sep 21 2024 07:42:48 GMT+0000",
     isVerified: "verified",
     followers: 10000,
-    following: 230
+    following: 230,
+    accountNotifications:{
+      mention: true,
+      follow: true,
+      shareActivity: true,
+      message: true
+    },
+    marketingNotifications:{
+      promotion: true,
+      companyNews: true,
+      weeklyJobs: true,
+      unsubscribe: true
+    },
+    profileCompleted:{
+      name: true,
+      email: true,
+      logo: true,
+      coverPic: true,
+      image1: true,
+      image2: true,
+      image3: true,
+      story: true,
+      founderName: true,
+      foundedDate: true,
+      location: true,
+      numberOfEmployees: true,
+      website: true,
+      socialLinks: true
+    },
+    profileStatus:""
   }
 ]

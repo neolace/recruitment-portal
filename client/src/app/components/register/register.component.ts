@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         email: formData.email,
         password: formData.password,
         role: formData.role,
-        userLevel: 1
+        userLevel: formData.role === 'candidate' ? "1" : "2",
       }).subscribe((response: any) => {
         if (!response) {
           console.log("User already exists or something went wrong");

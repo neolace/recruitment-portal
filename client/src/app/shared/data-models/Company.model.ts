@@ -29,4 +29,8 @@ export interface CompanyModel {
   isVerified?: any;
   followers?: any;
   following?: any;
+  accountNotifications?: any;
+  marketingNotifications?: any;
+  profileCompleted?: any;
+  profileStatus?: any;
 }
