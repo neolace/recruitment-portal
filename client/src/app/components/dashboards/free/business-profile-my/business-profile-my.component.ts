@@ -13,8 +13,6 @@ import {AlertsService} from "../../../../services/alerts.service";
 })
 export class BusinessProfileMyComponent implements OnInit, AfterViewInit {
 
-  employeeId: any;
-  employee: any;
   companyId: any;
   company: any;
 
@@ -34,8 +32,8 @@ export class BusinessProfileMyComponent implements OnInit, AfterViewInit {
               private companyService: CompanyService,
               private alertService: AlertsService) { }
   ngOnInit(): void {
-    this.employeeId = this.cookieService.userID();
-    this.getEmployee(this.employeeId)
+    this.companyId = this.cookieService.organization();
+    this.getCompany(this.companyId)
   }
 
   ngAfterViewInit() {
@@ -45,24 +43,12 @@ export class BusinessProfileMyComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getEmployee(id: any) {
-    this.loading = true;
-    this.employeeService.fetchFullEmployee(id).subscribe(
-      (data) => {
-        this.employee = data;
-        this.getCompany(this.employee?.employee?.companyId);
-      },
-      (error) => {
-        this.alertService.errorMessage('An unexpected error has occurred', 'Unexpected Error');
-        this.loading = false;
-      }
-    );
-  }
-
   getCompany(id: any) {
+    this.loading = true;
     this.companyService.fetchFullCompany(id).subscribe(
       (data) => {
         this.company = data;
+        console.log(this.company)
         this.calculateProgress(data?.company)
         this.loading = false;
       },

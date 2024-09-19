@@ -67,7 +67,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
           this.cookieService.createUserID(response.employeeId);
           this.cookieService.createLevel(response.userLevel);
           this.cookieService.createAdmin(response.email);
-          this.cookieService.createOrganizationID(response.organizationId);
+          this.cookieService.createOrganizationID(response.companyId);
         }
       }, error => {
         this.alertService.errorMessage('User already exists or an unexpected error has occurred', 'Unexpected Error');

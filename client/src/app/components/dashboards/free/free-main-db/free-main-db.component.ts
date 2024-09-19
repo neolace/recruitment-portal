@@ -40,7 +40,9 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
 
   async ngOnInit(): Promise<any> {
     this.employeeId = this.cookieService.userID();
+    this.companyId = this.cookieService.organization();
     this.getEmployee(this.employeeId)
+    this.getCompany(this.companyId);
   }
 
   ngAfterViewInit() {
@@ -56,7 +58,6 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
       (data) => {
         this.employee = data;
         this.calculateProfileProgress(this.employee?.employee, 'employer');
-        this.getCompany(this.employee?.employee?.companyId);
       },
       (error: HttpErrorResponse) => {
         // Check for different error types

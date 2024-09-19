@@ -73,6 +73,7 @@ public class CredentialsService {
 
                 CompanyModel savedCmp = companyRepository.save(cmp);
                 emp.setCompanyId(savedCmp.getId());
+                credentials.setCompanyId(savedCmp.getId());
             }
 
             EmployeeModel savedEmp = employeeRepository.save(emp);
