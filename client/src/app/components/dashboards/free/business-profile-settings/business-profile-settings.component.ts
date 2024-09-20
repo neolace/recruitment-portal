@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../../../services/auth.service";
 import {EmployeeService} from "../../../../services/employee.service";
@@ -7,14 +7,16 @@ import {AlertsService} from "../../../../services/alerts.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {FileUploadService} from "../../../../services/file-upload.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {CredentialService} from "../../../../services/credential.service";
 
 @Component({
   selector: 'app-business-profile-settings',
   templateUrl: './business-profile-settings.component.html',
   styleUrls: ['./business-profile-settings.component.scss']
 })
-export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
+export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit, OnDestroy{
 
+  employeeId: any;
   companyId: any;
   company: any;
   editSocialLinksId: any;
@@ -54,16 +56,38 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
     github: new FormControl(''),
   })
 
+  changePassForm = new FormGroup({
+    oldPass: new FormControl('', [Validators.required]),
+    newPass: new FormControl('', [Validators.required]),
+    confirmPass: new FormControl('', [Validators.required])
+  })
+
+  aNotificationsForm = new FormGroup({
+    mention: new FormControl(false),
+    follow: new FormControl(false),
+    share: new FormControl(false),
+    message: new FormControl(false)
+  })
+
+  mNotificationsForm = new FormGroup({
+    promotion: new FormControl(false),
+    companyNews: new FormControl(false),
+    jobs: new FormControl(false),
+    unsubscribe: new FormControl(false)
+  })
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private cookieService: AuthService,
               private employeeService: EmployeeService,
+              private credentialService: CredentialService,
               private companyService: CompanyService,
               private fileUploadService: FileUploadService,
               private alertService: AlertsService) {}
 
   ngOnInit(): void {
     this.companyId = this.cookieService.organization();
+    this.employeeId = this.cookieService.userID();
     this.getCompany(this.companyId);
   }
 
@@ -72,6 +96,10 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
     icons.forEach((icon) => {
       icon.setAttribute('translate', 'no');
     });
+  }
+
+  ngOnDestroy() {
+    this.updateNotifications()
   }
 
   getCompany(id: any) {
@@ -83,6 +111,7 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
         this.patchVisualDetails();
         this.patchContactDetails();
         this.patchValuesToSocialForm();
+        this.patchNotifications(data?.company?.accountNotifications, data?.company?.marketingNotifications);
         this.loading = false;
       },
       (error: HttpErrorResponse) => {
@@ -360,6 +389,85 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
     }
   }
 
+  changePass() {
+    this.loading = true;
+    if (this.changePassForm.valid) {
+      this.credentialService.fetchCredentialByEmployeeId(this.employeeId).subscribe((data) => {
+        if (data) {
+          if (data.password === this.changePassForm.get('oldPass')?.value) {
+            if (this.changePassForm.get('newPass')?.value === this.changePassForm.get('confirmPass')?.value) {
+              this.credentialService.updateCredential(this.employeeId, {
+                id:data.id,
+                employeeId:this.employeeId,
+                firstname:data.firstname,
+                lastname:data.lastname,
+                email:data.email,
+                password:this.changePassForm.get('confirmPass')?.value,
+                role:data.role,
+                userLevel:data.userLevel
+              }).subscribe((data) => {
+                this.clear('changePass');
+                this.loading = false;
+                this.alertService.successMessage('Password updated successfully', 'Success');
+              }, (error) => {
+                this.loading = false;
+                this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+              });
+            } else {
+              this.loading = false;
+              this.alertService.errorMessage('Passwords do not match', 'Error');
+            }
+          } else {
+            this.loading = false;
+            this.alertService.errorMessage('Old password is incorrect', 'Error');
+          }
+        }
+      }, (error) => {
+        this.loading = false;
+        this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+      })
+    } else {
+      this.loading = false;
+      this.alertService.errorMessage('Please fill all the required fields', 'Error');
+    }
+  }
+
+  updateNotifications() {
+    this.companyService.updateNotifications({
+      id: this.companyId,
+      accountNotifications: {
+        mention: this.aNotificationsForm.get('mention')?.value,
+        follow: this.aNotificationsForm.get('follow')?.value,
+        shareActivity: this.aNotificationsForm.get('share')?.value,
+        message: this.aNotificationsForm.get('message')?.value
+      },
+      marketingNotifications: {
+        promotion: this.mNotificationsForm.get('promotion')?.value,
+        companyNews: this.mNotificationsForm.get('companyNews')?.value,
+        weeklyJobs: this.mNotificationsForm.get('jobs')?.value,
+        unsubscribe: this.mNotificationsForm.get('unsubscribe')?.value
+      }
+    }).subscribe((data) => {
+      this.getCompany(this.companyId);
+      this.alertService.successMessage('All applied changes are visible after refresh', 'Success');
+    })
+  }
+
+  patchNotifications(account:any, marketing:any) {
+    if (account){
+      this.aNotificationsForm.get('mention')?.patchValue(account.mention);
+      this.aNotificationsForm.get('follow')?.patchValue(account.follow);
+      this.aNotificationsForm.get('share')?.patchValue(account.shareActivity);
+      this.aNotificationsForm.get('message')?.patchValue(account.message);
+    }
+    if (marketing){
+      this.mNotificationsForm.get('promotion')?.patchValue(marketing.promotion);
+      this.mNotificationsForm.get('companyNews')?.patchValue(marketing.companyNews);
+      this.mNotificationsForm.get('jobs')?.patchValue(marketing.weeklyJobs);
+      this.mNotificationsForm.get('unsubscribe')?.patchValue(marketing.unsubscribe);
+    }
+  }
+
   generateRandomId(): string {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   }
@@ -375,8 +483,17 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
       case 'social':
         this.socialForm.reset();
         break;
+      case 'changePass':
+        this.changePassForm.reset();
+        break;
       default:
         break;
     }
+  }
+
+  saveEverything() {
+    this.updateNotifications();
+    this.router.navigate(['/dashboard/business-profile-my']);
+    this.alertService.successMessage('All applied changes are visible after refresh', 'Success');
   }
 }

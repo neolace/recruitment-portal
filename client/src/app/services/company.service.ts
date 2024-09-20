@@ -162,6 +162,17 @@ export class CompanyService {
     );
   }
 
+  updateNotifications(company: CompanyModel): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    this.http.put(`${this.baseUrl}/company/update/notifications` , company, {headers}).subscribe(data => {
+
+    });
+
+    return this.company$;
+  }
+
   private clearCache() {
     this.cacheInitialized = false;
     this.companySubject.next(null);

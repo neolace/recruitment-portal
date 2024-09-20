@@ -62,4 +62,9 @@ public class CompanyController {
     public CompanyModel updateCompany(@RequestBody CompanyModel company) {
         return companyService.updateCompany(company);
     }
+
+    @PutMapping("/update/notifications")
+    public CompanyModel updateNotifications(@RequestBody CompanyModel company) {
+        return companyService.updateNotifications(company);
+    }
 }
