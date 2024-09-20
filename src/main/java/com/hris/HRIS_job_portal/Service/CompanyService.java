@@ -123,6 +123,38 @@ public class CompanyService {
         return null;
     }
 
+    public CompanyModel updateCompany(CompanyModel company) {
+        Optional<CompanyModel> companyModel = companyRepository.findById(company.getId());
+        if (companyModel.isPresent()) {
+            CompanyModel existingCompany = companyModel.get();
+            existingCompany.setName(company.getName());
+            existingCompany.setShortDescription(company.getShortDescription());
+            existingCompany.setCompanyStory(company.getCompanyStory());
+            existingCompany.setCompanyLevel(company.getCompanyLevel());
+            existingCompany.setLocation(company.getLocation());
+            existingCompany.setFoundedDate(company.getFoundedDate());
+            existingCompany.setFounderName(company.getFounderName());
+            existingCompany.setHeadquarters(company.getHeadquarters());
+            existingCompany.setNumberOfEmployees(company.getNumberOfEmployees());
+            existingCompany.setWebsite(company.getWebsite());
+            existingCompany.setSocialLinks(company.getSocialLinks());
+            existingCompany.setContactEmail(company.getContactEmail());
+            existingCompany.setContactNumber(company.getContactNumber());
+            existingCompany.setIsVerified(company.getIsVerified());
+            existingCompany.setPostedJobs(company.getPostedJobs());
+            existingCompany.setJoinedDate(company.getJoinedDate());
+            existingCompany.setFollowers(company.getFollowers());
+            existingCompany.setFollowing(company.getFollowing());
+            existingCompany.setAccountNotifications(company.getAccountNotifications());
+            existingCompany.setMarketingNotifications(company.getMarketingNotifications());
+            existingCompany.setProfileCompleted(company.getProfileCompleted());
+            existingCompany.setProfileStatus(company.getProfileStatus());
+
+            return companyRepository.save(existingCompany);
+        }
+        return null;
+    }
+
     @Async
     public CompletableFuture<List<CompanyModel>> getAllCompaniesAsync() {
         List<CompanyModel> companies = getAllCompanies();

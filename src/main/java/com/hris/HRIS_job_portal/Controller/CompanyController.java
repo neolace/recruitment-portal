@@ -57,4 +57,9 @@ public class CompanyController {
     public CompanyModel updateThumb3Pic(@RequestBody CompanyModel company) {
         return companyService.updateThumb3Pic(company);
     }
+
+    @PutMapping("/update")
+    public CompanyModel updateCompany(@RequestBody CompanyModel company) {
+        return companyService.updateCompany(company);
+    }
 }
