@@ -36,9 +36,9 @@
   <div class="container">
     <div class="row my-3 second-content">
       <div class="col-12 col-md-6 col-lg-8 left-side">
-        <div *ngIf="company?.company?.story">
+        <div *ngIf="company?.company?.companyStory">
           <h5>Company Story</h5>
-          <p *ngFor="let s of company?.company?.story.split('\n')">{{s}}</p>
+          <p *ngFor="let s of company?.company?.companyStory.split('\n')">{{s}}</p>
         </div>
 
         <div class="row row-gap-3">
@@ -82,7 +82,7 @@
           </div>
           <div class="d-flex align-items-center justify-content-between w-100">
             <div class="caption"><i class="material-icons">language</i><span>Website:</span></div>
-            <div class="value">{{company?.company?.website ? company?.company?.website : 'N/A'}}</div>
+            <div class="value"><a [href]="company?.company?.website ? company?.company?.website : '/#/dashboard/business-profile-my'">{{company?.company?.website ? company?.company?.website : 'N/A'}}</a></div>
           </div>
 
           <div class="d-flex align-items-center justify-content-between w-100" *ngIf="company?.socials.length > 0">
