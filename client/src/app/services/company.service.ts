@@ -60,6 +60,18 @@ export class CompanyService {
     );
   }
 
+  updateCompany(company: CompanyModel): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    this.http.put(`${this.baseUrl}/company/update` , company, {headers}).subscribe(data => {
+      this.clearCache(); // Invalidate the cache
+      this.fetchFullCompany(company.id); // Refresh the cache after updating
+    });
+
+    return this.company$;
+  }
+
   updateLogoPic(company: CompanyModel): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:password')

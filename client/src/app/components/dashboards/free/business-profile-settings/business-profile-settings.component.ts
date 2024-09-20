@@ -6,6 +6,7 @@ import {CompanyService} from "../../../../services/company.service";
 import {AlertsService} from "../../../../services/alerts.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {FileUploadService} from "../../../../services/file-upload.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-business-profile-settings',
@@ -28,6 +29,15 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
   forbidden: boolean = false;
   corsError: boolean = false;
   unexpectedError: boolean = false;
+
+  visualDetailsForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    founded: new FormControl(''),
+    founder: new FormControl(''),
+    noe: new FormControl(''),
+    hq: new FormControl('', [Validators.required]),
+    story: new FormControl('')
+  })
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -55,6 +65,7 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
       (data) => {
         this.company = data;
         this.calculateProgress(data?.company)
+        this.patchVisualDetails();
         this.loading = false;
       },
       (error: HttpErrorResponse) => {
@@ -209,6 +220,50 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
         this.loading = false;
         this.alertService.warningMessage('Path created! Not updated your profile! Reload & choose again!!', 'Warning');
       });
+    }
+  }
+
+  updateVisualDetails() {
+    if (this.visualDetailsForm.invalid) {
+      this.alertService.warningMessage('Name & Head Quaters are required.', 'Warning');
+      return;
+    }
+    this.companyService.updateCompany({
+      id: this.companyId,
+      ...this.company.company,
+      name: this.visualDetailsForm.get('name')?.value,
+      foundedDate: this.visualDetailsForm.get('founded')?.value,
+      founderName: this.visualDetailsForm.get('founder')?.value,
+      numberOfEmployees: this.visualDetailsForm.get('noe')?.value,
+      headquarters: this.visualDetailsForm.get('hq')?.value,
+      companyStory: this.visualDetailsForm.get('story')?.value,
+    }).subscribe((data) => {
+      this.getCompany(this.companyId);
+      this.clear('visual')
+      this.loading = false;
+      this.alertService.successMessage('Company details updated successfully.', 'Success');
+    }, (error) => {
+      this.loading = false;
+      this.alertService.errorMessage('Something went wrong. Please try again.', 'Error');
+    })
+  }
+
+  patchVisualDetails() {
+    this.visualDetailsForm.get('name')?.setValue(this.company?.company?.name);
+    this.visualDetailsForm.get('founded')?.setValue(this.company?.company?.foundedDate);
+    this.visualDetailsForm.get('founder')?.setValue(this.company?.company?.founderName);
+    this.visualDetailsForm.get('noe')?.setValue(this.company?.company?.numberOfEmployees);
+    this.visualDetailsForm.get('hq')?.setValue(this.company?.company?.headquarters);
+    this.visualDetailsForm.get('story')?.setValue(this.company?.company?.companyStory);
+  }
+
+  clear(form: string) {
+    switch (form) {
+      case 'visual':
+        this.visualDetailsForm.reset();
+        break;
+      default:
+        break;
     }
   }
 }

@@ -37,30 +37,36 @@
     <div class="form-card-1">
       <h5>Visual Details :</h5>
 
-      <form action="">
+      <form [formGroup]="visualDetailsForm">
         <div class="row form-wrapper">
           <div class="col-12 col-md-6">
             <div class="form-group">
+              <label for="name">Company Name</label>
+              <input type="text" class="form-control" id="name" placeholder="Google" formControlName="name">
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
               <label for="founded">Founded (Year)</label>
-              <input type="number" class="form-control" id="founded" placeholder="2003">
+              <input type="number" class="form-control" id="founded" placeholder="2003" formControlName="founded">
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="founder">Founder</label>
-              <input type="text" class="form-control" id="founder" placeholder="John Doe">
+              <input type="text" class="form-control" id="founder" placeholder="John Doe" formControlName="founder">
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="noe">Number of Employees</label>
-              <input type="number" class="form-control" id="noe" placeholder="500">
+              <input type="number" class="form-control" id="noe" placeholder="500" formControlName="noe">
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="hq">Head Quarters</label>
-              <input type="text" class="form-control" id="hq" placeholder="France, Paris">
+              <input type="text" class="form-control" id="hq" placeholder="France, Paris" formControlName="hq">
             </div>
           </div>
           <div class="col-12 col-md-6">
@@ -72,12 +78,12 @@
           <div class="col-12">
             <div class="form-group">
               <label for="story">Company Story</label>
-              <textarea class="form-control" id="story" rows="5" placeholder="Your company story"></textarea>
+              <textarea class="form-control" id="story" rows="5" placeholder="Your company story" formControlName="story"></textarea>
             </div>
           </div>
           <div class="col-12">
             <div class="form-group">
-              <button type="submit" class="btn-1">Save Changes</button>
+              <button type="submit" class="btn-1" (click)="updateVisualDetails()">Save Changes</button>
             </div>
           </div>
         </div>
@@ -157,19 +163,19 @@
             <div class="col-12">
               <div class="form-group">
                 <label for="old-password">Old Password</label>
-                <input type="password" class="form-control" id="old-password">
+                <input type="password" class="form-control" id="old-password" autocomplete="section-blue password old-password">
               </div>
             </div>
             <div class="col-12">
               <div class="form-group">
                 <label for="new-password">New Password</label>
-                <input type="password" class="form-control" id="new-password">
+                <input type="password" class="form-control" id="new-password" autocomplete="section-blue password new-password">
               </div>
             </div>
             <div class="col-12">
               <div class="form-group">
                 <label for="confirm-password">Confirm Password</label>
-                <input type="password" class="form-control" id="confirm-password">
+                <input type="password" class="form-control" id="confirm-password" autocomplete="section-blue password re-new-password">
               </div>
             </div>
             <div class="col-12">
