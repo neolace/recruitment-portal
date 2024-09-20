@@ -48,7 +48,6 @@ export class BusinessProfileMyComponent implements OnInit, AfterViewInit {
     this.companyService.fetchFullCompany(id).subscribe(
       (data) => {
         this.company = data;
-        console.log(this.company)
         this.calculateProgress(data?.company)
         this.loading = false;
       },
