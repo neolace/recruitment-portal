@@ -150,6 +150,37 @@ public class CompanyService {
             existingCompany.setProfileCompleted(company.getProfileCompleted());
             existingCompany.setProfileStatus(company.getProfileStatus());
 
+            Map<String, Boolean> profileCompleted = (Map<String, Boolean>) existingCompany.getProfileCompleted();
+            if (profileCompleted == null) {
+                profileCompleted = new HashMap<>();
+            }
+            if (company.getName() != null && !company.getName().isEmpty()) {
+                profileCompleted.put("name", true);
+            }
+            if (company.getContactEmail() != null && !company.getContactEmail().isEmpty()) {
+                profileCompleted.put("email", true);
+            }
+            if (company.getCompanyStory() != null && !company.getCompanyStory().isEmpty()) {
+                profileCompleted.put("story", true);
+            }
+            if (company.getFounderName() != null && !company.getFounderName().isEmpty()) {
+                profileCompleted.put("founderName", true);
+            }
+            if (company.getFoundedDate() != null && !company.getFoundedDate().isEmpty()) {
+                profileCompleted.put("foundedDate", true);
+            }
+            if (company.getLocation() != null && !company.getLocation().isEmpty()) {
+                profileCompleted.put("location", true);
+            }
+            if (company.getNumberOfEmployees() != null && !company.getNumberOfEmployees().isEmpty()) {
+                profileCompleted.put("numberOfEmployees", true);
+            }
+            if (company.getWebsite() != null && !company.getWebsite().isEmpty()) {
+                profileCompleted.put("website", true);
+            }
+
+            existingCompany.setProfileCompleted(profileCompleted);
+
             return companyRepository.save(existingCompany);
         }
         return null;
