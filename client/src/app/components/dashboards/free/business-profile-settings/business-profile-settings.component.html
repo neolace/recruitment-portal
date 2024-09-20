@@ -1,5 +1,5 @@
 <div class="top-banner" style="overflow-x: hidden">
-  <div class="curved-div">
+  <div class="curved-div" [ngStyle]="{'background-image': company?.company?.profileBanner ? 'url(' + company?.company?.profileBanner + ')' : ''}">
     <div class="overlay"></div>
   </div>
 
@@ -11,12 +11,12 @@
             <div class="right-cont">
               <div class="d-flex align-items-center mb-3 mb-sm-0">
                 <div class="company-logo">
-                  <img src="https://jobstack-shreethemes.vercel.app/static/media/google-logo.28878765ba39f327cf3e.png"
+                  <img [src]="company?.company?.logo ? company?.company?.logo : './assets/imgs/shared/default_org_logo.svg'"
                        alt="logo">
                 </div>
                 <div class="d-flex flex-column">
-                  <div class="company-name">Google</div>
-                  <div class="company-location"><i class="material-icons">location_on</i> France, Paris</div>
+                  <div class="company-name">{{company?.company?.name ? company?.company?.name : 'Not Available'}}</div>
+                  <div class="company-location"><i class="material-icons">location_on</i> {{company?.company?.location ? company?.company?.location : 'Not Available'}}</div>
                 </div>
               </div>
             </div>
