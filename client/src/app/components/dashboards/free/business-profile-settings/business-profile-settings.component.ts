@@ -468,6 +468,25 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit, 
     }
   }
 
+  deleteCompany() {
+    this.loading = true;
+    this.companyService.deleteCompany(this.companyId).subscribe((data) => {
+      this.employeeService.deleteCompany(this.employeeId).subscribe((data) => {
+        this.loading = false;
+        this.alertService.successMessage('Company deleted successfully and you converted to a candidate', 'Success');
+        this.router.navigate(['/']);
+      }, (error) => {
+        this.loading = false;
+        this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+      })
+    }, (error) => {
+      this.loading = false;
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    })
+    this.cookieService.logout()
+    this.router.navigate(['/']);
+  }
+
   generateRandomId(): string {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   }

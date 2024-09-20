@@ -216,6 +216,23 @@ public class EmployeeService {
         }
     }
 
+    public void deleteCompany(String id) {
+        Optional<EmployeeModel> employeeModel = employeeRepository.findById(id);
+        Optional<CredentialsModel> credentialsModel = credentialsRepository.findByEmployeeId(id);
+        if (employeeModel.isPresent() && credentialsModel.isPresent()) {
+            EmployeeModel employee = employeeModel.get();
+            CredentialsModel credentials = credentialsModel.get();
+
+            credentials.setUserLevel("1");
+            credentials.setRole("candidate");
+            employee.setCompanyId(null);
+            employeeRepository.save(employee);
+            credentialsRepository.save(credentials);
+        } else {
+            throw new RuntimeException("Employee not found for id: " + id);
+        }
+    }
+
     @Async
     public CompletableFuture<List<EmployeeModel>> getAllEmployeesAsync() {
         // Fetch employees asynchronously

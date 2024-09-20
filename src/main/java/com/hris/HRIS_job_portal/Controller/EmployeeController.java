@@ -79,4 +79,9 @@ public class EmployeeController {
     public void deleteEmployee(@PathVariable String id) {
         employeeService.deleteEmployee(id);
     }
+
+    @DeleteMapping("/delete/company/{id}")
+    public void deleteCompany(@PathVariable String id) {
+        employeeService.deleteCompany(id);
+    }
 }

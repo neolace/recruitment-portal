@@ -173,6 +173,21 @@ export class CompanyService {
     return this.company$;
   }
 
+  deleteCompany(id: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.delete(`${this.baseUrl}/company/delete/${id}`, {headers}).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchCompanies(); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    );
+  }
+
   private clearCache() {
     this.cacheInitialized = false;
     this.companySubject.next(null);
