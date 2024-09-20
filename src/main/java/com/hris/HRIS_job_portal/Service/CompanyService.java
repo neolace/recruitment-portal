@@ -186,6 +186,23 @@ public class CompanyService {
         return null;
     }
 
+    public CompanyModel updateNotifications(CompanyModel company) {
+        Optional<CompanyModel> companyModel = companyRepository.findById(company.getId());
+        if (companyModel.isPresent()) {
+            CompanyModel existingCompany = companyModel.get();
+            if (existingCompany.getAccountNotifications() == null) {
+                existingCompany.setAccountNotifications(new HashMap<>());
+            }
+            if (existingCompany.getMarketingNotifications() == null) {
+                existingCompany.setMarketingNotifications(new HashMap<>());
+            }
+            existingCompany.setAccountNotifications(company.getAccountNotifications());
+            existingCompany.setMarketingNotifications(company.getMarketingNotifications());
+            return companyRepository.save(existingCompany);
+        }
+        return null;
+    }
+
     @Async
     public CompletableFuture<List<CompanyModel>> getAllCompaniesAsync() {
         List<CompanyModel> companies = getAllCompanies();

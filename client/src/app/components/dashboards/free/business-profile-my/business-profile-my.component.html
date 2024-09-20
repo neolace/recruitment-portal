@@ -85,26 +85,28 @@
             <div class="value"><a [href]="company?.company?.website ? company?.company?.website : '/#/dashboard/business-profile-my'">{{company?.company?.website ? company?.company?.website : 'N/A'}}</a></div>
           </div>
 
-          <div class="d-flex align-items-center justify-content-between w-100" *ngIf="company?.socials.length > 0">
+          <div class="d-flex align-items-center justify-content-between w-100 my-2" *ngIf="company?.socials.length > 0">
             <div class="caption">Social:</div>
-            <div class="item-set" *ngFor="let s of company?.socials">
-              <div class="social-item" *ngIf="s?.linkedin">
-                <a [href]="s?.linkedin"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-              </div>
-              <div class="social-item" *ngIf="s?.facebook">
-                <a [href]="s?.facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-              </div>
-              <div class="social-item" *ngIf="s?.instagram">
-                <a [href]="s?.instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-              </div>
-              <div class="social-item " *ngIf="s?.twitter">
-                <a [href]="s?.twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-              </div>
-              <div class="social-item" *ngIf="s?.github">
-                <a [href]="s?.github"><i class="fa fa-github" aria-hidden="true"></i></a>
-              </div>
-              <div class="social-item" *ngIf="company?.company?.email">
-                <a href="mailto:{{company?.company?.email}}"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+            <div *ngFor="let sl of company?.socials">
+              <div class="item-set" *ngFor="let s of sl.socialLinks">
+                <div class="social-item" *ngIf="s?.linkedin">
+                  <a [href]="s?.linkedin"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                </div>
+                <div class="social-item" *ngIf="s?.facebook">
+                  <a [href]="s?.facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                </div>
+                <div class="social-item" *ngIf="s?.instagram">
+                  <a [href]="s?.instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                </div>
+                <div class="social-item " *ngIf="s?.twitter">
+                  <a [href]="s?.twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                </div>
+                <div class="social-item" *ngIf="s?.github">
+                  <a [href]="s?.github"><i class="fa fa-github" aria-hidden="true"></i></a>
+                </div>
+                <div class="social-item" *ngIf="company?.company?.contactEmail">
+                  <a href="mailto:{{company?.company?.contactEmail}}"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+                </div>
               </div>
             </div>
           </div>
