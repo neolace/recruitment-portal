@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface CmpSocialRepository extends MongoRepository<CmpSocialModel, String> {
     List<CmpSocialModel> findByCompanyId(String companyId);
+    void deleteByCompanyId(String companyId);
 }

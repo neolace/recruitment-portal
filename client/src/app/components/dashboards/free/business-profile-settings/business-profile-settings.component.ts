@@ -17,6 +17,7 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
 
   companyId: any;
   company: any;
+  editSocialLinksId: any;
 
   progressValue: number = 0;
 
@@ -43,6 +44,14 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
     email: new FormControl('', [Validators.required, Validators.email]),
     phone: new FormControl('', [Validators.required]),
     website: new FormControl('')
+  })
+
+  socialForm = new FormGroup({
+    facebook: new FormControl(''),
+    twitter: new FormControl(''),
+    linkedin: new FormControl(''),
+    instagram: new FormControl(''),
+    github: new FormControl(''),
   })
 
   constructor(private router: Router,
@@ -73,6 +82,7 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
         this.calculateProgress(data?.company)
         this.patchVisualDetails();
         this.patchContactDetails();
+        this.patchValuesToSocialForm();
         this.loading = false;
       },
       (error: HttpErrorResponse) => {
@@ -292,6 +302,68 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
     this.contactForm.get('website')?.setValue(this.company?.company?.website);
   }
 
+  addSocial() {
+    this.loading = true;
+    const social: any[] = [{
+      id: this.generateRandomId(),
+      facebook: this.socialForm.get('facebook')?.value,
+      twitter: this.socialForm.get('twitter')?.value,
+      linkedin: this.socialForm.get('linkedin')?.value,
+      instagram: this.socialForm.get('instagram')?.value,
+      github: this.socialForm.get('github')?.value
+    }];
+    this.companyService.addSocial({
+      companyId: this.companyId,
+      socialLinks: social
+    }).subscribe((data) => {
+      this.clear('social');
+      this.getCompany(this.companyId);
+      this.loading = false;
+      this.alertService.successMessage('Social updated successfully', 'Success');
+    }, (error) => {
+      this.loading = false;
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  updateSocial(id: any) {
+    this.loading = true;
+    this.companyService.editSocial(this.companyId, {
+      id: id,
+      facebook: this.socialForm.get('facebook')?.value,
+      twitter: this.socialForm.get('twitter')?.value,
+      linkedin: this.socialForm.get('linkedin')?.value,
+      instagram: this.socialForm.get('instagram')?.value,
+      github: this.socialForm.get('github')?.value
+    }).subscribe((data) => {
+      this.clear('social');
+      this.getCompany(this.companyId);
+      this.loading = false;
+      this.alertService.successMessage('Social updated successfully', 'Success');
+    }, (error) => {
+      this.clear('social');
+      this.loading = false;
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  patchValuesToSocialForm() {
+    if (this.company?.socials) {
+      this.company?.socials.forEach((social: any) => {
+        this.socialForm.get('facebook')?.setValue(social?.socialLinks[0]?.facebook);
+        this.socialForm.get('twitter')?.setValue(social?.socialLinks[0]?.twitter);
+        this.socialForm.get('instagram')?.setValue(social?.socialLinks[0]?.instagram);
+        this.socialForm.get('linkedin')?.setValue(social?.socialLinks[0]?.linkedin);
+        this.socialForm.get('github')?.setValue(social?.socialLinks[0]?.github);
+        this.editSocialLinksId = social.socialLinks[0].id;
+      })
+    }
+  }
+
+  generateRandomId(): string {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  }
+
   clear(form: string) {
     switch (form) {
       case 'visual':
@@ -299,6 +371,9 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
         break;
       case 'contact':
         this.contactForm.reset();
+        break;
+      case 'social':
+        this.socialForm.reset();
         break;
       default:
         break;

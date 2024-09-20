@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {BehaviorSubject, Observable, tap} from "rxjs";
+import {BehaviorSubject, catchError, Observable, tap, throwError} from "rxjs";
 import {CompanyModel} from "../shared/data-models/Company.model";
 
 @Injectable({
@@ -130,6 +130,36 @@ export class CompanyService {
     });
 
     return this.company$;
+  }
+
+  addSocial(social: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.post(`${this.baseUrl}/cmp_socials/add` , social, {headers}).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullCompany(social.companyId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    )
+  }
+
+  editSocial(companyId: string, social: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.put(`${this.baseUrl}/cmp_socials/edit-single/${companyId}`, social, { headers }).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullCompany(social.companyId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    );
   }
 
   private clearCache() {

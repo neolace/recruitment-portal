@@ -1,5 +1,6 @@
 package com.hris.HRIS_job_portal.Service;
 
+import com.hris.HRIS_job_portal.DTO.SocialLinksDTO;
 import com.hris.HRIS_job_portal.Model.CmpSocialModel;
 import com.hris.HRIS_job_portal.Model.CompanyModel;
 import com.hris.HRIS_job_portal.Repository.CmpSocialRepository;
@@ -8,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -62,6 +60,46 @@ public class CmpSocialService {
         return cmpSocialsModel;
     }
 
+    public CmpSocialModel updateCmpSocials(String id, CmpSocialModel cmpSocials) {
+        CmpSocialModel cmpSocialsModel = cmpSocialRepository.findById(id).orElse(null);
+        if (cmpSocialsModel != null) {
+            cmpSocialsModel.setCompanyId(cmpSocials.getCompanyId());
+            cmpSocialsModel.setSocialLinks(cmpSocials.getSocialLinks());
+            return cmpSocialRepository.save(cmpSocialsModel);
+        }
+        return null;
+    }
+
+    public CmpSocialModel editCmpSocial(String companyId, SocialLinksDTO updatedCmpSocials) {
+        List<CmpSocialModel> cmpSocialsList = cmpSocialRepository.findByCompanyId(companyId);
+
+        if (!cmpSocialsList.isEmpty()) {
+            CmpSocialModel cmpSocialsModel = cmpSocialsList.get(0);
+
+            List<SocialLinksDTO> links = cmpSocialsModel.getSocialLinks();
+            if (links != null) {
+                for (SocialLinksDTO link : links) {
+                    if (link.getId().equals(updatedCmpSocials.getId())) {
+                        link.setFacebook(updatedCmpSocials.getFacebook());
+                        link.setTwitter(updatedCmpSocials.getTwitter());
+                        link.setLinkedin(updatedCmpSocials.getLinkedin());
+                        link.setGithub(updatedCmpSocials.getGithub());
+                        link.setInstagram(updatedCmpSocials.getInstagram());
+                        break;
+                    }
+                }
+                cmpSocialsModel.setSocialLinks(links);
+
+                return cmpSocialRepository.save(cmpSocialsModel);
+            }
+            return cmpSocialsModel;
+        }
+        throw new RuntimeException("CmpSocials not found for companyId: " + companyId);
+    }
+
+    public void deleteCmpSocials(String companyId) {
+        cmpSocialRepository.deleteByCompanyId(companyId);
+    }
 
     @Async
     public CompletableFuture<List<CmpSocialModel>> getCmpSocialsByCompanyIdAsync(String companyId) {
