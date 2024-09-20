@@ -127,29 +127,29 @@
       <div class="form-card-1">
         <h5>Contact Info :</h5>
 
-        <form action="">
+        <form [formGroup]="contactForm">
           <div class="row form-wrapper">
             <div class="col-12">
               <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="email" class="form-control" id="email" placeholder="XwVpP@example.com">
+                <input type="email" class="form-control" id="email" placeholder="XwVpP@example.com" formControlName="email">
               </div>
             </div>
             <div class="col-12">
               <div class="form-group">
                 <label for="phone">Phone Number</label>
-                <input type="text" class="form-control" id="phone" placeholder="123-456-7890">
+                <input type="text" class="form-control" id="phone" placeholder="123-456-7890" formControlName="phone">
               </div>
             </div>
             <div class="col-12">
               <div class="form-group">
                 <label for="website">Web Site</label>
-                <input type="text" class="form-control" id="website" placeholder="www.company.com">
+                <input type="text" class="form-control" id="website" placeholder="www.company.com" formControlName="website">
               </div>
             </div>
             <div class="col-12">
               <div class="form-group">
-                <button type="submit" class="btn-1">Add</button>
+                <button type="submit" class="btn-1" (click)="updateContactDetails()">Add</button>
               </div>
             </div>
           </div>
