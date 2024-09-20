@@ -39,6 +39,12 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
     story: new FormControl('')
   })
 
+  contactForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    phone: new FormControl('', [Validators.required]),
+    website: new FormControl('')
+  })
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private cookieService: AuthService,
@@ -66,6 +72,7 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
         this.company = data;
         this.calculateProgress(data?.company)
         this.patchVisualDetails();
+        this.patchContactDetails();
         this.loading = false;
       },
       (error: HttpErrorResponse) => {
@@ -235,11 +242,33 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
       foundedDate: this.visualDetailsForm.get('founded')?.value,
       founderName: this.visualDetailsForm.get('founder')?.value,
       numberOfEmployees: this.visualDetailsForm.get('noe')?.value,
-      headquarters: this.visualDetailsForm.get('hq')?.value,
+      location: this.visualDetailsForm.get('hq')?.value,
       companyStory: this.visualDetailsForm.get('story')?.value,
     }).subscribe((data) => {
       this.getCompany(this.companyId);
       this.clear('visual')
+      this.loading = false;
+      this.alertService.successMessage('Company details updated successfully.', 'Success');
+    }, (error) => {
+      this.loading = false;
+      this.alertService.errorMessage('Something went wrong. Please try again.', 'Error');
+    })
+  }
+
+  updateContactDetails() {
+    if (this.contactForm.invalid) {
+      this.alertService.warningMessage('Email & Phone are required.', 'Warning');
+      return;
+    }
+    this.companyService.updateCompany({
+      id: this.companyId,
+      ...this.company.company,
+      contactEmail: this.contactForm.get('email')?.value,
+      contactNumber: this.contactForm.get('phone')?.value,
+      website: this.contactForm.get('website')?.value
+    }).subscribe((data) => {
+      this.getCompany(this.companyId);
+      this.clear('contact')
       this.loading = false;
       this.alertService.successMessage('Company details updated successfully.', 'Success');
     }, (error) => {
@@ -253,14 +282,23 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit{
     this.visualDetailsForm.get('founded')?.setValue(this.company?.company?.foundedDate);
     this.visualDetailsForm.get('founder')?.setValue(this.company?.company?.founderName);
     this.visualDetailsForm.get('noe')?.setValue(this.company?.company?.numberOfEmployees);
-    this.visualDetailsForm.get('hq')?.setValue(this.company?.company?.headquarters);
+    this.visualDetailsForm.get('hq')?.setValue(this.company?.company?.location);
     this.visualDetailsForm.get('story')?.setValue(this.company?.company?.companyStory);
+  }
+
+  patchContactDetails() {
+    this.contactForm.get('email')?.setValue(this.company?.company?.contactEmail);
+    this.contactForm.get('phone')?.setValue(this.company?.company?.contactNumber);
+    this.contactForm.get('website')?.setValue(this.company?.company?.website);
   }
 
   clear(form: string) {
     switch (form) {
       case 'visual':
         this.visualDetailsForm.reset();
+        break;
+      case 'contact':
+        this.contactForm.reset();
         break;
       default:
         break;
