@@ -67,4 +67,9 @@ public class CompanyController {
     public CompanyModel updateNotifications(@RequestBody CompanyModel company) {
         return companyService.updateNotifications(company);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteCompany(@PathVariable String id) {
+        companyService.deleteCompany(id);
+    }
 }

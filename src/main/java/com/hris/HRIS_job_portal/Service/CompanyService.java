@@ -203,6 +203,10 @@ public class CompanyService {
         return null;
     }
 
+    public void deleteCompany(String id) {
+        companyRepository.deleteById(id);
+    }
+
     @Async
     public CompletableFuture<List<CompanyModel>> getAllCompaniesAsync() {
         List<CompanyModel> companies = getAllCompanies();

@@ -82,6 +82,19 @@ export class EmployeeService {
     return this.employees$;
   }
 
+  deleteCompany(id: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+
+    this.http.delete(`${this.baseUrl}/employee/delete/company/${id}`, {headers}).subscribe(() => {
+      this.clearCache();  // Clear cache after deletion
+      this.fetchEmployees(); // Re-fetch all employees
+    });
+
+    return this.employees$;
+  }
+
   // Update employee's personal details and refresh cache
   updateEmployee(employee: EmployeeModel): Observable<any> {
     const headers = new HttpHeaders({
