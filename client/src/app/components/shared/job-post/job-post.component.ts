@@ -5,6 +5,7 @@ import {AuthService} from "../../../services/auth.service";
 import {CompanyService} from "../../../services/company.service";
 import {jobCategories} from "../../../shared/data-store/job-categories-data-store";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AlertsService} from "../../../services/alerts.service";
 
 @Component({
   selector: 'app-job-post',
@@ -37,16 +38,17 @@ export class JobPostComponent implements AfterViewInit, OnInit {
   cemail: any = '';
   cphone: any = '';
   chq: any = '';
+  cLogo: any = '';
   formLocked: boolean = true;
 
   jobPostForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
-    category: new FormControl('', [Validators.required]),
-    jobType: new FormControl('', [Validators.required]),
-    salary: new FormControl('', [Validators.required]),
-    minSalary: new FormControl('', [Validators.required]),
-    maxSalary: new FormControl('', [Validators.required]),
+    category: new FormControl('IT', [Validators.required]),
+    jobType: new FormControl('Web Developer', [Validators.required]),
+    salary: new FormControl(''),
+    minSalary: new FormControl(''),
+    maxSalary: new FormControl(''),
     totalOpenings: new FormControl('', [Validators.required]),
     employeeType: new FormControl('', [Validators.required]),
     skills: new FormControl(''),
@@ -65,7 +67,10 @@ export class JobPostComponent implements AfterViewInit, OnInit {
     expdate: new FormControl(''),
   })
 
-  constructor(private employeeService: EmployeeService, private cookieService: AuthService, private companyService: CompanyService) {
+  constructor(private employeeService: EmployeeService,
+              private cookieService: AuthService,
+              private alertService: AlertsService,
+              private companyService: CompanyService) {
   }
 
   ngAfterViewInit() {
@@ -85,10 +90,16 @@ export class JobPostComponent implements AfterViewInit, OnInit {
   onCategoryChange(): void {
     this.isOtherCategorySelected = this.selectedCategory === 'Other';
     this.isOtherJobTypeSelected = this.selectedCategory === 'Other';
+    if (this.selectedCategory) {
+      this.jobPostForm.get('category')?.setValue(this.selectedCategory);
+    }
   }
 
   onJobTypeChange(): void {
     this.isOtherJobTypeSelected = this.selectedJobType === 'Other';
+    if (this.selectedJobType) {
+      this.jobPostForm.get('jobType')?.setValue(this.selectedJobType);
+    }
   }
 
   getEmployee(id: any) {
@@ -127,6 +138,7 @@ export class JobPostComponent implements AfterViewInit, OnInit {
           this.cemail = this.company?.company?.contactEmail;
           this.cphone = this.company?.company?.contactNumber;
           this.chq = this.company?.company?.location;
+          this.cLogo = this.company?.company?.logo;
           if (this.cname && this.cemail && this.cphone && this.chq) {
             this.formLocked = false;
           }
@@ -157,5 +169,62 @@ export class JobPostComponent implements AfterViewInit, OnInit {
 
   filterJobTypes(selectedCategory: any) {
     return this.filteredJobTypes = this.categoriesDataStore.filter((category: any) => category.name === selectedCategory)[0].subCategories;
+  }
+
+  saveJobPost() {
+    const postData = [{
+      id: this.generateRandomId(),
+      title: this.jobPostForm.get('title')?.value,
+      description: this.jobPostForm.get('description')?.value,
+      category: this.selectedCategory ? this.selectedCategory : this.jobPostForm.get('category')?.value,
+      jobType: this.selectedJobType ? this.selectedJobType : this.jobPostForm.get('jobType')?.value,
+      salary: this.jobPostForm.get('salary')?.value,
+      minSalary: this.jobPostForm.get('minSalary')?.value,
+      maxSalary: this.jobPostForm.get('maxSalary')?.value,
+      totalOpenings: this.jobPostForm.get('totalOpenings')?.value,
+      employeeType: this.jobPostForm.get('employeeType')?.value,
+      skills: this.jobPostForm.get('skills')?.value,
+      qualifications: this.jobPostForm.get('qualifications')?.value,
+      experience: this.jobPostForm.get('experience')?.value,
+      requirements: this.jobPostForm.get('requirements')?.value,
+      education: this.jobPostForm.get('education')?.value,
+      responsibilities: this.jobPostForm.get('responsibilities')?.value,
+      offers: this.jobPostForm.get('offer')?.value,
+      eduShortDesc: this.jobPostForm.get('es')?.value,
+      exShortDesc: this.jobPostForm.get('exs')?.value,
+      location: this.jobPostForm.get('country')?.value + ', ' + this.jobPostForm.get('state')?.value,
+      datePosted: this.jobPostForm.get('postdate')?.value,
+      expiryDate: this.jobPostForm.get('expdate')?.value
+    }]
+
+    if (this.formLocked) {
+      this.alertService.warningMessage('Form Locked! Complete main details on profile', 'Warning');
+      return;
+    }
+    if (this.jobPostForm.invalid) {
+      this.alertService.warningMessage('Please fill all required fields! (Starred with *)', 'Warning');
+      return;
+    }
+    this.loading = true;
+    this.companyService.addJobPost({
+      companyId: this.companyId,
+      companyName: this.cname,
+      companyLogo: this.cLogo,
+      companyLevel: this.cookieService.level(),
+      postedJobs: postData
+    }).subscribe(
+      (data) => {
+        this.loading = false;
+        this.alertService.successMessage('Job Post Added Successfully', 'Success');
+      },
+      (error) => {
+        this.loading = false;
+        this.alertService.errorMessage('Unable to Add Job Post', 'Error');
+      }
+    )
+  }
+
+  generateRandomId(): string {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   }
 }

@@ -20,6 +20,7 @@ public class PostedJobsDTO {
     private String jobBanner;
     private String employeeType;
     private String location;
+    private String category;
     private String jobType;
     private String exShortDesc;
     private String eduShortDesc;

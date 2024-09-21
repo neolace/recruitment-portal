@@ -188,6 +188,21 @@ export class CompanyService {
     );
   }
 
+  addJobPost(jobPost: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.post(`${this.baseUrl}/cmp_posted_jobs/add` , jobPost, {headers}).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullCompany(jobPost.companyId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    )
+  }
+
   private clearCache() {
     this.cacheInitialized = false;
     this.companySubject.next(null);
