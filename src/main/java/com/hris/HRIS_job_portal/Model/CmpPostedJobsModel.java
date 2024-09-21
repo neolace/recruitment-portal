@@ -22,7 +22,6 @@ public class CmpPostedJobsModel {
     private String companyName;
     private String companyLogo;
     private String companyLevel;
-    private String category;
     @Field("postedJobs")
     private List<PostedJobsDTO> postedJobs;
 }

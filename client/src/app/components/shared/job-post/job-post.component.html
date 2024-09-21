@@ -269,7 +269,7 @@
 
           <div class="col-12">
             <div class="form-group">
-              <button type="submit" [disabled]="formLocked" class="btn-1">{{formLocked?'Locked':'Post Now'}}</button>
+              <button type="submit" [disabled]="formLocked" class="btn-1" (click)="saveJobPost()">{{formLocked?'Locked':'Post Now'}}</button>
             </div>
           </div>
         </div>
