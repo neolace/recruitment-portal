@@ -43,36 +43,33 @@
   <div class="d-flex align-items-center justify-content-center w-100">
 
     <div class="form-card-1">
-      <form action="">
+      <form [formGroup]="jobPostForm">
         <h5>Job details:</h5>
         <div class="row form-wrapper">
           <div class="col-12">
             <div class="form-group">
-              <label for="title">Job Title</label>
-              <input type="text" class="form-control" id="title" placeholder="web developer">
+              <label for="title">Job Title *</label>
+              <input type="text" class="form-control" id="title" placeholder="web developer" formControlName="title">
             </div>
           </div>
 
           <div class="col-12">
             <div class="form-group">
-              <label for="description">Job Description</label>
-              <textarea class="form-control" id="description" rows="5" placeholder="Job Description"></textarea>
+              <label for="description">Job Description *</label>
+              <textarea class="form-control" id="description" rows="5" placeholder="Job Description" formControlName="description"></textarea>
             </div>
           </div>
 
           <div class="row">
             <div class="col-12 col-md-6">
               <div class="form-group">
-                <label for="category">Categories</label>
+                <label for="category">Categories *</label>
                 <select id="category" [(ngModel)]="selectedCategory" [ngModelOptions]="{standalone: true}" (change)="onCategoryChange()">
-                  <option value="IT">IT</option>
-                  <option value="HR">HR</option>
-                  <option value="Marketing">Marketing</option>
-                  <option value="Other">Other</option>
+                  <option *ngFor="let c of filterCategories()" [value]="c.name">{{c.name}}</option>
                 </select>
                 <div class="collapse" [ngClass]="{'show': isOtherCategorySelected}" id="otherCollapseCat">
                   <div class="d-flex justify-content-end my-2">
-                    <input type="text" class="form-control" placeholder="Enter new category">
+                    <input type="text" class="form-control" placeholder="Enter new category" formControlName="category">
                   </div>
                 </div>
               </div>
@@ -80,17 +77,13 @@
 
             <div class="col-12 col-md-6">
               <div class="form-group">
-                <label for="jobType">Job Type</label>
+                <label for="jobType">Job Type *</label>
                 <select id="jobType" [(ngModel)]="selectedJobType" [ngModelOptions]="{standalone: true}" (change)="onJobTypeChange()">
-                  <option>Web Developer</option>
-                  <option>Full Stack Developer</option>
-                  <option>Front End Developer</option>
-                  <option>Back End Developer</option>
-                  <option>Other</option>
+                  <option *ngFor="let j of filterJobTypes(selectedCategory)" [value]="j.name">{{j.name}}</option>
                 </select>
                 <div class="collapse" [ngClass]="{'show': isOtherJobTypeSelected}" id="otherCollapseJob">
                   <div class="d-flex justify-content-end my-2">
-                    <input type="text" class="form-control" placeholder="Enter new job type">
+                    <input type="text" class="form-control" placeholder="Enter new job type" formControlName="jobType">
                   </div>
                 </div>
               </div>
@@ -101,7 +94,7 @@
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="salary">Salary</label>
-                <select class="form-control" id="salary">
+                <select class="form-control" id="salary" formControlName="salary">
                   <option>Hourly</option>
                   <option>Monthly</option>
                 </select>
@@ -113,7 +106,7 @@
                 <label></label>
                 <div class="input-group flex-nowrap">
                   <span class="input-group-text">$</span>
-                  <input type="text" class="form-control" placeholder="Min">
+                  <input type="text" class="form-control" placeholder="Min" formControlName="minSalary">
                 </div>
               </div>
             </div>
@@ -123,8 +116,33 @@
                 <label></label>
                 <div class="input-group flex-nowrap">
                   <span class="input-group-text">$</span>
-                  <input type="text" class="form-control" placeholder="Max">
+                  <input type="text" class="form-control" placeholder="Max" formControlName="maxSalary">
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <label for="totalOpenings">Total Openings *</label>
+                <input type="number" id="totalOpenings" class="form-control" placeholder="5" formControlName="totalOpenings">
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <label for="employeeType">Employee Type *</label>
+                <select class="form-control" id="employeeType" formControlName="employeeType">
+                  <option>On Site</option>
+                  <option>Remote</option>
+                  <option>Hybrid</option>
+                  <option>Permanent</option>
+                  <option>Contract</option>
+                  <option>Internship</option>
+                  <option>Volunteer</option>
+                  <option>Other</option>
+                </select>
               </div>
             </div>
           </div>
@@ -135,14 +153,14 @@
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="skills">Skills</label>
-                <textarea class="form-control" id="skills" rows="5" placeholder="Skills"></textarea>
+                <textarea class="form-control" id="skills" rows="5" placeholder="Skills" formControlName="skills"></textarea>
               </div>
             </div>
 
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="qualifications">Qualifications</label>
-                <textarea class="form-control" id="qualifications" rows="5" placeholder="Qualifications"></textarea>
+                <textarea class="form-control" id="qualifications" rows="5" placeholder="Qualifications" formControlName="qualifications"></textarea>
               </div>
             </div>
           </div>
@@ -150,15 +168,60 @@
           <div class="row">
             <div class="col-12 col-md-6">
               <div class="form-group">
-                <label for="experience">Experience</label>
-                <textarea class="form-control" id="experience" rows="5" placeholder="Experience"></textarea>
+                <label for="education">Education</label>
+                <textarea class="form-control" id="education" rows="5" placeholder="Education" formControlName="education"></textarea>
               </div>
             </div>
 
             <div class="col-12 col-md-6">
               <div class="form-group">
-                <label for="industry">Industry</label>
-                <input class="form-control" id="industry" placeholder="Banking">
+                <label for="experience">Experience</label>
+                <textarea class="form-control" id="experience" rows="5" placeholder="Experience" formControlName="experience"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <label for="es">Education (short) *</label>
+                <input class="form-control" id="es" placeholder="BSc" formControlName="es">
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <label for="es">Experience (short) *</label>
+                <input class="form-control" id="exs" placeholder="+2 years" formControlName="exs">
+              </div>
+            </div>
+          </div>
+
+          <h5>Requirements and Responsibilities:</h5>
+
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <label for="requirements">Requirements</label>
+                <textarea class="form-control" id="requirements" rows="5" placeholder="Requirements" formControlName="requirements"></textarea>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <label for="responsibilities">Responsibilities</label>
+                <textarea class="form-control" id="responsibilities" rows="5" placeholder="Responsibilities" formControlName="responsibilities"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <h5>We will offer...</h5>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="offer">We offers...</label>
+                <textarea class="form-control" id="offer" rows="5" placeholder="We offers..." formControlName="offer"></textarea>
               </div>
             </div>
           </div>
@@ -168,28 +231,45 @@
           <div class="col-12">
             <div class="form-group">
               <label for="address">Address</label>
-              <input class="form-control" id="address" placeholder="Address">
+              <input class="form-control" id="address" placeholder="Address" formControlName="address">
             </div>
           </div>
 
           <div class="row">
             <div class="col-6">
               <div class="form-group">
-                <label for="country">Country</label>
-                <input class="form-control" id="country" placeholder="Country">
+                <label for="country">Country *</label>
+                <input class="form-control" id="country" placeholder="Country" formControlName="country">
               </div>
             </div>
             <div class="col-6">
               <div class="form-group">
-                <label for="state">City/State</label>
-                <input class="form-control" id="state" placeholder="State">
+                <label for="state">City/State *</label>
+                <input class="form-control" id="state" placeholder="State" formControlName="state">
+              </div>
+            </div>
+          </div>
+
+          <h5>Other:</h5>
+
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <label for="postdate">Date Posted *</label>
+                <input type="date" class="form-control" id="postdate" formControlName="postdate">
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="expdate">Date Expired</label>
+                <input type="date" class="form-control" id="expdate" formControlName="expdate">
               </div>
             </div>
           </div>
 
           <div class="col-12">
             <div class="form-group">
-              <button type="submit" [disabled]="formLocked" class="btn-1">Post Now</button>
+              <button type="submit" [disabled]="formLocked" class="btn-1">{{formLocked?'Locked':'Post Now'}}</button>
             </div>
           </div>
         </div>

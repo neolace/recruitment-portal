@@ -25,12 +25,11 @@
 }
 
 #google_translate_element {
-  position: absolute;
-  bottom: 20px;
-  right: 10px;
-  z-index: 99;
-
   .goog-te-gadget{
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+    z-index: 99;
     color: rgba(0,0,0,0);
 
     span{

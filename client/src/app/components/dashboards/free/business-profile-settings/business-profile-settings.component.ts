@@ -39,6 +39,7 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit, 
     founder: new FormControl(''),
     noe: new FormControl(''),
     hq: new FormControl('', [Validators.required]),
+    bio: new FormControl(''),
     story: new FormControl('')
   })
 
@@ -282,6 +283,7 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit, 
       founderName: this.visualDetailsForm.get('founder')?.value,
       numberOfEmployees: this.visualDetailsForm.get('noe')?.value,
       location: this.visualDetailsForm.get('hq')?.value,
+      shortDescription: this.visualDetailsForm.get('bio')?.value,
       companyStory: this.visualDetailsForm.get('story')?.value,
     }).subscribe((data) => {
       this.getCompany(this.companyId);
@@ -322,6 +324,7 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit, 
     this.visualDetailsForm.get('founder')?.setValue(this.company?.company?.founderName);
     this.visualDetailsForm.get('noe')?.setValue(this.company?.company?.numberOfEmployees);
     this.visualDetailsForm.get('hq')?.setValue(this.company?.company?.location);
+    this.visualDetailsForm.get('bio')?.setValue(this.company?.company?.shortDescription);
     this.visualDetailsForm.get('story')?.setValue(this.company?.company?.companyStory);
   }
 
