@@ -41,6 +41,8 @@ export class JobPostComponent implements AfterViewInit, OnInit {
   cLogo: any = '';
   formLocked: boolean = true;
 
+  postedJobs: any = [];
+
   jobPostForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
@@ -142,6 +144,7 @@ export class JobPostComponent implements AfterViewInit, OnInit {
           if (this.cname && this.cemail && this.cphone && this.chq) {
             this.formLocked = false;
           }
+          this.postedJobs = this.company?.postedJobs;
           this.loading = false;
         },
         (error: HttpErrorResponse) => {
@@ -197,14 +200,23 @@ export class JobPostComponent implements AfterViewInit, OnInit {
       expiryDate: this.jobPostForm.get('expdate')?.value
     }]
 
+    if (this.cookieService.level() === '2'){
+      if (this.postedJobs[0].postedJobs.length >= 3) {
+        this.alertService.warningMessage('You Reached Maximum Job Post Limit. Upgrade to Add More!', 'Warning');
+        return;
+      }
+    }
+
     if (this.formLocked) {
       this.alertService.warningMessage('Form Locked! Complete main details on profile', 'Warning');
       return;
     }
+
     if (this.jobPostForm.invalid) {
       this.alertService.warningMessage('Please fill all required fields! (Starred with *)', 'Warning');
       return;
     }
+
     this.loading = true;
     this.companyService.addJobPost({
       companyId: this.companyId,
@@ -215,6 +227,7 @@ export class JobPostComponent implements AfterViewInit, OnInit {
     }).subscribe(
       (data) => {
         this.loading = false;
+        this.jobPostForm.reset();
         this.alertService.successMessage('Job Post Added Successfully', 'Success');
       },
       (error) => {

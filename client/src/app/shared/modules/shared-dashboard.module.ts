@@ -17,6 +17,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {RouterLink} from "@angular/router";
 import {SharedComponentModule} from "./shared-component.module";
+import {SharedPipesModule} from "./shared-pipes.module";
 
 
 
@@ -28,14 +29,15 @@ import {SharedComponentModule} from "./shared-component.module";
     BusinessProfileSettingsComponent,
     CompanyJobsMyComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatProgressSpinnerModule,
-    ReactiveFormsModule,
-    RouterLink,
-    SharedComponentModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatProgressSpinnerModule,
+        ReactiveFormsModule,
+        RouterLink,
+        SharedComponentModule,
+        SharedPipesModule
+    ],
   exports: [
     PersonalProfileMyComponent,
     PersonalProfileSettingsComponent,
