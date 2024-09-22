@@ -1,28 +1,28 @@
-<google-map
-  height="500px"
-  width="100%"
-  [zoom]="zoom"
-  [center]="center"
-  [options]="options"
->
-  <map-marker
-    #markerElem
-    *ngFor="let marker of markers"
-    [position]="marker.position"
-    [label]="marker.label"
-    [title]="marker.title"
-    [options]="marker.options"
-    (mapClick)="openInfo(markerElem, marker.info)"
-  >
-  </map-marker>
+<!--<google-map-->
+<!--  height="500px"-->
+<!--  width="100%"-->
+<!--  [zoom]="zoom"-->
+<!--  [center]="center"-->
+<!--  [options]="options"-->
+<!--&gt;-->
+<!--  <map-marker-->
+<!--    #markerElem-->
+<!--    *ngFor="let marker of markers"-->
+<!--    [position]="marker.position"-->
+<!--    [label]="marker.label"-->
+<!--    [title]="marker.title"-->
+<!--    [options]="marker.options"-->
+<!--    (mapClick)="openInfo(markerElem, marker.info)"-->
+<!--  >-->
+<!--  </map-marker>-->
 
-  <map-info-window>{{ infoContent }}</map-info-window>
+<!--  <map-info-window>{{ infoContent }}</map-info-window>-->
 
-  <div class="map-btns">
-    <button class="btn-1" (click)="zoomIn()">+</button>
-    <button class="btn-1" (click)="zoomOut()">-</button>
-  </div>
-</google-map>
+<!--  <div class="map-btns">-->
+<!--    <button class="btn-1" (click)="zoomIn()">+</button>-->
+<!--    <button class="btn-1" (click)="zoomOut()">-</button>-->
+<!--  </div>-->
+<!--</google-map>-->
 
 <div class="container">
   <div class="container">
