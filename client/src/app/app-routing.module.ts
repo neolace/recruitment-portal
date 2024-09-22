@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'job-post', loadChildren: () => import('./components/shared/job-post/job-post.module').then(m => m.JobPostModule) },
   { path: 'learn-more-jobs', loadChildren: () => import('./components/shared/jobs-learn-more/jobs-learn-more.module').then(m => m.JobsLearnMoreModule) },
   { path: 'companies', loadChildren: () => import('./components/companies/companies.module').then(m => m.CompaniesModule) },
-  { path: 'contact', loadChildren: () => import('./components/contact/contact.module').then(m => m.ContactModule) },
+  { path: 'for-companies', loadChildren: () => import('./components/contact/contact.module').then(m => m.ContactModule) },
   { path: 'pricing', loadChildren: () => import('./components/prising/prising.module').then(m => m.PrisingModule) },
   { path: 'candidate-profile', loadChildren: () => import('./components/shared/emp-profile/emp-profile.module').then(m => m.EmpProfileModule) },
   { path: 'candidate-profile-setting', loadChildren: () => import('./components/shared/emp-profile-settings/emp-profile-settings.module').then(m => m.EmpProfileSettingsModule) },

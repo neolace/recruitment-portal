@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {companyDataStore} from "../../shared/data-store/company-data-store";
 import {CompanyService} from "../../services/company.service";
 import {HttpErrorResponse} from "@angular/common/http";
-import {Observable, tap} from "rxjs";
+import {filter, Observable, tap} from "rxjs";
 
 @Component({
   selector: 'app-companies',
@@ -119,7 +119,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit{
   updatePaginatedCompanies() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedCompanies = this.filteredCompanies?.slice(startIndex, endIndex);
+    this.paginatedCompanies = this.filteredCompanies?.filter(data => data.name !== null)?.slice(startIndex, endIndex);
   }
 
   changePage(page: number) {

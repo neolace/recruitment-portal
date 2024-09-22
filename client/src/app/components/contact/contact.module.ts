@@ -3,6 +3,7 @@ import {ContactComponent} from "./contact.component";
 import {CommonModule} from "@angular/common";
 import {ContactRoutingModule} from "./contact-routing.module";
 import {GoogleMapsModule} from "@angular/google-maps";
+import {SharedPipesModule} from "../../shared/modules/shared-pipes.module";
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import {GoogleMapsModule} from "@angular/google-maps";
   imports: [
     CommonModule,
     ContactRoutingModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    SharedPipesModule
   ],
   exports: []
 })
