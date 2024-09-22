@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ValueIncrementService} from "../../services/value-increment.service";
+import {GoogleMap, MapInfoWindow, MapMarker} from "@angular/google-maps";
 
 @Component({
   selector: 'app-about',
@@ -8,6 +9,8 @@ import {ValueIncrementService} from "../../services/value-increment.service";
 })
 export class AboutComponent implements OnInit, AfterViewInit {
   @ViewChild('achievementsSection') achievementsSection!: ElementRef;
+  @ViewChild(GoogleMap, { static: false }) map: GoogleMap | any;
+  @ViewChild(MapInfoWindow, { static: false }) info: MapInfoWindow | any;
 
   jobsAch: number = 1548;
   branchesAch: number = 25;
@@ -16,6 +19,37 @@ export class AboutComponent implements OnInit, AfterViewInit {
   branchesAchValue: number = 0;
   countriesAchValue: number = 0;
   observer!: IntersectionObserver;
+
+  zoom = 12;
+  center: google.maps.LatLngLiteral | any;
+  options: google.maps.MapOptions = {
+    mapTypeId: 'hybrid',
+    zoomControl: false,
+    scrollwheel: false,
+    disableDoubleClickZoom: true,
+    maxZoom: 20,
+    minZoom: 8
+  };
+  markers:any = [
+    {
+      position: {
+        lat: 6.918604,
+        lng: 79.865564,
+      },
+      label: {
+        color: '#fff',
+        text: 'Meet Us Here',
+        weight: 'bold',
+        fontSize: '20px'
+      },
+      title: 'Talent Boozt Pvt LTD',
+      info: 'Visit our location',
+      options: {
+        animation: google.maps.Animation.BOUNCE,
+      },
+    }
+  ];
+  infoContent = '';
 
   constructor(private valueIncrementService: ValueIncrementService) { }
 
@@ -28,6 +62,10 @@ export class AboutComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.center = {
+      lat: 6.918604,
+      lng: 79.865564,
+    };
   }
 
   setupIntersectionObserver() {
@@ -66,6 +104,20 @@ export class AboutComponent implements OnInit, AfterViewInit {
     this.valueIncrementService.incrementValue(targetValue, value => {
       this.countriesAchValue = value;
     }, interval);
+  }
+
+  zoomIn() {
+    if (this.zoom < this.options.maxZoom!) this.zoom++;
+  }
+
+  zoomOut() {
+    if (this.zoom > this.options.minZoom!) this.zoom--;
+  }
+
+  openInfo(marker: HTMLElement, content: any) {
+    const mark = marker as unknown as MapMarker;
+    this.infoContent = content;
+    this.info.open(mark);
   }
 
 }
