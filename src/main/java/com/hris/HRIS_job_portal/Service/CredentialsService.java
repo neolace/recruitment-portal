@@ -50,7 +50,7 @@ public class CredentialsService {
             profileCompleted.put("socialLinks", false);
             emp.setProfileCompleted(profileCompleted);
 
-            if (credentials.getUserLevel().equals("2")) {
+            if (credentials.getUserLevel().equals("2") || credentials.getUserLevel().equals("3") || credentials.getUserLevel().equals("4")) {
                 CompanyModel cmp = new CompanyModel();
 
                 Map<String, Boolean> cmpProfileCompleted = new HashMap<>();
@@ -70,6 +70,7 @@ public class CredentialsService {
                 cmpProfileCompleted.put("socialLinks", false);
 
                 cmp.setProfileCompleted(cmpProfileCompleted);
+                cmp.setCompanyLevel(credentials.getUserLevel());
 
                 CompanyModel savedCmp = companyRepository.save(cmp);
                 emp.setCompanyId(savedCmp.getId());

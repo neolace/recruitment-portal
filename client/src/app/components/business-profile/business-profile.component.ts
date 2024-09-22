@@ -12,9 +12,9 @@ export class BusinessProfileComponent implements OnInit, AfterViewInit{
 
   companyDataStore: any;
   filteredCompanyDataStore: any[] = [];
-  socialsDataStore: any;
+  socialsDataStore: any[] = [];
   filteredSocialsDataStore: any[] = [];
-  postedJobsDataStore: any;
+  postedJobsDataStore: any[] = [];
   filteredPostedJobsDataStore: any[] = [];
   companyId: any;
 
@@ -71,17 +71,17 @@ export class BusinessProfileComponent implements OnInit, AfterViewInit{
   }
 
   filterCompanyData(): any[] {
-    this.filteredCompanyDataStore = this.companyDataStore.filter((data: any) => data.id === this.companyId);
+    this.filteredCompanyDataStore = this.companyDataStore?.filter((data: any) => data.id === this.companyId);
     return this.filteredCompanyDataStore;
   }
 
   filterSocialsData(): any[] {
-    this.filteredSocialsDataStore = this.socialsDataStore[0].filter((data: any) => data.companyId === this.companyId);
+    this.filteredSocialsDataStore = this.socialsDataStore[0]?.filter((data: any) => data.companyId === this.companyId);
     return this.filteredSocialsDataStore;
   }
 
   filterPostedJobsData(): any[] {
-    this.filteredPostedJobsDataStore = this.postedJobsDataStore[0].filter((data: any) => data.companyId === this.companyId);
+    this.filteredPostedJobsDataStore = this.postedJobsDataStore[0]?.filter((data: any) => data.companyId === this.companyId);
     return this.filteredPostedJobsDataStore;
   }
 

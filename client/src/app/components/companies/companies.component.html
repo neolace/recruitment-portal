@@ -71,13 +71,13 @@
               <span>{{c.location}}</span>
             </div>
             <div class="card-bottom-left">
-              <div class="open-jobs">{{c.postedJobs.length > 0 ? c.postedJobs.length : 0}} Jobs</div>
+              <div class="open-jobs">{{ getJobCount(c.id) }} Jobs</div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="no-results-found" *ngIf="companyDataStore.length === 0">
+      <div class="no-results-found" *ngIf="companyDataStore?.length === 0">
         <h3>Sorry! No results found :(</h3>
         <img src="./assets/imgs/shared/not-found.svg" alt="404">
       </div>

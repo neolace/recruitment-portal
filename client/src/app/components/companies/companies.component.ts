@@ -1,6 +1,9 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {companyDataStore} from "../../shared/data-store/company-data-store";
+import {CompanyService} from "../../services/company.service";
+import {HttpErrorResponse} from "@angular/common/http";
+import {Observable, tap} from "rxjs";
 
 @Component({
   selector: 'app-companies',
@@ -9,7 +12,7 @@ import {companyDataStore} from "../../shared/data-store/company-data-store";
 })
 export class CompaniesComponent implements OnInit, AfterViewInit{
 
-  companyDataStore: any[] = [];
+  companyDataStore: any;
   filteredCompanies: any[] = [];
   paginatedCompanies: any[] = []; // List of companies to show on the current page
   currentPage: number = 1;
@@ -24,16 +27,28 @@ export class CompaniesComponent implements OnInit, AfterViewInit{
   targetInput2: any;
 
   isSearchResultNotFound: boolean = false;
+  jobCounts: { [key: string]: number } = {};  // Cache job counts
 
-  constructor(private router: Router) { }
+  loading: boolean = false;
 
-  ngOnInit() {
+  serverError: boolean = false;
+  notFound: boolean = false;
+  forbidden: boolean = false;
+  corsError: boolean = false;
+  unexpectedError: boolean = false;
+
+  constructor(private router: Router, private companyService: CompanyService) { }
+
+  async ngOnInit() : Promise<any> {
     // Initialize the pagination
-    this.companyDataStore = companyDataStore;
-    this.filteredCompanies = this.companyDataStore;
-    this.totalPages = Math.ceil(this.companyDataStore.length / this.itemsPerPage);
-    this.updatePaginationRange();
-    this.updatePaginatedCompanies();
+    await this.getAllCompanies().subscribe((data) => {
+      this.filteredCompanies = this.companyDataStore;
+      this.sortCompaniesByType();
+      this.totalPages = Math.ceil(this.companyDataStore?.length / this.itemsPerPage);
+      this.updatePaginationRange();
+      this.updatePaginatedCompanies();
+      this.prefetchJobCounts();
+    });
   }
 
   ngAfterViewInit() {
@@ -43,11 +58,30 @@ export class CompaniesComponent implements OnInit, AfterViewInit{
     });
   }
 
+  getAllCompanies(): Observable<any> {
+    this.loading = true;
+    return this.companyService.fetchCompanies().pipe(
+      tap(data => {
+        this.companyDataStore = data;
+        this.loading = false;
+      })
+    )
+  }
+
+  sortCompaniesByType(): void {
+    this.filteredCompanies?.sort((a, b) => {
+      const order: any = { '4': 1, '3': 2, '2': 3 };
+
+      // Sort by the defined order (premium first, then pro, then free)
+      return order[a.companyLevel] - order[b.companyLevel];
+    });
+  }
+
   filterCompanies(): void {
     // Filter companies based on both inputs (title and location)
     this.filteredCompanies = this.companyDataStore.filter((data: any) => {
-      const titleMatch = this.targetInput1 ? data.name.toLowerCase().includes(this.targetInput1.toLowerCase()) : true;
-      const locationMatch = this.targetInput2 ? data.location.toLowerCase().includes(this.targetInput2.toLowerCase()) : true;
+      const titleMatch = this.targetInput1 ? data.name?.toLowerCase().includes(this.targetInput1.toLowerCase()) : true;
+      const locationMatch = this.targetInput2 ? data.location?.toLowerCase().includes(this.targetInput2.toLowerCase()) : true;
       return titleMatch && locationMatch;
     });
 
@@ -56,6 +90,20 @@ export class CompaniesComponent implements OnInit, AfterViewInit{
     this.totalPages = Math.ceil(this.filteredCompanies.length / this.itemsPerPage);
     this.updatePaginationRange();
     this.updatePaginatedCompanies();
+  }
+
+  // Cache job count to prevent repeated API calls
+  prefetchJobCounts() {
+    // Loop through all companies and fetch the job counts once
+    this.filteredCompanies?.forEach(company => {
+      this.companyService.fetchPostedJobsById(company.id).subscribe(data => {
+        this.jobCounts[company.id] = data[0]?.postedJobs.length || 0; // Default to 0 if no jobs found
+      });
+    });
+  }
+
+  getJobCount(companyId: string): number {
+    return this.jobCounts[companyId] ?? 0; // Return 0 if the count is not yet available
   }
 
   handleCompanySearch(data: any): void {
@@ -71,7 +119,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit{
   updatePaginatedCompanies() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedCompanies = this.filteredCompanies.slice(startIndex, endIndex);
+    this.paginatedCompanies = this.filteredCompanies?.slice(startIndex, endIndex);
   }
 
   changePage(page: number) {

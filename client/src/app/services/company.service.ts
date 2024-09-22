@@ -26,7 +26,7 @@ export class CompanyService {
     });
 
     if (!this.companiesCacheInitialized) {
-      this.http.get<any>(`${this.baseUrl}/company/getAll`, {headers}).subscribe(data => {
+      this.http.get<any>(`${this.baseUrl}/company/all`, {headers}).subscribe(data => {
         this.companiesSubject.next(data);
         this.companiesCacheInitialized = true; // Cache is initialized after the first fetch
       });
@@ -196,6 +196,21 @@ export class CompanyService {
       tap((data) => {
         this.clearCache(); // Invalidate the cache
         this.fetchFullCompany(jobPost.companyId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    )
+  }
+
+  fetchPostedJobsById(id: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.get(`${this.baseUrl}/cmp_posted_jobs/getByCompanyId/${id}`, {headers}).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullCompany(id); // Refresh the cache after updating
       }),
       catchError((error) => {
         return throwError(error); // Re-throw the error so that the component can handle it
