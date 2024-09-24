@@ -75,6 +75,14 @@
               <input type="file" accept="image/*" class="form-control" id="logo" (change)="uploadFile($event, 'portal/companies/' + companyId + '/logo', 'logo')">
             </div>
           </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="companyType">Company Type *</label>
+              <select id="companyType" [(ngModel)]="selectedCompanyType" [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let c of companyTypes" [value]="c.name">{{c.name}}</option>
+              </select>
+            </div>
+          </div>
           <div class="col-12">
             <div class="form-group">
               <label for="bio">Bio Status</label>

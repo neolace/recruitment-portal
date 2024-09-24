@@ -33,4 +33,5 @@ export interface CompanyModel {
   marketingNotifications?: any;
   profileCompleted?: any;
   profileStatus?: any;
+  companyType?: any;
 }

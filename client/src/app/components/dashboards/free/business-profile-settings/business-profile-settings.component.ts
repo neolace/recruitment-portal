@@ -25,6 +25,16 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit, 
 
   downloadURL?: any;
 
+  selectedCompanyType: any = 'IT';
+  companyTypes: any[] = [
+    {name: 'IT'},
+    {name: 'Education'},
+    {name: 'Health'},
+    {name: 'Retail'},
+    {name: 'Manufacturing'},
+    {name: 'Other'}
+  ];
+
   loading: boolean = false;
 
   serverError: boolean = false;
@@ -39,6 +49,7 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit, 
     founder: new FormControl(''),
     noe: new FormControl(''),
     hq: new FormControl('', [Validators.required]),
+    companyType: new FormControl('IT', [Validators.required]),
     bio: new FormControl(''),
     story: new FormControl('')
   })
@@ -283,6 +294,7 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit, 
       founderName: this.visualDetailsForm.get('founder')?.value,
       numberOfEmployees: this.visualDetailsForm.get('noe')?.value,
       location: this.visualDetailsForm.get('hq')?.value,
+      companyType: this.selectedCompanyType,
       shortDescription: this.visualDetailsForm.get('bio')?.value,
       companyStory: this.visualDetailsForm.get('story')?.value,
     }).subscribe((data) => {

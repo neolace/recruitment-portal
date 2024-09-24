@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v2/company")
@@ -26,6 +27,11 @@ public class CompanyController {
     @GetMapping("/get/{id}")
     public CompanyModel getCompany(@PathVariable String id) {
         return companyService.getCompany(id);
+    }
+
+    @GetMapping("/getByType/{type}")
+    public Optional<List<CompanyModel>> getCompanyByType(@PathVariable String type) {
+        return companyService.getCompanyByType(type);
     }
 
     @PostMapping("/add")

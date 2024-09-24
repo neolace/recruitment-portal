@@ -116,3 +116,37 @@
     }
   }
 }
+
+.popular-companies{
+  .card-bottom{
+    padding: 20px 15px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .card-bottom-left, .card-bottom-right{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      color: var(--color-text-300);
+
+      i{
+        font-size: 18px;
+        margin-right: 5px;
+      }
+    }
+
+    .card-bottom-right{
+      justify-content: flex-end;
+    }
+
+    .card-bottom-left{
+      justify-content: flex-start;
+      i{
+        color: #3b82f6;
+      }
+    }
+  }
+}
