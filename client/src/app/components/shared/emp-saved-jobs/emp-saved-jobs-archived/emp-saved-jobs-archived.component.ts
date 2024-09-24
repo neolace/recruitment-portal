@@ -51,11 +51,14 @@ export class EmpSavedJobsArchivedComponent implements AfterViewInit{
 
   getAllJobs() {
     this.companyService.fetchAllPostedJobs().subscribe((data) => {
-      data.forEach((job: any) => {
-        job.postedJobs.forEach((j: any) => {
-          this.jobAdDataStore.push(j);
-        })
-      })
+      data.forEach((company: any) => {
+        company.postedJobs.forEach((job: any) => {
+          job.companyName = company.companyName;
+          job.companyLogo = company.companyLogo;
+          job.companyLevel = company.companyLevel;
+          this.jobAdDataStore.push(job);
+        });
+      });
     }, (error: any) => {
       this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
     })

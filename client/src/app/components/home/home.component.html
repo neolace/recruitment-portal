@@ -140,20 +140,20 @@
   <div class="container popular-jobs">
     <div class="container">
       <div class="row">
-        <div class="col-12 col-md-6 mb-4" *ngFor="let p of jobAdDataStrore | truncateComments: 4; let i = index">
+        <div class="col-12 col-md-6 mb-4" *ngFor="let p of filterJobsAds() | truncateComments: 4; let i = index">
           <div class="card-1">
             <div class="card-top">
               <div class="card-top-left d-flex align-items-center">
                 <div class="logo-icon-wrapper">
                   <div class="logo-icon">
                     <img
-                      src="{{p.companyLogo}}"
-                      alt="{{p.companyName}}">
+                      src="{{p?.companyLogo ? p?.companyLogo : './assets/imgs/shared/default_org_logo.svg'}}"
+                      alt="{{p?.companyName ? p?.companyName : 'N/A'}}">
                   </div>
                 </div>
                 <div class="d-flex flex-column align-items-start justify-content-between">
-                  <div class="company-name">{{p.companyName}}</div>
-                  <div class="opens-ago">{{p.datePosted | timeAgo}}</div>
+                  <div class="company-name">{{p?.companyName ? p?.companyName : 'N/A'}}</div>
+                  <div class="opens-ago">{{p?.datePosted ? p?.datePosted : 'N/A' | timeAgo}}</div>
                 </div>
               </div>
               <div class="card-top-right">
@@ -166,24 +166,24 @@
             <div class="card-content">
               <div class="card-content-left">
                 <div class="d-flex flex-column align-items-start">
-                  <div class="job-title" routerLink="/job-details/{{p.id}}">{{p.title}}</div>
-                  <div class="open-positions">Total Openings: {{p.totalOpenings}}</div>
+                  <div class="job-title" routerLink="/job-details/{{p.id}}">{{p?.title ? p?.title : 'N/A'}}</div>
+                  <div class="open-positions">Total Openings: {{p?.totalOpenings ? p?.totalOpenings : 'N/A'}}</div>
                 </div>
               </div>
               <div class="card-content-right">
-                <div class="salary-range"><i class="fa fa-usd" aria-hidden="true"></i> ${{p.minSalary}} - ${{p.maxSalary}}</div>
+                <div class="salary-range"><i class="fa fa-usd" aria-hidden="true"></i> ${{p?.minSalary ? p?.minSalary : 'N/A'}} - ${{p?.maxSalary ? p?.maxSalary : 'N/A'}}</div>
               </div>
             </div>
             <hr>
             <div class="card-bottom">
-              <div *ngIf="p.companyLevel != '1'"></div>
-              <div class="card-bottom-left" *ngIf="p.companyLevel == '1'">
+              <div *ngIf="p?.companyLevel != '3' && p?.companyLevel != '4'"></div>
+              <div class="card-bottom-left" *ngIf="p?.companyLevel == '3' || p?.companyLevel == '4'">
                 <i class="material-icons">verified</i>
                 <span>Verified</span>
               </div>
               <div class="card-bottom-right">
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                <span>{{p.location}}</span>
+                <span>{{p?.location ? p?.location : 'N/A'}}</span>
               </div>
             </div>
           </div>
@@ -271,32 +271,32 @@
 
   <div class="popular-companies">
     <div class="row">
-      <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 pt-4" *ngFor="let c of companyDataStore | truncateComments: 4; let i = index">
+      <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 pt-4" *ngFor="let c of filteredCompanies | truncateComments: 4; let i = index">
         <div class="card-2">
           <div class="card-top">
             <div class="logo-icon-wrapper">
               <div class="logo-icon">
                 <img
-                  [src]="c.logo"
-                  alt="{{c.name}}">
+                  [src]="c?.logo ? c.logo : './assets/imgs/shared/default_org_logo.svg'"
+                  alt="{{c?.name ? c.name : 'Company Logo'}}">
               </div>
             </div>
           </div>
 
           <div class="card-content">
             <div class="d-flex flex-column align-items-start">
-              <div class="company-name" routerLink="/business-profile/{{c.id}}">{{c.name}}</div>
-              <div class="company-description">{{c.shortDescription}}</div>
+              <div class="company-name" routerLink="/business-profile/{{c?.id}}">{{c?.name ? c?.name : 'Company Name'}}</div>
+              <div class="company-description">{{c?.shortDescription ? c?.shortDescription : c?.companyStory | truncate : 50}}</div>
             </div>
           </div>
           <hr>
           <div class="card-bottom">
             <div class="card-bottom-right">
               <i class="fa fa-map-marker" aria-hidden="true"></i>
-              <span>{{c.location}}</span>
+              <span>{{c?.location ? c.location : 'N/A'}}</span>
             </div>
             <div class="card-bottom-left">
-              <div class="open-jobs">{{c.postedJobs.length > 0 ? c.postedJobs.length : 0}} Jobs</div>
+              <div class="open-jobs">{{ getJobCount(c.id) }} Jobs</div>
             </div>
           </div>
         </div>
