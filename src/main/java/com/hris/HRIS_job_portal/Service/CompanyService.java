@@ -29,6 +29,10 @@ public class CompanyService {
         return companyRepository.findById(id).orElse(null);
     }
 
+    public Optional<List<CompanyModel>> getCompanyByType(String type) {
+        return companyRepository.findAllByCompanyType(type);
+    }
+
     public CompanyModel addCompany(CompanyModel company) {
         return companyRepository.save(company);
     }
@@ -149,6 +153,7 @@ public class CompanyService {
             existingCompany.setMarketingNotifications(company.getMarketingNotifications());
             existingCompany.setProfileCompleted(company.getProfileCompleted());
             existingCompany.setProfileStatus(company.getProfileStatus());
+            existingCompany.setCompanyType(company.getCompanyType());
 
             Map<String, Boolean> profileCompleted = (Map<String, Boolean>) existingCompany.getProfileCompleted();
             if (profileCompleted == null) {

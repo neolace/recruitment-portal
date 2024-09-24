@@ -41,4 +41,5 @@ public class CompanyModel {
     private Object marketingNotifications;
     private Object profileCompleted;
     private String profileStatus;
+    private String companyType;
 }

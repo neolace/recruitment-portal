@@ -17,6 +17,8 @@ export class BusinessProfileComponent implements OnInit, AfterViewInit{
   postedJobsDataStore: any[] = [];
   filteredPostedJobsDataStore: any[] = [];
   companyId: any;
+  companyType: any;
+  relatedCompanies: any;
 
   loading: boolean = false;
 
@@ -40,9 +42,11 @@ export class BusinessProfileComponent implements OnInit, AfterViewInit{
     this.loading = true;
     this.companyService.fetchFullCompany(id).subscribe(
       (data) => {
+        this.companyType = data?.company?.companyType
         this.companyDataStore = [data.company];
         this.postedJobsDataStore = [data.postedJobs];
         this.socialsDataStore = [data.socials];
+        this.getCompaniesByType(this.companyType);
         this.loading = false;
       },
       (error: HttpErrorResponse) => {
@@ -61,6 +65,16 @@ export class BusinessProfileComponent implements OnInit, AfterViewInit{
         this.loading = false;
       }
     )
+  }
+
+  getCompaniesByType(companyType: any) {
+    if (this.companyType) {
+      this.companyService.getCompaniesByType(companyType).subscribe((data) => {
+        this.relatedCompanies = data;
+      }, (error) => {
+        console.log(error)
+      })
+    }
   }
 
   ngAfterViewInit() {

@@ -41,6 +41,13 @@ export class CompanyService {
     return this.http.get<any>(`${this.baseUrl}/company/get/${id}`, {headers});
   }
 
+  getCompaniesByType(type: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.get<any>(`${this.baseUrl}/company/getByType/${type}`, {headers});
+  }
+
   fetchFullCompany(id: any): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:password')
