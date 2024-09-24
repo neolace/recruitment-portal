@@ -1,11 +1,12 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
-import {jobAdDataStrore} from "../../shared/data-store/JobAd-data-strore";
-import {companyDataStore} from "../../shared/data-store/company-data-store";
 import {ValueIncrementService} from "../../services/value-increment.service";
 import {EmployeeService} from "../../services/employee.service";
 import {AuthService} from "../../services/auth.service";
 import {ToastrService} from "ngx-toastr";
+import {Observable, tap} from "rxjs";
+import {CompanyService} from "../../services/company.service";
+import {AlertsService} from "../../services/alerts.service";
 
 @Component({
   selector: 'app-home',
@@ -15,9 +16,12 @@ import {ToastrService} from "ngx-toastr";
 export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('achievementsSection') achievementsSection!: ElementRef;
 
-  jobAdDataStrore: any = jobAdDataStrore;
+  companyDataStore: any;
+  filteredCompanies: any[] = [];
+  jobCounts: { [key: string]: number } = {};
 
-  companyDataStore: any = companyDataStore;
+  jobAdDataStore: any[] = [];
+  filteredJobs: any[] = [];
 
   jobSearch: string = '';
   locationSearch: string = '';
@@ -39,15 +43,33 @@ export class HomeComponent implements OnInit, AfterViewInit {
   employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
   userSavedIds: any[] = [];
 
+  loading: boolean = false;
+  serverError: boolean = false;
+  notFound: boolean = false;
+  forbidden: boolean = false;
+  corsError: boolean = false;
+  unexpectedError: boolean = false;
+
   constructor(private router: Router,
               private valueIncrementService: ValueIncrementService,
               private employeeService: EmployeeService,
+              private companyService: CompanyService,
               private cookieService: AuthService,
-              private toastr: ToastrService ) { }
+              private alertService: AlertsService,
+              private toastr: ToastrService) {
+  }
 
-  ngOnInit() {
+  async ngOnInit(): Promise<any> {
     this.employeeId = this.cookieService.userID();
-    this.getEmployee(this.employeeId);
+    await this.getEmployee(this.employeeId).subscribe((data) => {
+
+    });
+    await this.getAllCompanies().subscribe((data) => {
+      this.filteredCompanies = this.companyDataStore;
+      this.sortCompaniesByType();
+      this.prefetchJobCounts();
+      this.getAllJobs();
+    });
   }
 
   ngAfterViewInit() {
@@ -58,16 +80,74 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getEmployee(id: any) {
-    this.employeeService.fetchFullEmployee(id).subscribe(
-      (data) => {
+  getEmployee(id: any): Observable<any> {
+    return this.employeeService.fetchFullEmployee(id).pipe(
+      tap((data) => {
         this.employee = data;
         this.userSavedIds = this.employee.employee.savedJobs.map((job: any) => job.jobId);
-      },
-      (error: any) => {
-        this.warningMessage('Please Login First to Apply Jobs', 'Reminder');
-      }
-    );
+      })
+    )
+  }
+
+  getAllJobs() {
+    this.companyService.fetchAllPostedJobs().subscribe((data) => {
+      data.forEach((company: any) => {
+        company.postedJobs.forEach((job: any) => {
+          // Add company details to each job
+          job.companyName = company.companyName;
+          job.companyLogo = company.companyLogo;
+          job.companyLevel = company.companyLevel;
+          this.jobAdDataStore.push(job);
+        });
+      });
+    });
+  }
+
+  filterJobsAds(): any[] {
+    this.filteredJobs = this.jobAdDataStore.filter((job: any) => job.title !== null);
+    this.sortJobsByType();
+    return this.filteredJobs;
+  }
+
+  sortJobsByType(): void {
+    this.filteredJobs?.sort((a, b) => {
+      const order: any = {'4': 1, '3': 2, '2': 3};
+
+      // Sort by the defined order (premium first, then pro, then free)
+      return order[a.companyLevel] - order[b.companyLevel];
+    });
+  }
+
+  getAllCompanies(): Observable<any> {
+    this.loading = true;
+    return this.companyService.fetchCompanies().pipe(
+      tap(data => {
+        this.companyDataStore = data;
+        this.loading = false;
+      })
+    )
+  }
+
+  sortCompaniesByType(): void {
+    this.filteredCompanies?.sort((a, b) => {
+      const order: any = {'4': 1, '3': 2, '2': 3};
+
+      // Sort by the defined order (premium first, then pro, then free)
+      return order[a.companyLevel] - order[b.companyLevel];
+    });
+  }
+
+  prefetchJobCounts() {
+    // Loop through all companies and fetch the job counts once
+    this.filteredCompanies?.forEach(company => {
+      this.companyService.fetchPostedJobsById(company.id).subscribe(data => {
+        this.jobCounts[company.id] = data[0]?.postedJobs.length || 0; // Default to 0 if no jobs found
+      });
+    });
+  }
+
+  getJobCount(companyId: string): number {
+    return this.jobCounts[companyId] ?? 0; // Return 0 if the count is not yet available
   }
 
   setupIntersectionObserver() {
@@ -82,7 +162,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.2 });
+    }, {threshold: 0.2});
 
     // Start observing the achievements section
     if (this.achievementsSection) {
@@ -110,11 +190,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
   }
 
-  filterJobs():any[] {
-    this.webDeveloperJobs = this.jobAdDataStrore.filter((item:any) => item.title.toLowerCase().trim() === 'web developer').length;
-    this.graphicDesignerJobs = this.jobAdDataStrore.filter((item:any) => item.title.toLowerCase().trim() === 'graphic designer').length;
-    this.dataEntryOperatorJobs = this.jobAdDataStrore.filter((item:any) => item.title.toLowerCase().trim() === 'data entry operator').length;
-    this.businessDevelopmentJobs = this.jobAdDataStrore.filter((item:any) => item.title.toLowerCase().trim() === 'business development').length;
+  filterJobs(): any[] {
+    this.webDeveloperJobs = this.jobAdDataStore?.filter((item: any) => item.title?.toLowerCase().trim() === 'web developer').length;
+    this.graphicDesignerJobs = this.jobAdDataStore?.filter((item: any) => item.title?.toLowerCase().trim() === 'graphic designer').length;
+    this.dataEntryOperatorJobs = this.jobAdDataStore?.filter((item: any) => item.title?.toLowerCase().trim() === 'data entry operator').length;
+    this.businessDevelopmentJobs = this.jobAdDataStore?.filter((item: any) => item.title?.toLowerCase().trim() === 'business development').length;
 
     return [
       {
