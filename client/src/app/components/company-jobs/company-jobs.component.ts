@@ -1,6 +1,11 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {jobAdDataStrore} from "../../shared/data-store/JobAd-data-strore";
+import {HttpErrorResponse} from "@angular/common/http";
+import {CompanyService} from "../../services/company.service";
+import {EmployeeService} from "../../services/employee.service";
+import {AlertsService} from "../../services/alerts.service";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-company-jobs',
@@ -9,15 +14,33 @@ import {jobAdDataStrore} from "../../shared/data-store/JobAd-data-strore";
 })
 export class CompanyJobsComponent implements OnInit, AfterViewInit{
 
-  jobsDataStore: any = jobAdDataStrore;
-  filteredJobs :any[] = [];
   companyId: any;
+  company: any;
+  postedJobs: any;
 
-  constructor(private router: Router) { }
+  employee: any;
+  employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
+  userSavedIds: any[] = [];
+
+  loading: boolean = false;
+
+  serverError: boolean = false;
+  notFound: boolean = false;
+  forbidden: boolean = false;
+  corsError: boolean = false;
+  unexpectedError: boolean = false;
+
+  constructor(private router: Router,
+              private companyService: CompanyService,
+              private employeeService: EmployeeService,
+              private alertService: AlertsService,
+              private cookieService: AuthService) { }
 
   ngOnInit() {
+    this.employeeId = this.cookieService.userID();
     this.companyId = this.router.url.split('/')[2];
-    this.filterJobs();
+    this.getCompany(this.companyId)
+    this.getEmployee(this.employeeId);
   }
 
   ngAfterViewInit() {
@@ -27,12 +50,76 @@ export class CompanyJobsComponent implements OnInit, AfterViewInit{
     });
   }
 
-  filterJobs(): any[] {
-    this.filteredJobs = this.jobsDataStore.filter((job:any) => job.companyId === this.companyId);
-    return this.filteredJobs;
+  getCompany(id: any) {
+    this.loading = true;
+    this.companyService.fetchFullCompany(id).subscribe(
+      (data) => {
+        this.company = data;
+        this.postedJobs = data?.postedJobs[0];
+        this.loading = false;
+      },
+      (error: HttpErrorResponse) => {
+        // Check for different error types
+        if (error.status === 404) {
+          this.notFound = true;
+        } else if (error.status === 500) {
+          this.serverError = true;
+        } else if (error.status === 0) {
+          this.corsError = true;
+        } else if (error.status === 403) {
+          this.forbidden = true;
+        } else {
+          this.unexpectedError = true;
+        }
+        this.loading = false;
+      }
+    )
+  }
+
+  getEmployee(id: any) {
+    this.employeeService.fetchFullEmployee(id).subscribe(
+      (data) => {
+        this.employee = data;
+        this.userSavedIds = this.employee?.employee?.savedJobs?.map((job: any) => job.jobId);
+      },
+      (error: any) => {
+        this.alertService.warningMessage('Please Login First to Apply Jobs', 'Reminder');
+      }
+    );
   }
 
   moveToRegister() {
     this.router.navigate(['/register'], {queryParams: {from: 'companies'}});
+  }
+
+  saveFav(id: string) {
+    if (this.employeeId == null) {
+      this.alertService.warningMessage('Please Login First to Save Jobs', 'Reminder');
+      return;
+    }
+    this.employeeService.saveFavJobs(this.employeeId, {
+      jobId: id,
+      status: 'saved'
+    }).subscribe((data) => {
+      this.getEmployee(this.employeeId);
+      this.getCompany(this.companyId);
+      this.alertService.successMessage('Job Saved Successfully', 'Success');
+    }, (error: any) => {
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  removeFav(id: string) {
+    if (this.employeeId == null) {
+      this.alertService.warningMessage('Please Login First to Save Jobs', 'Reminder');
+      return;
+    }
+    this.employeeService.removeFavJobs(this.employeeId, id).subscribe((data) => {
+      this.getEmployee(this.employeeId);
+      this.getCompany(this.companyId);
+      this.alertService.successMessage('Job Removed Successfully', 'Success');
+    }, (error: any) => {
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
   }
 }

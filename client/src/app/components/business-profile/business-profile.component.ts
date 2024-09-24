@@ -47,6 +47,7 @@ export class BusinessProfileComponent implements OnInit, AfterViewInit{
         this.postedJobsDataStore = [data.postedJobs];
         this.socialsDataStore = [data.socials];
         this.getCompaniesByType(this.companyType);
+        this.sortCompaniesByType();
         this.loading = false;
       },
       (error: HttpErrorResponse) => {
@@ -75,6 +76,15 @@ export class BusinessProfileComponent implements OnInit, AfterViewInit{
         console.log(error)
       })
     }
+  }
+
+  sortCompaniesByType(): void {
+    this.relatedCompanies?.sort((a: any, b: any) => {
+      const order: any = { '4': 1, '3': 2, '2': 3 };
+
+      // Sort by the defined order (premium first, then pro, then free)
+      return order[a.companyLevel] - order[b.companyLevel];
+    });
   }
 
   ngAfterViewInit() {
