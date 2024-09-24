@@ -154,23 +154,23 @@
       <div class="details-card-1">
         <div class="d-flex align-items-center justify-content-between w-100">
           <div class="caption"><i class="material-icons">emoji_events</i><span>Founded:</span></div>
-          <div class="value">{{c.foundedDate}}</div>
+          <div class="value">{{c?.foundedDate ? c?.foundedDate : 'N/A'}}</div>
         </div>
         <div class="d-flex align-items-center justify-content-between w-100">
           <div class="caption"><i class="material-icons">admin_panel_settings</i><span>Founder:</span></div>
-          <div class="value">{{c.founderName}}</div>
+          <div class="value">{{c?.founderName ? c?.founderName : 'N/A'}}</div>
         </div>
         <div class="d-flex align-items-center justify-content-between w-100">
           <div class="caption"><i class="material-icons">business</i><span>Head Quarters:</span></div>
-          <div class="value">{{c.headquarters}}</div>
+          <div class="value">{{c?.headquarters ? c?.headquarters : 'N/A'}}</div>
         </div>
         <div class="d-flex align-items-center justify-content-between w-100">
           <div class="caption"><i class="material-icons">manage_accounts</i><span>Number of Employees:</span></div>
-          <div class="value">{{c.numberOfEmployees}}</div>
+          <div class="value">{{c?.numberOfEmployees ? c?.numberOfEmployees : 'N/A'}}</div>
         </div>
         <div class="d-flex align-items-center justify-content-between w-100">
           <div class="caption"><i class="material-icons">language</i><span>Website:</span></div>
-          <div class="value">{{c.website}}</div>
+          <div class="value"><a [href]="c?.company?.website ? c?.company?.website : '/#/'">{{c?.company?.website ? c?.company?.website : 'N/A'}}</a></div>
         </div>
 
         <div class="d-flex align-items-center justify-content-between w-100" *ngIf="filterSocialsData().length > 0">

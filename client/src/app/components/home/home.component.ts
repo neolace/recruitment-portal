@@ -145,6 +145,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   saveFav(id: string) {
+    if (this.employeeId == null) {
+      this.warningMessage('Please Login First to Save Jobs', 'Reminder');
+      return;
+    }
     this.employeeService.saveFavJobs(this.employeeId, {
       jobId: id,
       status: 'saved'
@@ -157,6 +161,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   removeFav(id: string) {
+    if (this.employeeId == null) {
+      this.warningMessage('Please Login First to Save Jobs', 'Reminder');
+      return;
+    }
     this.employeeService.removeFavJobs(this.employeeId, id).subscribe((data) => {
       this.getEmployee(this.employeeId);
       this.successMessage('Job Removed Successfully', 'Success');
