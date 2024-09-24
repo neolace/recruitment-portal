@@ -16,9 +16,12 @@ export class CompanyService {
   company$ = this.companySubject.asObservable();
   private companiesSubject = new BehaviorSubject<any>(null);
   companies$ = this.companiesSubject.asObservable();
+  private postedJobsSubject = new BehaviorSubject<any>(null);
+  postedJobs$ = this.postedJobsSubject.asObservable();
 
   cacheInitialized = false;
   companiesCacheInitialized = false;
+  postedJobsCacheInitialized = false;
 
   fetchCompanies(): Observable<any>|any {
     const headers = new HttpHeaders({
@@ -225,9 +228,32 @@ export class CompanyService {
     )
   }
 
+  fetchAllPostedJobs(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    if (this.postedJobsCacheInitialized) {
+      return this.postedJobs$; // Return the cached data as observable
+    }
+    return this.http.get(`${this.baseUrl}/cmp_posted_jobs/getAll`, {headers}).pipe(
+      tap((data) => {
+        this.postedJobsSubject.next(data); // Cache main data
+        this.postedJobsCacheInitialized = true; // Cache is initialized after the first fetch
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    );
+  }
+
   private clearCache() {
     this.cacheInitialized = false;
     this.companySubject.next(null);
+  }
+
+  private clearPostedJobsCache() {
+    this.postedJobsCacheInitialized = false;
+    this.postedJobsSubject.next(null);
   }
 
   clearCompaniesCache() {

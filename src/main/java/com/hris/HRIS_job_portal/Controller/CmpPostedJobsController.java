@@ -19,6 +19,11 @@ public class CmpPostedJobsController {
         return cmpPostedJobsService.getCmpPostedJobsByCompanyId(companyId);
     }
 
+    @GetMapping("/getAll")
+    public List<CmpPostedJobsModel> getAllCmpPostedJobs() {
+        return cmpPostedJobsService.getAllCmpPostedJobs();
+    }
+
     @PostMapping("/add")
     public CmpPostedJobsModel addCmpPostedJobs(@RequestBody CmpPostedJobsModel cmpPostedJobs) {
         return cmpPostedJobsService.addCmpPostedJobs(cmpPostedJobs);
