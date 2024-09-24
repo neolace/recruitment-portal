@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {jobAdDataStrore} from "../../../shared/data-store/JobAd-data-strore";
 import {Router} from "@angular/router";
 import {ValueIncrementService} from "../../../services/value-increment.service";
 import {EmployeeService} from "../../../services/employee.service";
 import {AuthService} from "../../../services/auth.service";
 import {ToastrService} from "ngx-toastr";
+import {CompanyService} from "../../../services/company.service";
 
 
 @Component({
@@ -14,9 +14,12 @@ import {ToastrService} from "ngx-toastr";
 })
 export class JobDetailsComponent implements OnInit, AfterViewInit{
 
-  jobDataStore: any = jobAdDataStrore;
+  jobDataStore: any[] = [];
+  filteredJobs: any[] = [];
   filteredJobDataStore: any[] = [];
   jobPostId: any;
+  jobPostTitle: any;
+  companyName: any;
 
   employee: any;
   employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
@@ -25,6 +28,7 @@ export class JobDetailsComponent implements OnInit, AfterViewInit{
   constructor(private router: Router,
               private valueIncrementService: ValueIncrementService,
               private employeeService: EmployeeService,
+              private companyService: CompanyService,
               private cookieService: AuthService,
               private toastr: ToastrService ) { }
 
@@ -33,6 +37,7 @@ export class JobDetailsComponent implements OnInit, AfterViewInit{
     this.employeeId = this.cookieService.userID();
     this.filterJobData();
     this.getEmployee(this.employeeId);
+    this.getAllJobs();
   }
 
   ngAfterViewInit() {
@@ -54,8 +59,42 @@ export class JobDetailsComponent implements OnInit, AfterViewInit{
     );
   }
 
+  getAllJobs() {
+    this.companyService.fetchAllPostedJobs().subscribe((data) => {
+      data.forEach((company: any) => {
+        company.postedJobs.forEach((job: any) => {
+          // Add company details to each job
+          job.companyName = company.companyName;
+          job.companyLogo = company.companyLogo;
+          job.companyLevel = company.companyLevel;
+          this.jobDataStore.push(job);
+        });
+      });
+    });
+  }
+
+  filterJobsAds(): any[] {
+    this.filteredJobs = this.jobDataStore.filter((job: any) => job.title !== null && job.title === this.jobPostTitle && job.id !== this.jobPostId);
+    if (this.filteredJobs.length === 0) {
+      this.filteredJobs = this.jobDataStore.filter((job: any) => job.companyName === this.companyName);
+    }
+    this.sortJobsByType();
+    return this.filteredJobs;
+  }
+
+  sortJobsByType(): void {
+    this.filteredJobs?.sort((a, b) => {
+      const order: any = {'4': 1, '3': 2, '2': 3};
+
+      // Sort by the defined order (premium first, then pro, then free)
+      return order[a.companyLevel] - order[b.companyLevel];
+    });
+  }
+
   filterJobData(): any[] {
     this.filteredJobDataStore = this.jobDataStore.filter((job: any) => job.id === this.jobPostId);
+    this.jobPostTitle = this.filteredJobDataStore[0]?.title;
+    this.companyName = this.filteredJobDataStore[0]?.companyName;
     return this.filteredJobDataStore;
   }
 

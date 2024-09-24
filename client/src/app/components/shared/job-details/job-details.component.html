@@ -84,13 +84,6 @@
           <div class="title-1 mb-2">Job Description:</div>
           <p *ngFor="let d of j.description.split('\n')">{{d}}</p>
 
-          <div *ngIf="j.responsibilities">
-            <div class="title-1 mb-2">Responsibilities and Duties:</div>
-            <ul *ngFor="let r of j.responsibilities.split('\n')">
-              <li>{{r}}</li>
-            </ul>
-          </div>
-
           <div *ngIf="j.requirements">
             <div class="title-1 mb-2">Requirements:</div>
             <ul *ngFor="let re of j.requirements.split('\n')">
@@ -104,15 +97,33 @@
             </ul>
           </div>
           <div *ngIf="j.education">
-            <div class="title-1 mb-2">Required Qualifications:</div>
+            <div class="title-1 mb-2">Required Educational Qualifications:</div>
             <ul *ngFor="let ed of j.education.split('\n')">
               <li>{{ed}}</li>
+            </ul>
+          </div>
+          <div *ngIf="j.qualifications">
+            <div class="title-1 mb-2">Required Additional Qualifications:</div>
+            <ul *ngFor="let q of j.qualifications.split('\n')">
+              <li>{{q}}</li>
             </ul>
           </div>
           <div *ngIf="j.skills">
             <div class="title-1 mb-2">Skills:</div>
             <ul *ngFor="let sk of j.skills.split('\n')">
               <li>{{sk}}</li>
+            </ul>
+          </div>
+          <div *ngIf="j.responsibilities">
+            <div class="title-1 mb-2">Responsibilities and Duties:</div>
+            <ul *ngFor="let r of j.responsibilities.split('\n')">
+              <li>{{r}}</li>
+            </ul>
+          </div>
+          <div *ngIf="j.offer">
+            <div class="title-1 mb-2">What You Will Get:</div>
+            <ul *ngFor="let o of j.offer.split('\n')">
+              <li>{{o}}</li>
             </ul>
           </div>
 
@@ -131,7 +142,7 @@
   <div class="container popular-jobs">
     <div class="container">
       <div class="row">
-        <div class="col-12 col-md-6 mb-4" *ngFor="let p of jobDataStore | truncateComments: 2; let i = index">
+        <div class="col-12 col-md-6 mb-4" *ngFor="let p of filterJobsAds() | truncateComments: 2; let i = index">
           <div class="card-1">
             <div class="card-top">
               <div class="card-top-left d-flex align-items-center">
