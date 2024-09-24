@@ -24,6 +24,10 @@ public class CmpPostedJobsService {
         return cmpPostedJobsRepository.findByCompanyId(companyId);
     }
 
+    public List<CmpPostedJobsModel> getAllCmpPostedJobs() {
+        return cmpPostedJobsRepository.findAll();
+    }
+
     public CmpPostedJobsModel addCmpPostedJobs(CmpPostedJobsModel cmpPostedJobs) {
         List<CmpPostedJobsModel> cmpPostedJobsList = cmpPostedJobsRepository.findByCompanyId(cmpPostedJobs.getCompanyId());
 

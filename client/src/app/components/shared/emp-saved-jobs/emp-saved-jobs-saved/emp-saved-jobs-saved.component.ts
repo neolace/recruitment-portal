@@ -1,9 +1,9 @@
 import {AfterViewInit, Component} from '@angular/core';
-import {jobAdDataStrore} from "../../../../shared/data-store/JobAd-data-strore";
 import {EmployeeService} from "../../../../services/employee.service";
 import {AuthService} from "../../../../services/auth.service";
 import {Router} from "@angular/router";
 import {AlertsService} from "../../../../services/alerts.service";
+import {CompanyService} from "../../../../services/company.service";
 
 @Component({
   selector: 'app-emp-saved-jobs-saved',
@@ -16,9 +16,10 @@ export class EmpSavedJobsSavedComponent implements AfterViewInit{
   employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
   userSavedIds: any[] = [];
 
-  jobAdDataStore: any[] = jobAdDataStrore; //for test
-  filteredJobs: any[] = []; //for test
+  jobAdDataStore: any[] = [];
+  filteredJobs: any[] = [];
   constructor(private employeeService: EmployeeService,
+              private companyService: CompanyService,
               private cookieService: AuthService,
               private alertService: AlertsService,
               private router: Router ) { }
@@ -33,6 +34,7 @@ export class EmpSavedJobsSavedComponent implements AfterViewInit{
   ngOnInit(): void {
     this.employeeId = this.cookieService.userID();
     this.getEmployee(this.employeeId);
+    this.getAllJobs();
   }
 
   getEmployee(id: any) {
@@ -45,6 +47,18 @@ export class EmpSavedJobsSavedComponent implements AfterViewInit{
         this.alertService.warningMessage('Please Login First to Apply Jobs', 'Reminder');
       }
     );
+  }
+
+  getAllJobs() {
+    this.companyService.fetchAllPostedJobs().subscribe((data) => {
+      data.forEach((job: any) => {
+        job.postedJobs.forEach((j: any) => {
+          this.jobAdDataStore.push(j);
+        })
+      })
+    }, (error: any) => {
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    })
   }
 
   filterJobs():any[] {
