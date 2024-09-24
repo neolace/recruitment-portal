@@ -1,9 +1,10 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import { jobAdDataStrore } from '../../shared/data-store/JobAd-data-strore';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {EmployeeService} from "../../services/employee.service";
 import {AuthService} from "../../services/auth.service";
 import {AlertsService} from "../../services/alerts.service";
+import {CompanyService} from "../../services/company.service";
+import {Observable, tap} from "rxjs";
 
 @Component({
   selector: 'app-job',
@@ -37,25 +38,35 @@ export class JobComponent implements OnInit, AfterViewInit {
   employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
   userSavedIds: any[] = [];
 
+  locationFilter: string = 'Onsite';
+  employmentFilter: string = 'Full time';
+  sortFilter: string = 'Recent';
+
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private employeeService: EmployeeService,
+              private companyService: CompanyService,
               private cookieService: AuthService,
-              private alertService: AlertsService) { }
+              private alertService: AlertsService) {
+  }
 
-  ngOnInit() {
+  async ngOnInit(): Promise<any> {
     this.employeeId = this.cookieService.userID();
-    // Get query parameters from route
-    this.route.queryParams.subscribe(params => {
-      this.jobSearch = params['jobSearch'] || '';
-      this.locationSearch = params['locationSearch'] || '';
+    await this.getAllJobs().subscribe((data) => {
+      // Get query parameters from route
+      this.route.queryParams.subscribe(params => {
+        this.jobSearch = params['jobSearch'] || '';
+        this.locationSearch = params['locationSearch'] || '';
+        this.locationFilter = params['locationFilter'] || this.locationFilter;
+        this.employmentFilter = params['employmentFilter'] || this.employmentFilter;
+        this.sortFilter = params['sortFilter'] || this.sortFilter;
 
-      // Initialize the data and perform filtering based on query params
-      this.jobAdDataStore = jobAdDataStrore;
-      this.filterJobs(); // Apply filtering based on query params
-      this.totalPages = Math.ceil(this.filteredJobAds.length / this.itemsPerPage);
-      this.updatePaginationRange();
-      this.updatePaginatedJobAds();
-    });
+        this.filterJobs(); // Apply filtering based on query params
+        this.totalPages = Math.ceil(this.filteredJobAds.length / this.itemsPerPage);
+        this.updatePaginationRange();
+        this.updatePaginatedJobAds();
+      });
+    })
 
     this.getEmployee(this.employeeId);
   }
@@ -79,25 +90,76 @@ export class JobComponent implements OnInit, AfterViewInit {
     });
   }
 
+  getAllJobs(): Observable<any> {
+    return this.companyService.fetchAllPostedJobs().pipe(
+      tap((data) => {
+        data.forEach((company: any) => {
+          company.postedJobs.forEach((job: any) => {
+            // Add company details to each job
+            job.companyName = company.companyName;
+            job.companyLogo = company.companyLogo;
+            job.companyLevel = company.companyLevel;
+            this.jobAdDataStore.push(job);
+          });
+        });
+      })
+    )
+  }
+
+  sortJobsByType(): void {
+    // Use the sortFilter to determine sorting criteria
+    if (this.sortFilter === 'Recent') {
+      this.paginatedJobAds?.sort((a, b) => new Date(b.postedDate).getTime() - new Date(a.postedDate).getTime());
+    } else if (this.sortFilter === 'Popular') {
+      this.paginatedJobAds?.sort((a, b) => b.popularityScore - a.popularityScore);  // Assuming jobs have a popularityScore field
+    }
+  }
+
   filterJobs(): void {
-    // Filter jobs based on both inputs (title and location)
+    // Filter jobs based on both inputs (title, location, filters)
     this.filteredJobAds = this.jobAdDataStore.filter((data: any) => {
       const titleMatch = this.targetInput1 ? data.title.toLowerCase().includes(this.targetInput1.toLowerCase()) : true;
       const locationMatch = this.targetInput2 ? data.location.toLowerCase().includes(this.targetInput2.toLowerCase()) : true;
       const titleMatchQuery = this.jobSearch ? data.title.toLowerCase().includes(this.jobSearch.toLowerCase()) : true;
       const locationMatchQuery = this.locationSearch ? data.location.toLowerCase().includes(this.locationSearch.toLowerCase()) : true;
-      return titleMatch && locationMatch && titleMatchQuery && locationMatchQuery;
+
+      // Apply the location and employment filters
+      const locationFilterMatch = this.locationFilter ? data.locationType.toLowerCase() === this.locationFilter.toLowerCase() : true;
+      const employmentFilterMatch = this.employmentFilter ? data.employmentType.toLowerCase() === this.employmentFilter.toLowerCase() : true;
+
+      return titleMatch && locationMatch && titleMatchQuery && locationMatchQuery && locationFilterMatch && employmentFilterMatch;
     });
 
     this.isSearchResultNotFound = this.filteredJobAds.length === 0;
+    this.isClearButtonVisible = !!(this.targetInput1 || this.targetInput2 || this.jobSearch || this.locationSearch || this.locationFilter || this.employmentFilter);
 
-    this.isClearButtonVisible = !!(this.targetInput1 || this.targetInput2 || this.jobSearch || this.locationSearch);
-
-    // Update pagination after filtering
     this.totalPages = Math.ceil(this.filteredJobAds.length / this.itemsPerPage);
     this.currentPage = 1; // Reset to first page after filtering
     this.updatePaginationRange();
     this.updatePaginatedJobAds();
+  }
+
+  applyFilters(): void {
+    const queryParams = {
+      jobSearch: this.jobSearch,
+      locationSearch: this.locationSearch,
+      locationFilter: this.locationFilter,
+      employmentFilter: this.employmentFilter,
+      sortFilter: this.sortFilter,
+    };
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    });
+    this.filterJobs();
+  }
+
+  clearFilters(): void {
+    this.locationFilter = 'Onsite'; // Reset to default
+    this.employmentFilter = 'Full time'; // Reset to default
+    this.sortFilter = 'Recent'; // Reset to default
+    this.clearSearch();
   }
 
   handleJobSearch(data: any): void {
@@ -124,6 +186,7 @@ export class JobComponent implements OnInit, AfterViewInit {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedJobAds = this.filteredJobAds.slice(startIndex, endIndex);
+    this.sortJobsByType()
   }
 
   changePage(page: number) {
@@ -145,7 +208,7 @@ export class JobComponent implements OnInit, AfterViewInit {
       this.startPage = this.totalPages - this.pageLimit + 1;
       this.endPage = this.totalPages;
     }
-    this.pages = Array.from({ length: this.endPage - this.startPage + 1 }, (_, i) => i + this.startPage);
+    this.pages = Array.from({length: this.endPage - this.startPage + 1}, (_, i) => i + this.startPage);
   }
 
   focusInput() {

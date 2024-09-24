@@ -231,7 +231,7 @@
             </div>
             <hr>
             <div class="card-bottom">
-              <div *ngIf="rc?.companyLevel != '3' || rc?.companyLevel != '4'"></div>
+              <div *ngIf="rc?.companyLevel != '3' && rc?.companyLevel != '4'"></div>
               <div class="card-bottom-left" *ngIf="rc?.companyLevel == '3' || rc?.companyLevel == '4'">
                 <i class="material-icons">verified</i>
                 <span>Verified</span>

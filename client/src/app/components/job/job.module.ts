@@ -3,6 +3,7 @@ import {JobComponent} from "./job.component";
 import {CommonModule} from "@angular/common";
 import {JobRoutingModule} from "./job-routing.module";
 import {SharedPipesModule} from "../../shared/modules/shared-pipes.module";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import {SharedPipesModule} from "../../shared/modules/shared-pipes.module";
   imports: [
     CommonModule,
     JobRoutingModule,
-    SharedPipesModule
+    SharedPipesModule,
+    FormsModule
   ]
 })
 export class JobModule { }

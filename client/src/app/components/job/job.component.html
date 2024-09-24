@@ -38,12 +38,12 @@
               <div class="card-top-left d-flex align-items-center">
                 <div class="logo-icon-wrapper">
                   <div class="logo-icon">
-                    <img [src]="p.companyLogo" alt="logo">
+                    <img [src]="p.companyLogo ? p.companyLogo : './assets/imgs/shared/default_org_logo.svg'" alt="logo">
                   </div>
                 </div>
                 <div class="d-flex flex-column align-items-start justify-content-between">
-                  <div class="company-name">{{p.companyName}}</div>
-                  <div class="opens-ago">{{p.datePosted | timeAgo}}</div>
+                  <div class="company-name">{{p.companyName ? p.companyName : 'N/A'}}</div>
+                  <div class="opens-ago">{{p.datePosted ? p.datePosted : 'N/A' | timeAgo}}</div>
                 </div>
               </div>
               <div class="card-top-right">
@@ -57,20 +57,20 @@
               <div class="card-content-left">
                 <div class="d-flex flex-column align-items-start">
                   <div class="job-title" routerLink="/job-details/{{p.id}}">{{p.title}}</div>
-                  <div class="open-positions">Total Openings: {{p.totalOpenings}}</div>
+                  <div class="open-positions">Total Openings: {{p.totalOpenings ? p.totalOpenings : 'N/A'}}</div>
                 </div>
               </div>
             </div>
             <hr>
             <div class="card-bottom">
-              <div *ngIf="p.companyLevel != '1'"></div>
-              <div class="card-bottom-left" *ngIf="p.companyLevel == '1'">
+              <div *ngIf="p.companyLevel != '3' && p.companyLevel != '4'"></div>
+              <div class="card-bottom-left" *ngIf="p.companyLevel == '3' || p.companyLevel == '4'">
                 <i class="material-icons">verified</i>
                 <span>Verified</span>
               </div>
               <div class="card-bottom-right">
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                <span>{{p.location}}</span>
+                <span>{{p.location ? p.location : 'N/A'}}</span>
               </div>
             </div>
           </div>
@@ -213,26 +213,26 @@
 
       <div class="container">
         <div class="btn-group" role="group" aria-label="Button group 1">
-          <input type="radio" class="btn-check" name="location" id="remote" autocomplete="off">
+          <input type="radio" class="btn-check" name="location" id="remote" autocomplete="off" [(ngModel)]="locationFilter" value="Remote">
           <label class="btn btn-outline-primary" for="remote">Remote</label>
 
-          <input type="radio" class="btn-check" name="location" id="onsite" autocomplete="off" checked>
+          <input type="radio" class="btn-check" name="location" id="onsite" autocomplete="off" [(ngModel)]="locationFilter" value="Onsite" checked>
           <label class="btn btn-outline-primary" for="onsite">Onsite</label>
 
-          <input type="radio" class="btn-check" name="location" id="hybrid" autocomplete="off">
+          <input type="radio" class="btn-check" name="location" id="hybrid" autocomplete="off" [(ngModel)]="locationFilter" value="Hybrid">
           <label class="btn btn-outline-primary" for="hybrid">Hybrid</label>
         </div>
       </div>
 
       <div class="container">
         <div class="btn-group" role="group" aria-label="Button group 2">
-          <input type="radio" class="btn-check" name="employment" id="fulltime" autocomplete="off" checked>
+          <input type="radio" class="btn-check" name="employment" id="fulltime" autocomplete="off" [(ngModel)]="employmentFilter" value="Full time" checked>
           <label class="btn btn-outline-primary" for="fulltime">Full time</label>
 
-          <input type="radio" class="btn-check" name="employment" id="parttime" autocomplete="off">
+          <input type="radio" class="btn-check" name="employment" id="parttime" autocomplete="off" [(ngModel)]="employmentFilter" value="Part time">
           <label class="btn btn-outline-primary" for="parttime">Part time</label>
 
-          <input type="radio" class="btn-check" name="employment" id="contract" autocomplete="off">
+          <input type="radio" class="btn-check" name="employment" id="contract" autocomplete="off" [(ngModel)]="employmentFilter" value="On contract">
           <label class="btn btn-outline-primary" for="contract">On contract</label>
         </div>
       </div>
@@ -246,18 +246,18 @@
 
       <div class="container">
         <div class="btn-group" role="group" aria-label="Button group 1">
-          <input type="radio" class="btn-check" name="sort" id="recent" autocomplete="off" checked>
+          <input type="radio" class="btn-check" name="sort" id="recent" autocomplete="off" [(ngModel)]="sortFilter" value="Recent" checked>
           <label class="btn btn-outline-primary" for="recent">Recent</label>
 
-          <input type="radio" class="btn-check" name="sort" id="popular" autocomplete="off">
+          <input type="radio" class="btn-check" name="sort" id="popular" autocomplete="off" [(ngModel)]="sortFilter" value="Popular">
           <label class="btn btn-outline-primary" for="popular">Popular</label>
         </div>
       </div>
     </div>
 
     <div class="d-flex align-items-center justify-content-end w-100 my-3">
-      <button class="btn-2 me-2">Clear</button>
-      <button class="btn-1">Apply Filters</button>
+      <button class="btn-2 me-2" (click)="clearFilters()">Clear</button>
+      <button class="btn-1" (click)="applyFilters()">Apply Filters</button>
     </div>
 
     <div class="sub-topic">
