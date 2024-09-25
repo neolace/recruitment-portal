@@ -94,44 +94,47 @@
 
     <div *ngIf="showFooter" class="footer">
       <div class="container">
-        <div class="d-md-flex align-items-center justify-content-between footer-top">
-          <div class="footer-top-left">
+        <div class="row footer-top">
+          <div class="col-12 col-md-4 col-lg-3">
             <div class="logo-lg">
               <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAI0AAAAYCAYAAADH9X5VAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjlFMDkzNEY3QUQxRjExRUQ4QkREQThFQTZFNEQwQTcxIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjlFMDkzNEY4QUQxRjExRUQ4QkREQThFQTZFNEQwQTcxIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6OUUwOTM0RjVBRDFGMTFFRDhCRERBOEVBNkU0RDBBNzEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6OUUwOTM0RjZBRDFGMTFFRDhCRERBOEVBNkU0RDBBNzEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7uuRVeAAAKQklEQVR42uxaC5RVZRX+z713zp0HQzAzkoihKeFM2chDRGYNzZQL8TECGVqQEZCClg9ioYUytlSKshJ8YIKKgGVaYEhJGQEJmU2KPRABl9DQTDCAA4PDPO7ztP97v3Nnz+acM/cOrFZrnD3rW3Oe/zn//3//3t/e5xqWZan8xXephBmWigbCKuaP0o6lurDJhDcJtfYBw/Ipf9RUVlypLJ9f1dwwT5UUfFT1Ws+yQDfv60coJ/g4aaQZ9NdrvaTRVkiYQ/gxoYIwlfCcvChG7kbDxc4klLH9rYT3T2O/dNu3wF1qzCcc6J3ulJ1LuJ/tP0T4e7o3+9K8rgAPKiXcRniaUEf4KcEkfLlTo4ahWsPtavXOGrf2xhDWMgw7zYNSTLiB8BXCNLx/r3XYAIyNjfMyudmLNGcRFhK2gyD/IjxDWE6Bp1Z1hJ6VBD8mKWVZgSy1ikjT0PKBU9tR6ZhO86BExH78fzwpHyfcBMwkfOT/jDSxLuajW6T5NpFiN+EewghCLh17lYRumT+WdSBAYjeJYOK/Lx5YTfqlla6ZlCINCeFDzU1qyfYtH8aVfElycSWgvfKgntS5TqSh4B8wLOPn/mjWIkI+QQFhIsc2IsyNRJxbIYRtuTvKFwvcRlmTSf+nk/+ZYJ8xs4LqqR2vq7rmYx820pwtvF5LjxPCvrg/SRrDWkrbX3K4TuuWBWz/NcLfsH0l4T5CteWLz7R8sbhl2CS0VF8zWwX9gVN5R+3aKyFutQg/Qfgr4Y8ZiNtmgs79ryJcjP7ocLuZ8Jc07tea63LCJ+DK/0HYSNgrrhuOd13QKYlU6gpCPfZrXET/pwmXEUpwz1683xtpvJ+J55ZDVrQT3iJsIuzv5rh/lpCHRCJI2EnYkyJNViRH/7uOzs9Ks8E8tm0PwFzq6zMxf+Q/RJzEgfZQu7ppdLkakJvfXcJor1YN4SZNr97HMUFhjzb0AN4FzdXP4fxWaI93Hc7pwXoSYtFJNz1GmMc0k85IqhwW5hNs/2rCBpFJLlPMQwv7HWE64ZDL+c8TfuQiZkMIj3Oxna4tSkqUlO3k0iNBGjOUayrDujeDRjlpbKXbn3CvsnJnp9RnKKwaDke6S5jlmEyvd7gT+qEKHsjJskE+N/sM4c+Eccx72vawC2ESa43wTXjCr2Ug6OMijGmPeb7H9dpL/ZYw1iHMzUXpw8006b8OD3i5xxhxWyAIswellUZJmkpyiBdmMKFB4fptm0wxTtdEjiZmlYTyztomRQFL+X0ZFfpudyDMRnRAi8prWI2pAh5nWhrtbkd46INQVcRqT3bqby+CQSIj/APhhyDrTOZR9PYaTOwOeEXd3tAOqZgIZ23YP8rafEQQ5mV4FruMMYKFPR0FFrNrxzkQRvftTSzgCeinXeL4AeEbLuNil/91OeUBdrwOpG08SdMEQ30uy9AL+NmzWln6reshF8LlK38srlqb/KolFFF9c8x02z5LFJ6OE6ZgUrh2eBG1IwVv8AQ8htugzMEk2XYGYRU0mZ0mzwYxFNw996jfgk7Q9ivcew2euwPHq4GJhHUsnb0WGkraUxizCoSEu9m5RwnvEIZgv5KRxgcdKUP5UpH2r8VYKZAzh5GXW1NSnnQan0b0r9ZRCBNpSjIkTdwjxx9KU5QgTYA8TPyDgApH4snXTc/GibpGtSCMQhi5GavSthkepFklBkTbEZWsZr/NUuIpWL1xnI91LJBE1fQ7EOFt8DD9XUSt6eGZuW0ALkG7thVB6xxipMkVovlStv8zQRgFkt6CEKaJvcVjQc0GafjYTIaHdM6egu15/TLjjNXSkRic9IGpMFVBItKYRkCnZZk0PlzopV+6XLcJ4eoC7F/k0eYKl+NNCC13YL8YBNJueTdC0ngWBrX+OIiJXiNIeyrWDE82CoQYDC3mFEK0fVKM+0qXdnW4+mIXzzaUqOhjbLd6ptxmKO94hp08wrZzxblUUSZK4alP0FTBgD+Tts9g24eV+zepKCb3AiaMfS7V38Mez6sXHoGnelpXvSSIPBDCV+N1wvWijUysHwT/dRneVyjIVHuaSzG6T7r6/3t3TxPO3UWPrkqzwXri5l7G/aJOy8FI5vKavpGWmJo+dbDKzwt4hTfprTiBtfvvK8Qjv2eASK3jHrUeNysSRGwTQlCL0a9iIMcKUo2BtyljAjqTGtkLyGr483fBg+6GWB/hcO8xMQ46lL13ikTZC33VH4tPZ44jk5rVoSKcFc7ZRFBpYhvhBNsfxLaPmeGct4O0HT0eVKNLitTkqxx/TzPEoZZi2z/FirrSpZO6SPcptr/LY0C+4JE2TxQDVy+8aCU00dUQl5Pgvm3T7/A5j0VguJB5tCDMWhQPS+F5qj1SZFlTcvNUxRDYXX2Q3APiLxD3VjtdnCRNJHsL4R2C3m4nvIJtiVhWNPvhxHY4dez81Plo9hr632i0B1VRbp6ad+sg5fOdlHWNgjjjRbp9IrXlhajvIYZzG4DCGo97z3oMyh3IBGTfl2BwbFuvOj52zkJWtAUC2c4oXsJkHxH1FrdFEBDhzTZZ4pgvwkwpBLKT6USA/5ThZnglWcdagpqLXlA/8RDkdyOELxe1qjnQWCeHJ/1tiRaETnOfhwB7COX1+SwTINFo3W4Z8Rodg4yOz1bDmJj7bmLETsTVpKp8dc45Ju/AZohM+fFOp6YNbP89pJZ2gWkwMouVqEyejczlTJGFvNJFXWk9RPWrqF9MxcTwsMgzrAq2Qlfhuc9h9U+BG7ftoHjeDhDHFrNPIsw0oBbzLkQ4txtV8lcFUYTBZQ5imIexRQhvdrb2MubvT3i36awGZGKhuVVaI6xdnXFtgxfOBtnGciFu6J97Thp/gKem05DC6cLWx7BKdJn+DSJMIwHfqhIeeCQm1IdOP62bDtPVixYXqouGp4idj1VU4BBHyxyEqn7hX7PMxct2ITxw4um6zepM0kHUUtYJrVMjXHsEY8HrN7UghPwq+7xL5nI9yDsQ78711lGEsiKH+zaKcKZQU5qXRv/2QX/Z4zwSRUDbJmJR8RoRr6LPAvE7wpNg+zqkYBUQgush9hoT/iUe4CH7frQxH984VChkqeEXm6p0WFDG+BwhhF8Egw+7ML8KHsfrtx6/QBsNDqTjabUXgeqgV9aJ4++DjFtFu5IwExwIo7BiN3k89yAyMB7KChhh7JSfe2tpdyKEeH0e0GQrF+Ps9xgvbfcQ/s32l2GcHT2NbfeBXTNcahGaKN/H+VmokCasrdVS1QsLVHlFjnypGRCWR7CC01X7Q7ESxiAkHYd3+41y/wJcjPK3XetZAS11Lf7n4PmbQd7mLt5hPNorhcveD0K8oLr+nnMF3r0I775C9H0IQmUZPHI92n4W5YRKXLefj7OwgejbWESHNlSvN6C2pBw04VSh5fY5JBrljGRv2QVCN9JoK0GoOohJrkNsLMYg6BXyuEiRVVubpRY+WKhGXZqteq1nWqALrbAU8bo/woSJVfoa4PjjIsvqHdiebP8VYADCi+A2YcnRWQAAAABJRU5ErkJggg==" alt="logo">
             </div>
-
+            <p class="not-animate">Lorem ipsum dolor sit. 123 Street <br>+94 123 456 789 <br>info@talentboozt.com</p>
           </div>
-          <div class="footer-top-right see-more">
-            <div class="row">
-              <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <p class="see-more-btn">Home</p>
-              </div>
-              <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <p class="see-more-btn">Jobs</p>
-              </div>
-              <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <p class="see-more-btn">Companies</p>
-              </div>
-              <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <p class="see-more-btn">Blog</p>
-              </div>
-              <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <p class="see-more-btn">Login</p>
-              </div>
-              <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <p class="see-more-btn">Register</p>
-              </div>
+          <div class="col-6 col-md-4 col-lg-2">
+            <h6>About Us</h6>
+            <p>> Jobs</p>
+            <p>> Companies</p>
+            <p>> Terms &amp; Conditions</p>
+            <p>> FAQs</p>
+            <p>> Packages</p>
+            <p>> Contact Us</p>
+          </div>
+          <div class="col-6 col-md-4 col-lg-2">
+            <h6>Follow Us</h6>
+            <p>> Facebook</p>
+            <p>> Twitter</p>
+            <p>> LinkedIn</p>
+            <p>> Youtube</p>
+            <p>> Instagram</p>
+          </div>
+          <div class="col-12 col-lg-5">
+            <h6>Still need help?</h6>
+            <p class="not-animate">Let us now about your issue and professional will reach you out.</p>
+            <div class="input-group">
+              <input type="email" class="form-control" placeholder="Enter your valid email">
+              <button class="btn btn-outline-secondary" type="button"><i class="material-icons">near_me</i></button>
             </div>
           </div>
         </div>
-        <hr>
-        <div class="d-md-flex align-items-center justify-content-between footer-bottom">
-          <div class="footer-bottom-left">
-            <p>© 2024. All rights reserved</p>
-          </div>
-          <div class="footer-bottom-right">
-            <p>Designed by <a routerLink="/about">Talent Boozt Systems</a></p>
-          </div>
+      </div>
+
+      <div class="d-md-flex align-items-center justify-content-between footer-bottom">
+        <div class="footer-bottom-left">
+          <p>© 2024. All rights reserved</p>
+        </div>
+        <div class="footer-bottom-right">
+          <p>Designed by Talent Boozt Systems</p>
         </div>
       </div>
     </div>
