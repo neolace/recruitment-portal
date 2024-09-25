@@ -52,7 +52,9 @@ export class JobPostComponent implements AfterViewInit, OnInit {
     minSalary: new FormControl(''),
     maxSalary: new FormControl(''),
     totalOpenings: new FormControl('', [Validators.required]),
+    ageRange: new FormControl(''),
     employeeType: new FormControl('', [Validators.required]),
+    locationType: new FormControl('', [Validators.required]),
     skills: new FormControl(''),
     qualifications: new FormControl(''),
     experience: new FormControl(''),
@@ -185,7 +187,9 @@ export class JobPostComponent implements AfterViewInit, OnInit {
       minSalary: this.jobPostForm.get('minSalary')?.value,
       maxSalary: this.jobPostForm.get('maxSalary')?.value,
       totalOpenings: this.jobPostForm.get('totalOpenings')?.value,
+      ageRange: this.jobPostForm.get('ageRange')?.value,
       employeeType: this.jobPostForm.get('employeeType')?.value,
+      locationType: this.jobPostForm.get('locationType')?.value,
       skills: this.jobPostForm.get('skills')?.value,
       qualifications: this.jobPostForm.get('qualifications')?.value,
       experience: this.jobPostForm.get('experience')?.value,
@@ -197,7 +201,8 @@ export class JobPostComponent implements AfterViewInit, OnInit {
       exShortDesc: this.jobPostForm.get('exs')?.value,
       location: this.jobPostForm.get('country')?.value + ', ' + this.jobPostForm.get('state')?.value,
       datePosted: this.jobPostForm.get('postdate')?.value,
-      expiryDate: this.jobPostForm.get('expdate')?.value
+      expiryDate: this.jobPostForm.get('expdate')?.value,
+      popularityScore: 0
     }]
 
     if (this.cookieService.level() === '2'){

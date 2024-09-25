@@ -38,8 +38,8 @@ export class JobComponent implements OnInit, AfterViewInit {
   employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
   userSavedIds: any[] = [];
 
-  locationFilter: string = 'Onsite';
-  employmentFilter: string = 'Full time';
+  locationFilter: string = 'On Site';
+  employmentFilter: string = 'Full Time';
   sortFilter: string = 'Recent';
 
   constructor(private route: ActivatedRoute,
@@ -57,9 +57,6 @@ export class JobComponent implements OnInit, AfterViewInit {
       this.route.queryParams.subscribe(params => {
         this.jobSearch = params['jobSearch'] || '';
         this.locationSearch = params['locationSearch'] || '';
-        this.locationFilter = params['locationFilter'] || this.locationFilter;
-        this.employmentFilter = params['employmentFilter'] || this.employmentFilter;
-        this.sortFilter = params['sortFilter'] || this.sortFilter;
 
         this.filterJobs(); // Apply filtering based on query params
         this.totalPages = Math.ceil(this.filteredJobAds.length / this.itemsPerPage);
@@ -124,11 +121,13 @@ export class JobComponent implements OnInit, AfterViewInit {
       const locationMatchQuery = this.locationSearch ? data.location.toLowerCase().includes(this.locationSearch.toLowerCase()) : true;
 
       // Apply the location and employment filters
-      const locationFilterMatch = this.locationFilter ? data.locationType.toLowerCase() === this.locationFilter.toLowerCase() : true;
-      const employmentFilterMatch = this.employmentFilter ? data.employmentType.toLowerCase() === this.employmentFilter.toLowerCase() : true;
+      const locationFilterMatch = this.locationFilter ? data?.locationType.toLowerCase() === this.locationFilter.toLowerCase() : true;
+      const employmentFilterMatch = this.employmentFilter ? data.employeeType.toLowerCase() === this.employmentFilter.toLowerCase() : true;
 
       return titleMatch && locationMatch && titleMatchQuery && locationMatchQuery && locationFilterMatch && employmentFilterMatch;
     });
+
+    console.log(this.filteredJobAds)
 
     this.isSearchResultNotFound = this.filteredJobAds.length === 0;
     this.isClearButtonVisible = !!(this.targetInput1 || this.targetInput2 || this.jobSearch || this.locationSearch || this.locationFilter || this.employmentFilter);
@@ -156,9 +155,9 @@ export class JobComponent implements OnInit, AfterViewInit {
   }
 
   clearFilters(): void {
-    this.locationFilter = 'Onsite'; // Reset to default
-    this.employmentFilter = 'Full time'; // Reset to default
-    this.sortFilter = 'Recent'; // Reset to default
+    this.locationFilter = 'Onsite';
+    this.employmentFilter = 'Full time';
+    this.sortFilter = 'Recent';
     this.clearSearch();
   }
 

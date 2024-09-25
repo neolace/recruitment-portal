@@ -17,8 +17,10 @@ public class PostedJobsDTO {
     private String education;
     private String skills;
     private String totalOpenings;
+    private String ageRange;
     private String jobBanner;
     private String employeeType;
+    private String locationType;
     private String location;
     private String category;
     private String jobType;
@@ -30,4 +32,5 @@ public class PostedJobsDTO {
     private String datePosted;
     private String expiryDate;
     private String url;
+    private String popularityScore;
 }

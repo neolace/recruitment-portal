@@ -132,13 +132,33 @@
 
             <div class="col-12 col-md-6">
               <div class="form-group">
+                <label for="ageRange">Age Range</label>
+                <input type="text" id="ageRange" class="form-control" placeholder="5" formControlName="ageRange">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="form-group">
                 <label for="employeeType">Employee Type *</label>
                 <select class="form-control" id="employeeType" formControlName="employeeType">
+                  <option>Full Time</option>
+                  <option>Part Time</option>
+                  <option>On Contract</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <label for="locationType">Location Type *</label>
+                <select class="form-control" id="locationType" formControlName="locationType">
                   <option>On Site</option>
                   <option>Remote</option>
                   <option>Hybrid</option>
                   <option>Permanent</option>
-                  <option>Contract</option>
                   <option>Internship</option>
                   <option>Volunteer</option>
                   <option>Other</option>
