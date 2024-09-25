@@ -21,7 +21,8 @@
             <input type="text" placeholder="Location" (keyup)="handleLocationSearch($event.target)">
           </div>
         </div>
-        <button class="search-button" (click)="isClearButtonVisible ? clearSearch():''">{{isClearButtonVisible ? 'Clear Filters' : 'Search'}}</button>
+        <button class="search-button"
+                (click)="isClearButtonVisible ? clearSearch():''">{{isClearButtonVisible ? 'Clear Filters' : 'Search'}}</button>
       </div>
     </div>
   </div>
@@ -198,7 +199,8 @@
   CATEGORIES
 </button>
 
-<div class="offcanvas offcanvas-start category-offcanvas" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+<div class="offcanvas offcanvas-start category-offcanvas" data-bs-scroll="true" tabindex="-1"
+     id="offcanvasWithBothOptions"
      aria-labelledby="offcanvasWithBothOptionsLabel">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Categories</h5>
@@ -213,26 +215,32 @@
 
       <div class="container">
         <div class="btn-group" role="group" aria-label="Button group 1">
-          <input type="radio" class="btn-check" name="location" id="remote" autocomplete="off" [(ngModel)]="locationFilter" value="Remote">
+          <input type="radio" class="btn-check" name="location" id="remote" autocomplete="off"
+                 [(ngModel)]="locationFilter" value="Remote">
           <label class="btn btn-outline-primary" for="remote">Remote</label>
 
-          <input type="radio" class="btn-check" name="location" id="onsite" autocomplete="off" [(ngModel)]="locationFilter" value="On Site" checked>
+          <input type="radio" class="btn-check" name="location" id="onsite" autocomplete="off"
+                 [(ngModel)]="locationFilter" value="On Site" checked>
           <label class="btn btn-outline-primary" for="onsite">Onsite</label>
 
-          <input type="radio" class="btn-check" name="location" id="hybrid" autocomplete="off" [(ngModel)]="locationFilter" value="Hybrid">
+          <input type="radio" class="btn-check" name="location" id="hybrid" autocomplete="off"
+                 [(ngModel)]="locationFilter" value="Hybrid">
           <label class="btn btn-outline-primary" for="hybrid">Hybrid</label>
         </div>
       </div>
 
       <div class="container">
         <div class="btn-group" role="group" aria-label="Button group 2">
-          <input type="radio" class="btn-check" name="employment" id="fulltime" autocomplete="off" [(ngModel)]="employmentFilter" value="Full Time" checked>
+          <input type="radio" class="btn-check" name="employment" id="fulltime" autocomplete="off"
+                 [(ngModel)]="employmentFilter" value="Full Time" checked>
           <label class="btn btn-outline-primary" for="fulltime">Full time</label>
 
-          <input type="radio" class="btn-check" name="employment" id="parttime" autocomplete="off" [(ngModel)]="employmentFilter" value="Part Time">
+          <input type="radio" class="btn-check" name="employment" id="parttime" autocomplete="off"
+                 [(ngModel)]="employmentFilter" value="Part Time">
           <label class="btn btn-outline-primary" for="parttime">Part time</label>
 
-          <input type="radio" class="btn-check" name="employment" id="contract" autocomplete="off" [(ngModel)]="employmentFilter" value="On Contract">
+          <input type="radio" class="btn-check" name="employment" id="contract" autocomplete="off"
+                 [(ngModel)]="employmentFilter" value="On Contract">
           <label class="btn btn-outline-primary" for="contract">On contract</label>
         </div>
       </div>
@@ -246,10 +254,12 @@
 
       <div class="container">
         <div class="btn-group" role="group" aria-label="Button group 1">
-          <input type="radio" class="btn-check" name="sort" id="recent" autocomplete="off" [(ngModel)]="sortFilter" value="Recent" checked>
+          <input type="radio" class="btn-check" name="sort" id="recent" autocomplete="off" [(ngModel)]="sortFilter"
+                 value="Recent" checked>
           <label class="btn btn-outline-primary" for="recent">Recent</label>
 
-          <input type="radio" class="btn-check" name="sort" id="popular" autocomplete="off" [(ngModel)]="sortFilter" value="Popular">
+          <input type="radio" class="btn-check" name="sort" id="popular" autocomplete="off" [(ngModel)]="sortFilter"
+                 value="Popular">
           <label class="btn btn-outline-primary" for="popular">Popular</label>
         </div>
       </div>
@@ -266,23 +276,25 @@
     </div>
 
     <div class="container my-2">
-      <ul class="category-list">
-        <li>Software Engineer</li>
-        <li>Software Developer</li>
-        <li>Full Stack Developer</li>
-        <li>Frontend Developer</li>
-        <li>Backend Developer</li>
-        <li>Android Developer</li>
-        <li>IOS Developer</li>
-        <li>React Developer</li>
-        <li>Angular Developer</li>
-        <li>Flutter Developer</li>
-        <li>Node Developer</li>
-        <li>Java Developer</li>
-        <li>Python Developer</li>
-        <li>PHP Developer</li>
-        <li>Ruby Developer</li>
-      </ul>
+      <div *ngFor="let cat of filterCategoriesList; let i = index">
+        <div class="accordion" id="accordionCategory">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#'+i"
+                      aria-expanded="false" [attr.aria-controls]="i">
+                {{cat.name}}
+              </button>
+            </h2>
+            <div [id]="i" class="accordion-collapse collapse" data-bs-parent="#accordionCategory">
+              <div class="accordion-body" *ngFor="let sc of cat.subCategories">
+                <ul class="category-list">
+                  <li (click)="selectCategory(sc.name)">{{sc.name}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
