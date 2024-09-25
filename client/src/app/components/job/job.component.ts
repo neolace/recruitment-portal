@@ -5,6 +5,7 @@ import {AuthService} from "../../services/auth.service";
 import {AlertsService} from "../../services/alerts.service";
 import {CompanyService} from "../../services/company.service";
 import {Observable, tap} from "rxjs";
+import {jobCategories} from "../../shared/data-store/job-categories-data-store";
 
 @Component({
   selector: 'app-job',
@@ -38,9 +39,11 @@ export class JobComponent implements OnInit, AfterViewInit {
   employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
   userSavedIds: any[] = [];
 
-  locationFilter: string = 'On Site';
-  employmentFilter: string = 'Full Time';
-  sortFilter: string = 'Recent';
+  locationFilter: string = '';
+  employmentFilter: string = '';
+  sortFilter: string = '';
+
+  filterCategoriesList: any[] = jobCategories;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -127,8 +130,6 @@ export class JobComponent implements OnInit, AfterViewInit {
       return titleMatch && locationMatch && titleMatchQuery && locationMatchQuery && locationFilterMatch && employmentFilterMatch;
     });
 
-    console.log(this.filteredJobAds)
-
     this.isSearchResultNotFound = this.filteredJobAds.length === 0;
     this.isClearButtonVisible = !!(this.targetInput1 || this.targetInput2 || this.jobSearch || this.locationSearch || this.locationFilter || this.employmentFilter);
 
@@ -154,10 +155,26 @@ export class JobComponent implements OnInit, AfterViewInit {
     this.filterJobs();
   }
 
+  selectCategory(category: string): void {
+    if (category === 'Other') {
+      this.clearFilters();
+      return;
+    }
+    const queryParams = {
+      jobSearch: category,
+    };
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    });
+    this.filterJobs();
+  }
+
   clearFilters(): void {
-    this.locationFilter = 'Onsite';
-    this.employmentFilter = 'Full time';
-    this.sortFilter = 'Recent';
+    this.locationFilter = '';
+    this.employmentFilter = '';
+    this.sortFilter = '';
     this.clearSearch();
   }
 
