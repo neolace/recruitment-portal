@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'job-post', loadChildren: () => import('./components/shared/job-post/job-post.module').then(m => m.JobPostModule) },
   { path: 'learn-more-jobs', loadChildren: () => import('./components/shared/jobs-learn-more/jobs-learn-more.module').then(m => m.JobsLearnMoreModule) },
   { path: 'companies', loadChildren: () => import('./components/companies/companies.module').then(m => m.CompaniesModule) },
-  { path: 'for-companies', loadChildren: () => import('./components/contact/contact.module').then(m => m.ContactModule) },
+  { path: 'contact', loadChildren: () => import('./components/contact/contact.module').then(m => m.ContactModule) },
   { path: 'pricing', loadChildren: () => import('./components/prising/prising.module').then(m => m.PrisingModule) },
   { path: 'candidate-profile', loadChildren: () => import('./components/shared/emp-profile/emp-profile.module').then(m => m.EmpProfileModule) },
   { path: 'candidate-profile-setting', loadChildren: () => import('./components/shared/emp-profile-settings/emp-profile-settings.module').then(m => m.EmpProfileSettingsModule) },
@@ -28,7 +28,8 @@ const routes: Routes = [
   { path: 'dashboard', loadChildren: () => import('./components/dashboards/free/free-dashboard/free-dashboard.module').then(m => m.FreeDashboardModule) },
   { path: 'pro', loadChildren: () => import('./components/dashboards/pro/pro-dashboard/pro-dashboard.module').then(m => m.ProDashboardModule) },
   { path: 'candidate-profile-setting-test', loadChildren: () => import('./components/shared/emp-profile-settings-test/emp-profile-settings-test.module').then(m => m.EmpProfileSettingsTestModule) },
-  { path: '403', loadChildren: () => import('./components/shared/forbidden/forbidden.module').then(m => m.ForbiddenModule) }
+  { path: '403', loadChildren: () => import('./components/shared/forbidden/forbidden.module').then(m => m.ForbiddenModule) },
+  { path: 'for-companies', loadChildren: () => import('./components/for-companies/for-companies.module').then(m => m.ForCompaniesModule) }
 ];
 
 @NgModule({
