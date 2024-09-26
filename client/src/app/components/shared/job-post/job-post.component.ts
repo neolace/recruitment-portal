@@ -6,6 +6,7 @@ import {CompanyService} from "../../../services/company.service";
 import {jobCategories} from "../../../shared/data-store/job-categories-data-store";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AlertsService} from "../../../services/alerts.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-job-post',
@@ -26,6 +27,7 @@ export class JobPostComponent implements AfterViewInit, OnInit {
   employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
   company: any;
   companyId: any;
+  jobId: any;
   loading: boolean = false;
 
   serverError: boolean = false;
@@ -74,6 +76,7 @@ export class JobPostComponent implements AfterViewInit, OnInit {
   constructor(private employeeService: EmployeeService,
               private cookieService: AuthService,
               private alertService: AlertsService,
+              private route: ActivatedRoute,
               private companyService: CompanyService) {
   }
 
@@ -87,8 +90,15 @@ export class JobPostComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     this.employeeId = this.cookieService.userID();
     this.companyId = this.cookieService.organization();
-    this.getEmployee(this.employeeId)
-    this.getCompany(this.companyId)
+    this.getEmployee(this.employeeId);
+    this.getCompany(this.companyId);
+
+    this.route.queryParams.subscribe(params => {
+      this.jobId = params['id'];
+      if (this.jobId) {
+        this.patchValues(this.jobId);
+      }
+    })
   }
 
   onCategoryChange(): void {
@@ -238,6 +248,78 @@ export class JobPostComponent implements AfterViewInit, OnInit {
       (error) => {
         this.loading = false;
         this.alertService.errorMessage('Unable to Add Job Post', 'Error');
+      }
+    )
+  }
+
+  patchValues(jobId: any) {
+    this.companyService.getPostedJob(this.companyId, jobId).subscribe(
+      (data) => {
+        console.log(data)
+        this.jobPostForm.get('title')?.setValue(data.title);
+        this.jobPostForm.get('description')?.setValue(data.description);
+        this.jobPostForm.get('category')?.setValue(data.category);
+        this.jobPostForm.get('jobType')?.setValue(data.jobType);
+        this.jobPostForm.get('salary')?.setValue(data.salary);
+        this.jobPostForm.get('minSalary')?.setValue(data.minSalary);
+        this.jobPostForm.get('maxSalary')?.setValue(data.maxSalary);
+        this.jobPostForm.get('totalOpenings')?.setValue(data.totalOpenings);
+        this.jobPostForm.get('ageRange')?.setValue(data.ageRange);
+        this.jobPostForm.get('employeeType')?.setValue(data.employeeType);
+        this.jobPostForm.get('locationType')?.setValue(data.locationType);
+        this.jobPostForm.get('skills')?.setValue(data.skills);
+        this.jobPostForm.get('qualifications')?.setValue(data.qualifications);
+        this.jobPostForm.get('experience')?.setValue(data.experience);
+        this.jobPostForm.get('requirements')?.setValue(data.requirements);
+        this.jobPostForm.get('education')?.setValue(data.education);
+        this.jobPostForm.get('responsibilities')?.setValue(data.responsibilities);
+        this.jobPostForm.get('offer')?.setValue(data.offers);
+        this.jobPostForm.get('es')?.setValue(data.eduShortDesc);
+        this.jobPostForm.get('exs')?.setValue(data.exShortDesc);
+        this.jobPostForm.get('country')?.setValue(data.location.split(',')[0]);
+        this.jobPostForm.get('state')?.setValue(data.location.split(',')[1]);
+        this.jobPostForm.get('postdate')?.setValue(data.datePosted);
+        this.jobPostForm.get('expdate')?.setValue(data.expiryDate);
+      }
+    )
+  }
+
+  updateJob(){
+    this.loading = true;
+    this.companyService.updatePostedJob(this.companyId, this.jobId, {
+      id: this.jobId,
+      title: this.jobPostForm.get('title')?.value,
+      description: this.jobPostForm.get('description')?.value,
+      category: this.selectedCategory ? this.selectedCategory : this.jobPostForm.get('category')?.value,
+      jobType: this.selectedJobType ? this.selectedJobType : this.jobPostForm.get('jobType')?.value,
+      salary: this.jobPostForm.get('salary')?.value,
+      minSalary: this.jobPostForm.get('minSalary')?.value,
+      maxSalary: this.jobPostForm.get('maxSalary')?.value,
+      totalOpenings: this.jobPostForm.get('totalOpenings')?.value,
+      ageRange: this.jobPostForm.get('ageRange')?.value,
+      employeeType: this.jobPostForm.get('employeeType')?.value,
+      locationType: this.jobPostForm.get('locationType')?.value,
+      skills: this.jobPostForm.get('skills')?.value,
+      qualifications: this.jobPostForm.get('qualifications')?.value,
+      experience: this.jobPostForm.get('experience')?.value,
+      requirements: this.jobPostForm.get('requirements')?.value,
+      education: this.jobPostForm.get('education')?.value,
+      responsibilities: this.jobPostForm.get('responsibilities')?.value,
+      offers: this.jobPostForm.get('offer')?.value,
+      eduShortDesc: this.jobPostForm.get('es')?.value,
+      exShortDesc: this.jobPostForm.get('exs')?.value,
+      location: this.jobPostForm.get('country')?.value + ', ' + this.jobPostForm.get('state')?.value,
+      datePosted: this.jobPostForm.get('postdate')?.value,
+      expiryDate: this.jobPostForm.get('expdate')?.value,
+      popularityScore: 0
+    }).subscribe(
+      (data) => {
+        this.loading = false;
+        this.alertService.successMessage('Job Post Updated Successfully', 'Success');
+      },
+      (error) => {
+        this.loading = false;
+        this.alertService.errorMessage('Unable to Update Job Post', 'Error');
       }
     )
   }

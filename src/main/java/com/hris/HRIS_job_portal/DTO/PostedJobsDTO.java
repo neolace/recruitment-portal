@@ -26,6 +26,7 @@ public class PostedJobsDTO {
     private String jobType;
     private String exShortDesc;
     private String eduShortDesc;
+    private String salary;
     private String minSalary;
     private String maxSalary;
     private String offers;

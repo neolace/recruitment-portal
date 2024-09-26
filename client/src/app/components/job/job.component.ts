@@ -100,7 +100,7 @@ export class JobComponent implements OnInit, AfterViewInit {
             job.companyLogo = company.companyLogo;
             job.companyLevel = company.companyLevel;
             filteredJobs.push(job);
-            filteredJobs = filteredJobs.filter((item: any) => new Date(item.expiryDate).getTime() < new Date().getTime())
+            filteredJobs = filteredJobs.filter((item: any) => new Date(item.expiryDate).getTime() > new Date().getTime())
             this.jobAdDataStore.push(...filteredJobs);
           });
         });

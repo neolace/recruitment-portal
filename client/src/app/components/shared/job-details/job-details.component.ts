@@ -74,9 +74,9 @@ export class JobDetailsComponent implements OnInit, AfterViewInit{
   }
 
   filterJobsAds(): any[] {
-    this.filteredJobs = this.jobDataStore.filter((job: any) => job.title !== null && job.title === this.jobPostTitle && job.id !== this.jobPostId);
+    this.filteredJobs = this.jobDataStore.filter((job: any) => job.title !== null && job.title === this.jobPostTitle && job.id !== this.jobPostId && new Date(job.expiryDate) > new Date());
     if (this.filteredJobs.length === 0) {
-      this.filteredJobs = this.jobDataStore.filter((job: any) => job.companyName === this.companyName);
+      this.filteredJobs = this.jobDataStore.filter((job: any) => job.companyName === this.companyName && job.id !== this.jobPostId && new Date(job.expiryDate) > new Date());
     }
     this.sortJobsByType();
     return this.filteredJobs;
@@ -140,5 +140,12 @@ export class JobDetailsComponent implements OnInit, AfterViewInit{
       progressBar: true,
       progressAnimation: 'decreasing',
     });
+  }
+
+  navigateToJobDetails(id:any) {
+    this.router.navigate(['/job-details', id]);
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   }
 }

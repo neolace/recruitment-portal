@@ -49,13 +49,13 @@
                     <i class="material-icons">more_horiz</i>
                   </div>
                   <ul class="dropdown-menu">
-                    <li *ngIf="!isExpired(p.expiryDate)"><a class="dropdown-item" href="#">View</a></li>
-                    <li *ngIf="!isExpired(p.expiryDate)"><a class="dropdown-item" href="#">Edit and Update</a></li>
-                    <li><a class="dropdown-item" href="#">{{isExpired(p.expiryDate) ? 'Reopen' : 'Close'}} the Job</a></li>
+                    <li *ngIf="!isExpired(p.expiryDate)"><a class="dropdown-item" routerLink="/job-details/{{p.id}}">View</a></li>
+                    <li *ngIf="!isExpired(p.expiryDate)"><a class="dropdown-item" (click)="edit(p.id)">Edit and Update</a></li>
+                    <li><a class="dropdown-item" (click)="isExpired(p.expiryDate) ? reopen(p.id) : close(p.id, p)">{{isExpired(p.expiryDate) ? 'Reopen' : 'Close'}} the Job</a></li>
                     <li>
                       <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item danger" href="#">Delete</a></li>
+                    <li><a class="dropdown-item danger" (click)="deleteJobPost(p.id)">Delete</a></li>
                   </ul>
                 </div>
               </div>
