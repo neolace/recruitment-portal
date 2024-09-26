@@ -95,11 +95,13 @@ export class JobComponent implements OnInit, AfterViewInit {
       tap((data) => {
         data.forEach((company: any) => {
           company.postedJobs.forEach((job: any) => {
-            // Add company details to each job
+            let filteredJobs: any[] = [];
             job.companyName = company.companyName;
             job.companyLogo = company.companyLogo;
             job.companyLevel = company.companyLevel;
-            this.jobAdDataStore.push(job);
+            filteredJobs.push(job);
+            filteredJobs = filteredJobs.filter((item: any) => new Date(item.expiryDate).getTime() < new Date().getTime())
+            this.jobAdDataStore.push(...filteredJobs);
           });
         });
       })
