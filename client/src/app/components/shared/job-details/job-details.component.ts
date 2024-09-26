@@ -23,6 +23,7 @@ export class JobDetailsComponent implements OnInit, AfterViewInit{
 
   employee: any;
   employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
+  companyId: any;
   userSavedIds: any[] = [];
 
   constructor(private router: Router,
@@ -67,6 +68,7 @@ export class JobDetailsComponent implements OnInit, AfterViewInit{
           job.companyName = company.companyName;
           job.companyLogo = company.companyLogo;
           job.companyLevel = company.companyLevel;
+          job.companyId = company.companyId;
           this.jobDataStore.push(job);
         });
       });
@@ -95,6 +97,7 @@ export class JobDetailsComponent implements OnInit, AfterViewInit{
     this.filteredJobDataStore = this.jobDataStore.filter((job: any) => job.id === this.jobPostId);
     this.jobPostTitle = this.filteredJobDataStore[0]?.title;
     this.companyName = this.filteredJobDataStore[0]?.companyName;
+    this.companyId = this.filteredJobDataStore[0]?.companyId;
     return this.filteredJobDataStore;
   }
 
@@ -147,5 +150,9 @@ export class JobDetailsComponent implements OnInit, AfterViewInit{
     setTimeout(() => {
       window.location.reload();
     }, 500);
+  }
+
+  navigateToApplyJob() {
+    this.router.navigate(['/job-apply'], {queryParams: {companyId: this.companyId, jobId: this.jobPostId}});
   }
 }

@@ -36,6 +36,13 @@ public class JobApplyController {
         return jobApplyService.addJobApply(jobApply);
     }
 
+    @PostMapping("/addApplicant/{companyId}/{jobId}")
+    public JobApplyModel addJobApplicant(@PathVariable String companyId,
+                                         @PathVariable String jobId,
+                                         @RequestBody JobApplicantDTO jobApplicant) {
+        return jobApplyService.addJobApplicant(companyId, jobId, jobApplicant);
+    }
+
     @GetMapping("/getSingleByCompanyId/{companyId}/jobApply/{applicantId}")
     public JobApplicantDTO getSingleJobApplyByJobId(@PathVariable String companyId, @PathVariable String applicantId) {
         return jobApplyService.getSingleJobApplyByJobId(companyId, applicantId);

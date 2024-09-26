@@ -9,8 +9,8 @@ import lombok.ToString;
 @ToString
 public class JobApplicantDTO {
     private String id;
-    private String firstName;
-    private String lastName;
+    private String employeeId;
+    private String name;
     private String email;
     private String phone;
     private String location;
