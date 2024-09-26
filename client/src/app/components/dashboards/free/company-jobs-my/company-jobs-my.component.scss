@@ -1,0 +1,31 @@
+.card-1{
+  position: relative;
+
+  .expired{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    min-height: 16px;
+    background-color: var(--color-danger-100);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    padding: 10px;
+
+    p{
+      color: white;
+      margin: 0;
+    }
+  }
+}
+
+.dropdown{
+  .dropdown-menu{
+    .dropdown-item.danger{
+      color: var(--color-danger-100);
+    }
+  }
+}

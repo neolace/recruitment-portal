@@ -122,4 +122,8 @@ export class CompanyJobsComponent implements OnInit, AfterViewInit{
       this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
     });
   }
+
+  isExpired(expiryDate: any) {
+    return new Date(expiryDate) < new Date();
+  }
 }

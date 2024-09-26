@@ -91,20 +91,27 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   getAllJobs() {
     this.companyService.fetchAllPostedJobs().subscribe((data) => {
+      const uniqueJobsMap = new Map(); // Create a map to store unique jobs by their ID or another unique property
+
       data.forEach((company: any) => {
         company.postedJobs.forEach((job: any) => {
-          // Add company details to each job
           job.companyName = company.companyName;
           job.companyLogo = company.companyLogo;
           job.companyLevel = company.companyLevel;
-          this.jobAdDataStore.push(job);
+
+          if (!uniqueJobsMap.has(job.id)) {
+            uniqueJobsMap.set(job.id, job); // Add the job to the map if not already added
+          }
         });
       });
+
+      // Convert the map back to an array and update jobAdDataStore
+      this.jobAdDataStore = Array.from(uniqueJobsMap.values());
     });
   }
 
   filterJobsAds(): any[] {
-    this.filteredJobs = this.jobAdDataStore.filter((job: any) => job.title !== null);
+    this.filteredJobs = this.jobAdDataStore.filter((job: any) => job.title !== null && new Date(job.expiryDate).getTime() < new Date().getTime());
     this.sortJobsByType();
     return this.filteredJobs;
   }

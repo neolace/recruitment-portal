@@ -28,7 +28,7 @@
   <div class="popular-jobs">
     <div class="row">
       <div class="col-12 col-md-4 mb-3" *ngFor="let job of postedJobs?.postedJobs">
-        <div class="card-1">
+        <div class="card-1" *ngIf="isExpired(job.expiryDate)">
           <div class="card-top">
             <div class="card-top-left d-flex align-items-center">
               <div class="logo-icon-wrapper">

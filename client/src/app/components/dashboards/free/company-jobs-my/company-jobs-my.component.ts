@@ -68,4 +68,8 @@ export class CompanyJobsMyComponent implements AfterViewInit, OnInit{
       }
     )
   }
+
+  isExpired(expiryDate: any) {
+    return new Date(expiryDate) > new Date();
+  }
 }

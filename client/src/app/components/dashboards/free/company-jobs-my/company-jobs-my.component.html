@@ -49,13 +49,13 @@
                     <i class="material-icons">more_horiz</i>
                   </div>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">View</a></li>
-                    <li><a class="dropdown-item" href="#">Edit and Update</a></li>
-                    <li><a class="dropdown-item" href="#">Close the Job</a></li>
+                    <li *ngIf="!isExpired(p.expiryDate)"><a class="dropdown-item" href="#">View</a></li>
+                    <li *ngIf="!isExpired(p.expiryDate)"><a class="dropdown-item" href="#">Edit and Update</a></li>
+                    <li><a class="dropdown-item" href="#">{{isExpired(p.expiryDate) ? 'Reopen' : 'Close'}} the Job</a></li>
                     <li>
                       <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                    <li><a class="dropdown-item danger" href="#">Delete</a></li>
                   </ul>
                 </div>
               </div>
@@ -79,6 +79,10 @@
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
                 <span>{{p.location ? p.location : 'N/A'}}</span>
               </div>
+            </div>
+
+            <div class="expired" *ngIf="isExpired(p.expiryDate)">
+              <p>Expired! This Ad is no longer available!</p>
             </div>
           </div>
         </div>
