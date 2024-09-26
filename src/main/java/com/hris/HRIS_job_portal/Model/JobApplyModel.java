@@ -20,7 +20,6 @@ public class JobApplyModel {
     private String id;
     private String companyId;
     private String jobId;
-    private String jobClosingDate;
     @Field("applicants")
     List<JobApplicantDTO> applicants;
 }

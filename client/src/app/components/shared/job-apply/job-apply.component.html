@@ -13,36 +13,34 @@
   <div class="d-flex align-items-center justify-content-center w-100">
 
     <div class="form-card-1">
-      <form action="">
+      <form [formGroup]="applyForm">
         <div class="row form-wrapper">
           <div class="col-12">
             <div class="form-group">
-              <label for="name">Your Name</label>
-              <input type="text" class="form-control" id="name" placeholder="John Doe">
+              <label for="name">Your Name *</label>
+              <input type="text" class="form-control" id="name" placeholder="John Doe" formControlName="name">
             </div>
           </div>
 
           <div class="col-12">
             <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="email" class="form-control" id="email" placeholder="XwVpP@example.com">
+              <label for="email">Email Address *</label>
+              <input type="email" class="form-control" id="email" placeholder="XwVpP@example.com" formControlName="email">
             </div>
           </div>
 
           <div class="col-12">
             <div class="form-group">
-              <label for="phone">Phone Number</label>
-              <input type="text" class="form-control" id="phone" placeholder="123 456 7890">
+              <label for="phone">Phone Number *</label>
+              <input type="text" class="form-control" id="phone" placeholder="123 456 7890" formControlName="phone">
             </div>
           </div>
 
           <div class="col-12">
             <div class="form-group">
-              <label for="location">Location</label>
-              <select class="form-control" id="location">
-                <option>Location 1</option>
-                <option>Location 2</option>
-                <option>Location 3</option>
+              <label for="location">Location *</label>
+              <select class="form-control" id="location" formControlName="location">
+                <option *ngFor="let c of countriesSet">{{c.name}}</option>
               </select>
             </div>
           </div>
@@ -50,20 +48,20 @@
           <div class="col-12">
             <div class="form-group">
               <label for="cover">Covering Letter</label>
-              <textarea class="form-control" id="cover" rows="5" placeholder="Covering Letter"></textarea>
+              <textarea class="form-control" id="cover" rows="5" placeholder="Covering Letter" formControlName="cover"></textarea>
             </div>
           </div>
 
           <div class="col-12">
             <div class="form-group">
               <label for="resume">Upload Resume</label>
-              <input type="file" class="form-control" id="resume">
+              <input type="file" class="form-control" id="resume" (change)="uploadFile($event, 'portal/resumes/'+ jobId +'/' + employeeId)">
             </div>
           </div>
 
           <div class="col-12">
             <div class="form-group">
-              <button type="submit" class="btn-1">Send</button>
+              <button type="submit" class="btn-1" (click)="apply(companyId, jobId)">Send</button>
             </div>
           </div>
         </div>
