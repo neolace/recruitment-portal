@@ -246,6 +246,43 @@ export class CompanyService {
     );
   }
 
+  getPostedJob(companyId: any, jobId: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.get(`${this.baseUrl}/cmp_posted_jobs/getByCompanyId/${companyId}/postedJob/${jobId}`, {headers});
+  }
+
+  updatePostedJob(companyId: any, jobId: any, jobPost: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.put(`${this.baseUrl}/cmp_posted_jobs/updateByCompanyId/${companyId}/postedJob/${jobId}` , jobPost, {headers}).pipe(
+      tap((data) => {
+        this.clearPostedJobsCache(); // Invalidate the cache
+        this.fetchFullCompany(jobPost.companyId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    )
+  }
+
+  deletePostedJob(companyId: any, jobId: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.delete(`${this.baseUrl}/cmp_posted_jobs/deleteByCompanyId/${companyId}/postedJob/${jobId}`, {headers}).pipe(
+      tap((data) => {
+        this.clearPostedJobsCache(); // Invalidate the cache
+        this.fetchFullCompany(companyId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    )
+  }
+
   private clearCache() {
     this.cacheInitialized = false;
     this.companySubject.next(null);

@@ -124,6 +124,6 @@ export class CompanyJobsComponent implements OnInit, AfterViewInit{
   }
 
   isExpired(expiryDate: any) {
-    return new Date(expiryDate) < new Date();
+    return new Date(expiryDate) > new Date();
   }
 }

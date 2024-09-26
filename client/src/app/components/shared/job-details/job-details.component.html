@@ -168,7 +168,7 @@
             <div class="card-content">
               <div class="card-content-left">
                 <div class="d-flex flex-column align-items-start">
-                  <div class="job-title" routerLink="/job-details/{{p.id}}">{{p.title}}</div>
+                  <div class="job-title" (click)="navigateToJobDetails(p.id)">{{p.title}}</div>
                   <div class="open-positions">Total Openings: {{p.totalOpenings}}</div>
                 </div>
               </div>

@@ -14,6 +14,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 export class CompanyJobsMyComponent implements AfterViewInit, OnInit{
 
   companyId: any;
+  companyLevel: any;
   company: any;
   postedJobs: any;
 
@@ -33,6 +34,7 @@ export class CompanyJobsMyComponent implements AfterViewInit, OnInit{
 
   ngOnInit() {
     this.companyId = this.cookieService.organization();
+    this.companyLevel = this.cookieService.level();
     this.getCompany(this.companyId)
   }
 
@@ -70,6 +72,49 @@ export class CompanyJobsMyComponent implements AfterViewInit, OnInit{
   }
 
   isExpired(expiryDate: any) {
-    return new Date(expiryDate) > new Date();
+    return new Date(expiryDate) < new Date();
+  }
+
+  edit(id:any) {
+    if (id){
+      this.router.navigate(['/job-post'], {relativeTo: this.route, queryParams: {id: id}});
+    }
+  }
+
+  reopen(id:any) {
+    if (this.companyLevel >= 2){
+      this.alertService.warningMessage('This feature is only available for verified companies', 'Warning');
+      return;
+    }
+    if (id){
+      this.router.navigate(['/job-post'], {relativeTo: this.route, queryParams: {id: id}});
+    }
+  }
+
+  close(id:any, job: any) {
+    if (id){
+      this.companyService.updatePostedJob(this.companyId, id,{
+        ...job,
+        expiryDate: new Date()
+      }).subscribe((data) => {
+        this.alertService.successMessage('Job closed successfully', 'Success');
+        this.getCompany(this.companyId)
+        location.reload();
+      }, (error: HttpErrorResponse) => {
+        this.alertService.errorMessage('Job closing failed', 'Error');
+      })
+    }
+  }
+
+  deleteJobPost(id:any) {
+    if (id){
+      this.companyService.deletePostedJob(this.companyId, id).subscribe((data) => {
+        this.alertService.successMessage('Job deleted successfully', 'Success');
+        this.getCompany(this.companyId);
+        location.reload();
+      }, (error: HttpErrorResponse) => {
+        this.alertService.errorMessage('Job deletion failed', 'Error');
+      })
+    }
   }
 }

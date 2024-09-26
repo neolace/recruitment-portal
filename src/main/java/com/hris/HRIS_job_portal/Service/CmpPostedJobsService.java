@@ -66,6 +66,57 @@ public class CmpPostedJobsService {
         return cmpPostedJobsModel;
     }
 
+    // Get a single posted job by companyId and jobId
+    public PostedJobsDTO getPostedJobByJobId(String companyId, String jobId) {
+        List<CmpPostedJobsModel> cmpPostedJobsList = cmpPostedJobsRepository.findByCompanyId(companyId);
+
+        if (!cmpPostedJobsList.isEmpty()) {
+            CmpPostedJobsModel cmpPostedJobsModel = cmpPostedJobsList.get(0);
+
+            return cmpPostedJobsModel.getPostedJobs().stream()
+                    .filter(job -> job.getId().equals(jobId))
+                    .findFirst()
+                    .orElse(null);  // Return null if the job is not found
+        }
+        return null;
+    }
+
+    // Update a specific posted job
+    public PostedJobsDTO updatePostedJob(String companyId, String jobId, PostedJobsDTO updatedJob) {
+        List<CmpPostedJobsModel> cmpPostedJobsList = cmpPostedJobsRepository.findByCompanyId(companyId);
+
+        if (!cmpPostedJobsList.isEmpty()) {
+            CmpPostedJobsModel cmpPostedJobsModel = cmpPostedJobsList.get(0);
+
+            List<PostedJobsDTO> postedJobs = cmpPostedJobsModel.getPostedJobs();
+            for (int i = 0; i < postedJobs.size(); i++) {
+                PostedJobsDTO job = postedJobs.get(i);
+                if (job.getId().equals(jobId)) {
+                    // Update the job details
+                    postedJobs.set(i, updatedJob);
+                    cmpPostedJobsModel.setPostedJobs(postedJobs);
+                    cmpPostedJobsRepository.save(cmpPostedJobsModel);  // Save changes to the database
+                    return updatedJob;
+                }
+            }
+        }
+        return null;  // Job not found or company doesn't exist
+    }
+
+    // Delete a specific posted job
+    public void deletePostedJob(String companyId, String jobId) {
+        List<CmpPostedJobsModel> cmpPostedJobsList = cmpPostedJobsRepository.findByCompanyId(companyId);
+
+        if (!cmpPostedJobsList.isEmpty()) {
+            CmpPostedJobsModel cmpPostedJobsModel = cmpPostedJobsList.get(0);
+
+            List<PostedJobsDTO> postedJobs = cmpPostedJobsModel.getPostedJobs();
+            postedJobs.removeIf(job -> job.getId().equals(jobId));  // Remove the job if it matches jobId
+
+            cmpPostedJobsModel.setPostedJobs(postedJobs);
+            cmpPostedJobsRepository.save(cmpPostedJobsModel);  // Save changes to the database
+        }
+    }
 
     @Async
     public CompletableFuture<List<CmpPostedJobsModel>> getCmpPostedJobsByCompanyIdAsync(String companyId) {

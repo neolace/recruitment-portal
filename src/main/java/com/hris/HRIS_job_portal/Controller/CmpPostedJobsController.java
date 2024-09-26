@@ -1,5 +1,6 @@
 package com.hris.HRIS_job_portal.Controller;
 
+import com.hris.HRIS_job_portal.DTO.PostedJobsDTO;
 import com.hris.HRIS_job_portal.Model.CmpPostedJobsModel;
 import com.hris.HRIS_job_portal.Service.CmpPostedJobsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,22 @@ public class CmpPostedJobsController {
     @PostMapping("/add")
     public CmpPostedJobsModel addCmpPostedJobs(@RequestBody CmpPostedJobsModel cmpPostedJobs) {
         return cmpPostedJobsService.addCmpPostedJobs(cmpPostedJobs);
+    }
+
+    @GetMapping("/getByCompanyId/{companyId}/postedJob/{jobId}")
+    public PostedJobsDTO getPostedJobByJobId(
+            @PathVariable String companyId, @PathVariable String jobId) {
+        return cmpPostedJobsService.getPostedJobByJobId(companyId, jobId);
+    }
+
+    @PutMapping("/updateByCompanyId/{companyId}/postedJob/{jobId}")
+    public PostedJobsDTO updatePostedJob(
+            @PathVariable String companyId, @PathVariable String jobId, @RequestBody PostedJobsDTO updatedJob) {
+        return cmpPostedJobsService.updatePostedJob(companyId, jobId, updatedJob);
+    }
+
+    @DeleteMapping("/deleteByCompanyId/{companyId}/postedJob/{jobId}")
+    public void deletePostedJob(@PathVariable String companyId, @PathVariable String jobId) {
+        cmpPostedJobsService.deletePostedJob(companyId, jobId);
     }
 }
