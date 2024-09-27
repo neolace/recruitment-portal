@@ -1673,6 +1673,33 @@ $accordion-icon-transform3: rotate(270deg);
   }
 }
 
+// bootstrap tooltip
+.tooltip.show {
+  opacity: 1;
+}
+
+.tooltip-inner {
+  background-color: #8e44ad;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+  opacity: 1 !important;
+}
+
+.tooltip.bs-tooltip-right .arrow:before {
+  border-right-color: #8e44ad !important;
+}
+
+.tooltip.bs-tooltip-left .arrow:before {
+  border-left-color: #8e44ad !important;
+}
+
+.tooltip.bs-tooltip-bottom .arrow:before {
+  border-bottom-color: #8e44ad !important;
+}
+
+.tooltip.bs-tooltip-top .arrow:before {
+  border-top-color: #8e44ad !important;
+}
+
 .translated-ltr{
   .mat-typography{
     top: 0 !important;

@@ -8,6 +8,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AlertsService} from "../../../services/alerts.service";
 import {ActivatedRoute} from "@angular/router";
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-job-post',
   templateUrl: './job-post.component.html',
@@ -27,6 +29,7 @@ export class JobPostComponent implements AfterViewInit, OnInit {
   employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
   company: any;
   companyId: any;
+  companyLevel: any;
   jobId: any;
   loading: boolean = false;
 
@@ -44,6 +47,8 @@ export class JobPostComponent implements AfterViewInit, OnInit {
   formLocked: boolean = true;
 
   postedJobs: any = [];
+
+  isExpDate: boolean = false;
 
   jobPostForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -85,13 +90,25 @@ export class JobPostComponent implements AfterViewInit, OnInit {
     icons.forEach((icon) => {
       icon.setAttribute('translate', 'no');
     });
+
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
   }
 
   ngOnInit() {
     this.employeeId = this.cookieService.userID();
     this.companyId = this.cookieService.organization();
+    this.companyLevel = this.cookieService.level();
     this.getEmployee(this.employeeId);
     this.getCompany(this.companyId);
+
+    if (this.companyLevel <= 2) {
+      this.jobPostForm.get('expdate')?.disable();
+    } else {
+      this.jobPostForm.get('expdate')?.enable();
+    }
 
     this.route.queryParams.subscribe(params => {
       this.jobId = params['id'];
@@ -187,6 +204,16 @@ export class JobPostComponent implements AfterViewInit, OnInit {
   }
 
   saveJobPost() {
+    const postdate: any = this.jobPostForm.get('postdate')?.value;
+    let expdate: any = this.jobPostForm.get('expdate')?.value;
+
+    // If expdate is null or the control is disabled, set expdate to 10 days after postdate
+    if (!expdate || this.jobPostForm.get('expdate')?.disabled) {
+      const postdateObj = new Date(postdate);
+      postdateObj.setDate(postdateObj.getDate() + 10);  // Add 10 days to postdate
+      expdate = postdateObj.toISOString().split('T')[0];  // Format to YYYY-MM-DD
+    }
+
     const postData = [{
       id: this.generateRandomId(),
       title: this.jobPostForm.get('title')?.value,
@@ -210,13 +237,20 @@ export class JobPostComponent implements AfterViewInit, OnInit {
       eduShortDesc: this.jobPostForm.get('es')?.value,
       exShortDesc: this.jobPostForm.get('exs')?.value,
       location: this.jobPostForm.get('country')?.value + ', ' + this.jobPostForm.get('state')?.value,
-      datePosted: this.jobPostForm.get('postdate')?.value,
-      expiryDate: this.jobPostForm.get('expdate')?.value,
+      datePosted: postdate,
+      expiryDate: expdate,
       popularityScore: 0
     }]
 
-    if (this.cookieService.level() === '2'){
+    if (this.companyLevel === '2'){
       if (this.postedJobs[0].postedJobs.length >= 3) {
+        this.alertService.warningMessage('You Reached Maximum Job Post Limit. Upgrade to Add More!', 'Warning');
+        return;
+      }
+    }
+
+    if (this.companyLevel === '3'){
+      if (this.postedJobs[0].postedJobs.length >= 10) {
         this.alertService.warningMessage('You Reached Maximum Job Post Limit. Upgrade to Add More!', 'Warning');
         return;
       }

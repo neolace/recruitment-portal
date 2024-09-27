@@ -10,7 +10,9 @@
 </div>
 
 <div class="container">
-  <div *ngIf="loading"><app-page-loading></app-page-loading></div>
+  <div *ngIf="loading">
+    <app-page-loading></app-page-loading>
+  </div>
   <div>
     <h5>At least You have to provide the following details in your business profile to unlock this form.</h5>
     <div class="d-flex align-items-center justify-content-center w-100 my-5 px-5">
@@ -35,7 +37,7 @@
       </div>
       <div class="check-line"></div>
       <div class="check-ball ready" [ngClass]="formLocked?'':'active'" title="Ready to go">
-        <i class="material-icons">{{formLocked?'lock_outline':'lock_open'}}</i>
+        <i class="material-icons">{{formLocked ? 'lock_outline' : 'lock_open'}}</i>
         <div class="tag">Ready to go</div>
       </div>
     </div>
@@ -56,7 +58,8 @@
           <div class="col-12">
             <div class="form-group">
               <label for="description">Job Description *</label>
-              <textarea class="form-control" id="description" rows="5" placeholder="Job Description" formControlName="description"></textarea>
+              <textarea class="form-control" id="description" rows="5" placeholder="Job Description"
+                        formControlName="description"></textarea>
             </div>
           </div>
 
@@ -64,7 +67,8 @@
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="category">Categories *</label>
-                <select id="category" [(ngModel)]="selectedCategory" [ngModelOptions]="{standalone: true}" (change)="onCategoryChange()">
+                <select id="category" [(ngModel)]="selectedCategory" [ngModelOptions]="{standalone: true}"
+                        (change)="onCategoryChange()">
                   <option *ngFor="let c of filterCategories()" [value]="c.name">{{c.name}}</option>
                 </select>
                 <div class="collapse" [ngClass]="{'show': isOtherCategorySelected}" id="otherCollapseCat">
@@ -78,7 +82,8 @@
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="jobType">Job Type *</label>
-                <select id="jobType" [(ngModel)]="selectedJobType" [ngModelOptions]="{standalone: true}" (change)="onJobTypeChange()">
+                <select id="jobType" [(ngModel)]="selectedJobType" [ngModelOptions]="{standalone: true}"
+                        (change)="onJobTypeChange()">
                   <option *ngFor="let j of filterJobTypes(selectedCategory)" [value]="j.name">{{j.name}}</option>
                 </select>
                 <div class="collapse" [ngClass]="{'show': isOtherJobTypeSelected}" id="otherCollapseJob">
@@ -126,7 +131,8 @@
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="totalOpenings">Total Openings *</label>
-                <input type="number" id="totalOpenings" class="form-control" placeholder="5" formControlName="totalOpenings">
+                <input type="number" id="totalOpenings" class="form-control" placeholder="5"
+                       formControlName="totalOpenings">
               </div>
             </div>
 
@@ -173,14 +179,16 @@
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="skills">Skills</label>
-                <textarea class="form-control" id="skills" rows="5" placeholder="Skills" formControlName="skills"></textarea>
+                <textarea class="form-control" id="skills" rows="5" placeholder="Skills"
+                          formControlName="skills"></textarea>
               </div>
             </div>
 
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="qualifications">Qualifications</label>
-                <textarea class="form-control" id="qualifications" rows="5" placeholder="Qualifications" formControlName="qualifications"></textarea>
+                <textarea class="form-control" id="qualifications" rows="5" placeholder="Qualifications"
+                          formControlName="qualifications"></textarea>
               </div>
             </div>
           </div>
@@ -189,14 +197,16 @@
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="education">Education</label>
-                <textarea class="form-control" id="education" rows="5" placeholder="Education" formControlName="education"></textarea>
+                <textarea class="form-control" id="education" rows="5" placeholder="Education"
+                          formControlName="education"></textarea>
               </div>
             </div>
 
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="experience">Experience</label>
-                <textarea class="form-control" id="experience" rows="5" placeholder="Experience" formControlName="experience"></textarea>
+                <textarea class="form-control" id="experience" rows="5" placeholder="Experience"
+                          formControlName="experience"></textarea>
               </div>
             </div>
           </div>
@@ -223,14 +233,16 @@
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="requirements">Requirements</label>
-                <textarea class="form-control" id="requirements" rows="5" placeholder="Requirements" formControlName="requirements"></textarea>
+                <textarea class="form-control" id="requirements" rows="5" placeholder="Requirements"
+                          formControlName="requirements"></textarea>
               </div>
             </div>
 
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="responsibilities">Responsibilities</label>
-                <textarea class="form-control" id="responsibilities" rows="5" placeholder="Responsibilities" formControlName="responsibilities"></textarea>
+                <textarea class="form-control" id="responsibilities" rows="5" placeholder="Responsibilities"
+                          formControlName="responsibilities"></textarea>
               </div>
             </div>
           </div>
@@ -241,7 +253,8 @@
             <div class="col-12">
               <div class="form-group">
                 <label for="offer">We offers...</label>
-                <textarea class="form-control" id="offer" rows="5" placeholder="We offers..." formControlName="offer"></textarea>
+                <textarea class="form-control" id="offer" rows="5" placeholder="We offers..."
+                          formControlName="offer"></textarea>
               </div>
             </div>
           </div>
@@ -281,7 +294,10 @@
             </div>
             <div class="col-6">
               <div class="form-group">
-                <label for="expdate">Date Expired</label>
+                <label for="expdate">Date Expired <i class="fa fa-question-circle" data-bs-toggle="tooltip"
+                                                     data-bs-placement="top"
+                                                     data-bs-custom-class="custom-tooltip"
+                                                     data-bs-title="Only PRO version can set custom expiration date. Your job ad will expire after 10 days."></i></label>
                 <input type="date" class="form-control" id="expdate" formControlName="expdate">
               </div>
             </div>
@@ -289,7 +305,8 @@
 
           <div class="col-12">
             <div class="form-group">
-              <button type="submit" [disabled]="formLocked" class="btn-1" (click)="jobId ? updateJob() : saveJobPost()">{{formLocked?'Locked': jobId ? 'Update' : 'Post Now'}}</button>
+              <button type="submit" [disabled]="formLocked" class="btn-1"
+                      (click)="jobId ? updateJob() : saveJobPost()">{{formLocked ? 'Locked' : jobId ? 'Update' : 'Post Now'}}</button>
             </div>
           </div>
         </div>
