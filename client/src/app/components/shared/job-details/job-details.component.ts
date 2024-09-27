@@ -1,10 +1,11 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {ValueIncrementService} from "../../../services/value-increment.service";
 import {EmployeeService} from "../../../services/employee.service";
 import {AuthService} from "../../../services/auth.service";
 import {ToastrService} from "ngx-toastr";
 import {CompanyService} from "../../../services/company.service";
+import {JobApplyService} from "../../../services/job-apply.service";
 
 
 @Component({
@@ -12,7 +13,7 @@ import {CompanyService} from "../../../services/company.service";
   templateUrl: './job-details.component.html',
   styleUrls: ['./job-details.component.scss']
 })
-export class JobDetailsComponent implements OnInit, AfterViewInit{
+export class JobDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   jobDataStore: any[] = [];
   filteredJobs: any[] = [];
@@ -23,6 +24,8 @@ export class JobDetailsComponent implements OnInit, AfterViewInit{
 
   employee: any;
   employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
+  employeeName: any;
+  viewerId: any;
   companyId: any;
   userSavedIds: any[] = [];
 
@@ -30,6 +33,7 @@ export class JobDetailsComponent implements OnInit, AfterViewInit{
               private valueIncrementService: ValueIncrementService,
               private employeeService: EmployeeService,
               private companyService: CompanyService,
+              private jobApplyService: JobApplyService,
               private cookieService: AuthService,
               private toastr: ToastrService ) { }
 
@@ -46,12 +50,18 @@ export class JobDetailsComponent implements OnInit, AfterViewInit{
     icons.forEach((icon) => {
       icon.setAttribute('translate', 'no');
     });
+    this.addViewer();
+  }
+
+  ngOnDestroy() {
+    sessionStorage.removeItem(`viewerId_${this.jobPostId}`);
   }
 
   getEmployee(id: any) {
     this.employeeService.fetchFullEmployee(id).subscribe(
       (data) => {
         this.employee = data;
+        this.employeeName = this.employee.employee.firstname + ' ' + this.employee.employee.lastname;
         this.userSavedIds = this.employee.employee.savedJobs.map((job: any) => job.jobId);
       },
       (error: any) => {
@@ -99,6 +109,40 @@ export class JobDetailsComponent implements OnInit, AfterViewInit{
     this.companyName = this.filteredJobDataStore[0]?.companyName;
     this.companyId = this.filteredJobDataStore[0]?.companyId;
     return this.filteredJobDataStore;
+  }
+
+  addViewer() {
+    const viewerSessionKey = `viewerId_${this.jobPostId}`;
+
+    if (!sessionStorage.getItem(viewerSessionKey)) {
+      this.viewerId = this.employeeId ? this.generateRandomId() : `anon_${this.generateRandomId()}`;
+      sessionStorage.setItem(viewerSessionKey, this.viewerId);
+    }
+
+    this.jobApplyService.fetchJobViewerByJobId(this.jobPostId).subscribe((data: any) => {
+      const existingViewers = data[0]?.viewers || [];
+      const currentViewerId = sessionStorage.getItem(viewerSessionKey);
+
+      const isViewerAlreadyPresent = existingViewers.some((viewer: any) => {
+        return viewer.id === currentViewerId || (this.employeeId && viewer.employeeId === this.employeeId);
+      });
+
+      if (!isViewerAlreadyPresent) {
+        const viewerData = {
+          id: currentViewerId,
+          employeeId: this.employeeId || 'Guest_' + this.generateRandomId(),  // Ensure unique anonymous ID
+          name: this.employeeName || 'Guest',
+          status: 'registered'
+        };
+
+        this.jobApplyService.addViewer(this.companyId, this.jobPostId, viewerData)
+          .subscribe((response: any) => {
+            console.log('Viewer added');
+          }, (error: any) => {
+            console.error('Error adding viewer:', error);
+          });
+      }
+    });
   }
 
   saveFav(id: string) {
@@ -154,5 +198,9 @@ export class JobDetailsComponent implements OnInit, AfterViewInit{
 
   navigateToApplyJob() {
     this.router.navigate(['/job-apply'], {queryParams: {companyId: this.companyId, jobId: this.jobPostId}});
+  }
+
+  generateRandomId() {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   }
 }

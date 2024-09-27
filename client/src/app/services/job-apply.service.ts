@@ -101,13 +101,7 @@ export class JobApplyService {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:password')
     });
-    if (!this.jobViewerByJobIdCacheInitialized) {
-      this.http.get<any>(`${this.baseUrl}/cmp_job-apply/getByJobId/${jobId}`, {headers}).subscribe(data => {
-        this.jobViewerSubjectByJobId.next(data);
-        this.jobViewerByJobIdCacheInitialized = true; // Cache is initialized after the first fetch
-      });
-    }
-    return this.jobViewerByJobId$;
+    return this.http.get<any>(`${this.baseUrl}/cmp_job-apply/getByJobId/${jobId}`, {headers});
   }
 
   addApplicant(companyId: any, jobId: any, jobApplicant: any): Observable<any>|any {
