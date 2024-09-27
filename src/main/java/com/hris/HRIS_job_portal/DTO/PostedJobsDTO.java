@@ -16,6 +16,7 @@ public class PostedJobsDTO {
     private String experience;
     private String education;
     private String skills;
+    private String qualifications;
     private String totalOpenings;
     private String ageRange;
     private String jobBanner;

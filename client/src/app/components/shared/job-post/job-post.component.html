@@ -285,6 +285,15 @@
 
           <h5>Other:</h5>
 
+          <div class="row" *ngIf="companyLevel >= 3">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="banner">Upload a Custom Banner</label>
+                <input type="file" class="form-control" id="banner" (change)="uploadFile($event, 'portal/jobs/banners/' + generateRandomId())">
+              </div>
+            </div>
+          </div>
+
           <div class="row">
             <div class="col-6">
               <div class="form-group">
