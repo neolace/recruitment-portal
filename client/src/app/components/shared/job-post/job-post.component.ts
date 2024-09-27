@@ -7,6 +7,7 @@ import {jobCategories} from "../../../shared/data-store/job-categories-data-stor
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AlertsService} from "../../../services/alerts.service";
 import {ActivatedRoute} from "@angular/router";
+import {FileUploadService} from "../../../services/file-upload.service";
 
 declare var bootstrap: any;
 
@@ -48,7 +49,7 @@ export class JobPostComponent implements AfterViewInit, OnInit {
 
   postedJobs: any = [];
 
-  isExpDate: boolean = false;
+  downloadURL?: any;
 
   jobPostForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -82,6 +83,7 @@ export class JobPostComponent implements AfterViewInit, OnInit {
               private cookieService: AuthService,
               private alertService: AlertsService,
               private route: ActivatedRoute,
+              private fileUploadService: FileUploadService,
               private companyService: CompanyService) {
   }
 
@@ -237,6 +239,7 @@ export class JobPostComponent implements AfterViewInit, OnInit {
       eduShortDesc: this.jobPostForm.get('es')?.value,
       exShortDesc: this.jobPostForm.get('exs')?.value,
       location: this.jobPostForm.get('country')?.value + ', ' + this.jobPostForm.get('state')?.value,
+      jobBanner: this.downloadURL ? this.downloadURL : null,
       datePosted: postdate,
       expiryDate: expdate,
       popularityScore: 0
@@ -360,5 +363,30 @@ export class JobPostComponent implements AfterViewInit, OnInit {
 
   generateRandomId(): string {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  }
+
+  uploadFile(event: any, filePath: string) {
+    const file = event.target.files[0];
+    const maxFileSize = 1.5 * 1024 * 1024;
+    const allowedFileTypes = ['image/png', 'image/jpeg', 'application/pdf'];
+    if (file) {
+      if (file.size > maxFileSize) {
+        this.alertService.warningMessage('File size exceeds the maximum limit of 1.5MB.', 'Warning');
+        return;
+      }
+      if (!allowedFileTypes.includes(file.type)) {
+        this.alertService.warningMessage('Only PNG and JPEG files are allowed.', 'Warning');
+        return;
+      }
+      this.loading = true;
+      this.fileUploadService.uploadFile(filePath, file).subscribe(url => {
+        this.loading = false;
+        this.downloadURL = url;
+        this.alertService.successMessage('Successfully uploaded banner.', 'Success');
+      }, () => {
+        this.loading = false;
+        this.alertService.errorMessage('Failed to upload file. Please try again.', 'Error');
+      });
+    }
   }
 }
