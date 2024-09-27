@@ -83,7 +83,24 @@
         <div class="col col-lg-8">
           <div class="card-1">
             <div class="title-1">Latest Ads Posted</div>
-            <p>Currently you do not have any shared ads</p>
+            <div class="row" *ngFor="let p of jobPosts">
+              <div class="col-12">
+                <div class="card-1">
+                  <div class="title-2" routerLink="/job-details/{{p.id}}">{{p.title}}</div>
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                      <p class="m-0">Posted: {{p.datePosted | timeAgo}}</p>
+                      <p class="m-0">Expired: {{p.expiryDate | date}}</p>
+                    </div>
+                    <div>
+                      <p class="m-0">0 Views</p>
+                      <p class="m-0">{{getApplicants(p.id) ? getApplicants(p.id) : 0}} Applicants</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p *ngIf="jobPosts.length == 0">Currently you do not have any shared ads</p>
           </div>
         </div>
       </div>

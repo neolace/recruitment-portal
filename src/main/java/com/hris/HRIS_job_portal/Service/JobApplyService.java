@@ -1,6 +1,7 @@
 package com.hris.HRIS_job_portal.Service;
 
 import com.hris.HRIS_job_portal.DTO.JobApplicantDTO;
+import com.hris.HRIS_job_portal.DTO.JobViewerDTO;
 import com.hris.HRIS_job_portal.Model.JobApplyModel;
 import com.hris.HRIS_job_portal.Repository.JobApplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,40 @@ public class JobApplyService {
         return jobApplyRepository.save(jobApplyModel);
     }
 
+    public JobApplyModel addJobViewer(String companyId, String jobId, JobViewerDTO newViewer) {
+        Optional<List<JobApplyModel>> jobApplyList = jobApplyRepository.findAllByCompanyId(companyId);
+
+        // Check if there is an existing job posting for the company and job
+        JobApplyModel jobApplyModel = null;
+        if (jobApplyList.isPresent()) {
+            for (JobApplyModel applyModel : jobApplyList.get()) {
+                if (applyModel.getJobId().equals(jobId)) {
+                    jobApplyModel = applyModel;
+                    break;
+                }
+            }
+        }
+
+        if (jobApplyModel != null) {
+            // If a job posting exists, add the new applicant
+            List<JobViewerDTO> viewers = jobApplyModel.getViewers();
+            if (viewers == null) {
+                viewers = new ArrayList<>();
+            }
+            viewers.add(newViewer);
+            jobApplyModel.setViewers(viewers);
+        } else {
+            // If no job posting exists, create a new JobApplyModel and add the applicant
+            jobApplyModel = new JobApplyModel();
+            jobApplyModel.setCompanyId(companyId);
+            jobApplyModel.setJobId(jobId);
+            jobApplyModel.setViewers(Collections.singletonList(newViewer));
+        }
+
+        // Save and return the updated or newly created JobApplyModel
+        return jobApplyRepository.save(jobApplyModel);
+    }
+
     public JobApplicantDTO getSingleJobApplyByJobId(String companyId, String applicantId) {
         Optional<List<JobApplyModel>> jobApplyList = jobApplyRepository.findAllByCompanyId(companyId);
 
@@ -75,6 +110,21 @@ public class JobApplyService {
 
             return jobApplyModel.getApplicants().stream()
                     .filter(applicant -> applicant.getId().equals(applicantId))
+                    .findFirst()
+                    .orElse(null);
+        }
+
+        return null;
+    }
+
+    public JobViewerDTO getSingleJobViewerByJobId(String companyId, String viewerId) {
+        Optional<List<JobApplyModel>> jobApplyList = jobApplyRepository.findAllByCompanyId(companyId);
+
+        if (jobApplyList.isPresent()) {
+            JobApplyModel jobApplyModel = jobApplyList.get().get(0);
+
+            return jobApplyModel.getViewers().stream()
+                    .filter(viewer -> viewer.getId().equals(viewerId))
                     .findFirst()
                     .orElse(null);
         }
