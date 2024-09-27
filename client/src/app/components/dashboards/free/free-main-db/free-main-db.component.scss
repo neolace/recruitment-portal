@@ -37,6 +37,17 @@
     align-items: center;
     justify-content: center;
   }
+
+  .title-2{
+    color: var(--color-text-100);
+    font-weight: 450;
+    transition: all 0.3s ease;
+
+    &:hover{
+      color: var(--color-primary-100);
+      cursor: pointer;
+    }
+  }
 }
 
 .c-j-progress{

@@ -1,6 +1,7 @@
 package com.hris.HRIS_job_portal.Model;
 
 import com.hris.HRIS_job_portal.DTO.JobApplicantDTO;
+import com.hris.HRIS_job_portal.DTO.JobViewerDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,4 +23,6 @@ public class JobApplyModel {
     private String jobId;
     @Field("applicants")
     List<JobApplicantDTO> applicants;
+    @Field("viewers")
+    List<JobViewerDTO> viewers;
 }

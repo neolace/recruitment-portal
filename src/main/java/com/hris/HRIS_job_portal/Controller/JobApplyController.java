@@ -1,6 +1,7 @@
 package com.hris.HRIS_job_portal.Controller;
 
 import com.hris.HRIS_job_portal.DTO.JobApplicantDTO;
+import com.hris.HRIS_job_portal.DTO.JobViewerDTO;
 import com.hris.HRIS_job_portal.Model.JobApplyModel;
 import com.hris.HRIS_job_portal.Service.JobApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +44,21 @@ public class JobApplyController {
         return jobApplyService.addJobApplicant(companyId, jobId, jobApplicant);
     }
 
+    @PostMapping("/addViewer/{companyId}/{jobId}")
+    public JobApplyModel addJobViewer(@PathVariable String companyId,
+                                         @PathVariable String jobId,
+                                         @RequestBody JobViewerDTO jobViewer) {
+        return jobApplyService.addJobViewer(companyId, jobId, jobViewer);
+    }
+
     @GetMapping("/getSingleByCompanyId/{companyId}/jobApply/{applicantId}")
     public JobApplicantDTO getSingleJobApplyByJobId(@PathVariable String companyId, @PathVariable String applicantId) {
         return jobApplyService.getSingleJobApplyByJobId(companyId, applicantId);
+    }
+
+    @GetMapping("/getSingleByCompanyId/{companyId}/jobViewer/{viewerId}")
+    public JobViewerDTO getSingleJobViewerByJobId(@PathVariable String companyId, @PathVariable String viewerId) {
+        return jobApplyService.getSingleJobViewerByJobId(companyId, viewerId);
     }
 
     @PutMapping("/updateByCompanyId/{companyId}/jobApply/{applicantId}")

@@ -4,6 +4,7 @@ import {EmployeeService} from "../../../../services/employee.service";
 import {AuthService} from "../../../../services/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {CompanyService} from "../../../../services/company.service";
+import {JobApplyService} from "../../../../services/job-apply.service";
 
 @Component({
   selector: 'app-free-main-db',
@@ -17,9 +18,13 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
   personalProgressValue = 8;
   personalProgressMode: ProgressSpinnerMode = 'determinate';
 
+  applicants: any[] = [];
+  filteredApplicants: any[] = [];
+
   employee: any;
   employeeId: any;
   company: any;
+  jobPosts: any = [];
   companyId: any;
   loading: boolean = false;
   serverError: boolean = false;
@@ -36,6 +41,7 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
 
   constructor(private employeeService: EmployeeService,
               private companyService: CompanyService,
+              private jobApplyService: JobApplyService,
               private cookieService: AuthService ) {}
 
   async ngOnInit(): Promise<any> {
@@ -82,6 +88,7 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
     this.companyService.fetchFullCompany(id).subscribe(
       (data) => {
         this.company = data;
+        this.jobPosts = data?.postedJobs[0]?.postedJobs;
         this.calculateProfileProgress(data?.company, 'company');
         this.cname = this.company?.company?.name;
         this.cemail = this.company?.company?.contactEmail;
@@ -133,6 +140,24 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
       this.personalProgressValue = Math.round((completed / total) * 100);
     } else if (who === 'company') {
       this.progressValue = Math.round((completed / total) * 100);
+    }
+  }
+
+  protected readonly postMessage = postMessage;
+
+  getApplicants(id:any): any {
+    if (id){
+      this.jobApplyService.fetchJobApplyByJobId(id).subscribe(
+        (data: any) => {
+          this.applicants = data;
+        }, (error: HttpErrorResponse) => {
+          console.log(error)
+        }
+      )
+    }
+    if (this.applicants?.length) {
+      this.filteredApplicants = this.applicants?.filter((item: any) => item.jobId === id);
+      return this.filteredApplicants[0]?.applicants.length
     }
   }
 }
