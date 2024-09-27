@@ -20,6 +20,10 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
 
   applicants: any[] = [];
   filteredApplicants: any[] = [];
+  views: any[] = [];
+  filteredViews: any[] = [];
+  applicantsMap: any = {}; // Store applicants by jobPostId
+  viewsMap: any = {}; // Store viewers by jobPostId
 
   employee: any;
   employeeId: any;
@@ -49,6 +53,7 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
     this.companyId = this.cookieService.organization();
     this.getEmployee(this.employeeId)
     this.getCompany(this.companyId);
+    this.fetchJobPostData();
   }
 
   ngAfterViewInit() {
@@ -143,21 +148,25 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
     }
   }
 
-  protected readonly postMessage = postMessage;
+  fetchJobPostData() {
+    this.jobApplyService.fetchJobApply().subscribe(
+      (data: any) => {
+        data?.forEach((jobPost: any) => {
+          this.applicantsMap[jobPost.jobId] = jobPost.applicants?.length || 0;
+          this.viewsMap[jobPost.jobId] = jobPost.viewers?.length || 0;
+        });
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    );
+  }
 
-  getApplicants(id:any): any {
-    if (id){
-      this.jobApplyService.fetchJobApplyByJobId(id).subscribe(
-        (data: any) => {
-          this.applicants = data;
-        }, (error: HttpErrorResponse) => {
-          console.log(error)
-        }
-      )
-    }
-    if (this.applicants?.length) {
-      this.filteredApplicants = this.applicants?.filter((item: any) => item.jobId === id);
-      return this.filteredApplicants[0]?.applicants.length
-    }
+  getApplicants(jobPostId: string): number {
+    return this.applicantsMap[jobPostId] || 0;
+  }
+
+  getViews(jobPostId: string): number {
+    return this.viewsMap[jobPostId] || 0;
   }
 }

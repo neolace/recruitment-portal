@@ -93,8 +93,8 @@
                       <p class="m-0">Expired: {{p.expiryDate | date}}</p>
                     </div>
                     <div>
-                      <p class="m-0">0 Views</p>
-                      <p class="m-0">{{getApplicants(p.id) ? getApplicants(p.id) : 0}} Applicants</p>
+                      <p class="m-0">{{getViews(p.id)}} Views</p>
+                      <p class="m-0">{{getApplicants(p.id)}} Applicants</p>
                     </div>
                   </div>
                 </div>
