@@ -12,7 +12,7 @@
       <div class="d-flex align-items-center">
         <div class="ms-2 dropdown">
           <div class="profile-pic me-md-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://jobstack-shreethemes.vercel.app/static/media/05.a7ab2c82813cb95da9d6.jpg"
+            <img [src]="employeeProfile ? employeeProfile : './assets/imgs/shared/default_emp_dp.svg'"
                  alt="profile">
           </div>
 
@@ -31,8 +31,8 @@
           </ul>
         </div>
         <div class="d-none d-md-flex flex-column justify-content-between profile-tag">
-          <h6>User Name</h6>
-          <span>sample@sample.com</span>
+          <h6>{{employeeName ? employeeName : 'not available'}}</h6>
+          <span>{{employeeEmail ? employeeEmail : 'not available'}}</span>
         </div>
       </div>
     </div>
@@ -48,7 +48,11 @@
             <li routerLink="/dashboard/overview">Overview</li>
             <li routerLink="/dashboard/personal-profile">Personal Profile</li>
             <li routerLink="/dashboard/business-profile-my">Business Profile</li>
-            <li routerLink="/dashboard/company-jobs">Company Jobs</li>
+            <li routerLink="/job-post">Post a Job</li>
+            <li routerLink="/dashboard/company-jobs">Company Posted Jobs</li>
+            <li>Applicants</li>
+            <li>Billing and Usage</li>
+            <li>Teams</li>
           </ul>
         </mat-accordion>
       </div>
