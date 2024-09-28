@@ -9,6 +9,7 @@ import {FreeDashboardComponent} from "./components/dashboards/free/free-dashboar
 import {ProDashboardComponent} from "./components/dashboards/pro/pro-dashboard/pro-dashboard.component";
 import {commonSearchResults} from "./shared/data-store/common-search-results";
 import {AuthService} from "./services/auth.service";
+import {OAuthService} from "angular-oauth2-oidc";
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,11 @@ export class AppComponent implements OnInit, AfterViewInit {
   filteredSearchResults: any[] = [];
   targetInput: any;
 
-  constructor(public themeService: ThemeService, private router: Router, private renderer: Renderer2, private cookieService: AuthService) {}
+  constructor(public themeService: ThemeService,
+              private oauthService: OAuthService,
+              private router: Router,
+              private renderer: Renderer2,
+              private cookieService: AuthService) {}
 
   ngOnInit() {
     this.router.events.subscribe(event => {
@@ -128,6 +133,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   logout() {
     this.cookieService.logout()
+    this.oauthService.logOut();
     this.router.navigate(['/login']);
   }
 }

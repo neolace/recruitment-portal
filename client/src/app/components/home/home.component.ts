@@ -7,7 +7,6 @@ import {ToastrService} from "ngx-toastr";
 import {Observable, tap} from "rxjs";
 import {CompanyService} from "../../services/company.service";
 import {AlertsService} from "../../services/alerts.service";
-import {GoogleAuthService} from "../../services/google-auth.service";
 
 @Component({
   selector: 'app-home',
@@ -56,13 +55,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
               private employeeService: EmployeeService,
               private companyService: CompanyService,
               private cookieService: AuthService,
-              private googleAuthService: GoogleAuthService,
               private alertService: AlertsService,
               private toastr: ToastrService) {
   }
 
   async ngOnInit(): Promise<any> {
-    this.googleAuthService.loadDiscoveryDocumentAndTryLogin();
     this.employeeId = this.cookieService.userID();
     await this.getEmployee(this.employeeId).subscribe((data) => {
 

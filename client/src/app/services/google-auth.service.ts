@@ -27,37 +27,26 @@ export class GoogleAuthService {
 
   loadDiscoveryDocumentAndTryLogin() {
     this.oauthService.loadDiscoveryDocumentAndTryLogin().then(() => {
-      debugger; // Pause execution here to inspect the state
-      this.logToLocalStorage('Discovery document loaded');
       if (this.oauthService.hasValidAccessToken()) {
-        this.logToLocalStorage('Valid access token found');
         this.handleGoogleLogin();
       } else {
-        this.logToLocalStorage('No valid access token found');
+        this.alertService.errorMessage('No valid access token found', 'Error');
       }
     }).catch(error => {
-      this.logToLocalStorage('Error during OAuth configuration: ' + error);
+      this.alertService.errorMessage(error, 'Error');
     });
   }
 
-  private logToLocalStorage(message: string) {
-    const logs = localStorage.getItem('oauthLogs') || '';
-    localStorage.setItem('oauthLogs', logs + message + '\n');
-  }
-
   loginWithGoogle() {
-    this.logToLocalStorage('Initiating login with Google...');
     this.oauthService.initLoginFlow();
-    this.logToLocalStorage('Redirecting to Google for login...');
   }
 
   handleGoogleLogin() {
     this.oauthService.loadUserProfile().then((profile: any) => {
-      this.logToLocalStorage('User profile: ' + JSON.stringify(profile));
       const user = {
-        email: profile['email'],
-        firstName: profile['given_name'],
-        lastName: profile['family_name']
+        email: profile.info.email,
+        firstName: profile.info.given_name,
+        lastName: profile.info.family_name
       };
 
       // Check if Google user exists in database
@@ -78,8 +67,8 @@ export class GoogleAuthService {
       email: profile.email,
       firstname: profile.firstname,
       lastname: profile.lastname,
-      role: 'candidate',  // default role
-      userLevel: '1'      // default user level
+      role: 'candidate',
+      userLevel: '1'
     };
 
     this.credentialService.addCredential(newUser).subscribe((response: any) => {
