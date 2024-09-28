@@ -1,16 +1,18 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CredentialService} from "../../services/credential.service";
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {AlertsService} from "../../services/alerts.service";
+import {GoogleAuthService} from "../../services/google-auth.service";
+import {SocialAuthApiService} from "../../services/social-auth-api.service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements AfterViewInit {
+export class LoginComponent implements AfterViewInit, OnInit {
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -20,8 +22,14 @@ export class LoginComponent implements AfterViewInit {
   constructor(
     private router: Router,
     private credentialService: CredentialService,
+    private googleAuthService: GoogleAuthService,
+    private socialAuthService: SocialAuthApiService,
     private cookieService: AuthService,
     private alertService: AlertsService) { }
+
+  ngOnInit() {
+    this.googleAuthService.configureOAuth();
+  }
 
   ngAfterViewInit() {
     const icons = document.querySelectorAll('.material-icons');
@@ -72,5 +80,13 @@ export class LoginComponent implements AfterViewInit {
     } else {
       this.alertService.errorMessage('Form is not valid', 'Error');
     }
+  }
+
+  loginWithGoogle(): void {
+    this.googleAuthService.loginWithGoogle();
+  }
+
+  handleGoogleLogin(): void {
+    this.googleAuthService.handleGoogleLogin();
   }
 }
