@@ -24,12 +24,20 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/**").permitAll()  // Allow public access to some URLs
-                        .anyRequest().authenticated()               // All other requests need authentication
+                        .requestMatchers("/public/**", "/login", "/oauth2/**").permitAll()  // Public and OAuth2 URLs
+                        .anyRequest().authenticated()                                        // All other requests need authentication
                 )
-                .csrf(AbstractHttpConfigurer::disable)          // Disable CSRF for APIs (but keep enabled for web forms in production)
-                .httpBasic(withDefaults())                      // Enable Basic Authentication for APIs
-                .formLogin(withDefaults());                     // Form login for browser access
+                .csrf(AbstractHttpConfigurer::disable)                       // Disable CSRF (or enable in production)
+                .httpBasic(withDefaults())                                       // Basic Authentication for APIs (updated method)
+                .formLogin(form -> form                         // Updated formLogin with method chaining
+                        .loginPage("/login")                   // Custom login page
+                        .defaultSuccessUrl("/dashboard")        // Redirect after successful login
+                        .permitAll()                           // Allow everyone to access login page
+                )
+                .oauth2Login(oauth2 -> oauth2                   // OAuth2 login configuration
+                        .loginPage("/login")                   // Custom login page
+                        .defaultSuccessUrl("/dashboard")        // Redirect after successful OAuth2 login
+                );
 
         return http.build();
     }
