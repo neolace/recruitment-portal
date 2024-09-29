@@ -26,15 +26,18 @@ export class GoogleAuthService {
   }
 
   loadDiscoveryDocumentAndTryLogin() {
-    this.oauthService.loadDiscoveryDocumentAndTryLogin().then(() => {
-      if (this.oauthService.hasValidAccessToken()) {
-        this.handleGoogleLogin();
-      } else {
-        this.alertService.errorMessage('No valid access token found', 'Error');
-      }
-    }).catch(error => {
-      this.alertService.errorMessage(error, 'Error');
-    });
+    this.oauthService
+      .loadDiscoveryDocumentAndTryLogin()
+      .then(() => {
+        if (this.oauthService.hasValidAccessToken()) {
+          this.handleGoogleLogin();
+        } else {
+          this.alertService.errorMessage('No valid access token found', 'Error');
+        }
+      })
+      .catch((error) => {
+        this.alertService.errorMessage(error, 'Error');
+      });
   }
 
   loginWithGoogle() {
@@ -46,37 +49,41 @@ export class GoogleAuthService {
       const user = {
         email: profile.info.email,
         firstName: profile.info.given_name,
-        lastName: profile.info.family_name
+        lastName: profile.info.family_name,
       };
 
-      // Check if Google user exists in database
-      this.credentialService.fetchCredentialByEmail(user.email).subscribe((response: any) => {
-        if (response) {
-          this.processLogin(response);
-        } else {
-          this.registerGoogleUser(user);
+      this.credentialService.fetchCredentialByEmail(user.email).subscribe(
+        (response: any) => {
+          if (response) {
+            this.processLogin(response);
+          } else {
+            this.registerGoogleUser(user);
+          }
+        },
+        (error) => {
+          this.alertService.errorMessage('Error while checking user', 'Error');
         }
-      }, error => {
-        this.alertService.errorMessage('Error occurred while checking user existence', 'Error');
-      });
+      );
     });
   }
 
   registerGoogleUser(profile: any) {
     const newUser = {
       email: profile.email,
-      firstname: profile.firstname,
-      lastname: profile.lastname,
+      firstname: profile.firstName,
+      lastname: profile.lastName,
       role: 'candidate',
-      userLevel: '1'
+      userLevel: '1',
     };
 
-    this.credentialService.addCredential(newUser).subscribe((response: any) => {
-      // User registered, proceed with login
-      this.processLogin(response);
-    }, error => {
-      this.alertService.errorMessage('Error occurred while registering user', 'Error');
-    });
+    this.credentialService.addCredential(newUser).subscribe(
+      (response: any) => {
+        this.processLogin(response);
+      },
+      (error) => {
+        this.alertService.errorMessage('Error registering user', 'Error');
+      }
+    );
   }
 
   processLogin(user: any) {
@@ -87,21 +94,24 @@ export class GoogleAuthService {
       this.router.navigate(['/']);
       this.alertService.successMessage('Login successful', 'Success');
     } else if (user.role === 'employer') {
-      if (user.userLevel === "2") {
-        this.cookieService.createUserID(user.employeeId);
-        this.cookieService.createAdmin(user.email);
-        this.cookieService.createOrganizationID(user.companyId);
-        this.cookieService.createLevel(user.userLevel);
-        this.cookieService.unlock();
-        this.router.navigate(['/dashboard']);
-      } else if (user.userLevel === "3") {
-        this.cookieService.createUserID(user.employeeId);
-        this.cookieService.createProAdmin(user.email);
-        this.cookieService.createOrganizationID(user.companyId);
-        this.cookieService.createLevel(user.userLevel);
-        this.cookieService.unlock();
-        this.router.navigate(['/pro']);
-      }
+      this.handleEmployerLogin(user);
     }
+  }
+
+  private handleEmployerLogin(user: any) {
+    if (user.userLevel === '2') {
+      this.setEmployerSession(user, '/dashboard');
+    } else if (user.userLevel === '3') {
+      this.setEmployerSession(user, '/pro');
+    }
+  }
+
+  private setEmployerSession(user: any, route: string) {
+    this.cookieService.createUserID(user.employeeId);
+    this.cookieService.createAdmin(user.email);
+    this.cookieService.createOrganizationID(user.companyId);
+    this.cookieService.createLevel(user.userLevel);
+    this.cookieService.unlock();
+    this.router.navigate([route]);
   }
 }

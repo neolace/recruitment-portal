@@ -29,6 +29,10 @@ export class AuthService {
     this.cookieService.set('pro-admin-token',token,60*60*24*7);
   }
 
+  createSession(user: any) {
+    sessionStorage.setItem('access_token', user.access_token);
+  }
+
   public logout(){
     this.cookieService.delete('user-token-id');
     this.cookieService.delete('pro-admin-token');
