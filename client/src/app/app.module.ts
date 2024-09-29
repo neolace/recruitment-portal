@@ -21,15 +21,8 @@ import {AngularFireModule} from "@angular/fire/compat";
 import {SharedPipesModule} from "./shared/modules/shared-pipes.module";
 import {HttpClientModule} from "@angular/common/http";
 import {ToastrModule} from "ngx-toastr";
-import {
-  DateTimeProvider,
-  OAuthLogger,
-  OAuthService,
-  SystemDateTimeProvider,
-  UrlHelperService
-} from "angular-oauth2-oidc";
-import {MyOAuthLogger} from "./DTO/MyOAuthLogger";
-import {GoogleAuthService} from "./services/google-auth.service";
+import {LocationStrategy, PathLocationStrategy} from "@angular/common";
+import {OAuthModule} from "angular-oauth2-oidc";
 
 @NgModule({
   declarations: [
@@ -60,14 +53,11 @@ import {GoogleAuthService} from "./services/google-auth.service";
       preventDuplicates: true,
       maxOpened: 3,
       timeOut: 5000,
-    })
+    }),
+    OAuthModule.forRoot()
   ],
   providers: [
-    OAuthService,
-    { provide: OAuthLogger, useClass: MyOAuthLogger },
-    { provide: DateTimeProvider, useValue: SystemDateTimeProvider },
-    GoogleAuthService,
-    UrlHelperService
+    {provide: LocationStrategy, useClass: PathLocationStrategy }
   ],
   bootstrap: [AppComponent]
 })

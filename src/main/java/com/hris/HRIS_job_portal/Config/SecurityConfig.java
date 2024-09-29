@@ -2,12 +2,9 @@ package com.hris.HRIS_job_portal.Config;
 
 import com.hris.HRIS_job_portal.Model.CredentialsModel;
 import com.hris.HRIS_job_portal.Service.CredentialsService;
-import jakarta.servlet.http.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Description;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -19,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -39,7 +35,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/**", "/login", "/oauth2/**").permitAll()
+                        .requestMatchers("/public/**", "/login", "/oauth2/**", "/oauth/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
@@ -54,7 +50,7 @@ public class SecurityConfig {
                         .userInfoEndpoint(userInfo -> userInfo
                                 .oidcUserService(this.oidcUserService())
                         )
-                        .defaultSuccessUrl(configUtil.getProperty("SUCCESS_REDIRECT"), true)
+                        .defaultSuccessUrl(configUtil.getProperty("GOOGLE_CLIENT_REDIRECT"), true)
                         .permitAll()
                 );
 
@@ -62,7 +58,6 @@ public class SecurityConfig {
     }
 
     @Bean
-    @Description("In-memory user details for testing")
     public UserDetailsService users() {
         PasswordEncoder encoder = passwordEncoder();
         UserDetails user = User.builder()
@@ -89,14 +84,11 @@ public class SecurityConfig {
             @Override
             public OidcUser loadUser(OidcUserRequest userRequest) {
                 OidcUser oidcUser = delegate.loadUser(userRequest);
-
-                // Custom processing for Google user info
                 String email = oidcUser.getEmail();
                 String firstName = oidcUser.getGivenName();
                 String lastName = oidcUser.getFamilyName();
 
-                System.out.println("Google user info: " + email + " " + firstName + " " + lastName);
-
+                // Custom user registration logic
                 CredentialsModel existingCredentials = credentialsService.getCredentialsByEmail(email);
                 if (existingCredentials != null) {
                     return loginUser(existingCredentials);
@@ -110,7 +102,6 @@ public class SecurityConfig {
     private OidcUser loginUser(CredentialsModel credentials) {
         credentials.setRole("candidate");
         credentials.setUserLevel("1");
-
         return (OidcUser) credentials;
     }
 
@@ -121,7 +112,6 @@ public class SecurityConfig {
         newUser.setLastname(lastName);
         newUser.setRole("candidate");
         newUser.setUserLevel("1");
-
         CredentialsModel savedUser = credentialsService.addCredentials(newUser);
         return (OidcUser) savedUser;
     }
