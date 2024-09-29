@@ -47,6 +47,7 @@ export class LoginComponent implements AfterViewInit, OnInit {
           return;
         }
         if (formData.password === response.password) {
+          this.cookieService.createSession(response);
           if (response.role === 'candidate') {
             this.cookieService.createUserID(response.employeeId);
             this.cookieService.createLevel(response.userLevel);
@@ -84,9 +85,5 @@ export class LoginComponent implements AfterViewInit, OnInit {
 
   loginWithGoogle(): void {
     this.googleAuthService.loginWithGoogle();
-  }
-
-  handleGoogleLogin(): void {
-    this.googleAuthService.handleGoogleLogin();
   }
 }

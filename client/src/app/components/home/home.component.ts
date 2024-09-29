@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     return this.employeeService.fetchFullEmployee(id).pipe(
       tap((data) => {
         this.employee = data;
-        this.userSavedIds = this.employee.employee.savedJobs.map((job: any) => job.jobId);
+        this.userSavedIds = this.employee?.employee?.savedJobs?.map((job: any) => job.jobId);
       })
     )
   }
