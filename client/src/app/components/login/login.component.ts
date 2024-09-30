@@ -86,4 +86,16 @@ export class LoginComponent implements AfterViewInit, OnInit {
   loginWithGoogle(): void {
     this.googleAuthService.loginWithGoogle();
   }
+
+  loginWithGithub() {
+
+  }
+
+  loginWithLinkedin() {
+
+  }
+
+  loginWithFacebook() {
+
+  }
 }
