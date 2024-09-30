@@ -1,11 +1,12 @@
-import {Injectable, OnDestroy} from '@angular/core';
-import { AuthConfig, OAuthService } from "angular-oauth2-oidc";
+import { Injectable, OnDestroy } from '@angular/core';
+import {AuthConfig, NullValidationHandler, OAuthService} from "angular-oauth2-oidc";
 import { environment } from "../../environments/environment";
 import { CredentialService } from "./credential.service";
 import { Router } from "@angular/router";
 import { AlertsService } from "./alerts.service";
 import { AuthService } from "./auth.service";
-import {Subject} from "rxjs";
+import { Subject } from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,13 @@ export class GoogleAuthService implements OnDestroy {
 
   private hasLoggedIn = false;
   private unsubscribe$ = new Subject<void>();
+
   constructor(
     private oauthService: OAuthService,
     private credentialService: CredentialService,
     private alertService: AlertsService,
     private cookieService: AuthService,
+    private http: HttpClient,
     private router: Router
   ) {}
 
@@ -30,6 +33,7 @@ export class GoogleAuthService implements OnDestroy {
 
   configureOAuth() {
     this.oauthService.configure(this.googleAuthConfig);
+    this.oauthService.tokenValidationHandler = new NullValidationHandler();
     this.loadDiscoveryDocumentAndTryLogin();
   }
 
@@ -56,72 +60,75 @@ export class GoogleAuthService implements OnDestroy {
   }
 
   setOAuth(accessToken: string, idToken: string) {
-    document.cookie = `access_token=${accessToken}; path=/; secure; SameSite=Strict`; // Removed HttpOnly
-    document.cookie = `id_token=${idToken}; path=/; secure; SameSite=Strict`; // Removed HttpOnly
+    document.cookie = `access_token=${accessToken}; path=/; secure; SameSite=Strict`;
+    document.cookie = `id_token=${idToken}; path=/; secure; SameSite=Strict`;
   }
 
   handleRedirectCallback() {
     const fragment = window.location.hash.substring(1);
     const params = new URLSearchParams(fragment);
 
-    const accessToken: any = params.get('access_token');
-    const idToken: any = params.get('id_token');
-
-    sessionStorage.setItem('access_token', accessToken);
-    sessionStorage.setItem('id_token', idToken);
+    const accessToken = params.get('access_token');
+    const idToken = params.get('id_token');
 
     if (accessToken && idToken) {
+      // Store tokens in sessionStorage
+      sessionStorage.setItem('access_token', accessToken);
+      sessionStorage.setItem('id_token', idToken);
+
       if (!this.hasLoggedIn) {
         this.handleGoogleLogin();
         this.hasLoggedIn = true;
       }
-
-      // Check if the token is expired and refresh if necessary
-      if (this.oauthService.getAccessTokenExpiration() < Date.now() / 1000) {
-        this.oauthService.refreshToken().then(() => {
-          // Update the cookies after refreshing
-          const newAccessToken = this.oauthService.getAccessToken();
-          const newIdToken = this.oauthService.getIdToken();
-          this.setOAuth(newAccessToken, newIdToken);
-        }).catch(error => {
-          console.error('Error refreshing token:', error);
-        });
-      }
     } else {
-      this.alertService.errorMessage('No access token or id token found', 'Error');
+      this.alertService.errorMessage('Access token or ID token not found', 'Error');
     }
   }
 
   private handleGoogleLogin() {
-    this.oauthService.loadUserProfile()
-      .then((profile: any) => this.processUserProfile(profile))
-      .catch((error) => {
-        this.alertService.errorMessage('Error loading user profile: ' + error, 'Error');
-      });
-  }
+    const accessToken = this.oauthService.getAccessToken();
+    const userInfoEndpoint = 'https://www.googleapis.com/oauth2/v3/userinfo';
 
-  private processUserProfile(profile: any) {
-    const user = {
-      email: profile.info.email,
-      firstName: profile.info.given_name,
-      lastName: profile.info.family_name,
-    };
-
-    this.credentialService.fetchCredentialByEmail(user.email).subscribe(
-      (response: any) => {
-        if (response) {
-          this.processLogin(response);
-        } else {
-          this.registerGoogleUser(user);
-        }
-      },
+    this.http.get(userInfoEndpoint, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    }).subscribe(
+      (profile: any) => this.processUserProfile(profile),
       (error) => {
-        this.alertService.errorMessage('Error while checking user: ' + error, 'Error');
+        this.alertService.errorMessage('Error loading user profile: ' + (error.message || error), 'Error');
       }
     );
   }
 
+  private processUserProfile(profile: any) {
+    console.log(profile);
+    if (profile) {
+      const user = {
+        email: profile.email,
+        firstName: profile.given_name,
+        lastName: profile.family_name,
+      };
+
+      this.credentialService.fetchCredentialByEmail(user.email).subscribe(
+        (response: any) => {
+          if (response) {
+            this.processLogin(response);
+          } else {
+            this.registerGoogleUser(user);
+          }
+        },
+        (error) => {
+          this.alertService.errorMessage('Error while checking user: ' + error, 'Error');
+        }
+      );
+    } else {
+      this.alertService.errorMessage('Invalid user profile data received', 'Error');
+    }
+  }
+
   private registerGoogleUser(profile: any) {
+    console.log(profile)
     const newUser = {
       email: profile.email,
       firstname: profile.firstName,
@@ -141,6 +148,7 @@ export class GoogleAuthService implements OnDestroy {
   }
 
   private processLogin(user: any) {
+    console.log(user)
     this.cookieService.createUserID(user.employeeId);
     this.cookieService.createLevel(user.userLevel);
     this.cookieService.unlock();
