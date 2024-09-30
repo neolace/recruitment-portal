@@ -18,4 +18,7 @@ export interface EmployeeModel {
   marketingNotifications?: any;
   profileCompleted?: any;
   profileStatus?: any;
+  expectedSalaryRange?: any;
+  currentExperience?: any;
+  keywords?: any;
 }

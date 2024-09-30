@@ -236,7 +236,7 @@
       </div>
 
       <div class="row mt-4">
-        <div class="col-12 col-sm-6 col-lg-3">
+        <div class="col-12 col-sm-6 col-lg-3" *ngFor="let re of filteredEmployeesList() | truncateComments:4">
           <div class="employee-card">
             <div class="d-flex align-items-center justify-content-between w-100">
             <span class="top-rated">
@@ -248,152 +248,30 @@
             </div>
 
             <div class="profile-wrapper">
-              <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="profile" class="profile-img">
+              <img [src]="re?.image ? re?.image : './assets/imgs/shared/default_emp_dp.svg'" alt="profile" class="profile-img">
             </div>
 
-            <div class="name">John Doe</div>
-            <div class="title">Web Designer</div>
+            <div class="name">{{re?.firstname ? re?.firstname + ' ' + re?.lastname : 'N/A'}}</div>
+            <div class="title">{{re.occupation ? re.occupation : 'N/A'}}</div>
 
             <div class="keywords">
               <div class="d-flex align-items-center justify-content-around w-100 gap-1">
-                <div class="key">HTML</div>
-                <div class="key">CSS</div>
-                <div class="key">JavaScript</div>
+                <div class="key" *ngFor="let k of re?.keywords?.split(',')">{{k}}</div>
               </div>
             </div>
 
             <div class="d-flex align-items-center justify-content-around w-100">
               <div class="d-flex flex-column align-items-center justify-content-center">
                 <div class="caption">Salary:</div>
-                <div class="value">4k - 4.5k</div>
+                <div class="value">{{re?.expectedSalaryRange ? re?.expectedSalaryRange : 'N/A'}}</div>
               </div>
               <div class="d-flex flex-column align-items-center justify-content-center">
                 <div class="caption">Experience:</div>
-                <div class="value">2 years</div>
+                <div class="value">{{re?.currentExperience ? re?.currentExperience : 'N/A'}}</div>
               </div>
             </div>
 
-            <button class="btn-1">Profile</button>
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-lg-3">
-          <div class="employee-card">
-            <div class="d-flex align-items-center justify-content-between w-100">
-            <span class="top-rated">
-              <i class="material-icons">star_border</i>
-            </span>
-              <span class="favorite">
-              <i class="material-icons">favorite</i>
-            </span>
-            </div>
-
-            <div class="profile-wrapper">
-              <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="profile" class="profile-img">
-            </div>
-
-            <div class="name">Jane Doe</div>
-            <div class="title">Web Designer</div>
-
-            <div class="keywords">
-              <div class="d-flex align-items-center justify-content-around w-100 gap-1">
-                <div class="key">HTML</div>
-                <div class="key">CSS</div>
-                <div class="key">JavaScript</div>
-              </div>
-            </div>
-
-            <div class="d-flex align-items-center justify-content-around w-100">
-              <div class="d-flex flex-column align-items-center justify-content-center">
-                <div class="caption">Salary:</div>
-                <div class="value">4k - 4.5k</div>
-              </div>
-              <div class="d-flex flex-column align-items-center justify-content-center">
-                <div class="caption">Experience:</div>
-                <div class="value">2 years</div>
-              </div>
-            </div>
-
-            <button class="btn-1">Profile</button>
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-lg-3">
-          <div class="employee-card">
-            <div class="d-flex align-items-center justify-content-between w-100">
-            <span class="top-rated">
-              <i class="material-icons">star_border</i>
-            </span>
-              <span class="favorite">
-              <i class="material-icons">favorite</i>
-            </span>
-            </div>
-
-            <div class="profile-wrapper">
-              <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="profile" class="profile-img">
-            </div>
-
-            <div class="name">John Doe</div>
-            <div class="title">Web Designer</div>
-
-            <div class="keywords">
-              <div class="d-flex align-items-center justify-content-around w-100 gap-1">
-                <div class="key">HTML</div>
-                <div class="key">CSS</div>
-                <div class="key">JavaScript</div>
-              </div>
-            </div>
-
-            <div class="d-flex align-items-center justify-content-around w-100">
-              <div class="d-flex flex-column align-items-center justify-content-center">
-                <div class="caption">Salary:</div>
-                <div class="value">4k - 4.5k</div>
-              </div>
-              <div class="d-flex flex-column align-items-center justify-content-center">
-                <div class="caption">Experience:</div>
-                <div class="value">2 years</div>
-              </div>
-            </div>
-
-            <button class="btn-1">Profile</button>
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-lg-3">
-          <div class="employee-card">
-            <div class="d-flex align-items-center justify-content-between w-100">
-            <span class="top-rated">
-              <i class="material-icons">star_border</i>
-            </span>
-              <span class="favorite">
-              <i class="material-icons">favorite</i>
-            </span>
-            </div>
-
-            <div class="profile-wrapper">
-              <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="profile" class="profile-img">
-            </div>
-
-            <div class="name">Jane Doe</div>
-            <div class="title">Web Designer</div>
-
-            <div class="keywords">
-              <div class="d-flex align-items-center justify-content-around w-100 gap-1">
-                <div class="key">HTML</div>
-                <div class="key">CSS</div>
-                <div class="key">JavaScript</div>
-              </div>
-            </div>
-
-            <div class="d-flex align-items-center justify-content-around w-100">
-              <div class="d-flex flex-column align-items-center justify-content-center">
-                <div class="caption">Salary:</div>
-                <div class="value">4k - 4.5k</div>
-              </div>
-              <div class="d-flex flex-column align-items-center justify-content-center">
-                <div class="caption">Experience:</div>
-                <div class="value">2 years</div>
-              </div>
-            </div>
-
-            <button class="btn-1">Profile</button>
+            <button class="btn-1" (click)="viewProfile(re?.id)">Profile</button>
           </div>
         </div>
       </div>

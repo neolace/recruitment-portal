@@ -11,6 +11,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {SharedComponentModule} from "../../../shared/modules/shared-component.module";
+import {SharedPipesModule} from "../../../shared/modules/shared-pipes.module";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {SharedComponentModule} from "../../../shared/modules/shared-component.mo
         MatTooltipModule,
         MatProgressSpinnerModule,
         FormsModule,
-        SharedComponentModule
+        SharedComponentModule,
+        SharedPipesModule
     ],
   providers: [],
 })

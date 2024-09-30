@@ -3,6 +3,7 @@ import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
 import {EmployeeService} from "../../../services/employee.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {AuthService} from "../../../services/auth.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-emp-profile',
@@ -24,11 +25,23 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
   corsError: boolean = false;
   unexpectedError: boolean = false;
 
-  constructor(private employeeService: EmployeeService, private cookieService: AuthService) {}
+  employees: any;
+  filteredEmployees: any;
+
+  queryId: any;
+
+  constructor(private employeeService: EmployeeService, private cookieService: AuthService, private router: Router, private route: ActivatedRoute) {}
 
   async ngOnInit(): Promise<any> {
     this.employeeId = this.cookieService.userID();
+    this.route.queryParamMap.subscribe(params => {
+      this.queryId = params.get('id');
+    })
+    if (this.queryId) {
+      this.employeeId = this.queryId
+    }
     this.getEmployee(this.employeeId)
+    this.getAllEmployees()
   }
 
   ngAfterViewInit() {
@@ -64,6 +77,17 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
     );
   }
 
+  getAllEmployees() {
+    this.employeeService.fetchEmployees().subscribe((data: any) => {
+      this.employees = data;
+    })
+  }
+
+  filteredEmployeesList() {
+    this.filteredEmployees = this.employees?.filter((employee: any) => employee?.occupation === this.employee?.employee?.occupation);
+    return this.filteredEmployees;
+  }
+
   calculateProfileProgress(data: any) {
     this.loading = false;
     if (!data || !data.profileCompleted) {
@@ -84,5 +108,12 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
     this.progressValue = Math.round((completed / total) * 100);
   }
 
-    protected readonly length = length;
+  viewProfile(id: any) {
+    if (id) {
+      this.router.navigate(['/candidate-profile'], {queryParams: {id: id}});
+      setTimeout(() => {
+        window.location.reload();
+      }, 500)
+    }
+  }
 }

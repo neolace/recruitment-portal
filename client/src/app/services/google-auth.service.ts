@@ -59,11 +59,6 @@ export class GoogleAuthService implements OnDestroy {
     this.oauthService.initLoginFlow();
   }
 
-  setOAuth(accessToken: string, idToken: string) {
-    document.cookie = `access_token=${accessToken}; path=/; secure; SameSite=Strict`;
-    document.cookie = `id_token=${idToken}; path=/; secure; SameSite=Strict`;
-  }
-
   handleRedirectCallback() {
     const fragment = window.location.hash.substring(1);
     const params = new URLSearchParams(fragment);
@@ -102,7 +97,6 @@ export class GoogleAuthService implements OnDestroy {
   }
 
   private processUserProfile(profile: any) {
-    console.log(profile);
     if (profile) {
       const user = {
         email: profile.email,
@@ -128,7 +122,6 @@ export class GoogleAuthService implements OnDestroy {
   }
 
   private registerGoogleUser(profile: any) {
-    console.log(profile)
     const newUser = {
       email: profile.email,
       firstname: profile.firstName,
