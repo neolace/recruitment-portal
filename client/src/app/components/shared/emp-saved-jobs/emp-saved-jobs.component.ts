@@ -13,7 +13,6 @@ export class EmpSavedJobsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        // Logic to update active class based on the current route
         this.updateActiveClass();
       }
     });
@@ -27,7 +26,7 @@ export class EmpSavedJobsComponent implements OnInit, AfterViewInit {
   }
 
   navigateBetweenTabs(path: string) {
-    this.router.navigate([`/my-jobs/${path}/`]);
+    this.router.navigate([`/my-jobs/${path}`]);
   }
 
   updateActiveClass() {
