@@ -30,12 +30,12 @@ const routes: Routes = [
   { path: 'candidate-profile-setting-test', loadChildren: () => import('./components/shared/emp-profile-settings-test/emp-profile-settings-test.module').then(m => m.EmpProfileSettingsTestModule) },
   { path: '403', loadChildren: () => import('./components/shared/forbidden/forbidden.module').then(m => m.ForbiddenModule) },
   { path: 'for-companies', loadChildren: () => import('./components/for-companies/for-companies.module').then(m => m.ForCompaniesModule) },
-  { path: 'oauth-callback', loadChildren: () => import('./components/shared/o-auth-callback/o-auth-callback.module').then(m => m.OAuthCallbackModule) }
+  { path: 'oauth-callback', loadChildren: () => import('./components/shared/o-auth-callback/o-auth-callback.module').then(m => m.OAuthCallbackModule) },
+  { path: '**', redirectTo: '/home' }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    useHash: true,
     anchorScrolling: 'enabled',
     scrollPositionRestoration: 'enabled' })],
   exports: [RouterModule]

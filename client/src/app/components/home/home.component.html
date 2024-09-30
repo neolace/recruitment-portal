@@ -157,7 +157,7 @@
                 </div>
               </div>
               <div class="card-top-right">
-                <div class="visit-link-circle" (click)="userSavedIds.includes(p.id) ? removeFav(p.id) :saveFav(p.id)">
+                <div class="visit-link-circle" (click)="(userSavedIds && userSavedIds.includes(p.id)) ? removeFav(p.id) :saveFav(p.id)">
                   <i class="material-icons" [ngClass]="(userSavedIds && userSavedIds.includes(p.id)) ? 'liked' : ''">favorite_border</i>
                 </div>
               </div>
