@@ -16,7 +16,7 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Allow CORS for all endpoints
-                .allowedOrigins("http://localhost:4200", "https://accounts.google.com") // Allow requests from this origin
+                .allowedOrigins("http://localhost:4200", "https://accounts.google.com", "https://www.github.com") // Allow requests from this origin
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allow specific HTTP methods
                 .allowedHeaders("*") // Allow all headers
                 .allowCredentials(true); // Allow sending credentials
@@ -27,7 +27,7 @@ public class CorsConfig implements WebMvcConfigurer {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList("http://localhost:4200", "https://accounts.google.com")); // Allow multiple origins
+        config.setAllowedOrigins(Arrays.asList("http://localhost:4200", "https://accounts.google.com", "https://www.github.com")); // Allow multiple origins
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);

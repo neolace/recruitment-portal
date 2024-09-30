@@ -10,7 +10,7 @@ export class AuthService {
   constructor(private cookieService: CookieService) { }
 
   public createUserID(token:any){
-    this.cookieService.set('user-token-id',token,60*60*24*7);
+    this.cookieService.set('user-token-id',token, {expires: 60* 60* 24* 7, path: '/', sameSite: 'Strict', secure: true});
   }
 
   public createOrganizationID(token:any){
@@ -18,7 +18,7 @@ export class AuthService {
   }
 
   public createLevel(token:any){
-    this.cookieService.set('level', token, 60*60*24*7)
+    this.cookieService.set('level', token, {expires: 60* 60* 24* 7, path: '/', sameSite: 'Strict', secure: true});
   }
 
   public createAdmin(token:string){
@@ -39,6 +39,7 @@ export class AuthService {
     this.cookieService.delete('organization');
     this.cookieService.delete('admin-token');
     this.cookieService.delete('level');
+    sessionStorage.clear();
   }
 
   public isExists():boolean{
