@@ -71,6 +71,18 @@ public class EmployeeService {
         return employee;
     }
 
+    public EmployeeModel updateSearchAppearance(EmployeeModel employee) {
+        Optional<EmployeeModel> employeeModel = employeeRepository.findById(employee.getId());
+        if (employeeModel.isPresent()) {
+            EmployeeModel existingEmployee = employeeModel.get();
+            existingEmployee.setExpectedSalaryRange(employee.getExpectedSalaryRange());
+            existingEmployee.setCurrentExperience(employee.getCurrentExperience());
+            existingEmployee.setKeywords(employee.getKeywords());
+            employeeRepository.save(existingEmployee);
+        }
+        return employee;
+    }
+
     public EmployeeModel updateNotifications(EmployeeModel employee) {
         Optional<EmployeeModel> employeeModel = employeeRepository.findById(employee.getId());
         if (employeeModel.isPresent()) {

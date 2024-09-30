@@ -9,6 +9,8 @@ import {CredentialService} from "../../../services/credential.service";
 import {Router} from "@angular/router";
 import {AlertsService} from "../../../services/alerts.service";
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-emp-profile-settings',
   templateUrl: './emp-profile-settings.component.html',
@@ -43,6 +45,12 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
     occupation: new FormControl('', [Validators.required]),
     dob: new FormControl('', [Validators.required]),
     intro: new FormControl('')
+  });
+
+  searchAppearanceFormGroup = new FormGroup({
+    expectedSalaryRange: new FormControl(''),
+    currentExperience: new FormControl(''),
+    keywords: new FormControl('', [Validators.max(40), Validators.min(3), Validators.maxLength(40), Validators.minLength(3)]),
   });
 
   skillsFormGroup = new FormGroup({
@@ -116,6 +124,11 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
     icons.forEach((icon) => {
       icon.setAttribute('translate', 'no');
     });
+
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
   }
 
   ngOnDestroy() {
@@ -128,6 +141,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
       (data) => {
         this.employee = data;
         this.patchValuesToPersonalForm();
+        this.patchValuesToSearchAppearanceForm();
         this.patchValuesToContactForm();
         this.patchValuesToSocialForm();
         this.patchNotifications(data?.employee?.accountNotifications, data?.employee?.marketingNotifications);
@@ -189,6 +203,14 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
+  patchValuesToSearchAppearanceForm() {
+    if (this.employee) {
+      this.searchAppearanceFormGroup.get('expectedSalaryRange')?.setValue(this.employee?.employee?.expectedSalaryRange);
+      this.searchAppearanceFormGroup.get('currentExperience')?.setValue(this.employee?.employee?.currentExperience);
+      this.searchAppearanceFormGroup.get('keywords')?.setValue(this.employee?.employee?.keywords);
+    }
+  }
+
   savePersonalDetails() {
     this.loading = true;
     this.employeeService.updateEmployee({
@@ -203,6 +225,23 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
       this.getEmployee(this.employeeId);
       this.loading = false;
       this.alertService.successMessage('Personal details updated successfully! Please refresh the page.', 'Success');
+    }, (error) => {
+      this.loading = false;
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  saveSearchAppearance() {
+    this.loading = true;
+    this.employeeService.updateSearchAppearance({
+      id: this.employee?.employee?.id,
+      expectedSalaryRange: this.searchAppearanceFormGroup.get('expectedSalaryRange')?.value,
+      currentExperience: this.searchAppearanceFormGroup.get('currentExperience')?.value,
+      keywords: this.searchAppearanceFormGroup.get('keywords')?.value
+    }).subscribe((data) => {
+      this.getEmployee(this.employeeId);
+      this.loading = false;
+      this.alertService.successMessage('Search appearance updated successfully! Please refresh the page.', 'Success');
     }, (error) => {
       this.loading = false;
       this.alertService.errorMessage('Something went wrong. Please try again', 'Error');

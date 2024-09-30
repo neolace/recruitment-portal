@@ -41,6 +41,9 @@ public class EmployeeModel {
     private Object profileCompleted;
     private String profileStatus;
     private String companyId;
+    private String expectedSalaryRange;
+    private String currentExperience;
+    private String keywords;
 }
 
 // {

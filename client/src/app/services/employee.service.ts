@@ -29,7 +29,7 @@ export class EmployeeService {
     });
 
     if (!this.employeesCacheInitialized) {
-      this.http.get<EmployeeModel[]>(`${this.baseUrl}/employee/getAll`, {headers}).subscribe(data => {
+      this.http.get<EmployeeModel[]>(`${this.baseUrl}/employee/all`, {headers}).subscribe(data => {
         this.employeesSubject.next(data);
         this.employeesCacheInitialized = true; // Cache is initialized after the first fetch
       });
@@ -101,6 +101,18 @@ export class EmployeeService {
       'Authorization': 'Basic ' + btoa('admin:password')
     });
     this.http.put(`${this.baseUrl}/employee/update` , employee, {headers}).subscribe(data => {
+      this.clearCache(); // Invalidate the cache
+      this.fetchFullEmployee(employee.id); // Refresh the cache after updating
+    });
+
+    return this.employees$;
+  }
+
+  updateSearchAppearance(employee: EmployeeModel): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    this.http.put(`${this.baseUrl}/employee/update/sa` , employee, {headers}).subscribe(data => {
       this.clearCache(); // Invalidate the cache
       this.fetchFullEmployee(employee.id); // Refresh the cache after updating
     });
