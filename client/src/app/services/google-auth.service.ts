@@ -47,7 +47,8 @@ export class GoogleAuthService implements OnDestroy {
           }
           this.handleGoogleLogin();
         } else {
-          this.alertService.errorMessage('No valid access token found', 'Error');
+          this.alertService.warningMessage('No valid access token found', 'Warning');
+          return;
         }
       })
       .catch((error) => {
@@ -67,7 +68,6 @@ export class GoogleAuthService implements OnDestroy {
     const idToken = params.get('id_token');
 
     if (accessToken && idToken) {
-      // Store tokens in sessionStorage
       sessionStorage.setItem('access_token', accessToken);
       sessionStorage.setItem('id_token', idToken);
 
@@ -141,16 +141,17 @@ export class GoogleAuthService implements OnDestroy {
   }
 
   private processLogin(user: any) {
-    console.log(user)
     this.cookieService.createUserID(user.employeeId);
     this.cookieService.createLevel(user.userLevel);
     this.cookieService.unlock();
-    if (user.role === 'candidate') {
-      this.router.navigate(['/']);
-      this.alertService.successMessage('Login successful', 'Success');
-    } else if (user.role === 'employer') {
-      this.handleEmployerLogin(user);
-    }
+    setTimeout(() => {
+      if (user.role === 'candidate') {
+        this.router.navigate(['/']);
+        this.alertService.successMessage('Login successful', 'Success');
+      } else if (user.role === 'employer') {
+        this.handleEmployerLogin(user);
+      }
+    },500)
   }
 
   private handleEmployerLogin(user: any) {

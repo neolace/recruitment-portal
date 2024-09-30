@@ -10,6 +10,14 @@ export class SkipXsrfInterceptor implements HttpInterceptor {
       const clonedRequest = req.clone({ withCredentials: false });
       return next.handle(clonedRequest);
     }
+    if (req.url.includes('github.com/login/oauth/')) {
+      const clonedRequest = req.clone({ withCredentials: false });
+      return next.handle(clonedRequest);
+    }
+    if (req.url.includes('westernmilling.okta.com/.well-known/openid-configuration')) {
+      const clonedRequest = req.clone({ withCredentials: false });
+      return next.handle(clonedRequest);
+    }
     return next.handle(req);
   }
 }

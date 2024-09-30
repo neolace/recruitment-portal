@@ -15,7 +15,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -47,9 +51,10 @@ public class SecurityConfig {
                 )
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage(configUtil.getProperty("FAILURE_REDIRECT"))
-                        .userInfoEndpoint(userInfo -> userInfo
-                                .oidcUserService(this.oidcUserService())
-                        )
+                        .userInfoEndpoint(userInfo -> {
+                            userInfo.oidcUserService(this.oidcUserService());
+                            userInfo.userService(this.githubUserService()); // Add GitHub user service
+                        })
                         .defaultSuccessUrl(configUtil.getProperty("GOOGLE_CLIENT_REDIRECT"), true)
                         .permitAll()
                 );
@@ -97,6 +102,44 @@ public class SecurityConfig {
                 }
             }
         };
+    }
+
+    private OAuth2UserService<OAuth2UserRequest, OAuth2User> githubUserService() {
+        return new OAuth2UserService<>() {
+            @Override
+            public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+                OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new OAuth2UserService<>() {
+                    @Override
+                    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+                        return null;
+                    }
+                };
+                OAuth2User user = delegate.loadUser(userRequest);
+
+                // Extract user information (like email, name) from GitHub
+                String email = user.getAttribute("email");
+                String name = user.getAttribute("name");
+
+                // Custom user registration logic (similar to Google)
+                CredentialsModel existingCredentials = credentialsService.getCredentialsByEmail(email);
+                if (existingCredentials != null) {
+                    return loginUser(existingCredentials);
+                } else {
+                    return registerGitHubUser(email, name);
+                }
+            }
+        };
+    }
+
+    private OidcUser registerGitHubUser(String email, String name) {
+        CredentialsModel newUser = new CredentialsModel();
+        newUser.setEmail(email);
+        newUser.setFirstname(name); // Optionally split the name if needed
+        newUser.setLastname(""); // You can customize this if needed
+        newUser.setRole("candidate");
+        newUser.setUserLevel("1");
+        CredentialsModel savedUser = credentialsService.addCredentials(newUser);
+        return (OidcUser) savedUser; // Adjust if you want to return a different type
     }
 
     private OidcUser loginUser(CredentialsModel credentials) {

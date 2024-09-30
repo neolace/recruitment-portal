@@ -6,6 +6,7 @@ import {AuthService} from "../../services/auth.service";
 import {AlertsService} from "../../services/alerts.service";
 import {GoogleAuthService} from "../../services/google-auth.service";
 import {SocialAuthApiService} from "../../services/social-auth-api.service";
+import {GitHubAuthService} from "../../services/git-hub-auth.service";
 
 @Component({
   selector: 'app-login',
@@ -23,12 +24,14 @@ export class LoginComponent implements AfterViewInit, OnInit {
     private router: Router,
     private credentialService: CredentialService,
     private googleAuthService: GoogleAuthService,
+    private gitHubAuthService: GitHubAuthService,
     private socialAuthService: SocialAuthApiService,
     private cookieService: AuthService,
     private alertService: AlertsService) { }
 
   ngOnInit() {
     this.googleAuthService.configureOAuth();
+    this.gitHubAuthService.handleRedirectCallback();
   }
 
   ngAfterViewInit() {
@@ -88,7 +91,7 @@ export class LoginComponent implements AfterViewInit, OnInit {
   }
 
   loginWithGithub() {
-
+    this.gitHubAuthService.loginWithGitHub();
   }
 
   loginWithLinkedin() {
