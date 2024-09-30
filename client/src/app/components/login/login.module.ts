@@ -5,7 +5,7 @@ import {LoginRoutingModule} from "./login-routing.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {GoogleAuthService} from "../../services/google-auth.service";
 import {OAuthLogger, OAuthModule, OAuthService, UrlHelperService} from "angular-oauth2-oidc";
-import {MyOAuthLogger} from "../../DTO/MyOAuthLogger";
+import {MyOAuthLogger} from "../../Config/MyOAuthLogger";
 
 @NgModule({
   declarations: [
