@@ -9,6 +9,8 @@ import {FreeDashboardComponent} from "./components/dashboards/free/free-dashboar
 import {ProDashboardComponent} from "./components/dashboards/pro/pro-dashboard/pro-dashboard.component";
 import {commonSearchResults} from "./shared/data-store/common-search-results";
 import {AuthService} from "./services/auth.service";
+import {HttpErrorResponse} from "@angular/common/http";
+import {EmployeeService} from "./services/employee.service";
 
 @Component({
   selector: 'app-root',
@@ -28,9 +30,12 @@ export class AppComponent implements OnInit, AfterViewInit {
   filteredSearchResults: any[] = [];
   targetInput: any;
 
+  employee: any;
+
   constructor(public themeService: ThemeService,
               private router: Router,
               private renderer: Renderer2,
+              private employeeService: EmployeeService,
               private cookieService: AuthService) {}
 
   ngOnInit() {
@@ -54,6 +59,17 @@ export class AppComponent implements OnInit, AfterViewInit {
     icons.forEach((icon) => {
       icon.setAttribute('translate', 'no');
     });
+  }
+
+  getEmployee(id: any) {
+    this.employeeService.getEmployee(id).subscribe(
+      (data) => {
+        this.employee = data;
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error)
+      }
+    );
   }
 
   updateActiveClass() {

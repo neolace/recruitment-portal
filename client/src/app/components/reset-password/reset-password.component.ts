@@ -1,4 +1,5 @@
 import {AfterViewInit, Component} from '@angular/core';
+import {ThemeService} from "../../services/theme.service";
 
 @Component({
   selector: 'app-reset-password',
@@ -7,6 +8,10 @@ import {AfterViewInit, Component} from '@angular/core';
 })
 export class ResetPasswordComponent implements AfterViewInit{
 
+  constructor(
+    public themeService: ThemeService
+  ) {
+  }
   ngAfterViewInit() {
     const icons = document.querySelectorAll('.material-icons');
     icons.forEach((icon) => {

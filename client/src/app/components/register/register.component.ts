@@ -4,6 +4,7 @@ import {CredentialService} from "../../services/credential.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {AlertsService} from "../../services/alerts.service";
+import {ThemeService} from "../../services/theme.service";
 
 @Component({
   selector: 'app-register',
@@ -24,6 +25,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
               private route: ActivatedRoute,
               private credentialService: CredentialService,
               private alertService: AlertsService,
+              public themeService: ThemeService,
               private cookieService: AuthService) { }
 
   ngOnInit(): void {

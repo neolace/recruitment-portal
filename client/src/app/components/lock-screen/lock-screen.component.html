@@ -5,9 +5,9 @@
     <div class="content-holder">
       <div class="form-card-1">
         <div class="profile-wrapper">
-          <img src="https://jobstack-shreethemes.vercel.app/static/media/05.a7ab2c82813cb95da9d6.jpg" alt="profile">
+          <img [src]="employee?.image?employee.image:'./assets/imgs/shared/default_emp_dp.svg'" alt="profile">
         </div>
-        <h5>Jenny Jimenez</h5>
+        <h5>{{employee?.firstname ? employee?.firstname + ' ' + employee?.lastname : 'User Locked'}}</h5>
 
         <form [formGroup]="unlockForm">
           <div class="row form-wrapper">
