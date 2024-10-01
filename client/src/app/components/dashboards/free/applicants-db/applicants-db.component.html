@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12" *ngFor="let a of jobApplicants; let i = index">
+      <div class="card-1">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="title-1">Job ID : <a routerLink="/job-details/{{a.jobId}}">{{a.jobId}} </a>
+            <i class="fa fa-question-circle" data-bs-toggle="tooltip"
+               data-bs-placement="top"
+               data-bs-custom-class="custom-tooltip"
+               data-bs-title="Check the job details"></i></div>
+          <div></div>
+        </div>
+
+        <table class="table table-hover table-borderless w-100">
+          <thead class="w-100">
+          <tr>
+            <th scope="col" colspan="2">Applicants ({{a.applicants ? a.applicants.length : 0}})</th>
+            <th scope="col" class="hyperlink">Views ({{a.viewers ? a.viewers.length : 0}})</th>
+          </tr>
+          </thead>
+          <tbody class="w-100">
+          <tr *ngFor="let ad of a.applicants">
+            <td><span class="bold-text hyperlink" (click)="viewCandidateProfile(ad.employeeId)" data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      data-bs-custom-class="custom-tooltip"
+                      data-bs-title="Click to view profile">{{ad.name}}</span> from
+              <span class="bold-text">{{ad.location}}</span><br>
+              <span class="bold-text" data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    data-bs-title="Click to send email"><a class="hyperlink" href="mailto:{{ad.email}}">{{ad.email}}</a></span>
+            </td>
+            <td class="d-none d-md-table-cell">
+              <a [href]="ad.resume" target="_blank">
+                <button class="btn-1" data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        data-bs-custom-class="custom-tooltip"
+                        data-bs-title="Click to download CV">Download CV
+                </button>
+              </a>
+            </td>
+            <td class="d-table-cell d-md-none">
+              <button class="btn-1"><i class="material-icons">download</i></button>
+            </td>
+            <td>
+              <button class="btn-1"><i class="material-icons">more_vert</i></button>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <div class="hr-line"></div>
+            </td>
+          </tr>
+          <tr *ngIf="!a.applicants">
+            <td colspan="3">No Applicants</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

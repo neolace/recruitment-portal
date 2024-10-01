@@ -1728,3 +1728,51 @@ $accordion-icon-transform3: rotate(270deg);
     }
   }
 }
+
+// bootstrap table
+.table{
+  background-color: var(--color-surface-mixed-100);
+
+  thead{
+    th{
+      background-color: var(--color-surface-mixed-100);
+      color: var(--color-text-100);
+      font-weight: 600;
+    }
+    .hyperlink{
+      cursor: pointer;
+      text-decoration: underline;
+      transition: all 0.3s ease-in-out;
+
+      &:hover{
+        color: var(--color-primary-200);
+      }
+    }
+  }
+
+  tbody{
+    td{
+      background-color: var(--color-surface-mixed-100);
+      color: var(--color-text-200);
+
+      .bold-text{
+        font-weight: 500;
+      }
+
+      a{
+        text-decoration: none;
+        color: var(--color-secondary-200);
+      }
+
+      .hyperlink{
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        color: var(--color-secondary-200);
+
+        &:hover{
+          color: var(--color-secondary-600);
+        }
+      }
+    }
+  }
+}

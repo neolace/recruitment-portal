@@ -24,10 +24,12 @@ import {ToastrModule} from "ngx-toastr";
 import {LocationStrategy, PathLocationStrategy} from "@angular/common";
 import {OAuthModule} from "angular-oauth2-oidc";
 import {SkipXsrfInterceptor} from "./Config/SkipXsrfInterceptor";
+import { ApplicantsDbComponent } from './components/dashboards/free/applicants-db/applicants-db.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ApplicantsDbComponent
   ],
   imports: [
     BrowserModule,

@@ -14,7 +14,7 @@
 
     <div *ngIf="showNavbar" class="nav-bar sticky-top">
       <div class="container d-flex align-items-center justify-content-between">
-        <div class="logo" [ngStyle]="{'background-image': themeService.isDarkMode() ? 'url(./assets/imgs/logo/top-w.svg)' : 'url(./assets/imgs/logo/top-b.svg)'}"></div>
+        <div class="logo" [ngStyle]="{'background-image': themeService.isDarkMode() ? 'url(./assets/imgs/logo/top-w.svg)' : 'url(./assets/imgs/logo/top-b.svg)'}" routerLink="/"></div>
         <div class="menu">
           <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid" style="justify-content: flex-end!important;">
