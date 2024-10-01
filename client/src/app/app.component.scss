@@ -160,14 +160,20 @@
   }
 
   .logo{
-    width: 150px;
+    width: 200px;
     height: 40px;
-    //background-color: var(--color-surface-600);
     margin: 0 20px;
+    background-repeat: no-repeat;
+    background-position-y: -50px;
+    background-position-x: 0;
+    background-size: cover;
 
-    img{
-      width: 100%;
-      height: 100%;
+    @media screen and (max-width: 992px){
+      background-position-y: -40px;
+    }
+
+    @media screen and (max-width: 540px){
+      background-position-y: -30px;
     }
   }
 
@@ -277,11 +283,12 @@
     .logo-lg{
       width: 90%;
       max-width: 250px;
+      aspect-ratio: 16/9;
       margin-bottom: 16px;
-
-      img{
-        width: 100%;
-      }
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-image: url("../assets/imgs/logo/top-b.svg");
     }
   }
 
