@@ -7,6 +7,7 @@ import {AlertsService} from "../../services/alerts.service";
 import {GoogleAuthService} from "../../services/google-auth.service";
 import {SocialAuthApiService} from "../../services/social-auth-api.service";
 import {GitHubAuthService} from "../../services/git-hub-auth.service";
+import {ThemeService} from "../../services/theme.service";
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,7 @@ export class LoginComponent implements AfterViewInit, OnInit {
     private gitHubAuthService: GitHubAuthService,
     private socialAuthService: SocialAuthApiService,
     private cookieService: AuthService,
+    public themeService: ThemeService,
     private alertService: AlertsService) { }
 
   ngOnInit() {
