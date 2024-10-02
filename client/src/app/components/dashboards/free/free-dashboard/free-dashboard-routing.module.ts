@@ -10,6 +10,7 @@ import {NgModule} from "@angular/core";
 import {AdminGuard} from "../../../../guards/admin.guard";
 import {AuthGuard} from "../../../../guards/auth.guard";
 import {ApplicantsDbComponent} from "../applicants-db/applicants-db.component";
+import {CompanyAnalysisComponent} from "../company-analysis/company-analysis.component";
 
 const routes: Routes = [
   {
@@ -23,7 +24,8 @@ const routes: Routes = [
       { path: 'business-profile-my', component: BusinessProfileMyComponent, canActivate: [AdminGuard] },
       { path: 'business-profile-settings', component: BusinessProfileSettingsComponent, canActivate: [AdminGuard] },
       { path: 'company-jobs', component: CompanyJobsMyComponent, canActivate: [AdminGuard] },
-      { path: 'applicants', component: ApplicantsDbComponent, canActivate: [AdminGuard] }
+      { path: 'applicants', component: ApplicantsDbComponent, canActivate: [AdminGuard] },
+      { path: 'company-analysis', component: CompanyAnalysisComponent, canActivate: [AdminGuard] }
     ],
     canActivate: [AdminGuard, AuthGuard]
   }

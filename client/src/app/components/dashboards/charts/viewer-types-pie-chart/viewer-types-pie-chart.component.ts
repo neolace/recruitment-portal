@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, ChartData } from 'chart.js';
+import {ThemeService} from "../../../../services/theme.service";
 
 @Component({
   selector: 'app-viewer-types-pie-chart',
@@ -25,8 +26,11 @@ export class ViewerTypesPieChartComponent implements OnInit {
     datasets: []
   };
 
+  constructor(private themeService: ThemeService) { }
+
   ngOnInit(): void {
     this.populateChartData();
+    this.applyTheme();
   }
 
   populateChartData(): void {
@@ -53,5 +57,28 @@ export class ViewerTypesPieChartComponent implements OnInit {
       data: [viewerTypeMap['Guest'], viewerTypeMap['Registered']],
       backgroundColor: ['#FF6384', '#36A2EB']
     }];
+  }
+
+  applyTheme(): void {
+    const axisColor = this.themeService.isDarkMode() ? '#fff' : '#222';
+    const tooltipBackgroundColor = this.themeService.isDarkMode() ? '#333333' : '#ffffff';
+    const tooltipFontColor = this.themeService.isDarkMode() ? '#fff' : '#222';
+
+    this.pieChartOptions = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            color: axisColor
+          }
+        },
+        tooltip: {
+          backgroundColor: tooltipBackgroundColor,
+          titleColor: tooltipFontColor,
+          bodyColor: tooltipFontColor,
+        }
+      }
+    };
   }
 }

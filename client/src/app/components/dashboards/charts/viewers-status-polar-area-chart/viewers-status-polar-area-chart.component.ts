@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, ChartData } from 'chart.js';
+import {ThemeService} from "../../../../services/theme.service";
 
 @Component({
   selector: 'app-viewers-status-polar-area-chart',
@@ -27,8 +28,11 @@ export class ViewersStatusPolarAreaChartComponent implements OnInit {
     }]
   };
 
+  constructor(private themeService: ThemeService ) { }
+
   ngOnInit(): void {
     this.populateChartData();
+    this.applyTheme();
   }
 
   populateChartData(): void {
@@ -57,5 +61,45 @@ export class ViewersStatusPolarAreaChartComponent implements OnInit {
     // Update chart data
     this.polarAreaChartData.labels = statuses;
     this.polarAreaChartData.datasets[0].data = counts;
+  }
+
+  applyTheme(): void {
+    const axisColor = this.themeService.isDarkMode() ? '#fff' : '#222';
+    const gridColor = this.themeService.isDarkMode() ? '#444444' : '#e0e0e0';
+    const tooltipBackgroundColor = this.themeService.isDarkMode() ? '#333333' : '#ffffff';
+    const tooltipFontColor = this.themeService.isDarkMode() ? '#fff' : '#222';
+
+    this.polarAreaChartOptions = {
+      responsive: true,
+      scales: {
+        r: {
+          angleLines: {
+            color: gridColor
+          },
+          grid: {
+            color: gridColor
+          },
+          pointLabels: {
+            color: axisColor
+          },
+          ticks: {
+            color: axisColor,
+            backdropColor: this.themeService.isDarkMode() ? '#222222' : '#f9f9f9'
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: axisColor
+          }
+        },
+        tooltip: {
+          backgroundColor: tooltipBackgroundColor,
+          titleColor: tooltipFontColor,
+          bodyColor: tooltipFontColor
+        }
+      }
+    };
   }
 }

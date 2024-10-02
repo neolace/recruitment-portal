@@ -1,0 +1,10 @@
+<div *ngIf="jobData && jobData.length > 0">
+  <div style="display: block;">
+    <canvas baseChart
+            [data]="pieChartData"
+            [type]="pieChartType"
+            [options]="pieChartOptions">
+    </canvas>
+  </div>
+</div>
+<p *ngIf="jobData.length === 0">No email domain data available for the chart.</p>

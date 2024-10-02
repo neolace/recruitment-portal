@@ -16,12 +16,14 @@ import {SharedDashboardModule} from "../../../../shared/modules/shared-dashboard
 import {ApplicantsDbComponent} from "../applicants-db/applicants-db.component";
 import {SharedChartsComponentModule} from "../../../../shared/modules/shared-charts-component.module";
 import {SharedComponentModule} from "../../../../shared/modules/shared-component.module";
+import {CompanyAnalysisComponent} from "../company-analysis/company-analysis.component";
 
 @NgModule({
   declarations: [
     FreeMainDbComponent,
     FreeDashboardComponent,
-    ApplicantsDbComponent
+    ApplicantsDbComponent,
+    CompanyAnalysisComponent
   ],
   imports: [
     CommonModule,

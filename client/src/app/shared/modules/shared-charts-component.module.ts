@@ -25,6 +25,9 @@ import {
 import {
   ResumeDownloadRatesChartComponent
 } from "../../components/dashboards/charts/resume-download-rates-chart/resume-download-rates-chart.component";
+import {
+  ApplicantsEmailDomainsChartComponent
+} from "../../components/dashboards/charts/applicants-email-domains-chart/applicants-email-domains-chart.component";
 
 @NgModule({
   declarations: [
@@ -35,7 +38,8 @@ import {
     ViewersStatusPolarAreaChartComponent,
     ApplicantSubmissionDatesChartComponent,
     ViewerTypesPieChartComponent,
-    ResumeDownloadRatesChartComponent
+    ResumeDownloadRatesChartComponent,
+    ApplicantsEmailDomainsChartComponent
   ],
   imports: [
     NgChartsModule,
@@ -49,7 +53,8 @@ import {
     ViewersStatusPolarAreaChartComponent,
     ApplicantSubmissionDatesChartComponent,
     ViewerTypesPieChartComponent,
-    ResumeDownloadRatesChartComponent
+    ResumeDownloadRatesChartComponent,
+    ApplicantsEmailDomainsChartComponent
   ]
 })
 export class SharedChartsComponentModule {}
