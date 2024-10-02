@@ -17,4 +17,5 @@ public class JobApplicantDTO {
     private String resume;
     private String coverLetter;
     private String status;
+    private String date;
 }

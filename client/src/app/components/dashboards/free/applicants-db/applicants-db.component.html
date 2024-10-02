@@ -4,7 +4,8 @@
       <div class="card-1">
         <div class="d-flex align-items-center justify-content-between">
           <div class="title-1">
-            Job ID: <a routerLink="/job-details/{{a.jobId}}">{{a.jobId}}</a>
+            Job ID: <a class="d-none d-sm-inline" routerLink="/job-details/{{a.jobId}}">{{a.jobId}} </a>
+            <a class="d-inline d-sm-none" routerLink="/job-details/{{a.jobId}}"><i class="material-icons">call_made</i> </a>
             <i class="fa fa-question-circle" data-bs-toggle="tooltip"
                data-bs-placement="top"
                data-bs-custom-class="custom-tooltip"
@@ -12,10 +13,11 @@
           </div>
           <div class="d-flex align-items-center justify-content-between">
             <button class="see-more-btn me-1" (click)="toggleApplicants(a)">
-              See {{ a.showAllApplicants ? 'less' : 'all' }}
+              <p class="d-none d-sm-block m-0">See {{ a.showAllApplicants ? 'less' : 'all' }}</p>
+              <i class="d-block d-sm-none material-icons">{{ a.showAllApplicants ? 'expand' : 'compress' }}</i>
             </button>
             <div class="dropdown">
-              <button class="see-more-btn" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_horiz</i></button>
+              <button class="see-more-btn pb-0" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_horiz</i></button>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item">View</a></li>
                 <li><a class="dropdown-item">Edit and Update</a></li>
@@ -30,12 +32,15 @@
         <table class="table table-hover table-borderless w-100">
           <thead class="w-100">
           <tr>
-            <th scope="col" colspan="2">Applicants ({{a.applicants ? a.applicants.length : 0}})</th>
-            <th scope="col" class="hyperlink">Views ({{a.viewers ? a.viewers.length : 0}})</th>
+            <th scope="col" colspan="3">Applicants ({{a.applicants ? a.applicants.length : 0}})</th>
+            <th scope="col" class="hyperlink" data-bs-toggle="modal" data-bs-target="#viewsModel" [attr.data-bs-whatever]="a.jobId">
+              Views ({{a.viewers ? a.viewers.length : 0}})
+            </th>
           </tr>
           </thead>
           <tbody class="w-100">
-          <tr *ngFor="let ad of a.applicants | truncateComments: (a.showAllApplicants ? a.applicants.length : maxApplicantsDisplayed)" class="applicants-list-row">
+          <tr *ngFor="let ad of a.applicants | truncateComments: (a.showAllApplicants ? a.applicants.length : maxApplicantsDisplayed); let i = index" class="applicants-list-row">
+            <td>{{i + 1}}</td>
             <td>
               <span class="bold-text hyperlink" (click)="viewCandidateProfile(ad.employeeId)" data-bs-toggle="tooltip"
                     data-bs-placement="top"
@@ -91,6 +96,39 @@
     </div>
     <div *ngIf="forbidden && !jobApplicants || unexpectedError">
       <app-forbidden></app-forbidden>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="viewsModel" tabindex="-1" aria-labelledby="viewsModelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="viewsModelLabel">Job Viewers</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover table-borderless w-100" *ngIf="viewers && viewers.length > 0">
+          <tbody class="w-100">
+          <tr *ngFor="let viewer of viewers[0].viewers; let i = index" class="applicants-list-row">
+            <td>{{i + 1}}</td>
+            <td>{{viewer.name}}</td>
+            <td>
+              <div class="w-100 d-flex align-items-center justify-content-between">
+                <p class="m-0">{{viewer.date ? (viewer.date|timeAgo) : 'N/A'}}</p>
+                <div *ngIf="viewer.name != 'Guest'">
+                  <button class="btn-1" (click)="viewCandidateProfile(viewer.employeeId)"><i class="material-icons">call_made</i></button>
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <p *ngIf="!viewers || viewers.length === 0">No viewers found for this job.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
 </div>

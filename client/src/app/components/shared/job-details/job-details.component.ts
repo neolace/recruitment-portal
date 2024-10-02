@@ -157,12 +157,13 @@ export class JobDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
           id: currentViewerId,
           employeeId: this.employeeId || 'Guest_' + this.generateRandomId(),  // Ensure unique anonymous ID
           name: this.employeeName || 'Guest',
-          status: 'registered'
+          status: this.employeeName ? 'registered' : 'unregistered',
+          date: new Date()
         };
 
         this.jobApplyService.addViewer(this.companyId, this.jobPostId, viewerData)
           .subscribe((response: any) => {
-            console.log('Viewer added');
+            // console.log('Viewer added');
           }, (error: any) => {
             console.error('Error adding viewer:', error);
           });
