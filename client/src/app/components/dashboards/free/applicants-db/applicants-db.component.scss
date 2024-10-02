@@ -33,3 +33,11 @@
     background-color: var(--color-surface-mixed-300);
   }
 }
+
+.danger{
+  color: var(--color-danger-200);
+
+  &:hover{
+    color: var(--color-danger-100);
+  }
+}

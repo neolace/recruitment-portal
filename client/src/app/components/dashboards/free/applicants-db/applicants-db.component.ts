@@ -89,7 +89,6 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
   fetchJobViewers(jobId: any) {
     this.jobApplyService.fetchJobViewerByJobId(jobId).subscribe((data: any) => {
       this.viewers = data;
-      console.log(this.viewers)
     }, (error: HttpErrorResponse) => {
       console.error('Error fetching job viewers', error);
       this.viewers = [];
