@@ -103,13 +103,13 @@
     <div *ngIf="!loading && serverError">
       <app-failed-to-load-data></app-failed-to-load-data>
     </div>
-    <div *ngIf="notFound && !jobApplicants">
+    <div *ngIf="jobApplicants?.length == 0">
       <app-result-not-found></app-result-not-found>
     </div>
     <div *ngIf="corsError">
       <app-network-error></app-network-error>
     </div>
-    <div *ngIf="forbidden && !jobApplicants || unexpectedError">
+    <div *ngIf="forbidden && jobApplicants?.length == 0 || unexpectedError">
       <app-forbidden></app-forbidden>
     </div>
   </div>
