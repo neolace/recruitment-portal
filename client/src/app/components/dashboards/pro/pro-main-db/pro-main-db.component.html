@@ -2,7 +2,34 @@
   <div class="row">
     <div class="col-12 col-md-6">
       <h2 class="h2-1 mt-5">Hi,</h2>
-      <h2 class="h2-2">User Name</h2>
+      <h2 class="h2-2">{{employee?.employee?.firstname ? employee?.employee?.firstname : 'User'}}</h2>
+
+      <div class="d-flex align-items-center justify-content-center w-100 my-5 c-j-progress">
+        <div class="check-ball" [ngClass]="cname?'active':''" title="Company Name">
+          <i class="material-icons">check</i>
+          <div class="tag">Name</div>
+        </div>
+        <div class="check-line"></div>
+        <div class="check-ball" [ngClass]="cemail?'active':''" title="Company Email">
+          <i class="material-icons">check</i>
+          <div class="tag">Email</div>
+        </div>
+        <div class="check-line"></div>
+        <div class="check-ball" [ngClass]="cphone?'active':''" title="Company Phone">
+          <i class="material-icons">check</i>
+          <div class="tag">Phone</div>
+        </div>
+        <div class="check-line"></div>
+        <div class="check-ball" [ngClass]="chq?'active':''" title="Head Quarter">
+          <i class="material-icons">check</i>
+          <div class="tag">Location</div>
+        </div>
+        <div class="check-line"></div>
+        <div class="check-ball ready" [ngClass]="formLocked?'':'active'" title="Ready to go">
+          <i class="material-icons">{{formLocked?'lock_outline':'lock_open'}}</i>
+          <div class="tag">Ready to go</div>
+        </div>
+      </div>
 
       <div class="notification-area">
         <div>
@@ -56,7 +83,24 @@
         <div class="col col-lg-8">
           <div class="card-1">
             <div class="title-1">Latest Ads Posted</div>
-            <p>Currently you do not have any shared ads</p>
+            <div class="row" *ngFor="let p of jobPosts">
+              <div class="col-12">
+                <div class="card-1">
+                  <div class="title-2" routerLink="/job-details/{{p.id}}">{{p.title}}</div>
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                      <p class="m-0">Posted: {{p.datePosted | timeAgo}}</p>
+                      <p class="m-0">Expired: {{p.expiryDate | date}}</p>
+                    </div>
+                    <div>
+                      <p class="m-0">{{getViews(p.id)}} Views</p>
+                      <p class="m-0">{{getApplicants(p.id)}} Applicants</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p *ngIf="jobPosts.length == 0">Currently you do not have any shared ads</p>
           </div>
         </div>
       </div>
