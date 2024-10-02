@@ -13,11 +13,15 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {ProApplicantsDbComponent} from "../pro-applicants-db/pro-applicants-db.component";
+import {SharedChartsComponentModule} from "../../../../shared/modules/shared-charts-component.module";
+import {SharedComponentModule} from "../../../../shared/modules/shared-component.module";
 
 @NgModule({
   declarations: [
     ProDashboardComponent,
-    ProMainDbComponent
+    ProMainDbComponent,
+    ProApplicantsDbComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +36,9 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatProgressSpinnerModule,
     FormsModule,
     SharedPipesModule,
-    SharedDashboardModule
+    SharedDashboardModule,
+    SharedChartsComponentModule,
+    SharedComponentModule
   ],
   exports: []
 })
