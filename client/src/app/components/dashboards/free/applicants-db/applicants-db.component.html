@@ -3,12 +3,28 @@
     <div class="col-12" *ngFor="let a of jobApplicants; let i = index">
       <div class="card-1">
         <div class="d-flex align-items-center justify-content-between">
-          <div class="title-1">Job ID : <a routerLink="/job-details/{{a.jobId}}">{{a.jobId}} </a>
+          <div class="title-1">
+            Job ID: <a routerLink="/job-details/{{a.jobId}}">{{a.jobId}}</a>
             <i class="fa fa-question-circle" data-bs-toggle="tooltip"
                data-bs-placement="top"
                data-bs-custom-class="custom-tooltip"
-               data-bs-title="Check the job details"></i></div>
-          <div></div>
+               data-bs-title="Check the job details"></i>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <button class="see-more-btn me-1" (click)="toggleApplicants(a)">
+              See {{ a.showAllApplicants ? 'less' : 'all' }}
+            </button>
+            <div class="dropdown">
+              <button class="see-more-btn" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_horiz</i></button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item">View</a></li>
+                <li><a class="dropdown-item">Edit and Update</a></li>
+                <li><a class="dropdown-item">the Job</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item danger">Delete</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
 
         <table class="table table-hover table-borderless w-100">
@@ -19,11 +35,13 @@
           </tr>
           </thead>
           <tbody class="w-100">
-          <tr *ngFor="let ad of a.applicants">
-            <td><span class="bold-text hyperlink" (click)="viewCandidateProfile(ad.employeeId)" data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      data-bs-custom-class="custom-tooltip"
-                      data-bs-title="Click to view profile">{{ad.name}}</span> from
+          <tr *ngFor="let ad of a.applicants | truncateComments: (a.showAllApplicants ? a.applicants.length : maxApplicantsDisplayed)" class="applicants-list-row">
+            <td>
+              <span class="bold-text hyperlink" (click)="viewCandidateProfile(ad.employeeId)" data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    data-bs-title="Click to view profile">{{ad.name}}</span>
+              from
               <span class="bold-text">{{ad.location}}</span><br>
               <span class="bold-text" data-bs-toggle="tooltip"
                     data-bs-placement="top"
@@ -43,12 +61,16 @@
               <button class="btn-1"><i class="material-icons">download</i></button>
             </td>
             <td>
-              <button class="btn-1"><i class="material-icons">more_vert</i></button>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="3">
-              <div class="hr-line"></div>
+              <div class="dropdown">
+                <button class="btn-1" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item">View</a></li>
+                  <li><a class="dropdown-item">Edit and Update</a></li>
+                  <li><a class="dropdown-item">the Job</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item danger">Delete</a></li>
+                </ul>
+              </div>
             </td>
           </tr>
           <tr *ngIf="!a.applicants">
@@ -57,6 +79,18 @@
           </tbody>
         </table>
       </div>
+    </div>
+    <div *ngIf="!loading && serverError">
+      <app-failed-to-load-data></app-failed-to-load-data>
+    </div>
+    <div *ngIf="notFound && !jobApplicants">
+      <app-result-not-found></app-result-not-found>
+    </div>
+    <div *ngIf="corsError">
+      <app-network-error></app-network-error>
+    </div>
+    <div *ngIf="forbidden && !jobApplicants || unexpectedError">
+      <app-forbidden></app-forbidden>
     </div>
   </div>
 </div>

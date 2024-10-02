@@ -6,6 +6,7 @@ import {AuthService} from "../../../services/auth.service";
 import {ToastrService} from "ngx-toastr";
 import {CompanyService} from "../../../services/company.service";
 import {JobApplyService} from "../../../services/job-apply.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 
 @Component({
@@ -28,6 +29,14 @@ export class JobDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   viewerId: any;
   companyId: any;
   userSavedIds: any[] = [];
+
+  loading: boolean = false;
+
+  serverError: boolean = false;
+  notFound: boolean = false;
+  forbidden: boolean = false;
+  corsError: boolean = false;
+  unexpectedError: boolean = false;
 
   constructor(private router: Router,
               private valueIncrementService: ValueIncrementService,
@@ -82,6 +91,21 @@ export class JobDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
           this.jobDataStore.push(job);
         });
       });
+    },(error: HttpErrorResponse) => {
+      // Check for different error types
+      if (error.status === 404) {
+        this.notFound = true;
+      } else if (error.status === 500) {
+        this.serverError = true;
+      } else if (error.status === 0) {
+        this.corsError = true;
+      } else if (error.status === 403) {
+        this.forbidden = true;
+      } else {
+        this.unexpectedError = true;
+      }
+
+      this.loading = false;
     });
   }
 
@@ -108,6 +132,7 @@ export class JobDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.jobPostTitle = this.filteredJobDataStore[0]?.title;
     this.companyName = this.filteredJobDataStore[0]?.companyName;
     this.companyId = this.filteredJobDataStore[0]?.companyId;
+    this.notFound = this.filteredJobDataStore.length === 0;
     return this.filteredJobDataStore;
   }
 

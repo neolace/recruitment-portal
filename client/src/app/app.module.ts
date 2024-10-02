@@ -25,40 +25,42 @@ import {LocationStrategy, PathLocationStrategy} from "@angular/common";
 import {OAuthModule} from "angular-oauth2-oidc";
 import {SkipXsrfInterceptor} from "./Config/SkipXsrfInterceptor";
 import { ApplicantsDbComponent } from './components/dashboards/free/applicants-db/applicants-db.component';
+import {SharedComponentModule} from "./shared/modules/shared-component.module";
 
 @NgModule({
   declarations: [
     AppComponent,
     ApplicantsDbComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatIconModule,
-    GoogleMapsModule,
-    MatMenuModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatSidenavModule,
-    MatExpansionModule,
-    MatTooltipModule,
-    MatProgressSpinnerModule,
-    FormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    AngularFireStorageModule,
-    AngularFireAuthModule,
-    SharedPipesModule,
-    HttpClientModule,
-    ToastrModule.forRoot({
-      positionClass: 'toast-bottom-right',
-      preventDuplicates: true,
-      maxOpened: 3,
-      timeOut: 5000,
-    }),
-    OAuthModule.forRoot()
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatIconModule,
+        GoogleMapsModule,
+        MatMenuModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatSidenavModule,
+        MatExpansionModule,
+        MatTooltipModule,
+        MatProgressSpinnerModule,
+        FormsModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFirestoreModule,
+        AngularFireStorageModule,
+        AngularFireAuthModule,
+        SharedPipesModule,
+        HttpClientModule,
+        ToastrModule.forRoot({
+            positionClass: 'toast-bottom-right',
+            preventDuplicates: true,
+            maxOpened: 3,
+            timeOut: 5000,
+        }),
+        OAuthModule.forRoot(),
+        SharedComponentModule
+    ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: SkipXsrfInterceptor, multi: true},
     {provide: LocationStrategy, useClass: PathLocationStrategy }

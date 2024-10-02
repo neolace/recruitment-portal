@@ -132,6 +132,18 @@
       </div>
     </div>
   </div>
+  <div *ngIf="!loading && serverError">
+    <app-failed-to-load-data></app-failed-to-load-data>
+  </div>
+  <div *ngIf="notFound && filterJobData().length == 0">
+    <app-result-not-found></app-result-not-found>
+  </div>
+  <div *ngIf="corsError">
+    <app-network-error></app-network-error>
+  </div>
+  <div *ngIf="forbidden && filterJobData().length == 0 || unexpectedError">
+    <app-forbidden></app-forbidden>
+  </div>
 
   <div class="sub-topic-section">
     <h3>Related Vacancies</h3>
