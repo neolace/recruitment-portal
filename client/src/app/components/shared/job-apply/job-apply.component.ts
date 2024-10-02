@@ -81,7 +81,8 @@ export class JobApplyComponent implements AfterViewInit, OnInit{
       location: this.applyForm.get('location')?.value,
       resume: this.downloadURL,
       coverLetter: this.applyForm.get('cover')?.value,
-      status: 'Applied'
+      status: 'Applied',
+      date: new Date()
     }).subscribe(() => {
       this.loading = false;
       this.applyForm.reset();

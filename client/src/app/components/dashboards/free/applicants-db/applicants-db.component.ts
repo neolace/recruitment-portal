@@ -16,6 +16,9 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
   companyId: any;
   jobApplicants: any[] = [];
 
+  viewers: any[] = [];
+  selectedJobId: any;
+
   maxApplicantsDisplayed: number = 1;
 
   loading: boolean = false;
@@ -46,6 +49,17 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
     tooltipTriggerList.map(function (tooltipTriggerEl) {
       return new bootstrap.Tooltip(tooltipTriggerEl);
     });
+
+    const viewsModal = document.getElementById('viewsModel');
+    if (viewsModal) {
+      viewsModal.addEventListener('show.bs.modal', (event: any) => {
+        const button = event.relatedTarget;
+        const jobId = button.getAttribute('data-bs-whatever');
+
+        this.selectedJobId = jobId;
+        this.fetchJobViewers(this.selectedJobId);
+      });
+    }
   }
 
   fetchApplicants() {
@@ -72,9 +86,22 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
     });
   }
 
+  fetchJobViewers(jobId: any) {
+    this.jobApplyService.fetchJobViewerByJobId(jobId).subscribe((data: any) => {
+      this.viewers = data;
+      console.log(this.viewers)
+    }, (error: HttpErrorResponse) => {
+      console.error('Error fetching job viewers', error);
+      this.viewers = [];
+    });
+  }
+
   viewCandidateProfile(employeeId: any) {
     if (employeeId) {
       this.router.navigate(['/candidate-profile'], { queryParams: { id: employeeId } });
+      setTimeout(() => {
+        window.location.reload();
+      },500)
     }
   }
 

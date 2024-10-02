@@ -12,4 +12,5 @@ public class JobViewerDTO {
     private String employeeId;
     private String name;
     private String status;
+    private String date;
 }
