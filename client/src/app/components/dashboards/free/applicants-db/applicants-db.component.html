@@ -1,5 +1,24 @@
 <div class="container">
   <div class="row">
+    <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">
+      <div class="card-1">
+        <div class="title-1">Applicants per Job</div>
+        <app-applicants-per-job-bar-chart [jobData]="jobApplicants"></app-applicants-per-job-bar-chart>
+      </div>
+    </div>
+    <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">
+      <div class="row">
+        <div class="col-12 col-lg-8">
+          <div class="card-1">
+            <div class="title-1">Applicant by Location</div>
+            <app-applicant-location-pie-chart [jobData]="jobApplicants"></app-applicant-location-pie-chart>
+          </div>
+        </div>
+        <div class="col-12 col-lg-4"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-12" *ngFor="let a of jobApplicants; let i = index">
       <div class="card-1">
         <div class="d-flex align-items-center justify-content-between">
@@ -19,9 +38,9 @@
             <div class="dropdown">
               <button class="see-more-btn pb-0" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_horiz</i></button>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item">View</a></li>
-                <li><a class="dropdown-item">Edit and Update</a></li>
-                <li><a class="dropdown-item">the Job</a></li>
+                <li><a class="dropdown-item" routerLink="/job-details/{{a.jobId}}">View ad</a></li>
+                <li><a class="dropdown-item">Export</a></li>
+                <li><a class="dropdown-item">Analyze</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item danger">Delete</a></li>
               </ul>
@@ -69,9 +88,7 @@
               <div class="dropdown">
                 <button class="btn-1" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></button>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item">View</a></li>
-                  <li><a class="dropdown-item">Edit and Update</a></li>
-                  <li><a class="dropdown-item">the Job</a></li>
+                  <li><a class="dropdown-item" (click)="viewCandidateProfile(ad.employeeId)">View</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item danger">Delete</a></li>
                 </ul>

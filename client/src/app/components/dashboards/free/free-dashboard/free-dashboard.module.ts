@@ -1,11 +1,6 @@
 import {NgModule} from "@angular/core";
 import {FreeMainDbComponent} from "../free-main-db/free-main-db.component";
 import {FreeDashboardComponent} from "./free-dashboard.component";
-import {PersonalProfileMyComponent} from "../personal-profile-my/personal-profile-my.component";
-import {PersonalProfileSettingsComponent} from "../personal-profile-settings/personal-profile-settings.component";
-import {BusinessProfileMyComponent} from "../business-profile-my/business-profile-my.component";
-import {BusinessProfileSettingsComponent} from "../business-profile-settings/business-profile-settings.component";
-import {CompanyJobsMyComponent} from "../company-jobs-my/company-jobs-my.component";
 import {CommonModule} from "@angular/common";
 import {FreeDashboardRoutingModule} from "./free-dashboard-routing.module";
 import {MatIconModule} from "@angular/material/icon";
@@ -18,11 +13,15 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {SharedPipesModule} from "../../../../shared/modules/shared-pipes.module";
 import {SharedDashboardModule} from "../../../../shared/modules/shared-dashboard.module";
+import {ApplicantsDbComponent} from "../applicants-db/applicants-db.component";
+import {SharedChartsComponentModule} from "../../../../shared/modules/shared-charts-component.module";
+import {SharedComponentModule} from "../../../../shared/modules/shared-component.module";
 
 @NgModule({
   declarations: [
     FreeMainDbComponent,
-    FreeDashboardComponent
+    FreeDashboardComponent,
+    ApplicantsDbComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +36,9 @@ import {SharedDashboardModule} from "../../../../shared/modules/shared-dashboard
     MatProgressSpinnerModule,
     FormsModule,
     SharedPipesModule,
-    SharedDashboardModule
+    SharedDashboardModule,
+    SharedChartsComponentModule,
+    SharedComponentModule
   ],
   exports: []
 })

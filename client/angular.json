@@ -34,7 +34,8 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "crypto-js"
+              "crypto-js",
+              "moment"
             ]
           },
           "configurations": {
