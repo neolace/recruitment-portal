@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, ChartData } from 'chart.js';
+import {ThemeService} from "../../../../services/theme.service";
 
 @Component({
   selector: 'app-applicants-status-doughnut-chart',
@@ -27,8 +28,11 @@ export class ApplicantsStatusDoughnutChartComponent implements OnInit {
     }]
   };
 
+  constructor(private themeService: ThemeService) { }
+
   ngOnInit(): void {
     this.populateChartData();
+    this.applyTheme();
   }
 
   populateChartData(): void {
@@ -57,5 +61,28 @@ export class ApplicantsStatusDoughnutChartComponent implements OnInit {
     // Update chart data
     this.doughnutChartData.labels = statuses;
     this.doughnutChartData.datasets[0].data = counts;
+  }
+
+  applyTheme(): void {
+    const axisColor = this.themeService.isDarkMode() ? '#fff' : '#222';
+    const tooltipBackgroundColor = this.themeService.isDarkMode() ? '#333333' : '#ffffff';
+    const tooltipFontColor = this.themeService.isDarkMode() ? '#fff' : '#222';
+
+    this.doughnutChartOptions = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            color: axisColor
+          }
+        },
+        tooltip: {
+          backgroundColor: tooltipBackgroundColor,
+          titleColor: tooltipFontColor,
+          bodyColor: tooltipFontColor,
+        }
+      }
+    };
   }
 }

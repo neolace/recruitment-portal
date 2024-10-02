@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, ChartData } from 'chart.js';
 import * as moment from 'moment';
+import {ThemeService} from "../../../../services/theme.service";
 
 @Component({
   selector: 'app-applicant-submission-dates-chart',
@@ -31,8 +32,11 @@ export class ApplicantSubmissionDatesChartComponent implements OnInit {
     datasets: []
   };
 
+  constructor(private themeService: ThemeService ) { }
+
   ngOnInit(): void {
     this.populateChartData();
+    this.applyTheme();
   }
 
   populateChartData(): void {
@@ -67,5 +71,47 @@ export class ApplicantSubmissionDatesChartComponent implements OnInit {
       data: counts,
       backgroundColor: '#42A5F5'
     }];
+  }
+
+  applyTheme(): void {
+    const axisColor = this.themeService.isDarkMode() ? '#fff' : '#222';
+    const gridColor = this.themeService.isDarkMode() ? '#444444' : '#e0e0e0';
+    const tooltipBackgroundColor = this.themeService.isDarkMode() ? '#333333' : '#ffffff';
+    const tooltipFontColor = this.themeService.isDarkMode() ? '#fff' : '#222';
+
+    this.chartOptions = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            color: axisColor
+          }
+        },
+        tooltip: {
+          backgroundColor: tooltipBackgroundColor,
+          titleColor: tooltipFontColor,
+          bodyColor: tooltipFontColor,
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: axisColor
+          },
+          grid: {
+            color: gridColor
+          }
+        },
+        y: {
+          ticks: {
+            color: axisColor
+          },
+          grid: {
+            color: gridColor
+          }
+        }
+      }
+    };
   }
 }

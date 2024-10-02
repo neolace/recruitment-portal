@@ -1,0 +1,73 @@
+<div class="container">
+  <h3>Analytical Dashboard base on your company posted jobs</h3>
+
+  <div class="row">
+    <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">
+      <div class="card-1">
+        <div class="title-1">Applicants per Job</div>
+        <app-applicants-per-job-bar-chart [jobData]="jobApplicants"></app-applicants-per-job-bar-chart>
+      </div>
+    </div>
+    <div class="col-12 col-md-3" *ngIf="jobApplicants && jobApplicants.length > 0">
+      <div class="card-1">
+        <div class="title-1">Applicant by Location</div>
+        <app-applicant-location-pie-chart [jobData]="jobApplicants"></app-applicant-location-pie-chart>
+      </div>
+    </div>
+    <div class="col-12 col-md-3" *ngIf="jobApplicants && jobApplicants.length > 0">
+      <div class="card-1">
+        <div class="title-1">Applicants by Status</div>
+        <app-applicants-status-doughnut-chart [jobData]="jobApplicants"></app-applicants-status-doughnut-chart>
+      </div>
+    </div>
+    <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">
+      <div class="card-1">
+        <div class="title-1">Applicants applied Dates</div>
+        <app-applicant-submission-dates-chart [jobData]="jobApplicants"></app-applicant-submission-dates-chart>
+      </div>
+    </div>
+    <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">
+      <div class="card-1">
+        <div class="title-1">Job Viewers Over Time</div>
+        <app-job-viewers-over-time-line-chart [jobData]="jobApplicants"></app-job-viewers-over-time-line-chart>
+      </div>
+    </div>
+    <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">
+      <div class="card-1">
+        <div class="title-1">Resume Download Rates</div>
+        <app-resume-download-rates-chart [jobData]="jobApplicants"></app-resume-download-rates-chart>
+      </div>
+    </div>
+    <div class="col-12 col-md-3" *ngIf="jobApplicants && jobApplicants.length > 0">
+      <div class="card-1">
+        <div class="title-1">Job Views by Viewer Type</div>
+        <app-viewer-types-pie-chart [jobData]="jobApplicants"></app-viewer-types-pie-chart>
+      </div>
+    </div>
+    <div class="col-12 col-md-3" *ngIf="jobApplicants && jobApplicants.length > 0">
+      <div class="card-1">
+        <div class="title-1">Job Viewers Status</div>
+        <app-viewers-status-polar-area-chart [jobData]="jobApplicants"></app-viewers-status-polar-area-chart>
+      </div>
+    </div>
+    <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">
+      <div class="card-1">
+        <div class="title-1">Applicants Email Domains</div>
+        <app-applicants-email-domains-chart [jobData]="jobApplicants"></app-applicants-email-domains-chart>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!loading && serverError">
+  <app-failed-to-load-data></app-failed-to-load-data>
+</div>
+<div *ngIf="notFound && !jobApplicants">
+  <app-result-not-found></app-result-not-found>
+</div>
+<div *ngIf="corsError">
+  <app-network-error></app-network-error>
+</div>
+<div *ngIf="forbidden && !jobApplicants || unexpectedError">
+  <app-forbidden></app-forbidden>
+</div>

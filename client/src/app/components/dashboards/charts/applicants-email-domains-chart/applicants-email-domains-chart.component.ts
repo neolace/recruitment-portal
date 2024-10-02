@@ -1,24 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, ChartData } from 'chart.js';
-import * as moment from 'moment';
-import {ThemeService} from "../../../../services/theme.service";
+import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
-  selector: 'app-job-viewers-over-time-line-chart',
-  templateUrl: './job-viewers-over-time-line-chart.component.html',
-  styleUrls: ['./job-viewers-over-time-line-chart.component.scss']
+  selector: 'app-applicants-email-domains-chart',
+  templateUrl: './applicants-email-domains-chart.component.html',
+  styleUrls: ['./applicants-email-domains-chart.component.scss']
 })
-export class JobViewersOverTimeLineChartComponent implements OnInit {
+export class ApplicantsEmailDomainsChartComponent implements OnInit {
   @Input() jobData: any[] = [];
 
-  public lineChartOptions: ChartOptions<'line'> = {
+  public pieChartOptions: ChartOptions<'bar'> = {
     responsive: true,
-    scales: {
-      x: {},
-      y: {
-        beginAtZero: true
-      }
-    },
     plugins: {
       legend: {
         position: 'top',
@@ -26,9 +19,9 @@ export class JobViewersOverTimeLineChartComponent implements OnInit {
     }
   };
 
-  public lineChartType: ChartType | any = 'line';
+  public pieChartType: ChartType | any = 'bar';
 
-  public lineChartData: ChartData<'line'> = {
+  public pieChartData: ChartData<'bar'> = {
     labels: [],
     datasets: []
   };
@@ -45,32 +38,37 @@ export class JobViewersOverTimeLineChartComponent implements OnInit {
       return;
     }
 
-    const dateViewMap: { [date: string]: number } = {};
+    const emailDomainMap: { [domain: string]: number } = {};
 
-    // Loop through each job's viewers and count views per date
+    // Loop through applicants and count domains
     this.jobData.forEach(job => {
-      job.viewers.forEach((viewer: any) => {
-        const viewDate = viewer.date ? moment(viewer.date).format('YYYY-MM-DD') : 'Unknown';
-        if (!dateViewMap[viewDate]) {
-          dateViewMap[viewDate] = 1;
-        } else {
-          dateViewMap[viewDate]++;
+      job.applicants.forEach((applicant: any) => {
+        if (applicant.email) {
+          const domain = this.extractDomainFromEmail(applicant.email);
+          if (!emailDomainMap[domain]) {
+            emailDomainMap[domain] = 1;
+          } else {
+            emailDomainMap[domain]++;
+          }
         }
       });
     });
 
-    // Extract dates and counts
-    const dates = Object.keys(dateViewMap).sort(); // Sort by date
-    const counts = dates.map(date => dateViewMap[date]);
+    // Extract domains and counts
+    const domains = Object.keys(emailDomainMap);
+    const counts = domains.map(domain => emailDomainMap[domain]);
 
     // Update chart data
-    this.lineChartData.labels = dates;
-    this.lineChartData.datasets = [{
-      label: 'Job Viewers Over Time',
+    this.pieChartData.labels = domains;
+    this.pieChartData.datasets = [{
       data: counts,
-      borderColor: '#3e95cd',
-      fill: false
+      label: 'Email Domains',
+      backgroundColor: this.generateColors(domains.length)
     }];
+  }
+
+  extractDomainFromEmail(email: string): string {
+    return email.split('@')[1];
   }
 
   applyTheme(): void {
@@ -79,7 +77,7 @@ export class JobViewersOverTimeLineChartComponent implements OnInit {
     const tooltipBackgroundColor = this.themeService.isDarkMode() ? '#333333' : '#ffffff';
     const tooltipFontColor = this.themeService.isDarkMode() ? '#fff' : '#222';
 
-    this.lineChartOptions = {
+    this.pieChartOptions = {
       responsive: true,
       plugins: {
         legend: {
@@ -113,5 +111,13 @@ export class JobViewersOverTimeLineChartComponent implements OnInit {
         }
       }
     };
+  }
+
+  generateColors(count: number): string[] {
+    const colors = [];
+    for (let i = 0; i < count; i++) {
+      colors.push(`hsl(${Math.floor(Math.random() * 360)}, 100%, 75%)`);
+    }
+    return colors;
   }
 }

@@ -7,14 +7,9 @@
       </div>
     </div>
     <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">
-      <div class="row">
-        <div class="col-12 col-lg-8">
-          <div class="card-1">
-            <div class="title-1">Applicant by Location</div>
-            <app-applicant-location-pie-chart [jobData]="jobApplicants"></app-applicant-location-pie-chart>
-          </div>
-        </div>
-        <div class="col-12 col-lg-4"></div>
+      <div class="card-1">
+        <div class="title-1">Resume Download Rates</div>
+        <app-resume-download-rates-chart [jobData]="jobApplicants"></app-resume-download-rates-chart>
       </div>
     </div>
   </div>

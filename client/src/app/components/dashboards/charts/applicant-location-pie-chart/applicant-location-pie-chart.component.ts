@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {ChartData, ChartOptions, ChartType} from "chart.js";
+import {ThemeService} from "../../../../services/theme.service";
 
 @Component({
   selector: 'app-applicant-location-pie-chart',
@@ -14,7 +15,7 @@ export class ApplicantLocationPieChartComponent {
     responsive: true,
     plugins: {
       legend: {
-        position: 'right',
+        position: 'bottom',
       }
     }
   };
@@ -28,8 +29,11 @@ export class ApplicantLocationPieChartComponent {
     }]
   };
 
+  constructor(private themeService: ThemeService ) { }
+
   ngOnInit(): void {
     this.populateChartData();
+    this.applyTheme();
   }
 
   populateChartData(): void {
@@ -58,5 +62,28 @@ export class ApplicantLocationPieChartComponent {
     // Update chart data
     this.pieChartData.labels = locations;
     this.pieChartData.datasets[0].data = counts;
+  }
+
+  applyTheme(): void {
+    const axisColor = this.themeService.isDarkMode() ? '#fff' : '#222';
+    const tooltipBackgroundColor = this.themeService.isDarkMode() ? '#333333' : '#ffffff';
+    const tooltipFontColor = this.themeService.isDarkMode() ? '#fff' : '#222';
+
+    this.pieChartOptions = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            color: axisColor
+          }
+        },
+        tooltip: {
+          backgroundColor: tooltipBackgroundColor,
+          titleColor: tooltipFontColor,
+          bodyColor: tooltipFontColor,
+        }
+      }
+    };
   }
 }
