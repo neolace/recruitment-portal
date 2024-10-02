@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {JobApplyService} from "../../../../services/job-apply.service";
 import {AuthService} from "../../../../services/auth.service";
 import {Router} from "@angular/router";
+import {HttpErrorResponse} from "@angular/common/http";
 
 declare var bootstrap: any;
 
@@ -14,15 +15,25 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
 
   companyId: any;
   jobApplicants: any[] = [];
+
+  maxApplicantsDisplayed: number = 1;
+
+  loading: boolean = false;
+
+  serverError: boolean = false;
+  notFound: boolean = false;
+  forbidden: boolean = false;
+  corsError: boolean = false;
+  unexpectedError: boolean = false;
+
   constructor(
     private jobApplyService: JobApplyService,
     private router: Router,
     private cookieService: AuthService) { }
 
-
   ngOnInit(): void {
-    this.companyId = this.cookieService.organization()
-    this.fetchApplicants()
+    this.companyId = this.cookieService.organization();
+    this.fetchApplicants();
   }
 
   ngAfterViewInit() {
@@ -37,9 +48,27 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
     });
   }
 
-  fetchApplicants(){
+  fetchApplicants() {
     this.jobApplyService.fetchJobApplyByCompanyId(this.companyId).subscribe((data: any) => {
-      this.jobApplicants = data
+      this.jobApplicants = data?.map((job: any) => ({
+        ...job,
+        showAllApplicants: false
+      }));
+    }, (error: HttpErrorResponse) => {
+      // Check for different error types
+      if (error.status === 404) {
+        this.notFound = true;
+      } else if (error.status === 500) {
+        this.serverError = true;
+      } else if (error.status === 0) {
+        this.corsError = true;
+      } else if (error.status === 403) {
+        this.forbidden = true;
+      } else {
+        this.unexpectedError = true;
+      }
+
+      this.loading = false;
     });
   }
 
@@ -47,5 +76,9 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
     if (employeeId) {
       this.router.navigate(['/candidate-profile'], { queryParams: { id: employeeId } });
     }
+  }
+
+  toggleApplicants(job: any) {
+    job.showAllApplicants = !job.showAllApplicants;
   }
 }
