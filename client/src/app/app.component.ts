@@ -11,6 +11,7 @@ import {commonSearchResults} from "./shared/data-store/common-search-results";
 import {AuthService} from "./services/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {EmployeeService} from "./services/employee.service";
+import {CredentialService} from "./services/credential.service";
 
 @Component({
   selector: 'app-root',
@@ -31,14 +32,20 @@ export class AppComponent implements OnInit, AfterViewInit {
   targetInput: any;
 
   employee: any;
+  employeeId: any;
+  employeeLevel: any;
+  employeeType: any;
 
   constructor(public themeService: ThemeService,
               private router: Router,
               private renderer: Renderer2,
               private employeeService: EmployeeService,
+              private credentialsService: CredentialService,
               private cookieService: AuthService) {}
 
   ngOnInit() {
+    this.employeeId = this.cookieService.userID();
+    this.employeeLevel = this.cookieService.level();
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Logic to update active class based on the current route
@@ -52,6 +59,8 @@ export class AppComponent implements OnInit, AfterViewInit {
         }
       }
     });
+
+    this.getEmployee(this.employeeId);
   }
 
   ngAfterViewInit() {
@@ -65,6 +74,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.employeeService.getEmployee(id).subscribe(
       (data) => {
         this.employee = data;
+        this.credentialsService.fetchCredentialByEmployeeId(this.employeeId).subscribe(
+          (data) => {
+            this.employeeType = data?.role
+          }
+        )
       },
       (error: HttpErrorResponse) => {
         console.log(error)
