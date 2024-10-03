@@ -1,0 +1,62 @@
+<div class="container">
+  <div *ngFor="let j of jobData">
+    <h3>Job Post Analysis: {{ j?.jobId }}</h3>
+
+    <div class="job-details">
+      <p><strong>Applicants:</strong> {{ j?.applicants?.length || 0 }}</p>
+      <p><strong>Viewers:</strong> {{ j?.viewers?.length || 0 }}</p>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="card-1">
+          <!-- Applicant Count Chart -->
+          <div class="title-1">Applicant Count</div>
+          <app-applicants-per-job-bar-chart [jobData]="[j]"></app-applicants-per-job-bar-chart>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="card-1">
+          <!-- Viewer Types Chart -->
+          <div class="title-1">Viewer Types</div>
+          <app-viewer-types-pie-chart [jobData]="[j]"></app-viewer-types-pie-chart>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="card-1">
+          <!-- Applicants by Location Chart -->
+          <div class="title-1">Applicants by Location</div>
+          <app-applicant-location-pie-chart [jobData]="[j]"></app-applicant-location-pie-chart>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="card-1">
+          <!-- Submission Dates Chart -->
+          <div class="title-1">Submission Dates</div>
+          <app-applicant-submission-dates-chart [jobData]="[j]"></app-applicant-submission-dates-chart>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="card-1">
+          <!-- Viewer Activity Over Time Chart -->
+          <div class="title-1">Viewer Activity Over Time</div>
+          <app-job-viewers-over-time-line-chart [jobData]="[j]"></app-job-viewers-over-time-line-chart>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="card-1">
+          <!-- Resume Download Rates Chart -->
+          <div class="title-1">Resume Download Rates</div>
+          <app-resume-download-rates-chart [jobData]="[j]"></app-resume-download-rates-chart>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="card-1">
+          <!-- Applicants' Email Domains Chart -->
+          <div class="title-1">Applicants' Email Domains</div>
+          <app-applicants-email-domains-chart [jobData]="[j]"></app-applicants-email-domains-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
