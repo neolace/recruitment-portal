@@ -41,7 +41,7 @@ export class EmpSavedJobsAppliedComponent implements AfterViewInit, OnInit {
     this.employeeService.fetchFullEmployee(id).subscribe(
       (data) => {
         this.employee = data;
-        this.userSavedIds = this.employee.employee.savedJobs.filter((item: any) => item.status === 'applied' || item.status === 'expired').map((job: any) => job.jobId);
+        this.userSavedIds = this.employee.employee.savedJobs.filter((item: any) => item.status === 'applied').map((job: any) => job.jobId);
       },
       (error: any) => {
         this.alertService.warningMessage('Please Login First to Apply Jobs', 'Reminder');

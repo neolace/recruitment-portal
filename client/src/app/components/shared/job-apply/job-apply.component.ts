@@ -8,6 +8,7 @@ import {CompanyService} from "../../../services/company.service";
 import {AuthService} from "../../../services/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
+import {EmployeeService} from "../../../services/employee.service";
 
 @Component({
   selector: 'app-job-apply',
@@ -42,6 +43,7 @@ export class JobApplyComponent implements AfterViewInit, OnInit{
   constructor(private jobApplyService: JobApplyService,
               private fileUploadService: FileUploadService,
               private companyService: CompanyService,
+              private employeeService: EmployeeService,
               private cookieService: AuthService,
               private route: ActivatedRoute,
               private alertService: AlertsService) {
@@ -86,6 +88,7 @@ export class JobApplyComponent implements AfterViewInit, OnInit{
     }).subscribe(() => {
       this.loading = false;
       this.applyForm.reset();
+      this.setEmployeeJobStatus(jobId);
       this.alertService.successMessage('Successfully applied for the job.', 'Success');
     }, (error: HttpErrorResponse) => {
       if (error.status === 403) {
@@ -101,6 +104,19 @@ export class JobApplyComponent implements AfterViewInit, OnInit{
       }
       this.loading = false;
     })
+  }
+
+  setEmployeeJobStatus(id: string) {
+    if (this.employeeId == null) {
+      return;
+    }
+    this.employeeService.saveFavJobs(this.employeeId, {
+      jobId: id,
+      status: 'applied'
+    }).subscribe((data) => {
+    }, (error: any) => {
+      console.error(error);
+    });
   }
 
   uploadFile(event: any, filePath: string) {
