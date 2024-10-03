@@ -1,8 +1,9 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {JobApplyService} from "../../../../services/job-apply.service";
 import {AuthService} from "../../../../services/auth.service";
 import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
+import {AlertsService} from "../../../../services/alerts.service";
 
 declare var bootstrap: any;
 
@@ -12,6 +13,7 @@ declare var bootstrap: any;
   styleUrls: ['./applicants-db.component.scss']
 })
 export class ApplicantsDbComponent implements AfterViewInit, OnInit {
+  @ViewChild('table', { static: false }) table: ElementRef | any;
 
   companyId: any;
   jobApplicants: any[] = [];
@@ -32,6 +34,7 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
   constructor(
     private jobApplyService: JobApplyService,
     private router: Router,
+    private alertService: AlertsService,
     private cookieService: AuthService) { }
 
   ngOnInit(): void {
@@ -117,5 +120,38 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
       );
       window.open(url, '_blank');
     }
+  }
+
+  exportToCsv(jobId: any, applicants: any) {
+    if (!applicants || !applicants.length) {
+      this.alertService.warningMessage('No data to export', 'Warning');
+      return;
+    }
+
+    const csvData = this.datasetToCsv(applicants);
+    this.downloadCsv(csvData, `${jobId}-data.csv`);
+  }
+
+  datasetToCsv(applicants: any[]): string {
+    // Extract headers from the first object keys
+    const headers = Object.keys(applicants[0]).join(',');
+
+    // Process each object (applicant) into CSV row format
+    const rows = applicants.map(applicant => {
+      return Object.values(applicant).map(value => `"${value}"`).join(',');
+    });
+
+    // Combine headers and rows
+    return [headers, ...rows].join('\n');
+  }
+
+  downloadCsv(csv: string, filename: string) {
+    const csvBlob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(csvBlob);
+    const a = document.createElement('a');
+    a.setAttribute('href', url);
+    a.setAttribute('download', filename);
+    a.click();
+    window.URL.revokeObjectURL(url);
   }
 }
