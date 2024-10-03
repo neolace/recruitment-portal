@@ -109,4 +109,13 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
   toggleApplicants(job: any) {
     job.showAllApplicants = !job.showAllApplicants;
   }
+
+  analyzeJob(jobId: any) {
+    if (jobId) {
+      const url = this.router.serializeUrl(
+        this.router.createUrlTree(['/job-analysis', jobId])
+      );
+      window.open(url, '_blank');
+    }
+  }
 }

@@ -35,7 +35,7 @@
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" routerLink="/job-details/{{a.jobId}}">View ad</a></li>
                 <li><a class="dropdown-item">Export</a></li>
-                <li><a class="dropdown-item">Analyze</a></li>
+                <li><a class="dropdown-item" (click)="analyzeJob(a.jobId)">Analyze</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item danger">Delete</a></li>
               </ul>
