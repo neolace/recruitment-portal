@@ -4,6 +4,7 @@ import {AuthService} from "../../../../services/auth.service";
 import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
 import {AlertsService} from "../../../../services/alerts.service";
+import {EmployeeService} from "../../../../services/employee.service";
 
 declare var bootstrap: any;
 
@@ -33,6 +34,7 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
 
   constructor(
     private jobApplyService: JobApplyService,
+    private employeeService: EmployeeService,
     private router: Router,
     private alertService: AlertsService,
     private cookieService: AuthService) { }
@@ -153,5 +155,33 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
     a.setAttribute('download', filename);
     a.click();
     window.URL.revokeObjectURL(url);
+  }
+
+  setEmployeeJobStatus(employeeId: any, jobId: string, status: string) {
+    if (employeeId == null) {
+      return;
+    }
+    this.employeeService.saveFavJobs(employeeId, {
+      jobId: jobId,
+      status: status
+    }).subscribe((data) => {
+    }, (error: any) => {
+      console.error(error);
+    });
+  }
+
+  selectToInterview(jobId: any, job: any) {
+    if (job) {
+      this.jobApplyService.updateSingleApplicant(jobId, job.id, {
+        ...job,
+        status: 'Selected'
+      }).subscribe((data:any) => {
+        this.setEmployeeJobStatus(job.employeeId, jobId, 'inprogress');
+        this.alertService.successMessage('Candidate Selected for Interview', 'Success');
+      }, (error: any) => {
+        console.error(error);
+        this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+      })
+    }
   }
 }

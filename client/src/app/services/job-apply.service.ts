@@ -118,6 +118,13 @@ export class JobApplyService {
     return this.http.post<any>(`${this.baseUrl}/cmp_job-apply/addViewer/${companyId}/${jobId}`, jobViewer, {headers});
   }
 
+  updateSingleApplicant(jobId: any, applicantId: any, jobApplicant: any): Observable<any>|any {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.put<any>(`${this.baseUrl}/cmp_job-apply/updateByJobId/${jobId}/jobApply/${applicantId}`, jobApplicant, {headers});
+  }
+
   clearCacheJobId() {
     this.jobApplyByJobIdCacheInitialized = false;
     this.jobApplySubjectByJobId.next(null);

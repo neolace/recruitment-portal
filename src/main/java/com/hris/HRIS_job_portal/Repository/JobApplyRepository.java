@@ -10,4 +10,6 @@ public interface JobApplyRepository extends MongoRepository<JobApplyModel, Strin
     Optional<List<JobApplyModel>> findAllByCompanyId(String companyId);
 
     Optional<List<JobApplyModel>> findAllByJobId(String jobId);
+
+    Optional<JobApplyModel> findByJobId(String id);
 }

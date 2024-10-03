@@ -41,7 +41,7 @@ export class EmpSavedJobsInprogressComponent implements AfterViewInit{
     this.employeeService.fetchFullEmployee(id).subscribe(
       (data) => {
         this.employee = data;
-        this.userSavedIds = this.employee.employee.savedJobs.filter((item: any) => item.status === 'inprogress' || item.status === 'expired').map((job: any) => job.jobId);
+        this.userSavedIds = this.employee.employee.savedJobs.filter((item: any) => item.status === 'inprogress').map((job: any) => job.jobId);
       },
       (error: any) => {
         this.alertService.warningMessage('Please Login First to Apply Jobs', 'Reminder');
