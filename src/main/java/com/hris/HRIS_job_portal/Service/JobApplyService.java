@@ -151,6 +151,28 @@ public class JobApplyService {
         return null;
     }
 
+    public JobApplicantDTO updateSingleJobApplyByJobId(String jobId, String applicantId, JobApplicantDTO updatedJobApply) {
+        Optional<JobApplyModel> jobApplyList = jobApplyRepository.findByJobId(jobId);
+
+        if (jobApplyList.isPresent()) {
+            JobApplyModel jobApplyModel = jobApplyList.get();
+
+            List<JobApplicantDTO> applicantList = jobApplyModel.getApplicants();
+            for (int i = 0; i < applicantList.size(); i++) {
+                JobApplicantDTO applicant = applicantList.get(i);
+
+                if (applicant.getId().equals(applicantId)) {
+                    applicantList.set(i, updatedJobApply);
+
+                    jobApplyRepository.save(jobApplyModel);
+                    return updatedJobApply;
+                }
+            }
+        }
+
+        return null;
+    }
+
     public void deleteSingleJobApply(String companyId, String applicantId) {
         Optional<List<JobApplyModel>> jobApplyList = jobApplyRepository.findAllByCompanyId(companyId);
 

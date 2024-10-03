@@ -66,6 +66,11 @@ public class JobApplyController {
         return jobApplyService.updateSingleJobApply(companyId, applicantId, updatedJobApply);
     }
 
+    @PutMapping("/updateByJobId/{jobId}/jobApply/{applicantId}")
+    public JobApplicantDTO updateSingleJobApplyByJobId(@PathVariable String jobId, @PathVariable String applicantId, @RequestBody JobApplicantDTO updatedJobApply) {
+        return jobApplyService.updateSingleJobApplyByJobId(jobId, applicantId, updatedJobApply);
+    }
+
     @DeleteMapping("/deleteByCompanyId/{companyId}/jobApply/{applicantId}")
     public void deleteSingleJobApply(@PathVariable String companyId, @PathVariable String applicantId) {
         jobApplyService.deleteSingleJobApply(companyId, applicantId);
