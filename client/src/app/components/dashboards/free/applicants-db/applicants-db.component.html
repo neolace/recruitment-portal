@@ -34,7 +34,7 @@
               <button class="see-more-btn pb-0" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_horiz</i></button>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" routerLink="/job-details/{{a.jobId}}">View ad</a></li>
-                <li><a class="dropdown-item">Export</a></li>
+                <li><a class="dropdown-item" (click)="exportToCsv(a.jobId, a.applicants)">Export</a></li>
                 <li><a class="dropdown-item" (click)="analyzeJob(a.jobId)">Analyze</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item danger">Delete</a></li>
@@ -85,7 +85,7 @@
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" (click)="viewCandidateProfile(ad.employeeId)">View</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item">Select</a></li>
+                  <li><a class="dropdown-item">Select to Interview</a></li>
                   <li><a class="dropdown-item">Reject</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item danger">Delete</a></li>
