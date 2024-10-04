@@ -5,6 +5,7 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
 import com.stripe.model.Invoice;
 import com.stripe.model.Subscription;
+import com.stripe.model.checkout.Session;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,18 @@ public class StripeService {
 
     public Invoice getInvoice(String invoiceId) throws StripeException {
         return Invoice.retrieve(invoiceId);
+    }
+
+
+    public Session createCheckoutSession(String companyId, String planName) throws StripeException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("line_items", List.of(Map.of("price", planName)));
+        params.put("metadata", Map.of("company_id", companyId));
+        params.put("mode", "subscription");
+        params.put("success_url", "http://localhost:4200/success");
+        params.put("cancel_url", "http://localhost:4200/cancel");
+
+        return Session.create(params);
     }
 }
 
