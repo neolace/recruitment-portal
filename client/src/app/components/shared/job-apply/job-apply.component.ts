@@ -110,7 +110,7 @@ export class JobApplyComponent implements AfterViewInit, OnInit{
     if (this.employeeId == null) {
       return;
     }
-    this.employeeService.saveFavJobs(this.employeeId, {
+    this.employeeService.editFavJobStatus(this.employeeId, {
       jobId: id,
       status: 'applied'
     }).subscribe((data) => {

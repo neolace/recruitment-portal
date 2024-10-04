@@ -207,6 +207,8 @@ public class EmployeeService {
                 if (favJob.getJobId().equals(jobDto.getJobId())) {
                     favJob.setStatus(jobDto.getStatus());
                     return employeeRepository.save(employee);
+                } else {
+                    saveFavoriteJob(empId, jobDto);
                 }
             }
         } else {

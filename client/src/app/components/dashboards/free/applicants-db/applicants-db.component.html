@@ -86,7 +86,7 @@
                   <li><a class="dropdown-item" (click)="viewCandidateProfile(ad.employeeId)">View</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" (click)="selectToInterview(a.jobId, ad)">Select to Interview</a></li>
-                  <li><a class="dropdown-item">Reject</a></li>
+                  <li><a class="dropdown-item" (click)="removeFromStack(a.jobId, ad)">Reject</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item danger">Delete</a></li>
                 </ul>
