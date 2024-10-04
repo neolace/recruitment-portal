@@ -173,11 +173,29 @@ public class JobApplyService {
         return null;
     }
 
+    public void deleteJobApply(String id) {
+        jobApplyRepository.deleteById(id);
+    }
+
     public void deleteSingleJobApply(String companyId, String applicantId) {
         Optional<List<JobApplyModel>> jobApplyList = jobApplyRepository.findAllByCompanyId(companyId);
 
         if (jobApplyList.isPresent()) {
             JobApplyModel jobApplyModel = jobApplyList.get().get(0);
+
+            List<JobApplicantDTO> applicantList = jobApplyModel.getApplicants();
+            applicantList.removeIf(applicant -> applicant.getId().equals(applicantId));
+
+            jobApplyModel.setApplicants(applicantList);
+            jobApplyRepository.save(jobApplyModel);
+        }
+    }
+
+    public void deleteSingleJobApplyByJobId(String jobId, String applicantId) {
+        Optional<JobApplyModel> jobApplyList = jobApplyRepository.findByJobId(jobId);
+
+        if (jobApplyList.isPresent()) {
+            JobApplyModel jobApplyModel = jobApplyList.get();
 
             List<JobApplicantDTO> applicantList = jobApplyModel.getApplicants();
             applicantList.removeIf(applicant -> applicant.getId().equals(applicantId));

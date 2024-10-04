@@ -37,7 +37,7 @@
                 <li><a class="dropdown-item" (click)="exportToCsv(a.jobId, a.applicants)">Export</a></li>
                 <li><a class="dropdown-item" (click)="analyzeJob(a.jobId)">Analyze</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item danger">Delete</a></li>
+                <li><a class="dropdown-item danger" (click)="openDeleteModal(a.id, a, 'deleteJob')" data-bs-toggle="modal" data-bs-target="#deleteJobModel">Delete</a></li>
               </ul>
             </div>
           </div>
@@ -88,7 +88,7 @@
                   <li><a class="dropdown-item" (click)="selectToInterview(a.jobId, ad)">Select to Interview</a></li>
                   <li><a class="dropdown-item" (click)="removeFromStack(a.jobId, ad)">Reject</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item danger">Delete</a></li>
+                  <li><a class="dropdown-item danger" (click)="openDeleteModal(a.jobId, ad, 'delete')" data-bs-toggle="modal" data-bs-target="#deleteCandidateModel">Delete</a></li>
                 </ul>
               </div>
             </td>
@@ -143,6 +143,42 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteCandidateModel" tabindex="-1" aria-labelledby="deleteCandidateModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteCandidateModalLabel">Delete Account</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" #closeModal></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this applicant? This action cannot be undone!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" (click)="deleteSingleApplicant(jobId, applicantData)">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteJobModel" tabindex="-1" aria-labelledby="deleteJobModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteJobModalLabel">Delete Account</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" #closeModal2></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this content? This will erase all data associated with it and this action cannot be undone!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" (click)="deleteAllApplicants(jobId)">Delete</button>
       </div>
     </div>
   </div>
