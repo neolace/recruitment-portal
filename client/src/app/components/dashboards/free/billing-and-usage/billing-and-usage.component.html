@@ -1,1 +1,68 @@
-<p>billing-and-usage works!</p>
+<div class="container">
+  <div class="billing-usage">
+    <section class="subscription-details">
+      <h3>Subscription Plan</h3>
+      <div *ngFor="let s of subscription">
+        <strong>Plan:</strong> {{ s.plan_name }} <br>
+        <strong>Billing Cycle:</strong> {{ s.billing_cycle }} <br>
+        <strong>Cost:</strong> ${{ s.cost }} <br>
+        <strong>Start Date:</strong> {{ s.start_date | date }} <br>
+        <strong>End Date:</strong> {{ s.end_date | date }} <br>
+        <strong>Status: </strong> <span [class.active]="s.is_active">Active</span>
+      </div>
+      <button class="btn-1" (click)="openUpgradePlan()">Upgrade/Downgrade Plan</button>
+    </section>
+
+    <section class="usage-data">
+      <h3>Usage Overview</h3>
+      <div *ngFor="let u of usage">
+        <div>
+          <strong>Job Posts:</strong> {{ u.job_posts_used }} / {{ u.job_posts_allowed }}<br>
+          <mat-progress-bar [value]="calculatePercentage(u.job_posts_used, u.job_posts_allowed)"></mat-progress-bar>
+        </div>
+        <div>
+          <strong>Applicant Views:</strong> {{ u.applicant_views_used }} / {{ u.applicant_views_allowed }}<br>
+          <mat-progress-bar [value]="calculatePercentage(u.applicant_views_used, u.applicant_views_allowed)"></mat-progress-bar>
+        </div>
+        <div *ngIf="u.overage_charges > 0">
+          <strong>Overage Charges:</strong> ${{ u.overage_charges }}
+        </div>
+      </div>
+    </section>
+
+    <section class="billing-history">
+      <h3>Billing History</h3>
+      <table>
+        <thead>
+        <tr>
+          <th>Date</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Invoice</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let bill of billingHistory">
+          <td>{{ bill.date | date }}</td>
+          <td>${{ bill.amount }}</td>
+          <td>{{ bill.status }}</td>
+          <td>
+            <a href="{{ bill.invoiceUrl }}" download>Download Invoice</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="payment-methods">
+      <h3>Payment Methods</h3>
+      <div *ngFor="let payment of paymentMethods">
+        <div>
+          <strong>{{ payment.type }}:</strong> **** **** **** {{ payment.last_four }} <br>
+          <strong>Expiry Date:</strong> {{ payment.expiry_date | date: 'MM/yyyy' }} <br>
+        </div>
+      </div>
+      <button class="btn-1" (click)="openManagePaymentMethods()">Manage Payment Methods</button>
+    </section>
+  </div>
+</div>
