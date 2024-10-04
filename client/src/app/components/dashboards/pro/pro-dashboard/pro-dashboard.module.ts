@@ -16,12 +16,14 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {ProApplicantsDbComponent} from "../pro-applicants-db/pro-applicants-db.component";
 import {SharedChartsComponentModule} from "../../../../shared/modules/shared-charts-component.module";
 import {SharedComponentModule} from "../../../../shared/modules/shared-component.module";
+import {ProCompanyAnalysisComponent} from "../pro-company-analysis/pro-company-analysis.component";
 
 @NgModule({
   declarations: [
     ProDashboardComponent,
     ProMainDbComponent,
-    ProApplicantsDbComponent
+    ProApplicantsDbComponent,
+    ProCompanyAnalysisComponent
   ],
   imports: [
     CommonModule,
