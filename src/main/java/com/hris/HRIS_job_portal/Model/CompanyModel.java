@@ -42,4 +42,7 @@ public class CompanyModel {
     private Object profileCompleted;
     private String profileStatus;
     private String companyType;
+    private String subscription_id;
+    private String payment_method_id;
+    private String billing_address_id;
 }

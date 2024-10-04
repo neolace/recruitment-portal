@@ -18,6 +18,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {RouterLink} from "@angular/router";
 import {SharedComponentModule} from "./shared-component.module";
 import {SharedPipesModule} from "./shared-pipes.module";
+import {BillingAndUsageComponent} from "../../components/dashboards/free/billing-and-usage/billing-and-usage.component";
 
 
 
@@ -27,7 +28,8 @@ import {SharedPipesModule} from "./shared-pipes.module";
     PersonalProfileSettingsComponent,
     BusinessProfileMyComponent,
     BusinessProfileSettingsComponent,
-    CompanyJobsMyComponent
+    CompanyJobsMyComponent,
+    BillingAndUsageComponent
   ],
     imports: [
         CommonModule,
@@ -43,7 +45,8 @@ import {SharedPipesModule} from "./shared-pipes.module";
     PersonalProfileSettingsComponent,
     BusinessProfileMyComponent,
     BusinessProfileSettingsComponent,
-    CompanyJobsMyComponent
+    CompanyJobsMyComponent,
+    BillingAndUsageComponent
   ]
 })
 export class SharedDashboardModule { }
