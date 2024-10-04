@@ -1,6 +1,6 @@
 import {PaymentMethodsModel} from "../../data-models/payment/PaymentMethods.model";
 
-export var PaymentMethodsDataStore: PaymentMethodsModel[] = [
+export var paymentMethodsDataStore: PaymentMethodsModel[] = [
   {
     id: "301",
     companyId: "1",
