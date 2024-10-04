@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, tap} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -123,6 +123,30 @@ export class JobApplyService {
       'Authorization': 'Basic ' + btoa('admin:password')
     });
     return this.http.put<any>(`${this.baseUrl}/cmp_job-apply/updateByJobId/${jobId}/jobApply/${applicantId}`, jobApplicant, {headers});
+  }
+
+  deleteSingleApplicant(companyId: any, jobId: any, applicantId: any): Observable<any>|any {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.delete<any>(`${this.baseUrl}/cmp_job-apply/deleteByJobId/${jobId}/jobApply/${applicantId}`, {headers}).pipe(
+      tap(() => {
+        this.clearCacheCompanyId();
+        this.fetchJobViewerByCompanyId(companyId);
+      })
+    );
+  }
+
+  deleteCompleteApply(id: any): Observable<any>|any {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.delete<any>(`${this.baseUrl}/cmp_job-apply/delete/${id}`, {headers}).pipe(
+      tap(() => {
+        this.clearCache();
+        this.fetchJobApply();
+      })
+    );
   }
 
   clearCacheJobId() {

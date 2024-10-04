@@ -15,6 +15,8 @@ declare var bootstrap: any;
 })
 export class ApplicantsDbComponent implements AfterViewInit, OnInit {
   @ViewChild('table', { static: false }) table: ElementRef | any;
+  @ViewChild('closeModal') closeModal!: ElementRef;
+  @ViewChild('closeModal2') closeModal2!: ElementRef;
 
   companyId: any;
   jobApplicants: any[] = [];
@@ -31,6 +33,9 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
   forbidden: boolean = false;
   corsError: boolean = false;
   unexpectedError: boolean = false;
+
+  jobId: string | undefined;
+  applicantData: any;
 
   constructor(
     private jobApplyService: JobApplyService,
@@ -180,7 +185,6 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
         this.setEmployeeJobStatus(job.employeeId, jobId, 'inprogress');
         this.alertService.successMessage('Candidate Selected for Interview', 'Success');
       }, (error: any) => {
-        console.error(error);
         this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
       })
     }
@@ -195,9 +199,68 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
         this.setEmployeeJobStatus(job.employeeId, jobId, 'rejected');
         this.alertService.successMessage('Candidate Rejected', 'Success');
       }, (error: any) => {
-        console.error(error);
         this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
       })
+    }
+  }
+
+  deleteSingleApplicant(jobId: any, job: any) {
+    if (job) {
+      this.jobApplyService.deleteSingleApplicant(this.companyId, jobId, job.id).subscribe((data:any) => {
+        this.setEmployeeJobStatus(job.employeeId, jobId, 'deleted');
+        this.dismissModal('delete')
+        this.alertService.successMessage('Candidate Deleted', 'Success');
+        this.jobApplyService.clearCacheCompanyId();
+        this.fetchApplicants();
+      }, (error: any) => {
+        this.dismissModal('delete')
+        this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+      })
+    }
+  }
+
+  deleteAllApplicants(jobId: any) {
+    if (jobId) {
+      this.jobApplyService.deleteCompleteApply(jobId).subscribe((data:any) => {
+        this.dismissModal('deleteJob')
+        this.alertService.successMessage('All Applicants Deleted', 'Success');
+        this.jobApplyService.clearCacheCompanyId();
+        this.fetchApplicants();
+      }, (error: any) => {
+        this.dismissModal('deleteJob')
+        this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+      })
+    }
+  }
+
+  openDeleteModal(jobId: string, applicantData: any, value?: any) {
+    switch (value) {
+      case 'delete':
+        this.jobId = jobId;
+        this.applicantData = applicantData;
+        break;
+      case 'deleteJob':
+        this.jobId = jobId;
+        break;
+      default:
+        this.jobId = jobId;
+        this.applicantData = applicantData;
+        break;
+    }
+  }
+
+  dismissModal(val:any) {
+    switch (val) {
+      case 'delete':
+        const button = this.closeModal.nativeElement;
+        button.click();
+        break;
+      case 'deleteJob':
+        const button2 = this.closeModal2.nativeElement;
+        button2.click();
+        break;
+      default:
+        break;
     }
   }
 }
