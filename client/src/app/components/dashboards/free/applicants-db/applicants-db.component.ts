@@ -161,10 +161,11 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
     if (employeeId == null) {
       return;
     }
-    this.employeeService.saveFavJobs(employeeId, {
+    this.employeeService.editFavJobStatus(employeeId, {
       jobId: jobId,
       status: status
     }).subscribe((data) => {
+      // console.log(data);
     }, (error: any) => {
       console.error(error);
     });
@@ -178,6 +179,21 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
       }).subscribe((data:any) => {
         this.setEmployeeJobStatus(job.employeeId, jobId, 'inprogress');
         this.alertService.successMessage('Candidate Selected for Interview', 'Success');
+      }, (error: any) => {
+        console.error(error);
+        this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+      })
+    }
+  }
+
+  removeFromStack(jobId: any, job: any) {
+    if (job) {
+      this.jobApplyService.updateSingleApplicant(jobId, job.id, {
+        ...job,
+        status: 'Rejected'
+      }).subscribe((data:any) => {
+        this.setEmployeeJobStatus(job.employeeId, jobId, 'rejected');
+        this.alertService.successMessage('Candidate Rejected', 'Success');
       }, (error: any) => {
         console.error(error);
         this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
