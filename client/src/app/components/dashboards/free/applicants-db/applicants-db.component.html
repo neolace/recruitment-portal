@@ -123,23 +123,13 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <table class="table table-hover table-borderless w-100" *ngIf="viewers && viewers.length > 0">
-          <tbody class="w-100">
-          <tr *ngFor="let viewer of viewers[0].viewers; let i = index" class="applicants-list-row">
-            <td>{{i + 1}}</td>
-            <td>{{viewer.name}}</td>
-            <td>
-              <div class="w-100 d-flex align-items-center justify-content-between">
-                <p class="m-0">{{viewer.date ? (viewer.date|timeAgo) : 'N/A'}}</p>
-                <div *ngIf="viewer.name != 'Guest'">
-                  <button class="btn-1" (click)="viewCandidateProfile(viewer.employeeId)"><i class="material-icons">call_made</i></button>
-                </div>
-              </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-        <p *ngIf="!viewers || viewers.length === 0">No viewers found for this job.</p>
+        <div class="sample-wrapper">
+          <img [src]="themeService.isDarkMode() ? './assets/imgs/companies/dashboards/view-sample-d.png' : './assets/imgs/companies/dashboards/view-sample.png'" alt="sample">
+          <div class="sample-overlay">
+            <p>This feature is available in the pro version</p>
+            <button class="unlock" routerLink="/pricing"><i class="material-icons">lock</i> Unlock</button>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
