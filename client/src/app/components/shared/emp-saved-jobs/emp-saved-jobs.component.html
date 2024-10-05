@@ -27,16 +27,20 @@
         </div>
         <ul class="nav nav-tabs nav-tabs-style-1">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" (click)="navigateBetweenTabs('saved')" [class.active]="isActive('saved')">Saved</a>
+            <a class="nav-link" aria-current="page" (click)="navigateBetweenTabs('saved')"
+               [class.active]="isActive('saved')">Saved</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" (click)="navigateBetweenTabs('inprogress')" [class.active]="isActive('inprogress')">In progress</a>
+            <a class="nav-link" aria-current="page" (click)="navigateBetweenTabs('inprogress')"
+               [class.active]="isActive('inprogress')">In progress</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" (click)="navigateBetweenTabs('applied')" [class.active]="isActive('applied')">Applied</a>
+            <a class="nav-link" aria-current="page" (click)="navigateBetweenTabs('applied')"
+               [class.active]="isActive('applied')">Applied</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" (click)="navigateBetweenTabs('archived')" [class.active]="isActive('archived')">Archived</a>
+            <a class="nav-link" aria-current="page" (click)="navigateBetweenTabs('archived')"
+               [class.active]="isActive('archived')">Archived</a>
           </li>
         </ul>
 
@@ -46,7 +50,19 @@
       </div>
     </div>
     <div class="col-12 col-lg-4">
-      <div class="card-1"></div>
+      <div class="card-1">
+        <div class="random-hint-card">
+          <div class="title">{{selectedJobHint.title}}</div>
+          <ul class="list-1">
+            <li *ngFor="let l of selectedJobHint.points"><strong>{{l.strong}} </strong>
+              {{l.text}}
+              <ul *ngIf="l.list" class="list-2">
+                <li *ngFor="let li of l.list"><strong>{{li.strong}} </strong>{{li.text}}</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>

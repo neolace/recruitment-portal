@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from "@angular/router";
+import {MyJobListRandomHintDataStore} from "../../../shared/data-store/my-job-list-random-hint-data-store";
 
 @Component({
   selector: 'app-emp-saved-jobs',
@@ -8,9 +9,12 @@ import {NavigationEnd, Router} from "@angular/router";
 })
 export class EmpSavedJobsComponent implements OnInit, AfterViewInit {
 
+  jobHints = MyJobListRandomHintDataStore.data
+  selectedJobHint: any
   constructor(private router: Router) {}
 
   ngOnInit(): void {
+    this.randomHint()
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.updateActiveClass();
@@ -43,5 +47,9 @@ export class EmpSavedJobsComponent implements OnInit, AfterViewInit {
   }
   isActive(path: string) {
     return this.router.url === `/my-jobs/${path}`;
+  }
+
+  randomHint() {
+    this.selectedJobHint = this.jobHints[Math.floor(Math.random() * this.jobHints.length)];
   }
 }
