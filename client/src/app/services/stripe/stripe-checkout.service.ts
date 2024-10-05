@@ -3,17 +3,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { loadStripe } from '@stripe/stripe-js';
 import {Observable} from "rxjs";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root',
 })
 export class StripeCheckoutService {
-  private stripePromise = loadStripe('YOUR_STRIPE_PUBLIC_KEY');
+  stripe_key = environment.stripeKey
+  baseUrl = environment.apiUrl;
+  private stripePromise = loadStripe(this.stripe_key);
 
   constructor(private http: HttpClient) {}
 
   createStripeCheckoutSession(companyId: string, planName: string): Observable<any> {
-    return this.http.post('/webhook/create-checkout-session', { companyId, planName });
+    return this.http.post(this.baseUrl+'/webhook/create-checkout-session', { companyId, planName });
   }
 
   async redirectToCheckout(sessionId: string) {
