@@ -16,10 +16,20 @@
         </div>
       </div>
       <div class="col-12 col-md-6 col-lg-3">
-        <div class="card-1">
+        <div class="card-1" *ngIf="userLevel == '3' || userLevel == '4'">
           <!-- Viewer Types Chart -->
           <div class="title-1">Viewer Types</div>
           <app-viewer-types-pie-chart [jobData]="[j]"></app-viewer-types-pie-chart>
+        </div>
+        <div class="card-1" *ngIf="userLevel != '3' && userLevel != '4'">
+          <div class="title-1">Viewer Types</div>
+          <div class="sample-wrapper">
+            <img [src]="themeService.isDarkMode() ? './assets/imgs/companies/dashboards/job-views-by-type-sample-d.png' : './assets/imgs/companies/dashboards/job-views-by-type-sample.png'" alt="sample">
+            <div class="sample-overlay">
+              <p>This feature is available in the pro version</p>
+              <button class="unlock" routerLink="/pricing"><i class="material-icons">lock</i> Unlock</button>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-12 col-md-6 col-lg-3">
@@ -30,17 +40,37 @@
         </div>
       </div>
       <div class="col-12 col-md-6">
-        <div class="card-1">
+        <div class="card-1" *ngIf="userLevel == '3' || userLevel == '4'">
           <!-- Submission Dates Chart -->
           <div class="title-1">Submission Dates</div>
           <app-applicant-submission-dates-chart [jobData]="[j]"></app-applicant-submission-dates-chart>
         </div>
+        <div class="card-1" *ngIf="userLevel != '3' && userLevel != '4'">
+          <div class="title-1">Submission Dates</div>
+          <div class="sample-wrapper">
+            <img [src]="themeService.isDarkMode() ? './assets/imgs/companies/dashboards/app-submission-dates-sample-d.png' : './assets/imgs/companies/dashboards/app-submission-dates-sample.png'" alt="sample">
+            <div class="sample-overlay">
+              <p>This feature is available in the pro version</p>
+              <button class="unlock" routerLink="/pricing"><i class="material-icons">lock</i> Unlock</button>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col-12 col-md-6">
-        <div class="card-1">
+        <div class="card-1" *ngIf="userLevel == '3' || userLevel == '4'">
           <!-- Viewer Activity Over Time Chart -->
           <div class="title-1">Viewer Activity Over Time</div>
           <app-job-viewers-over-time-line-chart [jobData]="[j]"></app-job-viewers-over-time-line-chart>
+        </div>
+        <div class="card-1" *ngIf="userLevel != '3' && userLevel != '4'">
+          <div class="title-1">Job Viewers Over Time</div>
+          <div class="sample-wrapper">
+            <img [src]="themeService.isDarkMode() ? './assets/imgs/companies/dashboards/job-viewers-ot-sample-d.png' : './assets/imgs/companies/dashboards/job-viewers-ot-sample.png'" alt="sample">
+            <div class="sample-overlay">
+              <p>This feature is available in the pro version</p>
+              <button class="unlock" routerLink="/pricing"><i class="material-icons">lock</i> Unlock</button>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-12 col-md-6">
@@ -51,10 +81,20 @@
         </div>
       </div>
       <div class="col-12 col-md-6">
-        <div class="card-1">
+        <div class="card-1" *ngIf="userLevel == '3' || userLevel == '4'">
           <!-- Applicants' Email Domains Chart -->
           <div class="title-1">Applicants' Email Domains</div>
           <app-applicants-email-domains-chart [jobData]="[j]"></app-applicants-email-domains-chart>
+        </div>
+        <div class="card-1" *ngIf="userLevel != '3' && userLevel != '4'">
+          <div class="title-1">Applicants Email Domains</div>
+          <div class="sample-wrapper">
+            <img [src]="themeService.isDarkMode() ? './assets/imgs/companies/dashboards/applicant-email-domains-sample-d.png' : './assets/imgs/companies/dashboards/applicant-email-domains-sample.png'" alt="sample">
+            <div class="sample-overlay">
+              <p>This feature is available in the pro version</p>
+              <button class="unlock" routerLink="/pricing"><i class="material-icons">lock</i> Unlock</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
