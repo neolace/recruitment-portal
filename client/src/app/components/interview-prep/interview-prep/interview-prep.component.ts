@@ -13,13 +13,19 @@ export class InterviewPrepComponent {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.incrementViewCount(this.selectedQuestion);
+  }
 
   selectQuestion(question: any) {
     this.selectedQuestion = question;
+    this.incrementViewCount(question);
   }
 
-  incrementViewCount(answer: any) {
-    answer.viewCount++;
+  incrementViewCount(question: any) {
+    if (!sessionStorage.getItem(`token_${question.id}`)) {
+      sessionStorage.setItem(`token_${question.id}`, 'true');
+      question.viewCount++;
+    }
   }
 }

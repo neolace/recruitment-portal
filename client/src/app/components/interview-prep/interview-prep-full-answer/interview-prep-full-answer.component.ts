@@ -29,12 +29,9 @@ export class InterviewPrepFullAnswerComponent {
       this.selectedQuestion.answers.forEach((answer: any) => {
         if (answer.id === this.answerId) {
           this.selectedAnswer = answer;
+          this.incrementViewCount(answer);
         }
       })
-
-      console.log(this.selectedQuestion);
-
-      console.log(this.selectedAnswer);
     });
   }
 
@@ -48,6 +45,13 @@ export class InterviewPrepFullAnswerComponent {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
     return (match && match[2].length == 11) ? match[2] : null;
+  }
+
+  incrementViewCount(answer: any) {
+    if (!sessionStorage.getItem(`token_${this.selectedAnswer.id}`)) {
+      answer.viewCount++;
+      sessionStorage.setItem(`token_${this.selectedAnswer.id}`, 'true');
+    }
   }
 
   goBack() {

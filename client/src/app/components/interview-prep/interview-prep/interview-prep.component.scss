@@ -110,6 +110,7 @@
 .card-1{
   background-color: var(--color-surface-100);
   position: relative;
+  margin: max(20px, 1.2vw) 0;
 
   .top{
     background-color: var(--color-primary-600-opacity-3);

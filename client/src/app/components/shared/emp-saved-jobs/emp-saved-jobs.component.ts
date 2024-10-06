@@ -50,6 +50,11 @@ export class EmpSavedJobsComponent implements OnInit, AfterViewInit {
   }
 
   randomHint() {
-    this.selectedJobHint = this.jobHints[Math.floor(Math.random() * this.jobHints.length)];
+    if (!sessionStorage.getItem('jobHint')) {
+      this.selectedJobHint = this.jobHints[Math.floor(Math.random() * this.jobHints.length)];
+      sessionStorage.setItem('jobHint', JSON.stringify(this.selectedJobHint));
+    } else {
+      this.selectedJobHint = JSON.parse(sessionStorage.getItem('jobHint')!);
+    }
   }
 }
