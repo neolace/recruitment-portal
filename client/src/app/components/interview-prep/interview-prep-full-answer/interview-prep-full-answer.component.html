@@ -1,0 +1,13 @@
+<div *ngIf="selectedAnswer">
+  <h1>{{ selectedQuestion.question }}</h1>
+  <p>{{ selectedQuestion.overview }}</p>
+
+  <div>
+    <h3>{{ selectedAnswer.by }} - {{ selectedAnswer.position }}</h3>
+    <p>{{ selectedAnswer.answer }}</p>
+    <a *ngIf="selectedAnswer.video" [href]="selectedAnswer.video" target="_blank">Watch Video</a>
+    <p><strong>Views:</strong> {{ selectedAnswer.viewCount }}</p>
+  </div>
+
+  <button (click)="goBack()">Back</button>
+</div>
