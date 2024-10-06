@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {InterviewPrepDataStore} from "../../../shared/data-store/interview-prep-data-store";
 import {ActivatedRoute} from "@angular/router";
 import { Location } from '@angular/common';
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-interview-prep-full-answer',
@@ -14,7 +15,7 @@ export class InterviewPrepFullAnswerComponent {
   selectedQuestion: any;
   selectedAnswer: any;
 
-  constructor(private route: ActivatedRoute, private location: Location) {}
+  constructor(private route: ActivatedRoute, private location: Location, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -35,6 +36,18 @@ export class InterviewPrepFullAnswerComponent {
 
       console.log(this.selectedAnswer);
     });
+  }
+
+  getVideoUrl(url: string): any {
+    // Assuming the video URL is a YouTube URL, convert it to an embeddable format
+    const videoId = this.extractVideoId(url);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${videoId}`);
+  }
+
+  extractVideoId(url: string): string | null {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length == 11) ? match[2] : null;
   }
 
   goBack() {
