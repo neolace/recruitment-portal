@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild, ViewEncapsulation} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {ThemeService} from "./services/theme.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {LockScreenComponent} from "./components/lock-screen/lock-screen.component";
@@ -19,7 +28,7 @@ import {CredentialService} from "./services/credential.service";
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('navbarNav') navbarNav: ElementRef | any;
   title = 'SPARKC HR System';
 
@@ -68,6 +77,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     icons.forEach((icon) => {
       icon.setAttribute('translate', 'no');
     });
+  }
+
+  ngOnDestroy() {
+    this.removeUnwantedSession()
   }
 
   getEmployee(id: any) {
@@ -159,8 +172,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
+  removeUnwantedSession() {
+    sessionStorage.clear();
+  }
+
   logout() {
     this.cookieService.logout()
+    this.removeUnwantedSession()
     this.router.navigate(['/login']);
   }
 }
