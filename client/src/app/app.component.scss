@@ -290,6 +290,44 @@
       background-size: cover;
       background-image: url("../assets/imgs/logo/top-b.svg");
     }
+
+    .report-issue{
+      width: 100%;
+      margin: 14px 0;
+      background-color: #1f1f2e;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 12px 20px;
+
+      .report-btn{
+        background-color: #FFB100;
+        color: #fff;
+        margin: 0 0 8px 0;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        gap: 4px;
+        font-size: 12px;
+
+        i{
+          font-size: 14px;
+        }
+
+        &:hover{
+          background-color: #FFD700;
+        }
+      }
+    }
   }
 
   .footer-bottom{
@@ -300,5 +338,30 @@
     p{
       margin: 0;
     }
+  }
+}
+
+.modal-body{
+  p, ol, ul, li{
+    font-size: 14px;
+  }
+}
+
+.form-wrapper{
+  gap: unset;
+  row-gap: 20px;
+  font-size: 14px;
+
+  input, textarea{
+    font-size: 14px;
+
+    &::placeholder{
+      font-size: 14px;
+    }
+  }
+
+  span{
+    color: var(--color-text-200);
+    font-weight: 450;
   }
 }

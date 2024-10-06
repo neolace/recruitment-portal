@@ -21,6 +21,9 @@ import {AuthService} from "./services/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {EmployeeService} from "./services/employee.service";
 import {CredentialService} from "./services/credential.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AlertsService} from "./services/alerts.service";
+import {FileUploadService} from "./services/file-upload.service";
 
 @Component({
   selector: 'app-root',
@@ -45,11 +48,20 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   employeeLevel: any;
   employeeType: any;
 
+  downloadURL?: any;
+
+  reportIssueForm = new FormGroup({
+    issueType: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required]),
+  })
+
   constructor(public themeService: ThemeService,
               private router: Router,
               private renderer: Renderer2,
               private employeeService: EmployeeService,
               private credentialsService: CredentialService,
+              private fileUploadService: FileUploadService,
+              private alertService: AlertsService,
               private cookieService: AuthService) {}
 
   ngOnInit() {
@@ -180,5 +192,35 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cookieService.logout()
     this.removeUnwantedSession()
     this.router.navigate(['/login']);
+  }
+
+  uploadFile(event: any, filePath: string, location: string) {
+    const file = event.target.files[0];
+    const maxFileSize = 2 * 1024 * 1024;
+    const allowedFileTypes = ['image/png', 'image/jpeg', 'application/pdf'];
+    if (file) {
+      if (file.size > maxFileSize) {
+        this.alertService.warningMessage('File size exceeds the maximum limit of 2MB.', 'Warning');
+        return;
+      }
+      if (!allowedFileTypes.includes(file.type)) {
+        this.alertService.warningMessage('Only PNG, JPEG, and PDF files are allowed.', 'Warning');
+        return;
+      }
+      this.fileUploadService.uploadFile(filePath, file).subscribe(url => {
+        this.downloadURL = url;
+        //TODO: Upload to AWS S3
+      });
+    }
+  }
+
+  generateRandomId(): string {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  }
+
+  reportIssue() {
+    if (this.reportIssueForm.valid) {
+      console.log(this.reportIssueForm.value)
+    }
   }
 }
