@@ -100,6 +100,8 @@
 
   mat-drawer-content {
     width: 100%;
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
     min-height: calc(100vh - 70px);
   }
 
