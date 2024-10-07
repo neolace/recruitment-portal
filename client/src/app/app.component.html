@@ -148,6 +148,7 @@
                                                                                                 translate="no">bug_report</i>Report
                 An Issue
               </button>
+              <button id="openForm" class="d-none" data-bs-toggle="modal" data-bs-target="#issueReportModel" #openForm>btn</button>
             </div>
           </div>
         </div>
@@ -259,7 +260,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn-1 me-2" (click)="reportIssue()">Send</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #modelClose>Close</button>
         </div>
       </div>
     </div>

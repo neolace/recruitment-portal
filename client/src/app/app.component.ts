@@ -34,6 +34,8 @@ import {ReportIssueService} from "./services/report-issue.service";
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('navbarNav') navbarNav: ElementRef | any;
+  @ViewChild('openForm') openForm!: ElementRef;
+  @ViewChild('modelClose') modelClose!: ElementRef;
   title = 'SPARKC HR System';
 
   showNavbar = true;
@@ -64,7 +66,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
               private fileUploadService: FileUploadService,
               private reportIssueService: ReportIssueService,
               private alertService: AlertsService,
-              private cookieService: AuthService) {}
+              private cookieService: AuthService) {
+  }
 
   ngOnInit() {
     this.employeeId = this.cookieService.userID();
@@ -84,6 +87,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.getEmployee(this.employeeId);
+
+    if (sessionStorage.getItem('in_issue_progress') == 'true') {
+      this.continueReportProgress();
+    }
   }
 
   ngAfterViewInit() {
@@ -142,22 +149,22 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   toggleCommonComponent(component: any) {
-    if (component instanceof LockScreenComponent){
+    if (component instanceof LockScreenComponent) {
       this.showNavbar = false;
       this.showFooter = false;
-    } else if(component instanceof LoginComponent){
+    } else if (component instanceof LoginComponent) {
       this.showNavbar = false;
       this.showFooter = false;
-    } else if(component instanceof RegisterComponent){
+    } else if (component instanceof RegisterComponent) {
       this.showNavbar = false;
       this.showFooter = false;
-    } else if(component instanceof ResetPasswordComponent){
+    } else if (component instanceof ResetPasswordComponent) {
       this.showNavbar = false;
       this.showFooter = false;
-    } else if(component instanceof FreeDashboardComponent){
+    } else if (component instanceof FreeDashboardComponent) {
       this.showNavbar = false;
       this.showFooter = false;
-    } else if(component instanceof ProDashboardComponent){
+    } else if (component instanceof ProDashboardComponent) {
       this.showNavbar = false;
       this.showFooter = false;
     } else {
@@ -166,8 +173,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  filterSearchResults(): any[]{
-    if (this.targetInput === undefined){
+  filterSearchResults(): any[] {
+    if (this.targetInput === undefined) {
       this.filteredSearchResults = this.commonSearchResults
     }
     return this.filteredSearchResults;
@@ -217,7 +224,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   generateRandomId(): any {
-    let id:string;
+    let id: string;
     if (!sessionStorage.getItem('issue_id')) {
       id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
       sessionStorage.setItem('issue_id', id);
@@ -229,26 +236,50 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   reportIssue() {
     if (this.reportIssueForm.valid) {
+      sessionStorage.setItem('report_issue_form', JSON.stringify(this.reportIssueForm.value));
       if (this.downloadURL) {
         this.reportIssueService.addIssue({
           issueType: this.reportIssueForm.get('issueType')?.value,
           description: this.reportIssueForm.get('description')?.value,
           attachment: sessionStorage.getItem('downloadURL')
         }).subscribe((data) => {
-          sessionStorage.removeItem('downloadURL');
-          sessionStorage.removeItem('issue_id');
+          sessionStorage.clear();
           this.alertService.successMessage('Issue reported successfully.', 'Success');
           this.reportIssueForm.reset();
           this.downloadURL = null;
+          const model_close = this.modelClose.nativeElement;
+          model_close.click();
+          return;
         }, (error) => {
           this.alertService.errorMessage('Something went wrong. Please try again.', 'Error');
         })
       } else {
-        this.downloadURL = sessionStorage.getItem('downloadURL');
-        this.alertService.errorMessage('Please add or upload again the attachment.', 'Error');
+        const model_close = this.modelClose.nativeElement;
+        model_close.click();
+        sessionStorage.setItem('in_issue_progress', 'true');
+        window.location.reload();
       }
     } else {
       this.alertService.errorMessage('Please fill in all required fields.', 'Error');
+    }
+  }
+
+  continueReportProgress() {
+    setTimeout(() => {
+      const button: HTMLButtonElement = document.getElementById('openForm') as HTMLButtonElement;
+      button.click();
+    }, 1000)
+
+    const reportIssueFormValue = sessionStorage.getItem('report_issue_form');
+    if (reportIssueFormValue) {
+      this.reportIssueForm.patchValue(JSON.parse(reportIssueFormValue));
+      this.downloadURL = sessionStorage.getItem('downloadURL');
+
+      if (this.downloadURL) {
+        this.reportIssue()
+      } else {
+        this.alertService.errorMessage('Please add or upload again the attachment.', 'Error');
+      }
     }
   }
 }
