@@ -3,10 +3,7 @@ package com.hris.HRIS_job_portal.Controller;
 import com.hris.HRIS_job_portal.Model.IssueModel;
 import com.hris.HRIS_job_portal.Service.IssueService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +22,10 @@ public class IssueController {
     @PostMapping("/all")
     public List<IssueModel> getAllIssues() {
         return issueService.getAllIssues();
+    }
+
+    @PutMapping("/update/updateAttachment")
+    public IssueModel updateAttachment(@RequestBody IssueModel issue) {
+        return issueService.updateAttachment(issue);
     }
 }

@@ -24,6 +24,7 @@ import {CredentialService} from "./services/credential.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AlertsService} from "./services/alerts.service";
 import {FileUploadService} from "./services/file-upload.service";
+import {ReportIssueService} from "./services/report-issue.service";
 
 @Component({
   selector: 'app-root',
@@ -61,6 +62,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
               private employeeService: EmployeeService,
               private credentialsService: CredentialService,
               private fileUploadService: FileUploadService,
+              private reportIssueService: ReportIssueService,
               private alertService: AlertsService,
               private cookieService: AuthService) {}
 
@@ -209,18 +211,44 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       this.fileUploadService.uploadFile(filePath, file).subscribe(url => {
         this.downloadURL = url;
-        //TODO: Upload to AWS S3
+        sessionStorage.setItem('downloadURL', this.downloadURL);
       });
     }
   }
 
-  generateRandomId(): string {
-    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  generateRandomId(): any {
+    let id:string;
+    if (!sessionStorage.getItem('issue_id')) {
+      id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      sessionStorage.setItem('issue_id', id);
+      return id;
+    } else {
+      return sessionStorage.getItem('issue_id');
+    }
   }
 
   reportIssue() {
     if (this.reportIssueForm.valid) {
-      console.log(this.reportIssueForm.value)
+      if (this.downloadURL) {
+        this.reportIssueService.addIssue({
+          issueType: this.reportIssueForm.get('issueType')?.value,
+          description: this.reportIssueForm.get('description')?.value,
+          attachment: sessionStorage.getItem('downloadURL')
+        }).subscribe((data) => {
+          sessionStorage.removeItem('downloadURL');
+          sessionStorage.removeItem('issue_id');
+          this.alertService.successMessage('Issue reported successfully.', 'Success');
+          this.reportIssueForm.reset();
+          this.downloadURL = null;
+        }, (error) => {
+          this.alertService.errorMessage('Something went wrong. Please try again.', 'Error');
+        })
+      } else {
+        this.downloadURL = sessionStorage.getItem('downloadURL');
+        this.alertService.errorMessage('Please add or upload again the attachment.', 'Error');
+      }
+    } else {
+      this.alertService.errorMessage('Please fill in all required fields.', 'Error');
     }
   }
 }
