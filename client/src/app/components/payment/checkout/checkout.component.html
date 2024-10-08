@@ -1,0 +1,36 @@
+<div class="container mt-5">
+  <h2>Select Your Payment Method</h2>
+
+  <!-- Payment Method Selection -->
+  <div class="form-group">
+    <label for="payment-method">Payment Method</label>
+    <select class="form-control" id="payment-method" [(ngModel)]="selectedPaymentMethod">
+      <option value="stripe">Credit Card (via Stripe)</option>
+      <option value="paypal">PayPal</option>
+    </select>
+  </div>
+
+  <!-- Loader or Spinner -->
+  <div *ngIf="isLoading" class="spinner-border mt-4" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+
+  <!-- Payment Button -->
+  <div class="mt-4">
+    <button
+      class="btn btn-primary"
+      (click)="startCheckout()"
+      *ngIf="selectedPaymentMethod === 'stripe' && !isLoading"
+    >
+      Pay with Credit Card (via Stripe)
+    </button>
+
+    <button
+      class="btn btn-secondary"
+      (click)="startPayPalCheckout()"
+      *ngIf="selectedPaymentMethod === 'paypal' && !isLoading"
+    >
+      Pay with PayPal
+    </button>
+  </div>
+</div>

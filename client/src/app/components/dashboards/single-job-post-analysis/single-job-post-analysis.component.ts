@@ -1,6 +1,8 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {JobApplyService} from "../../../services/job-apply.service";
 import {ActivatedRoute} from "@angular/router";
+import {AuthService} from "../../../services/auth.service";
+import {ThemeService} from "../../../services/theme.service";
 
 @Component({
   selector: 'app-single-job-post-analysis',
@@ -18,9 +20,15 @@ export class SingleJobPostAnalysisComponent implements AfterViewInit, OnInit {
     viewers: [],
   }];
 
-  constructor(private jobApplyService: JobApplyService, private route: ActivatedRoute) { }
+  userLevel: any;
+
+  constructor(private jobApplyService: JobApplyService,
+              private route: ActivatedRoute,
+              public themeService: ThemeService,
+              private cookieService: AuthService) { }
 
   ngOnInit(): void {
+    this.userLevel = this.cookieService.level();
     this.route.params.subscribe(params => {
       this.jobId = params['id'];
     })

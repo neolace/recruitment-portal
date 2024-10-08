@@ -22,38 +22,68 @@
     </div>
     <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">
       <div class="card-1">
-        <div class="title-1">Applicants applied Dates</div>
-        <app-applicant-submission-dates-chart [jobData]="jobApplicants"></app-applicant-submission-dates-chart>
+        <div class="title-1">Resume Download Rates</div>
+        <app-resume-download-rates-chart [jobData]="jobApplicants"></app-resume-download-rates-chart>
       </div>
     </div>
     <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">
       <div class="card-1">
         <div class="title-1">Job Viewers Over Time</div>
-        <app-job-viewers-over-time-line-chart [jobData]="jobApplicants"></app-job-viewers-over-time-line-chart>
+        <div class="sample-wrapper">
+          <img [src]="themeService.isDarkMode() ? './assets/imgs/companies/dashboards/job-viewers-ot-sample-d.png' : './assets/imgs/companies/dashboards/job-viewers-ot-sample.png'" alt="sample">
+          <div class="sample-overlay">
+            <p>This feature is available in the pro version</p>
+            <button class="unlock" routerLink="/pricing"><i class="material-icons">lock</i> Unlock</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">
       <div class="card-1">
-        <div class="title-1">Resume Download Rates</div>
-        <app-resume-download-rates-chart [jobData]="jobApplicants"></app-resume-download-rates-chart>
+        <div class="title-1">Applicants applied Dates</div>
+        <div class="sample-wrapper">
+          <img [src]="themeService.isDarkMode() ? './assets/imgs/companies/dashboards/app-submission-dates-sample-d.png' : './assets/imgs/companies/dashboards/app-submission-dates-sample.png'" alt="sample">
+          <div class="sample-overlay">
+            <p>This feature is available in the pro version</p>
+            <button class="unlock" routerLink="/pricing"><i class="material-icons">lock</i> Unlock</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-12 col-md-6 col-lg-3" *ngIf="jobApplicants && jobApplicants.length > 0">
       <div class="card-1">
         <div class="title-1">Job Views by Viewer Type</div>
-        <app-viewer-types-pie-chart [jobData]="jobApplicants"></app-viewer-types-pie-chart>
+        <div class="sample-wrapper">
+          <img [src]="themeService.isDarkMode() ? './assets/imgs/companies/dashboards/job-views-by-type-sample-d.png' : './assets/imgs/companies/dashboards/job-views-by-type-sample.png'" alt="sample">
+          <div class="sample-overlay">
+            <p>This feature is available in the pro version</p>
+            <button class="unlock" routerLink="/pricing"><i class="material-icons">lock</i> Unlock</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-12 col-md-6 col-lg-3" *ngIf="jobApplicants && jobApplicants.length > 0">
       <div class="card-1">
         <div class="title-1">Job Viewers Status</div>
-        <app-viewers-status-polar-area-chart [jobData]="jobApplicants"></app-viewers-status-polar-area-chart>
+        <div class="sample-wrapper">
+          <img [src]="themeService.isDarkMode() ? './assets/imgs/companies/dashboards/job-views-by-status-sample-d.png' : './assets/imgs/companies/dashboards/job-views-by-status-sample.png'" alt="sample">
+          <div class="sample-overlay">
+            <p>This feature is available in the pro version</p>
+            <button class="unlock" routerLink="/pricing"><i class="material-icons">lock</i> Unlock</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">
       <div class="card-1">
         <div class="title-1">Applicants Email Domains</div>
-        <app-applicants-email-domains-chart [jobData]="jobApplicants"></app-applicants-email-domains-chart>
+        <div class="sample-wrapper">
+          <img [src]="themeService.isDarkMode() ? './assets/imgs/companies/dashboards/applicant-email-domains-sample-d.png' : './assets/imgs/companies/dashboards/applicant-email-domains-sample.png'" alt="sample">
+          <div class="sample-overlay">
+            <p>This feature is available in the pro version</p>
+            <button class="unlock" routerLink="/pricing"><i class="material-icons">lock</i> Unlock</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

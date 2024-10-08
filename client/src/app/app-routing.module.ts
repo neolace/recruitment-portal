@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {CheckoutComponent} from "./components/payment/checkout/checkout.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -34,6 +35,9 @@ const routes: Routes = [
   { path: 'oauth-callback/github', loadChildren: () => import('./components/shared/o-auth-callback-github/o-auth-callback-github.module').then(m => m.OAuthCallbackGithubModule) },
   { path: '404', loadChildren: () => import('./components/shared/not-found/not-found.module').then(m => m.NotFoundModule) },
   { path: 'job-analysis/:id', loadChildren: () => import('./components/dashboards/single-job-post-analysis/single-job-post-analysis.module').then(m => m.SingleJobPostAnalysisModule) },
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'interview-prep', loadChildren: () => import('./components/interview-prep/interview-prep/interview-prep.module').then(m => m.InterviewPrepModule) },
+  { path: 'interview-prep-answer/:qid/:aid', loadChildren: () => import('./components/interview-prep/interview-prep-full-answer/interview-prep-full-answer.module').then(m => m.InterviewPrepFullAnswerModule) },
   { path: '**', redirectTo: '/404' }
 ];
 

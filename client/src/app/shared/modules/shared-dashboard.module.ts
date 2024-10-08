@@ -19,6 +19,7 @@ import {RouterLink} from "@angular/router";
 import {SharedComponentModule} from "./shared-component.module";
 import {SharedPipesModule} from "./shared-pipes.module";
 import {BillingAndUsageComponent} from "../../components/dashboards/free/billing-and-usage/billing-and-usage.component";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 
 
@@ -38,7 +39,8 @@ import {BillingAndUsageComponent} from "../../components/dashboards/free/billing
         ReactiveFormsModule,
         RouterLink,
         SharedComponentModule,
-        SharedPipesModule
+        SharedPipesModule,
+        MatProgressBarModule
     ],
   exports: [
     PersonalProfileMyComponent,

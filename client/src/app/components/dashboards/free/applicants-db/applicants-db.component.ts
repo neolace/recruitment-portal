@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
 import {AlertsService} from "../../../../services/alerts.service";
 import {EmployeeService} from "../../../../services/employee.service";
+import {ThemeService} from "../../../../services/theme.service";
 
 declare var bootstrap: any;
 
@@ -41,6 +42,7 @@ export class ApplicantsDbComponent implements AfterViewInit, OnInit {
     private jobApplyService: JobApplyService,
     private employeeService: EmployeeService,
     private router: Router,
+    public themeService: ThemeService,
     private alertService: AlertsService,
     private cookieService: AuthService) { }
 

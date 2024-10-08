@@ -1,0 +1,54 @@
+.billing-usage {
+  max-width: 800px;
+  margin: auto;
+  padding: max(20px, 3vw) 0;
+
+  section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+
+  .btn-1{
+    margin-top: 10px;
+  }
+
+  h3 {
+    margin-bottom: max(14px, 1.6vw);
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  table, th, td {
+    border: 1px solid #ddd;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }
+
+  .active {
+    color: #2ecc71;
+  }
+
+  mat-progress-bar {
+    margin: 10px 0;
+  }
+
+  .subscription-details, .usage-data, .billing-history, .payment-methods{
+    color: var(--color-text-200);
+
+    strong{
+      color: var(--color-text-100);
+      font-weight: 450;
+    }
+  }
+}
