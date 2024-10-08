@@ -202,7 +202,7 @@ export class JobPostComponent implements AfterViewInit, OnInit {
   }
 
   filterJobTypes(selectedCategory: any) {
-    return this.filteredJobTypes = this.categoriesDataStore.filter((category: any) => category.name === selectedCategory)[0].subCategories;
+    return this.filteredJobTypes = this.categoriesDataStore.filter((category: any) => category.name === selectedCategory)[0]?.subCategories;
   }
 
   saveJobPost() {
