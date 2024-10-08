@@ -294,7 +294,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       const mail = this.requestInfoForm.get('email')?.value;
       if (mail) {
         this.commonService.requestMoreData(mail).subscribe((data) => {
-          this.requestInfoForm.get('email')?.setValue('Sending...');
           this.alertService.successMessage('Email sent successfully.', 'Success');
           this.requestInfoForm.reset();
           return;
