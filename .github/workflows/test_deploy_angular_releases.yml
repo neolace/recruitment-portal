@@ -48,21 +48,21 @@ jobs:
             },
             baseUrl: "http://localhost:3269/api/v1/"
           };' > client/src/environments/environment.development.ts
-      
+
       - name: Install dependencies
         run: |
           cd client
           npm install --force
-      
+
       - name: Build frontend
         run: |
           cd client
-          npm npm run build -- --output-path=dist --base-href="/Public_Job_Bord/v${{ github.event.release.tag_name }}/"
+          npm run build -- --output-path=dist --base-href="/Public_Job_Bord/v${{ github.event.release.tag_name }}/"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          
+          publish_dir: client/dist
           destination_dir: ${{ github.event.release.tag_name }}
+          
