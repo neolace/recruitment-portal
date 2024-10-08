@@ -81,8 +81,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.TOKEN }}
+          personal_token: ${{ secrets.TOKEN }}
           publish_dir: client/dist
           destination_dir: ${{ github.event.release.tag_name }}
-          publish_branch: gh-pages
-          external_repository: TalentBoozt/Public_Job_Bord  
+          publish_branch: gh-pages 
