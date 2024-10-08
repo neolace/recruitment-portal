@@ -1,0 +1,68 @@
+name: Deploy GitHub Release to GitHub Pages
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Create environment directory
+        run: mkdir -p client/src/environments
+
+      - name: Setup environment variables
+        run: |
+          echo 'export const environment = {
+            production: true,
+            firebaseConfig: {
+              apiKey: "FAKE_API_KEY",
+              authDomain: "fake-auth-domain.firebaseapp.com",
+              projectId: "fake-project-id",
+              storageBucket: "fake-project-id.appspot.com",
+              messagingSenderId: "1234567890",
+              appId: "1:1234567890:web:fakeappid",
+              measurementId: "G-FAKEMEASUREID"
+            },
+            baseUrl: "http://localhost:3269/api/v1/"
+          };' > client/src/environments/environment.ts
+          echo 'export const environment = {
+            production: true,
+            firebaseConfig: {
+              apiKey: "FAKE_API_KEY",
+              authDomain: "fake-auth-domain.firebaseapp.com",
+              projectId: "fake-project-id",
+              storageBucket: "fake-project-id.appspot.com",
+              messagingSenderId: "1234567890",
+              appId: "1:1234567890:web:fakeappid",
+              measurementId: "G-FAKEMEASUREID"
+            },
+            baseUrl: "http://localhost:3269/api/v1/"
+          };' > client/src/environments/environment.development.ts
+      
+      - name: Install dependencies
+        run: |
+          cd client
+          npm install --force
+      
+      - name: Build frontend
+        run: |
+          cd client
+          npm npm run build -- --output-path=dist --base-href="/Public_Job_Bord/v${{ github.event.release.tag_name }}/"
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          
+          destination_dir: ${{ github.event.release.tag_name }}
