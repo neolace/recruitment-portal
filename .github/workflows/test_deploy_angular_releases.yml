@@ -24,7 +24,7 @@ jobs:
         run: |
           echo 'export const environment = {
             production: true,
-            firebaseConfig: {
+            firebase: {
               apiKey: "FAKE_API_KEY",
               authDomain: "fake-auth-domain.firebaseapp.com",
               projectId: "fake-project-id",
@@ -47,7 +47,7 @@ jobs:
           
           echo 'export const environment = {
             production: true,
-            firebaseConfig: {
+            firebase: {
               apiKey: "FAKE_API_KEY",
               authDomain: "fake-auth-domain.firebaseapp.com",
               projectId: "fake-project-id",
