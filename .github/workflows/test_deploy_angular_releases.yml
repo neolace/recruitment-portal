@@ -33,8 +33,18 @@ jobs:
               appId: "1:1234567890:web:fakeappid",
               measurementId: "G-FAKEMEASUREID"
             },
-            baseUrl: "http://localhost:3269/api/v1/"
+            baseUrl: "http://localhost:3269/api/v1/",
+            apiUrl: "http://localhost:3269/api/v1/",
+            encryptionKey: "FAKE_ENCRYPTION_KEY",
+            githubAuthConfig: {
+              clientId: "FAKE_GITHUB_CLIENT_ID"
+            },
+            googleAuthConfig: {
+              clientId: "FAKE_GOOGLE_CLIENT_ID"
+            },
+            stripeKey: "FAKE_STRIPE_KEY"
           };' > client/src/environments/environment.ts
+          
           echo 'export const environment = {
             production: true,
             firebaseConfig: {
@@ -46,7 +56,16 @@ jobs:
               appId: "1:1234567890:web:fakeappid",
               measurementId: "G-FAKEMEASUREID"
             },
-            baseUrl: "http://localhost:3269/api/v1/"
+            baseUrl: "http://localhost:3269/api/v1/",
+            apiUrl: "http://localhost:3269/api/v1/",
+            encryptionKey: "FAKE_ENCRYPTION_KEY",
+            githubAuthConfig: {
+              clientId: "FAKE_GITHUB_CLIENT_ID"
+            },
+            googleAuthConfig: {
+              clientId: "FAKE_GOOGLE_CLIENT_ID"
+            },
+            stripeKey: "FAKE_STRIPE_KEY"
           };' > client/src/environments/environment.development.ts
 
       - name: Install dependencies
