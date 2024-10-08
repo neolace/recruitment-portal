@@ -137,10 +137,12 @@
           <div class="col-12 col-lg-5">
             <h6>Still need help?</h6>
             <p class="not-animate">Let us now about your issue and professional will reach you out.</p>
-            <div class="input-group">
-              <input type="email" class="form-control" placeholder="Enter your valid email">
-              <button class="btn btn-outline-secondary" type="button"><i class="material-icons">near_me</i></button>
-            </div>
+            <form [formGroup]="requestInfoForm">
+              <div class="input-group">
+                <input type="email" class="form-control" placeholder="Enter your valid email" formControlName="email">
+                <button class="btn btn-outline-secondary" type="button" (click)="contactMe()"><i class="material-icons">near_me</i></button>
+              </div>
+            </form>
 
             <div class="report-issue">
               <p class="not-animate">If you are facing any issue, please let us know</p>

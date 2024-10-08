@@ -25,6 +25,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AlertsService} from "./services/alerts.service";
 import {FileUploadService} from "./services/file-upload.service";
 import {ReportIssueService} from "./services/report-issue.service";
+import {CommonService} from "./services/common/common.service";
 
 @Component({
   selector: 'app-root',
@@ -58,6 +59,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     description: new FormControl('', [Validators.required]),
   })
 
+  requestInfoForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+  })
+
   constructor(public themeService: ThemeService,
               private router: Router,
               private renderer: Renderer2,
@@ -65,6 +70,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
               private credentialsService: CredentialService,
               private fileUploadService: FileUploadService,
               private reportIssueService: ReportIssueService,
+              private commonService: CommonService,
               private alertService: AlertsService,
               private cookieService: AuthService) {
   }
@@ -280,6 +286,25 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         this.alertService.errorMessage('Please add or upload again the attachment.', 'Error');
       }
+    }
+  }
+
+  contactMe() {
+    if (this.requestInfoForm.valid) {
+      const mail = this.requestInfoForm.get('email')?.value;
+      if (mail) {
+        this.commonService.requestMoreData(mail).subscribe((data) => {
+          this.requestInfoForm.get('email')?.setValue('Sending...');
+          this.alertService.successMessage('Email sent successfully.', 'Success');
+          this.requestInfoForm.reset();
+          return;
+        }, (error) => {
+          this.requestInfoForm.get('email')?.setValue('Error');
+          this.alertService.errorMessage('Something went wrong. Please try again.', 'Error');
+        })
+      }
+    } else {
+      this.alertService.errorMessage('Field is empty or invalid.', 'Error');
     }
   }
 }
