@@ -44,8 +44,8 @@ export class ApplicantLocationPieChartComponent {
     const locationCountMap: { [key: string]: number } = {};
 
     // Loop through job applicants to count applicants by location
-    this.jobData.forEach(job => {
-      job.applicants.forEach((applicant: any) => {
+    this.jobData?.forEach(job => {
+      job.applicants?.forEach((applicant: any) => {
         const location = applicant.location || 'Unknown';
         if (!locationCountMap[location]) {
           locationCountMap[location] = 1;

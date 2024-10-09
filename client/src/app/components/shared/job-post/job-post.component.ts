@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {HttpErrorResponse} from "@angular/common/http";
 import {EmployeeService} from "../../../services/employee.service";
 import {AuthService} from "../../../services/auth.service";
@@ -8,6 +8,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AlertsService} from "../../../services/alerts.service";
 import {ActivatedRoute} from "@angular/router";
 import {FileUploadService} from "../../../services/file-upload.service";
+import {CanComponentDeactivate} from "../../../guards/can-deactivate.guard";
+import {UnloadService} from "../../../services/common/unload.service";
 
 declare var bootstrap: any;
 
@@ -16,7 +18,7 @@ declare var bootstrap: any;
   templateUrl: './job-post.component.html',
   styleUrls: ['./job-post.component.scss']
 })
-export class JobPostComponent implements AfterViewInit, OnInit {
+export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeactivate, OnDestroy {
 
   selectedCategory: any = 'IT';
   selectedJobType: any = 'Web Developer';
@@ -84,7 +86,11 @@ export class JobPostComponent implements AfterViewInit, OnInit {
               private alertService: AlertsService,
               private route: ActivatedRoute,
               private fileUploadService: FileUploadService,
+              private unloadService: UnloadService,
               private companyService: CompanyService) {
+    this.jobPostForm.valueChanges.subscribe(() => {
+      this.unloadService.setUnsavedChanges(this.jobPostForm.dirty);
+    });
   }
 
   ngAfterViewInit() {
@@ -118,6 +124,17 @@ export class JobPostComponent implements AfterViewInit, OnInit {
         this.patchValues(this.jobId);
       }
     })
+  }
+
+  canDeactivate(): boolean {
+    if (this.jobPostForm.dirty) {
+      return confirm('You have unsaved changes. Do you really want to leave?');
+    }
+    return true;
+  }
+
+  ngOnDestroy() {
+    this.unloadService.setUnsavedChanges(false);
   }
 
   onCategoryChange(): void {

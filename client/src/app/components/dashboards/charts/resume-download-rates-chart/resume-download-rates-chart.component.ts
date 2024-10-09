@@ -47,7 +47,7 @@ export class ResumeDownloadRatesChartComponent implements OnInit {
 
     // Loop through applicants and count resume availability per job
     this.jobData.forEach(job => {
-      const resumesAvailable = job.applicants.filter((applicant: any) => applicant.resume).length;
+      const resumesAvailable = job.applicants?.filter((applicant: any) => applicant?.resume)?.length;
       resumeDownloadMap[job.jobId] = resumesAvailable;
     });
 

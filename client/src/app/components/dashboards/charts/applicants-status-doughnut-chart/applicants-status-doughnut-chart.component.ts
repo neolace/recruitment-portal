@@ -43,8 +43,8 @@ export class ApplicantsStatusDoughnutChartComponent implements OnInit {
     const statusCountMap: { [status: string]: number } = {};
 
     // Loop through each applicant's status and count occurrences
-    this.jobData.forEach(job => {
-      job.applicants.forEach((applicant: any) => {
+    this.jobData?.forEach(job => {
+      job.applicants?.forEach((applicant: any) => {
         const status = applicant.status || 'Unknown';
         if (!statusCountMap[status]) {
           statusCountMap[status] = 1;
