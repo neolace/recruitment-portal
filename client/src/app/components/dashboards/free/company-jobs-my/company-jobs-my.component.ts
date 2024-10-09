@@ -5,6 +5,7 @@ import {EmployeeService} from "../../../../services/employee.service";
 import {CompanyService} from "../../../../services/company.service";
 import {AlertsService} from "../../../../services/alerts.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Parser} from "@angular/compiler";
 
 @Component({
   selector: 'app-company-jobs-my',
@@ -82,7 +83,8 @@ export class CompanyJobsMyComponent implements AfterViewInit, OnInit{
   }
 
   reopen(id:any) {
-    if (this.companyLevel >= 2){
+    const cid: number = parseInt(this.companyLevel)
+    if (cid <= 2){
       this.alertService.warningMessage('This feature is only available for verified companies', 'Warning');
       return;
     }
