@@ -20,8 +20,8 @@ declare var bootstrap: any;
 })
 export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeactivate, OnDestroy {
 
-  selectedCategory: any = 'IT';
-  selectedJobType: any = 'Web Developer';
+  selectedCategory: any = 'Software Development and Engineering';
+  selectedJobType: any = 'Backend Developer';
   categoriesDataStore: any = jobCategories;
   filteredCategories: any = [];
   filteredJobTypes: any = [];
