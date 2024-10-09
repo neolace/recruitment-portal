@@ -7,7 +7,7 @@ import {BehaviorSubject} from "rxjs";
 export class ThemeService {
 
   private isDarkTheme: boolean = false;
-  private currentColorShading: string = 'green';
+  private currentColorShading: string = 'purple';
   private themeSubject = new BehaviorSubject<boolean>(this.isDarkTheme);
   private colorSubject = new BehaviorSubject<string>(this.currentColorShading);
 
@@ -34,7 +34,8 @@ export class ThemeService {
       'theme-green-light', 'theme-green-dark',
       'theme-orange-light', 'theme-orange-dark',
       'theme-red-light', 'theme-red-dark',
-      'theme-purple-light', 'theme-purple-dark'
+      'theme-purple-light', 'theme-purple-dark',
+      'theme-mixed-light', 'theme-mixed-dark'
     );
 
     // Add the new theme based on color and mode
