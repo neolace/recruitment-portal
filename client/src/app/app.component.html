@@ -2,15 +2,62 @@
      style="max-height: 100vh;">
 
   <div class="w-100 main-body">
-    <button class="theme-btn" (click)="toggleTheme()" title="Theme">
-      <img src="./assets/imgs/shared/moon.svg" alt="dark">
-      <img
-        [src]="themeService.isDarkMode()?'./assets/imgs/shared/toggle-off.svg':'./assets/imgs/shared/toggle-on.svg'"
-        alt="theme" height="40" width="40">
-      <img src="./assets/imgs/shared/sun.svg" alt="light">
-    </button>
+<!--    <button class="theme-btn" (click)="toggleTheme()" title="Theme">-->
+<!--      <img src="./assets/imgs/shared/moon.svg" alt="dark">-->
+<!--      <img-->
+<!--        [src]="themeService.isDarkMode()?'./assets/imgs/shared/toggle-off.svg':'./assets/imgs/shared/toggle-on.svg'"-->
+<!--        alt="theme" height="40" width="40">-->
+<!--      <img src="./assets/imgs/shared/sun.svg" alt="light">-->
+<!--    </button>-->
 
-    <div id="google_translate_element"></div>
+    <div class="ui-settings">
+      <div class="ui-btn-wrapper">
+        <div class="ui-btn" (click)="openUiSettings()">
+          <i class="material-icons">settings</i>
+        </div>
+        <div class="ui-settings-body" [ngClass]="isUiSettings ? 'active' : ''">
+          <div class="theme-wrapper">
+            <div class="theme-label">Theme Settings</div>
+            <div class="theme-options">
+              <ul class="theme-shade">
+                <li (click)="changeColorShading('blue')">
+                  <div class="color-btn blue"></div> <div class="color-name">Blue</div>
+                </li>
+                <li (click)="changeColorShading('green')">
+                  <div class="color-btn green"></div> <div class="color-name">Green</div>
+                </li>
+                <li (click)="changeColorShading('orange')">
+                  <div class="color-btn orange"></div> <div class="color-name">Orange</div>
+                </li>
+                <li (click)="changeColorShading('red')">
+                  <div class="color-btn red"></div> <div class="color-name">Red</div>
+                </li>
+                <li (click)="changeColorShading('purple')">
+                  <div class="color-btn purple"></div> <div class="color-name">Purple</div>
+                </li>
+              </ul>
+
+              <button class="theme-btn" (click)="toggleTheme()" title="Theme">
+                <img src="./assets/imgs/shared/moon.svg" alt="dark">
+                <img
+                  [src]="themeService.isDarkMode()?'./assets/imgs/shared/toggle-off.svg':'./assets/imgs/shared/toggle-on.svg'"
+                  alt="theme" height="40" width="40">
+                <img src="./assets/imgs/shared/sun.svg" alt="light">
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="translate">
+      <div class="lang-btn-wrapper">
+        <div class="lang-btn" (click)="clickTranslate()">
+          <i class="material-icons">translate</i>
+        </div>
+        <div id="google_translate_element" [ngClass]="isTranslator ? 'active' : ''"></div>
+      </div>
+    </div>
 
     <div *ngIf="showNavbar" class="nav-bar sticky-top">
       <div class="container d-flex align-items-center justify-content-between">

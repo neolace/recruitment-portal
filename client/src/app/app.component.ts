@@ -54,6 +54,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   downloadURL?: any;
 
+  isTranslator: boolean = false;
+  isUiSettings: boolean = false;
+
   reportIssueForm = new FormGroup({
     issueType: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
@@ -78,6 +81,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.employeeId = this.cookieService.userID();
     this.employeeLevel = this.cookieService.level();
+    this.themeService.applyTheme();
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Logic to update active class based on the current route
@@ -141,6 +145,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   toggleTheme() {
     this.themeService.toggleTheme();
+  }
+
+  changeColorShading(color: string) {
+    this.themeService.changeColorShading(color);
   }
 
   isActive(s: string) {
@@ -305,5 +313,17 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.alertService.errorMessage('Field is empty or invalid.', 'Error');
     }
+  }
+
+  clickTranslate() {
+    this.isTranslator = !this.isTranslator;
+  }
+
+  openUiSettings() {
+    this.isUiSettings = !this.isUiSettings;
+  }
+
+  changeLanguage(lang: string) {
+
   }
 }
