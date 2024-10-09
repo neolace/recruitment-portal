@@ -37,7 +37,7 @@ export class ApplicantsPerJobBarChartComponent {
 
   populateChartData() {
     const jobIds = this.jobData.map(job => job.jobId);
-    const applicantCounts = this.jobData.map(job => job.applicants.length);
+    const applicantCounts = this.jobData.map(job => job.applicants?.length);
 
     this.barChartData.labels = jobIds;
     this.barChartData.datasets[0].data = applicantCounts;

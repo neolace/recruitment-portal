@@ -116,116 +116,115 @@
 //  --color-box-shadow-100: rgba(0, 0, 0, 0.3);
 //}
 
+/* Light Theme */
 .theme-light {
-  --color-primary-100: #ff9024;
-  --color-primary-200: #ff9751;
-  --color-primary-300: #ff9966;
-  --color-primary-400: #9cc3ed;
-  --color-primary-500: #cc4f1c;
-  --color-primary-600: #be3800;
-  --color-primary-600-opacity-3: rgba(255,178,146,0.3);
-  --color-primary-600-opacity-6: rgba(255,189,162,0.6);
-  --color-primary-600-opacity-9: rgba(255,196,172,0.9);
+  --color-primary-100: #2ea043; /* GitHub's green for primary */
+  --color-primary-200: #3fb95e;
+  --color-primary-300: #56d178;
+  --color-primary-400: #69e18b;
+  --color-primary-500: #7cf3a0;
+  --color-primary-600: #a0f3b7;
+  --color-primary-600-opacity-3: rgba(127, 243, 160, 0.3);
+  --color-primary-600-opacity-6: rgba(127, 243, 160, 0.6);
+  --color-primary-600-opacity-9: rgba(127, 243, 160, 0.9);
 
+  --color-surface-100: #ffffff;
+  --color-surface-200: #f6f8fa; /* GitHub's light background */
+  --color-surface-300: #eaeef2;
+  --color-surface-400: #d1d5da;
+  --color-surface-500: #c0c6cc;
+  --color-surface-600: #b1b7bc;
 
-  --color-surface-100: #F0F0F0;
-  --color-surface-200: #E0E0E0;
-  --color-surface-300: #D0D0D0;
-  --color-surface-400: #C0C0C0;
-  --color-surface-500: #B0B0B0;
-  --color-surface-600: #A0A0A0;
+  --color-surface-mixed-100: #eaeef2; /* GitHub-inspired mixed background */
+  --color-surface-mixed-200: #f6f8fa;
+  --color-surface-mixed-300: #d1d5da;
+  --color-surface-mixed-400: #c0c6cc;
+  --color-surface-mixed-500: #b1b7bc;
+  --color-surface-mixed-600: #a0a6ad;
 
-  --color-surface-mixed-100: #e8e8e8;
-  --color-surface-mixed-200: #D8D8D8;
-  --color-surface-mixed-300: #C8C8C8;
-  --color-surface-mixed-400: #B8B8B8;
-  --color-surface-mixed-500: #A8A8A8;
-  --color-surface-mixed-600: #989898;
+  --color-secondary-100: #176f39; /* Deep green for secondary */
+  --color-secondary-200: #1f8c49;
+  --color-secondary-300: #239f4e;
+  --color-secondary-400: #27b257;
+  --color-secondary-500: #30c869;
+  --color-secondary-600: #33d874;
+  --color-secondary-600-opacity-3: rgba(51, 216, 116, 0.3);
+  --color-secondary-600-opacity-6: rgba(51, 216, 116, 0.6);
+  --color-secondary-600-opacity-9: rgba(51, 216, 116, 0.9);
 
-  --color-secondary-100: #ff9046;
-  --color-secondary-200: #CCCCCC;
-  --color-secondary-300: #ff6700;
-  --color-secondary-400: #999999;
-  --color-secondary-500: #7F7F7F;
-  --color-secondary-600: #9a3e00;
-  --color-secondary-600-opacity-3: rgba(102, 102, 102, 0.3);
-  --color-secondary-600-opacity-6: rgba(102, 102, 102, 0.6);
-  --color-secondary-600-opacity-9: rgba(102, 102, 102, 0.9);
+  --color-text-100: #1a1a1a; /* Darker for better readability */
+  --color-text-200: #2c3e50; /* Increased contrast */
+  --color-text-300: #3b4a5b; /* Slightly darker for clarity */
+  --color-text-400: #53616d; /* More readable gray */
+  --color-text-500: #6a7a85; /* Mid-tone for less important text */
+  --color-text-600: #8a9298; /* Lighter gray for very subtle text */
 
-  --color-text-100: #000000;
-  --color-text-200: #5e0808;
-  --color-text-300: #787878;
-  --color-text-400: #474747;
-  --color-text-500: #808080;
-  --color-text-600: #54718e;
+  --color-danger-100: #d73a49; /* GitHub's danger red */
+  --color-danger-200: #b92f3b;
+  --color-danger-300: #a1232f;
 
-  --color-danger-100: #e74c3c;
-  --color-danger-200: #c0392b;
-  --color-danger-300: #e67e22;
+  --color-code-100: #e36209; /* GitHub's orange for code highlight */
 
-  --color-code-100: #FF4500;
-
-  /* Additional Colors */
-  --color-highlight-100: #FFD700; /* Gold */
-  --color-accent-100: #FF69B4; /* Hot Pink */
-  --color-neutral-accent-100: #8B0000; /* Dark Red */
-  --color-box-shadow-100: rgba(0, 0, 0, 0.3);
+  --color-highlight-100: #ffd33d; /* GitHub's yellow highlight */
+  --color-accent-100: #0366d6; /* GitHub's link blue */
+  --color-neutral-accent-100: #6f42c1; /* GitHub's purple accent */
+  --color-box-shadow-100: rgba(27, 31, 35, 0.15);
 }
 
+/* Dark Theme */
 .theme-dark {
-  --color-primary-100: #8e44ad; /* Deep Purple */
-  --color-primary-200: #9b59b6; /* Soft Purple */
-  --color-primary-300: #af7ac5; /* Light Purple */
-  --color-primary-400: #d2b4de; /* Lavender */
-  --color-primary-500: #ebdef0; /* Very Light Lavender */
-  --color-primary-600: #f5eef8; /* Pale Lavender */
-  --color-primary-600-opacity-3: rgba(245, 238, 248, 0.3);
-  --color-primary-600-opacity-6: rgba(245, 238, 248, 0.6);
-  --color-primary-600-opacity-9: rgba(245, 238, 248, 0.9);
+  --color-primary-100: #2ea043; /* GitHub's green for dark theme */
+  --color-primary-200: #37ae4d;
+  --color-primary-300: #45c05e;
+  --color-primary-400: #50d26f;
+  --color-primary-500: #61e486;
+  --color-primary-600-opacity-3: rgba(97, 228, 134, 0.3);
+  --color-primary-600-opacity-6: rgba(97, 228, 134, 0.6);
+  --color-primary-600-opacity-9: rgba(97, 228, 134, 0.9);
 
-  --color-surface-100: #181818; /* Near Black */
-  --color-surface-200: #202020; /* Darker Gray */
-  --color-surface-300: #303030; /* Dark Gray */
-  --color-surface-400: #404040; /* Medium Gray */
-  --color-surface-500: #505050; /* Light Gray */
-  --color-surface-600: #606060; /* Lighter Gray */
+  --color-surface-100: #0d1117; /* GitHub's dark surface */
+  --color-surface-200: #161b22;
+  --color-surface-300: #21262d;
+  --color-surface-400: #30363d;
+  --color-surface-500: #484f58;
+  --color-surface-600: #6e7681;
 
-  --color-surface-mixed-100: #1f1f2e; /* Deep Blue-Gray */
-  --color-surface-mixed-200: #2a2a3b; /* Blue-Gray */
-  --color-surface-mixed-300: #353547; /* Grayish Blue */
-  --color-surface-mixed-400: #4b4b59; /* Light Blue-Gray */
-  --color-surface-mixed-500: #5f5f6d; /* Very Light Blue-Gray */
-  --color-surface-mixed-600: #747481; /* Light Gray-Blue */
+  --color-surface-mixed-100: #1f2126; /* Mixed tones */
+  --color-surface-mixed-200: #24272d;
+  --color-surface-mixed-300: #30363d;
+  --color-surface-mixed-400: #394147;
+  --color-surface-mixed-500: #484f58;
+  --color-surface-mixed-600: #5c646d;
 
-  --color-secondary-100: #63e4ff; /* Green for highlights */
-  --color-secondary-200: #27ae60; /* Dark Green */
-  --color-secondary-300: #642299; /* Darker Green */
-  --color-secondary-400: #d0aee2; /* Olive Green */
-  --color-secondary-500: #196f3d; /* Dark Olive */
-  --color-secondary-600: #145a50; /* Very Dark Olive */
-  --color-secondary-600-opacity-3: rgba(20, 90, 50, 0.3);
-  --color-secondary-600-opacity-6: rgba(20, 90, 50, 0.6);
-  --color-secondary-600-opacity-9: rgba(20, 90, 50, 0.9);
+  --color-secondary-100: #176f39; /* Deep green for secondary */
+  --color-secondary-200: #1f8c49;
+  --color-secondary-300: #239f4e;
+  --color-secondary-400: #27b257;
+  --color-secondary-500: #30c869;
+  --color-secondary-600: #33d874;
+  --color-secondary-600-opacity-3: rgba(51, 216, 116, 0.3);
+  --color-secondary-600-opacity-6: rgba(51, 216, 116, 0.6);
+  --color-secondary-600-opacity-9: rgba(51, 216, 116, 0.9);
 
-  --color-text-100: #e0e0e0; /* Light Gray */
-  --color-text-200: #cccccc; /* Slightly Darker Gray */
-  --color-text-300: #b3b3b3; /* Medium Gray */
-  --color-text-400: #999999; /* Darker Gray */
-  --color-text-500: #808080; /* Dark Gray */
-  --color-text-600: #666666; /* Very Dark Gray */
+  --color-text-100: #e6e6e6; /* Lighter gray for dark backgrounds */
+  --color-text-200: #d1d1d1; /* Slightly darker for readable secondary text */
+  --color-text-300: #b3b3b3; /* Darker mid-tone */
+  --color-text-400: #999999; /* Mid-gray for balance */
+  --color-text-500: #808080; /* Dark gray, contrast against lighter backgrounds */
+  --color-text-600: #666666; /* Very dark for muted text */
 
-  --color-danger-100: #e74c3c; /* Red */
-  --color-danger-200: #c0392b; /* Dark Red */
-  --color-danger-300: #a93226; /* Darker Red */
+  --color-danger-100: #ff6c6b; /* GitHub's red */
+  --color-danger-200: #d73a49;
+  --color-danger-300: #b92f3b;
 
-  --color-code-100: #f39c12; /* Bright Orange for Code Highlight */
+  --color-code-100: #f2cc60; /* GitHub's yellow for code highlight */
 
-  /* Additional Colors */
-  --color-highlight-100: #ff6347; /* Tomato for highlights */
-  --color-accent-100: #f0e68c; /* Khaki */
-  --color-neutral-accent-100: #4682b4; /* Steel Blue */
+  --color-highlight-100: #ffa657; /* GitHub's orange highlight */
+  --color-accent-100: #6f42c1; /* Purple for accents */
+  --color-neutral-accent-100: #2f81f7; /* Bright blue for accents */
   --color-box-shadow-100: rgba(0, 0, 0, 0.3);
 }
+
 
 *, *::before, *::after {
   box-sizing: border-box;
