@@ -91,6 +91,22 @@ export class AuthService {
     return locked.length !== 0;
   }
 
+  public setThemeMode(themeMode: string) {
+    this.cookieService.set('theme-mode', themeMode, 60*60*24*30);
+  }
+
+  public getThemeMode() {
+    return this.cookieService.get('theme-mode');
+  }
+
+  public setThemeColor(themeColor: string) {
+    this.cookieService.set('theme-color', themeColor, 60*60*24*30);
+  }
+
+  public getThemeColor() {
+    return this.cookieService.get('theme-color');
+  }
+
   public acceptAllCookies() {
     this.cookieService.set('cookies-accepted', 'true', 60*60*24*20);
   }
