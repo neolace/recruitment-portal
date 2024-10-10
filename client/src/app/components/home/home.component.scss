@@ -330,7 +330,7 @@
 
 .popular-2-left{
   .lg-img{
-    width: 90%;
+    width: 50%;
     left: 0;
     top: 0;
     border-radius: 12px;
@@ -342,21 +342,23 @@
     }
 
     .play-btn{
-      width: 80px;
-      height: 80px;
+      width: max(60px, 5vw);
+      height: max(60px, 5vw);
       border-radius: 50%;
+      border: 2px solid var(--color-primary-100);
       display: flex;
       align-items: center;
       justify-content: center;
       background-color: var(--color-surface-mixed-100);
       position: absolute;
-      right: -40px;
-      top: 40px;
+      right: max(-30px, -40px);
+      bottom: 35%;
       -webkit-box-shadow: 0 4px 8px 0 var(--color-box-shadow-100);
       -moz-box-shadow: 0 4px 8px 0 var(--color-box-shadow-100);
       box-shadow: 0 4px 8px 0 var(--color-box-shadow-100);
       transition: all .3s ease-in-out;
       cursor: pointer;
+      z-index: 3;
 
       i{
         font-size: 20px;
@@ -365,12 +367,10 @@
     }
 
     .sm-img{
-      width: 60%;
+      width: 120%;
       position: absolute;
-      right: -48px;
+      right: -80%;
       bottom: -48px;
-      border-radius: 8px;
-      border: 8px solid var(--color-surface-mixed-100);
       overflow: hidden;
       z-index: 2;
 
