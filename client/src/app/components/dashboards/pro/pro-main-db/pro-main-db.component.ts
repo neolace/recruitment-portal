@@ -91,6 +91,7 @@ export class ProMainDbComponent implements AfterViewInit{
   }
 
   getCompany(id: any) {
+    this.loading = true;
     this.companyService.fetchFullCompany(id).subscribe(
       (data) => {
         this.company = data;
@@ -109,6 +110,8 @@ export class ProMainDbComponent implements AfterViewInit{
         // Check for different error types
         if (error.status === 404) {
           this.notFound = true;
+          location.reload();
+          return;
         } else if (error.status === 500) {
           this.serverError = true;
         } else if (error.status === 0) {
