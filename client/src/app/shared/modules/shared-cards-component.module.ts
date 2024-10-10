@@ -4,11 +4,13 @@ import {NgClass, NgIf} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {SharedPipesModule} from "./shared-pipes.module";
 import {JobPostCard2Component} from "../../components/shared/cards/job-post-card2/job-post-card2.component";
+import {CompanyCard1Component} from "../../components/shared/cards/company-card1/company-card1.component";
 
 @NgModule({
   declarations: [
     JobPostCard1Component,
-    JobPostCard2Component
+    JobPostCard2Component,
+    CompanyCard1Component
   ],
   imports: [
     NgIf,
@@ -18,7 +20,8 @@ import {JobPostCard2Component} from "../../components/shared/cards/job-post-card
   ],
   exports: [
     JobPostCard1Component,
-    JobPostCard2Component
+    JobPostCard2Component,
+    CompanyCard1Component
   ]
 })
 export class SharedCardsComponentModule {}

@@ -212,34 +212,7 @@
   <div class="popular-companies">
     <div class="row">
       <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 pt-4" *ngFor="let c of filteredCompanies | truncateComments: 4; let i = index">
-        <div class="card-2">
-          <div class="card-top">
-            <div class="logo-icon-wrapper">
-              <div class="logo-icon">
-                <img
-                  [src]="c?.logo ? c.logo : './assets/imgs/shared/default_org_logo.svg'"
-                  alt="{{c?.name ? c.name : 'Company Logo'}}">
-              </div>
-            </div>
-          </div>
-
-          <div class="card-content">
-            <div class="d-flex flex-column align-items-start">
-              <div class="company-name" routerLink="/business-profile/{{c?.id}}">{{c?.name ? c?.name : 'Company Name'}}</div>
-              <div class="company-description">{{c?.shortDescription ? c?.shortDescription : c?.companyStory | truncate : 50}}</div>
-            </div>
-          </div>
-          <hr>
-          <div class="card-bottom">
-            <div class="card-bottom-right">
-              <i class="fa fa-map-marker" aria-hidden="true"></i>
-              <span>{{c?.location ? c.location : 'N/A'}}</span>
-            </div>
-            <div class="card-bottom-left">
-              <div class="open-jobs">{{ getJobCount(c.id) }} Jobs</div>
-            </div>
-          </div>
-        </div>
+        <app-company-card1 [c]="c" [jobCount]="getJobCount(c.id)"></app-company-card1>
       </div>
     </div>
 
