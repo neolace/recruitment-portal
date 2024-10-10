@@ -1,14 +1,14 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {EmployeeService} from "../../../../services/employee.service";
 import {AlertsService} from "../../../../services/alerts.service";
-import {Observable, tap} from "rxjs";
 
 @Component({
-  selector: 'app-job-post-card1',
-  templateUrl: './job-post-card1.component.html',
-  styleUrls: ['./job-post-card1.component.scss']
+  selector: 'app-job-post-card2',
+  templateUrl: './job-post-card2.component.html',
+  styleUrls: ['./job-post-card2.component.scss']
 })
-export class JobPostCard1Component {
+export class JobPostCard2Component {
+
 
   @Input() p: any = {};
   @Input() userSavedIds: any[] = [];

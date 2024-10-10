@@ -231,33 +231,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }, interval);
   }
 
-  saveFav(id: string) {
-    if (this.employeeId == null) {
-      this.warningMessage('Please Login First to Save Jobs', 'Reminder');
-      return;
-    }
-    this.employeeService.saveFavJobs(this.employeeId, {
-      jobId: id,
-      status: 'saved'
-    }).subscribe((data) => {
-      this.getEmployee(this.employeeId);
-      this.successMessage('Job Saved Successfully', 'Success');
-    }, (error: any) => {
-      this.errorMessage('Something went wrong. Please try again', 'Error');
-    });
-  }
-
-  removeFav(id: string) {
-    if (this.employeeId == null) {
-      this.warningMessage('Please Login First to Save Jobs', 'Reminder');
-      return;
-    }
-    this.employeeService.removeFavJobs(this.employeeId, id).subscribe((data) => {
-      this.getEmployee(this.employeeId);
-      this.successMessage('Job Removed Successfully', 'Success');
-    }, (error: any) => {
-      this.errorMessage('Something went wrong. Please try again', 'Error');
-    });
+  onJobSavedOrRemoved() {
+    this.getEmployee(this.employeeId);
   }
 
   successMessage(msg: string, title: string) {

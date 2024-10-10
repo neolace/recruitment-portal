@@ -363,7 +363,7 @@ export class EmployeeService {
   }
 
   // Clear cache
-  private clearCache() {
+  public clearCache() {
     this.cacheInitialized = false;
     this.employeeSubject.next(null);
   }

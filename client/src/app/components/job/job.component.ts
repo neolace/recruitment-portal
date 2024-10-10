@@ -234,24 +234,7 @@ export class JobComponent implements OnInit, AfterViewInit {
     document.body.scrollTop = 0;
   }
 
-  saveFav(id: string) {
-    this.employeeService.saveFavJobs(this.employeeId, {
-      jobId: id,
-      status: 'saved'
-    }).subscribe((data) => {
-      this.getEmployee(this.employeeId);
-      this.alertService.successMessage('Job Saved Successfully', 'Success');
-    }, (error: any) => {
-      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
-    });
-  }
-
-  removeFav(id: string) {
-    this.employeeService.removeFavJobs(this.employeeId, id).subscribe((data) => {
-      this.getEmployee(this.employeeId);
-      this.alertService.successMessage('Job Removed Successfully', 'Success');
-    }, (error: any) => {
-      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
-    });
+  onJobSavedOrRemoved() {
+    this.getEmployee(this.employeeId);
   }
 }
