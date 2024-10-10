@@ -12,15 +12,15 @@ import {SharedCardsComponentModule} from "../../shared/modules/shared-cards-comp
   declarations: [
     HomeComponent
   ],
-    imports: [
-        CommonModule,
-        HomeRoutingModule,
-        FormsModule,
-        MatIconModule,
-        RouterModule,
-        SharedPipesModule,
-        SharedCardsComponentModule
-    ],
+  imports: [
+    CommonModule,
+    HomeRoutingModule,
+    FormsModule,
+    MatIconModule,
+    RouterModule,
+    SharedPipesModule,
+    SharedCardsComponentModule
+  ],
   providers: [
   ],
 })
