@@ -1,4 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import {
+  differenceInDays,
+  differenceInHours,
+  differenceInMinutes, parseISO
+} from "date-fns";
 
 @Pipe({
   name: 'timeAgo'
@@ -6,23 +11,31 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TimeAgoPipe implements PipeTransform {
 
   transform(value: string): string {
-    const timestamp = new Date(value).getTime();
-    const now = Date.now();
-    const difference = now - timestamp;
+    let date = new Date(value);
+    const now = new Date();
 
-    const seconds = Math.floor(difference / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
+    if (isNaN(date.getTime())) {
+      return 'Invalid date';
+    }
 
-    if (days > 0) {
-      return days === 1 ? '1 day ago' : `${days} days ago`;
-    } else if (hours > 0) {
-      return hours === 1 ? '1 hour ago' : `${hours} hours ago`;
-    } else if (minutes > 0) {
-      return minutes === 1 ? '1 minute ago' : `${minutes} minutes ago`;
+    if (!isNaN(Number(value))) {
+      date = new Date(Number(value));
     } else {
-      return 'Just now';
+      date = parseISO(value);
+    }
+
+    const daysDifference = differenceInDays(now, date);
+    const hoursDifference = differenceInHours(now, date);
+    const minutesDifference = differenceInMinutes(now, date);
+
+    if (daysDifference > 0) {
+      return daysDifference === 1 ? '1 day ago' : `${daysDifference} days ago`;
+    } else if (hoursDifference > 0) {
+      return hoursDifference === 1 ? '1 hour ago' : `${hoursDifference} hours ago`;
+    } else if (minutesDifference > 0) {
+      return minutesDifference === 1 ? '1 minute ago' : `${minutesDifference} minutes ago`;
+    } else {
+      return 'Today';
     }
   }
 }
