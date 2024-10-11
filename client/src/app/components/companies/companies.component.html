@@ -29,19 +29,8 @@
 </div>
 
 <div class="container">
-  <div class="spec-card-1" *ngIf="targetInput1 === undefined && targetInput2 === undefined">
-    <div class="d-md-flex align-items-center justify-content-between w-100">
-      <div>
-        <div class="title">
-          Are you looking for employees?
-        </div>
-        <div class="sub-title">
-          Start to post your jobs <span>FREE</span> today!
-        </div>
-      </div>
-
-      <button class="btn-1" (click)="moveToRegister()">Get Started</button>
-    </div>
+  <div *ngIf="targetInput1 === undefined && targetInput2 === undefined">
+    <app-hire-card1></app-hire-card1>
   </div>
 
   <div class="popular-companies">
