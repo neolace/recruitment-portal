@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {environment} from "../../../environments/environment";
+import {ActivatedRoute, Router} from "@angular/router";
+import {CredentialService} from "../../services/credential.service";
+import {EncryptionService} from "../../services/encryption.service";
 
 @Component({
   selector: 'app-reset-password-form',
@@ -17,10 +17,13 @@ export class ResetPasswordFormComponent {
   errorMessage: string = '';
   successMessage: string = '';
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute,
+              private credentialService: CredentialService,
+              private router: Router,
+              private encryptionService: EncryptionService) {}
 
   ngOnInit() {
-    this.token = this.route.snapshot.queryParams['token']; // Get the token from URL
+    this.token = this.route.snapshot.queryParams['token'];
   }
 
   onSubmit() {
@@ -32,19 +35,22 @@ export class ResetPasswordFormComponent {
     this.loading = true;
     this.errorMessage = '';
     this.successMessage = '';
+    const encryptedPassword = this.encryptionService.encryptPassword(this.password);
 
-    const headers = new HttpHeaders({
-      'Authorization': 'Basic ' + btoa('admin:password')
-    });
-    this.http.post(`${environment.apiUrl}/password-reset/reset`, { token: this.token, newPassword: this.password }, { headers: headers }).subscribe({
-      next: () => {
-        this.successMessage = 'Your password has been reset successfully.';
+    this.credentialService.resetPassword(this.token, encryptedPassword).subscribe(
+      (response) => {
         this.loading = false;
+        this.password = '';
+        this.confirmPassword = '';
+        this.successMessage = 'Password has been reset successfully';
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        },1000)
       },
-      error: () => {
-        this.errorMessage = 'Failed to reset the password. Please try again.';
+      (error) => {
         this.loading = false;
-      },
-    });
+        this.errorMessage = 'Failed to reset password. Please try again.';
+      }
+    )
   }
 }

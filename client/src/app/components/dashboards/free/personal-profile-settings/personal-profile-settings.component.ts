@@ -8,6 +8,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {CredentialService} from "../../../../services/credential.service";
 import {Router} from "@angular/router";
 import {AlertsService} from "../../../../services/alerts.service";
+import {EncryptionService} from "../../../../services/encryption.service";
 
 @Component({
   selector: 'app-personal-profile-settings',
@@ -103,6 +104,7 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
               private employeeService: EmployeeService,
               private alertService: AlertsService,
               private credentialService: CredentialService,
+              private encryptionService: EncryptionService,
               private router: Router,
               private cookieService: AuthService) {
   }
@@ -427,6 +429,8 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
   changePass() {
     this.loading = true;
     if (this.changePassForm.valid) {
+      const password: string = this.changePassForm.get('newPass')?.value || '';
+      const encryptedPassword = this.encryptionService.encryptPassword(password);
       this.credentialService.fetchCredentialByEmployeeId(this.employeeId).subscribe((data) => {
         if (data) {
           if (data.password === this.changePassForm.get('oldPass')?.value) {
@@ -437,7 +441,7 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
                 firstname:data.firstname,
                 lastname:data.lastname,
                 email:data.email,
-                password:this.changePassForm.get('confirmPass')?.value,
+                password:encryptedPassword,
                 role:data.role,
                 userLevel:data.userLevel
               }).subscribe((data) => {

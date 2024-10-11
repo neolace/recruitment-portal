@@ -1,7 +1,5 @@
 import {AfterViewInit, Component} from '@angular/core';
 import {ThemeService} from "../../services/theme.service";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {environment} from "../../../environments/environment";
 import {CredentialService} from "../../services/credential.service";
 
 @Component({
