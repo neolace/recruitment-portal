@@ -15,6 +15,8 @@ export class ProDashboardComponent implements AfterViewInit, OnInit {
   employeeName: any;
   employeeEmail: any;
   employeeProfile: any;
+
+  organizationId: any;
   constructor(private router: Router,
               private route: ActivatedRoute,
               private employeeService: EmployeeService,
@@ -22,6 +24,11 @@ export class ProDashboardComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     this.employeeId = this.cookieService.userID();
+    this.organizationId = this.cookieService.organization();
+    if (!this.organizationId || !this.employeeId) {
+      window.location.reload();
+      return;
+    }
     this.getEmployee(this.employeeId);
   }
 
