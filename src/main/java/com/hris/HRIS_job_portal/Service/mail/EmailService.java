@@ -1,5 +1,6 @@
 package com.hris.HRIS_job_portal.Service.mail;
 
+import com.hris.HRIS_job_portal.Config.ConfigUtility;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.Session;
@@ -14,6 +15,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
     private final JavaMailSender javaMailSender;
+
+    @Autowired
+    ConfigUtility configUtil;
 
     @Autowired
     public EmailService(JavaMailSender javaMailSender) {
@@ -38,8 +42,17 @@ public class EmailService {
         Transport.send(message);
     }
 
+    public void sendPasswordResetEmail(String toEmail, String resetToken) {
+        String subject = "Password Reset Request";
+        String resetUrl = configUtil.getProperty("PASSWORD_REST_URL") + resetToken;
+        String body = "Dear User,\n\nYou requested to reset your password. Please click the following link to reset it:\n"
+                + resetUrl + "\n\nThis link will expire in 30 minutes.\n\nIf you did not request this, please ignore this email.";
+
+        sendSimpleEmail(toEmail, subject, body);
+    }
+
     public void contactMe(String email) {
-        String to = "kavindu123450@gmail.com";
+        String to = configUtil.getProperty("CONTACT_ME_EMAIL");
         String subject = "Request For Information";
         String body = "Hi, I would like to know more about your services. I'm, \n\n" + email + "\n\n Thank you.";
 

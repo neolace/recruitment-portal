@@ -22,6 +22,7 @@ const routes: Routes = [
   { path: 'locked', loadChildren: () => import('./components/lock-screen/lock-screen.module').then(m => m.LockScreenModule) },
   { path: 'login', loadChildren: () => import('./components/login/login.module').then(m => m.LoginModule) },
   { path: 'reset', loadChildren: () => import('./components/reset-password/reset-password.module').then(m => m.ResetPasswordModule) },
+  { path: 'reset-password', loadChildren: () => import('./components/reset-password-form/reset-password-form.module').then(m => m.ResetPasswordFormModule) },
   { path: 'register', loadChildren: () => import('./components/register/register.module').then(m => m.RegisterModule) },
   { path: 'privacy-policy', loadChildren: () => import('./components/privacy-policy/privacy-policy.module').then(m => m.PrivacyPolicyModule) },
   { path: 'terms-and-conditions', loadChildren: () => import('./components/terms-conditions/terms-conditions.module').then(m => m.TermsConditionsModule) },
