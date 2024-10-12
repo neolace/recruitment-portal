@@ -30,38 +30,38 @@ import {SharedComponentModule} from "./shared/modules/shared-component.module";
   declarations: [
     AppComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatIconModule,
-        GoogleMapsModule,
-        MatMenuModule,
-        MatButtonModule,
-        ReactiveFormsModule,
-        MatSidenavModule,
-        MatExpansionModule,
-        MatTooltipModule,
-        MatProgressSpinnerModule,
-        FormsModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFirestoreModule,
-        AngularFireStorageModule,
-        AngularFireAuthModule,
-        SharedPipesModule,
-        HttpClientModule,
-        ToastrModule.forRoot({
-            positionClass: 'toast-bottom-right',
-            preventDuplicates: true,
-            maxOpened: 3,
-            timeOut: 5000,
-        }),
-        OAuthModule.forRoot(),
-        SharedComponentModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    GoogleMapsModule,
+    MatMenuModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatSidenavModule,
+    MatExpansionModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireAuthModule,
+    SharedPipesModule,
+    HttpClientModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      maxOpened: 3,
+      timeOut: 5000,
+    }),
+    OAuthModule.forRoot(),
+    SharedComponentModule
+  ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: SkipXsrfInterceptor, multi: true},
-    {provide: LocationStrategy, useClass: PathLocationStrategy }
+    {provide: LocationStrategy, useClass: PathLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })

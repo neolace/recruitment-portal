@@ -60,4 +60,18 @@ export class CredentialService {
     });
     return this.http.delete<any>(`${this.baseUrl}/portal_credentials/delete/${id}`, {headers});
   }
+
+  resetPasswordRequest(email: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.post<any>(`${this.baseUrl}/password-reset/request`, { email: email }, {headers});
+  }
+
+  resetPassword(token: any, password: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.put<any>(`${this.baseUrl}/password-reset/reset`, { token: token, newPassword: password }, {headers});
+  }
 }

@@ -192,6 +192,10 @@ export class JobDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  onJobSavedOrRemoved() {
+    this.getEmployee(this.employeeId);
+  }
+
   successMessage(msg: string, title: string) {
     this.toastr.success(msg, title, {
       progressBar: true,

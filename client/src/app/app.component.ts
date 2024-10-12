@@ -56,6 +56,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isTranslator: boolean = false;
   isUiSettings: boolean = false;
+  showContacts: boolean = false;
+  isSubscribe: boolean = false;
+  loading: boolean = false;
 
   reportIssueForm = new FormGroup({
     issueType: new FormControl('', [Validators.required]),
@@ -63,6 +66,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   })
 
   requestInfoForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+  })
+
+  newsLetterForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
   })
 
@@ -98,8 +105,18 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.getEmployee(this.employeeId);
 
+    this.isSubscribe = this.cookieService.isNewsletter();
+
     if (sessionStorage.getItem('in_issue_progress') == 'true') {
       this.continueReportProgress();
+    }
+
+    if (sessionStorage.getItem('newsLatter') != 'true' && !this.isSubscribe) {
+      setTimeout(() => {
+        const model_open = document.getElementById('news_model_open');
+        model_open?.click();
+        sessionStorage.setItem('newsLatter', 'true');
+      }, 10000)
     }
   }
 
@@ -323,7 +340,31 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isUiSettings = !this.isUiSettings;
   }
 
-  changeLanguage(lang: string) {
+  toggleContacts() {
+    this.showContacts = !this.showContacts;
+  }
 
+  subscribeNewsLatter() {
+    if (this.newsLetterForm.valid) {
+      this.loading = true;
+      const email = this.newsLetterForm.get('email')?.value;
+      if (email) {
+        this.commonService.subscribeNewsLatter(email).subscribe((data) => {
+          this.alertService.successMessage('Email sent successfully.', 'Success');
+          this.cookieService.newsletter();
+          this.loading = false;
+          this.newsLetterForm.reset();
+          const model_close = document.getElementById('news_model_close');
+          model_close?.click();
+          return;
+        }, (error) => {
+          this.newsLetterForm.get('email')?.setValue('Error');
+          this.alertService.errorMessage('Something went wrong. Please try again.', 'Error');
+          this.loading = false;
+        })
+      }
+    } else {
+      this.alertService.errorMessage('Field is empty or invalid.', 'Error');
+    }
   }
 }

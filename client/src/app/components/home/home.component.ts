@@ -7,6 +7,8 @@ import {ToastrService} from "ngx-toastr";
 import {Observable, tap} from "rxjs";
 import {CompanyService} from "../../services/company.service";
 import {AlertsService} from "../../services/alerts.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {CommonService} from "../../services/common/common.service";
 
 @Component({
   selector: 'app-home',
@@ -31,9 +33,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   dataEntryOperatorJobs: number = 0;
   businessDevelopmentJobs: number = 0;
 
-  jobsAch: number = 1548;
-  branchesAch: number = 25;
-  countriesAch: number = 6;
+  jobsAch: number = 0; // available jobs now
+  branchesAch: number = 0; // companies
+  countriesAch: number = 2;
   jobsAchValue: number = 0;
   branchesAchValue: number = 0;
   countriesAchValue: number = 0;
@@ -50,12 +52,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
   corsError: boolean = false;
   unexpectedError: boolean = false;
 
+  isSubscribed: boolean = false;
+
+  newsLetterForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+  })
+
   constructor(private router: Router,
               private valueIncrementService: ValueIncrementService,
               private employeeService: EmployeeService,
               private companyService: CompanyService,
               private cookieService: AuthService,
               private alertService: AlertsService,
+              private commonService: CommonService,
               private toastr: ToastrService) {
   }
 
@@ -70,6 +79,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.prefetchJobCounts();
       this.getAllJobs();
     });
+    this.isSubscribed = this.cookieService.isNewsletter();
   }
 
   ngAfterViewInit() {
@@ -107,6 +117,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
       // Convert the map back to an array and update jobAdDataStore
       this.jobAdDataStore = Array.from(uniqueJobsMap.values());
+      this.jobsAch = this.jobAdDataStore?.length || 0;
+      localStorage.setItem('jobsAch', this.jobsAch.toString());
     });
   }
 
@@ -130,6 +142,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     return this.companyService.fetchCompanies().pipe(
       tap(data => {
         this.companyDataStore = data;
+        this.branchesAch = this.companyDataStore?.length || 0;
+        localStorage.setItem('branchesAch', this.branchesAch.toString());
         this.loading = false;
       })
     )
@@ -162,8 +176,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           // Element is in view, start the animation
-          this.incrementJobsValue(this.jobsAch, 0);
-          this.incrementBranchesValue(this.branchesAch, 50);
+          this.incrementJobsValue(this.jobsAch, 100);
+          this.incrementBranchesValue(this.branchesAch, 100);
           this.incrementCountriesValue(this.countriesAch, 100);
           // Once the animation has started, we can stop observing this element
           observer.unobserve(entry.target);
@@ -231,33 +245,42 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }, interval);
   }
 
-  saveFav(id: string) {
-    if (this.employeeId == null) {
-      this.warningMessage('Please Login First to Save Jobs', 'Reminder');
-      return;
-    }
-    this.employeeService.saveFavJobs(this.employeeId, {
-      jobId: id,
-      status: 'saved'
-    }).subscribe((data) => {
-      this.getEmployee(this.employeeId);
-      this.successMessage('Job Saved Successfully', 'Success');
-    }, (error: any) => {
-      this.errorMessage('Something went wrong. Please try again', 'Error');
-    });
+  onJobSavedOrRemoved() {
+    this.getEmployee(this.employeeId);
   }
 
-  removeFav(id: string) {
-    if (this.employeeId == null) {
-      this.warningMessage('Please Login First to Save Jobs', 'Reminder');
-      return;
+  subscribeNewsLatter() {
+    if (this.newsLetterForm.valid) {
+      this.loading = true;
+      const email = this.newsLetterForm.get('email')?.value;
+      if (email) {
+        this.commonService.subscribeNewsLatter(email).subscribe((data) => {
+          this.alertService.successMessage('Email sent successfully.', 'Success');
+          this.cookieService.newsletter();
+          this.loading = false;
+          this.newsLetterForm.reset();
+          const model_close = document.getElementById('news_model_close');
+          model_close?.click();
+          return;
+        }, (error) => {
+          this.newsLetterForm.get('email')?.setValue('Error');
+          this.alertService.errorMessage('Something went wrong. Please try again.', 'Error');
+          this.loading = false;
+        })
+      }
+    } else {
+      this.alertService.errorMessage('Field is empty or invalid.', 'Error');
     }
-    this.employeeService.removeFavJobs(this.employeeId, id).subscribe((data) => {
-      this.getEmployee(this.employeeId);
-      this.successMessage('Job Removed Successfully', 'Success');
-    }, (error: any) => {
-      this.errorMessage('Something went wrong. Please try again', 'Error');
-    });
+  }
+
+  openSubscribeModal() {
+    if (this.isSubscribed){
+      this.alertService.successMessage("You have already subscribed to our newsletter :)", "Subscribed!");
+      return;
+    } else {
+      const model = document.getElementById('news_model_open');
+      model?.click();
+    }
   }
 
   successMessage(msg: string, title: string) {

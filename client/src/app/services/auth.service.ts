@@ -39,6 +39,7 @@ export class AuthService {
     this.cookieService.delete('organization');
     this.cookieService.delete('admin-token');
     this.cookieService.delete('level');
+    this.cookieService.deleteAll();
     sessionStorage.clear();
   }
 
@@ -91,6 +92,22 @@ export class AuthService {
     return locked.length !== 0;
   }
 
+  public setThemeMode(themeMode: string) {
+    this.cookieService.set('theme-mode', themeMode, 60*60*24*30);
+  }
+
+  public getThemeMode() {
+    return this.cookieService.get('theme-mode');
+  }
+
+  public setThemeColor(themeColor: string) {
+    this.cookieService.set('theme-color', themeColor, 60*60*24*30);
+  }
+
+  public getThemeColor() {
+    return this.cookieService.get('theme-color');
+  }
+
   public acceptAllCookies() {
     this.cookieService.set('cookies-accepted', 'true', 60*60*24*20);
   }
@@ -102,6 +119,15 @@ export class AuthService {
   public isCookiesAccepted() {
     let cookie = this.cookieService.get('cookies-accepted');
     return cookie.length !== 0;
+  }
+
+  public newsletter() {
+    this.cookieService.set('newsletter', 'true', 60*60*24*30);
+  }
+
+  public isNewsletter() {
+    let newsletter = this.cookieService.get('newsletter');
+    return newsletter.length !== 0;
   }
 
 }

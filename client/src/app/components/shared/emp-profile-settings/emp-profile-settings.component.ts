@@ -8,6 +8,7 @@ import {AuthService} from "../../../services/auth.service";
 import {CredentialService} from "../../../services/credential.service";
 import {Router} from "@angular/router";
 import {AlertsService} from "../../../services/alerts.service";
+import {EncryptionService} from "../../../services/encryption.service";
 
 declare var bootstrap: any;
 
@@ -111,6 +112,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
               private credentialService: CredentialService,
               private alertService: AlertsService,
               private router: Router,
+              private encryptionService: EncryptionService,
               private cookieService: AuthService) {
   }
 
@@ -465,6 +467,8 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
   changePass() {
     this.loading = true;
     if (this.changePassForm.valid) {
+      const password: string = this.changePassForm.get('newPass')?.value || '';
+      const encryptedPassword = this.encryptionService.encryptPassword(password);
       this.credentialService.fetchCredentialByEmployeeId(this.employeeId).subscribe((data) => {
         if (data) {
           if (data.password === this.changePassForm.get('oldPass')?.value) {
@@ -475,7 +479,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
                 firstname:data.firstname,
                 lastname:data.lastname,
                 email:data.email,
-                password:this.changePassForm.get('confirmPass')?.value,
+                password:encryptedPassword,
                 role:data.role,
                 userLevel:data.userLevel
               }).subscribe((data) => {

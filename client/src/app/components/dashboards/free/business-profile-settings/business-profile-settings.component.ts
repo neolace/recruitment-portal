@@ -68,12 +68,6 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit, 
     github: new FormControl(''),
   })
 
-  changePassForm = new FormGroup({
-    oldPass: new FormControl('', [Validators.required]),
-    newPass: new FormControl('', [Validators.required]),
-    confirmPass: new FormControl('', [Validators.required])
-  })
-
   aNotificationsForm = new FormGroup({
     mention: new FormControl(false),
     follow: new FormControl(false),
@@ -404,49 +398,6 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit, 
     }
   }
 
-  changePass() {
-    this.loading = true;
-    if (this.changePassForm.valid) {
-      this.credentialService.fetchCredentialByEmployeeId(this.employeeId).subscribe((data) => {
-        if (data) {
-          if (data.password === this.changePassForm.get('oldPass')?.value) {
-            if (this.changePassForm.get('newPass')?.value === this.changePassForm.get('confirmPass')?.value) {
-              this.credentialService.updateCredential(this.employeeId, {
-                id:data.id,
-                employeeId:this.employeeId,
-                firstname:data.firstname,
-                lastname:data.lastname,
-                email:data.email,
-                password:this.changePassForm.get('confirmPass')?.value,
-                role:data.role,
-                userLevel:data.userLevel
-              }).subscribe((data) => {
-                this.clear('changePass');
-                this.loading = false;
-                this.alertService.successMessage('Password updated successfully', 'Success');
-              }, (error) => {
-                this.loading = false;
-                this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
-              });
-            } else {
-              this.loading = false;
-              this.alertService.errorMessage('Passwords do not match', 'Error');
-            }
-          } else {
-            this.loading = false;
-            this.alertService.errorMessage('Old password is incorrect', 'Error');
-          }
-        }
-      }, (error) => {
-        this.loading = false;
-        this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
-      })
-    } else {
-      this.loading = false;
-      this.alertService.errorMessage('Please fill all the required fields', 'Error');
-    }
-  }
-
   updateNotifications() {
     this.companyService.updateNotifications({
       id: this.companyId,
@@ -516,9 +467,6 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit, 
         break;
       case 'social':
         this.socialForm.reset();
-        break;
-      case 'changePass':
-        this.changePassForm.reset();
         break;
       default:
         break;

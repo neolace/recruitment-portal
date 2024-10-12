@@ -85,8 +85,8 @@
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" (click)="viewCandidateProfile(ad.employeeId)">View</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" (click)="selectToInterview(a.jobId, ad)">Select to Interview</a></li>
-                  <li><a class="dropdown-item" (click)="removeFromStack(a.jobId, ad)">Reject</a></li>
+                  <li><a class="dropdown-item" [ngClass]="ad.status === 'Selected' ? 'active' : ''" (click)="selectToInterview(a.jobId, ad)">Select to Interview</a></li>
+                  <li><a class="dropdown-item" [ngClass]="ad.status === 'Rejected' ? 'active' : ''" (click)="removeFromStack(a.jobId, ad)">Reject</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item danger" (click)="openDeleteModal(a.jobId, ad, 'delete')" data-bs-toggle="modal" data-bs-target="#deleteCandidateModel">Delete</a></li>
                 </ul>

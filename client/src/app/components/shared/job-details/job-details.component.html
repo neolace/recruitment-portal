@@ -155,52 +155,7 @@
     <div class="container">
       <div class="row">
         <div class="col-12 col-md-6 mb-4" *ngFor="let p of filterJobsAds() | truncateComments: 2; let i = index">
-          <div class="card-1">
-            <div class="card-top">
-              <div class="card-top-left d-flex align-items-center">
-                <div class="logo-icon-wrapper">
-                  <div class="logo-icon">
-                    <img
-                      src="{{p.companyLogo}}"
-                      alt="{{p.companyName}}">
-                  </div>
-                </div>
-                <div class="d-flex flex-column align-items-start justify-content-between">
-                  <div class="company-name">{{p.companyName}}</div>
-                  <div class="opens-ago">{{p.datePosted | timeAgo}}</div>
-                </div>
-              </div>
-              <div class="card-top-right">
-                <div class="visit-link-circle" (click)="userSavedIds.includes(p.id) ? removeFav(p.id) :saveFav(p.id)">
-                  <i class="material-icons" [ngClass]="userSavedIds.includes(p.id) ? 'liked' : ''">favorite_border</i>
-                </div>
-              </div>
-            </div>
-            <hr>
-            <div class="card-content">
-              <div class="card-content-left">
-                <div class="d-flex flex-column align-items-start">
-                  <div class="job-title" (click)="navigateToJobDetails(p.id)">{{p.title}}</div>
-                  <div class="open-positions">Total Openings: {{p.totalOpenings}}</div>
-                </div>
-              </div>
-              <div class="card-content-right">
-                <div class="salary-range"><i class="fa fa-usd" aria-hidden="true"></i> ${{p.minSalary}} - ${{p.maxSalary}}</div>
-              </div>
-            </div>
-            <hr>
-            <div class="card-bottom">
-              <div *ngIf="p.companyLevel != '1'"></div>
-              <div class="card-bottom-left" *ngIf="p.companyLevel == '1'">
-                <i class="material-icons">verified</i>
-                <span>Verified</span>
-              </div>
-              <div class="card-bottom-right">
-                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                <span>{{p.location}}</span>
-              </div>
-            </div>
-          </div>
+          <app-job-post-card1 [p]="p" [userSavedIds]="userSavedIds" [employeeId]="employeeId" (savedJobChanged)="onJobSavedOrRemoved()"></app-job-post-card1>
         </div>
       </div>
     </div>

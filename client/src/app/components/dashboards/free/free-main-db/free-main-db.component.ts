@@ -90,6 +90,7 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
   }
 
   getCompany(id: any) {
+    this.loading = true;
     this.companyService.fetchFullCompany(id).subscribe(
       (data) => {
         this.company = data;
@@ -108,6 +109,8 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
         // Check for different error types
         if (error.status === 404) {
           this.notFound = true;
+          location.reload();
+          return;
         } else if (error.status === 500) {
           this.serverError = true;
         } else if (error.status === 0) {

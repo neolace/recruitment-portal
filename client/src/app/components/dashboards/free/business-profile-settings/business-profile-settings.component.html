@@ -172,33 +172,11 @@
       <div class="form-card-1">
         <h5>Change Password :</h5>
 
-        <form [formGroup]="changePassForm">
-          <div class="row form-wrapper">
-            <div class="col-12">
-              <div class="form-group">
-                <label for="old-password">Old Password</label>
-                <input type="password" class="form-control" id="old-password" formControlName="oldPass" autocomplete="section-blue password old-password">
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="form-group">
-                <label for="new-password">New Password</label>
-                <input type="password" class="form-control" id="new-password" formControlName="newPass" autocomplete="section-blue password new-password">
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="form-group">
-                <label for="confirm-password">Confirm Password</label>
-                <input type="password" class="form-control" id="confirm-password" formControlName="confirmPass" autocomplete="section-blue password re-new-password">
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="form-group">
-                <button type="submit" (click)="changePass()" class="btn-1">Save Password</button>
-              </div>
-            </div>
+        <div class="card-1">
+          <div class="d-flex align-items-center justify-content-center text-center w-100 h-100">
+            <p>You need to change your password from personal settings</p>
           </div>
-        </form>
+        </div>
       </div>
     </div>
 

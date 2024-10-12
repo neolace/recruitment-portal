@@ -107,3 +107,16 @@
     </div>
   </div>
 </div>
+
+<div *ngIf="!loading && serverError">
+  <app-failed-to-load-data></app-failed-to-load-data>
+</div>
+<div *ngIf="notFound && company.length == 0">
+  <app-result-not-found></app-result-not-found>
+</div>
+<div *ngIf="corsError">
+  <app-network-error></app-network-error>
+</div>
+<div *ngIf="forbidden && company.length == 0 || unexpectedError">
+  <app-forbidden></app-forbidden>
+</div>

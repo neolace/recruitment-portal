@@ -116,6 +116,16 @@ public class CredentialsService {
         return null;
     }
 
+    public CredentialsModel updatePassword(String credentialsId, String password) {
+        Optional<CredentialsModel> optionalCredentials = credentialsRepository.findById(credentialsId);
+        if (optionalCredentials.isPresent()) {
+            CredentialsModel credentials1 = optionalCredentials.get();
+            credentials1.setPassword(password);
+            return credentialsRepository.save(credentials1);
+        }
+        return null;
+    }
+
     public CredentialsModel deleteCredentials(String employeeId) {
         return credentialsRepository.deleteByEmployeeId(employeeId);
     }
