@@ -7,6 +7,8 @@ import {ToastrService} from "ngx-toastr";
 import {Observable, tap} from "rxjs";
 import {CompanyService} from "../../services/company.service";
 import {AlertsService} from "../../services/alerts.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {CommonService} from "../../services/common/common.service";
 
 @Component({
   selector: 'app-home',
@@ -50,12 +52,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
   corsError: boolean = false;
   unexpectedError: boolean = false;
 
+  isSubscribed: boolean = false;
+
+  newsLetterForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+  })
+
   constructor(private router: Router,
               private valueIncrementService: ValueIncrementService,
               private employeeService: EmployeeService,
               private companyService: CompanyService,
               private cookieService: AuthService,
               private alertService: AlertsService,
+              private commonService: CommonService,
               private toastr: ToastrService) {
   }
 
@@ -70,6 +79,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.prefetchJobCounts();
       this.getAllJobs();
     });
+    this.isSubscribed = this.cookieService.isNewsletter();
   }
 
   ngAfterViewInit() {
@@ -233,6 +243,40 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   onJobSavedOrRemoved() {
     this.getEmployee(this.employeeId);
+  }
+
+  subscribeNewsLatter() {
+    if (this.newsLetterForm.valid) {
+      this.loading = true;
+      const email = this.newsLetterForm.get('email')?.value;
+      if (email) {
+        this.commonService.subscribeNewsLatter(email).subscribe((data) => {
+          this.alertService.successMessage('Email sent successfully.', 'Success');
+          this.cookieService.newsletter();
+          this.loading = false;
+          this.newsLetterForm.reset();
+          const model_close = document.getElementById('news_model_close');
+          model_close?.click();
+          return;
+        }, (error) => {
+          this.newsLetterForm.get('email')?.setValue('Error');
+          this.alertService.errorMessage('Something went wrong. Please try again.', 'Error');
+          this.loading = false;
+        })
+      }
+    } else {
+      this.alertService.errorMessage('Field is empty or invalid.', 'Error');
+    }
+  }
+
+  openSubscribeModal() {
+    if (this.isSubscribed){
+      this.alertService.successMessage("You have already subscribed to our newsletter :)", "Subscribed!");
+      return;
+    } else {
+      const model = document.getElementById('news_model_open');
+      model?.click();
+    }
   }
 
   successMessage(msg: string, title: string) {

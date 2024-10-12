@@ -349,6 +349,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
           this.cookieService.newsletter();
           this.loading = false;
           this.newsLetterForm.reset();
+          const model_close = document.getElementById('news_model_close');
+          model_close?.click();
           return;
         }, (error) => {
           this.newsLetterForm.get('email')?.setValue('Error');
