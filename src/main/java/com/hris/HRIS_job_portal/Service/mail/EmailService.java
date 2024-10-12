@@ -61,7 +61,13 @@ public class EmailService {
 
     public void sendRejectionNotification(String to, String candidateName) {
         String subject = "Application Status";
-        String body = "Dear " + candidateName + ",\n\nWe appreciate your interest in our company. Unfortunately, we have decided to move forward with other candidates at this time. We wish you the best of luck in your future endeavors.\n\nBest regards,\nHR Team";
+        String body = "Dear " + candidateName + ",\n\nWe appreciate your interest in using Talent Boozt. Unfortunately, you applied company has decided to move forward with other candidates at this time. \nBut don't stop now. You can apply unlimited jobs free of charge from Talent Boozt. We wish you the best of luck in your future endeavors.\n\nBest regards,\nTeam Talent Boozt.";
+        sendSimpleEmail(to, subject, body);
+    }
+
+    public void sendSelectionNotification(String to, String candidateName) {
+        String subject = "Application Status";
+        String body = "Dear " + candidateName + ",\n\nWe are happy to inform your application was selected in first round. Applied company will contact you shortly.\n\nBest regards,\nTeam Talent Boozt.";
         sendSimpleEmail(to, subject, body);
     }
 }

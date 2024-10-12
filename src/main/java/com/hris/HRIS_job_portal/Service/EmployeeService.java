@@ -5,6 +5,7 @@ import com.hris.HRIS_job_portal.Model.CredentialsModel;
 import com.hris.HRIS_job_portal.Model.EmployeeModel;
 import com.hris.HRIS_job_portal.Repository.CredentialsRepository;
 import com.hris.HRIS_job_portal.Repository.EmployeeRepository;
+import com.hris.HRIS_job_portal.Service.mail.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,9 @@ public class EmployeeService {
 
     @Autowired
     private CredentialsRepository credentialsRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
@@ -204,6 +208,13 @@ public class EmployeeService {
                 favJobs = new ArrayList<>();
             }
             for (FavJobDTO favJob : favJobs) {
+                if (!employee.getEmail().isEmpty()){
+                    if (jobDto.getStatus().equals("inprogress")) {
+                        emailService.sendSelectionNotification(employee.getEmail(), employee.getFirstname());
+                    } else if (jobDto.getStatus().equals("rejected")) {
+                        emailService.sendRejectionNotification(employee.getEmail(), employee.getFirstname());
+                    }
+                }
                 if (favJob.getJobId().equals(jobDto.getJobId())) {
                     favJob.setStatus(jobDto.getStatus());
                     return employeeRepository.save(employee);
