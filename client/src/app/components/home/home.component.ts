@@ -33,9 +33,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   dataEntryOperatorJobs: number = 0;
   businessDevelopmentJobs: number = 0;
 
-  jobsAch: number = 1548;
-  branchesAch: number = 25;
-  countriesAch: number = 6;
+  jobsAch: number = 0; // available jobs now
+  branchesAch: number = 0; // companies
+  countriesAch: number = 2;
   jobsAchValue: number = 0;
   branchesAchValue: number = 0;
   countriesAchValue: number = 0;
@@ -117,6 +117,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
       // Convert the map back to an array and update jobAdDataStore
       this.jobAdDataStore = Array.from(uniqueJobsMap.values());
+      this.jobsAch = this.jobAdDataStore?.length || 0;
+      localStorage.setItem('jobsAch', this.jobsAch.toString());
     });
   }
 
@@ -140,6 +142,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     return this.companyService.fetchCompanies().pipe(
       tap(data => {
         this.companyDataStore = data;
+        this.branchesAch = this.companyDataStore?.length || 0;
+        localStorage.setItem('branchesAch', this.branchesAch.toString());
         this.loading = false;
       })
     )
@@ -172,8 +176,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           // Element is in view, start the animation
-          this.incrementJobsValue(this.jobsAch, 0);
-          this.incrementBranchesValue(this.branchesAch, 50);
+          this.incrementJobsValue(this.jobsAch, 100);
+          this.incrementBranchesValue(this.branchesAch, 100);
           this.incrementCountriesValue(this.countriesAch, 100);
           // Once the animation has started, we can stop observing this element
           observer.unobserve(entry.target);

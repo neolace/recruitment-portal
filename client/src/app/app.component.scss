@@ -105,6 +105,10 @@
       &:hover{
         animation: shadow-anime .8s infinite;
       }
+
+      &.active{
+        animation: shadow-anime .8s infinite;
+      }
     }
 
     .contacts-section{
@@ -180,6 +184,10 @@
       }
 
       &:hover{
+        animation: rotate-anime 3s linear infinite;
+      }
+
+      &.active{
         animation: rotate-anime 3s linear infinite;
       }
     }
@@ -305,6 +313,10 @@
       }
 
       &:hover{
+        animation: shadow-anime .8s infinite;
+      }
+
+      &.active{
         animation: shadow-anime .8s infinite;
       }
     }

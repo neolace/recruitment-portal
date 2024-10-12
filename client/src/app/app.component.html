@@ -13,7 +13,7 @@
 
     <div class="toggle-contacts-button">
       <div class="contacts-btn-wrapper">
-        <div class="contact-btn" (click)="toggleContacts()">
+        <div class="contact-btn" [ngClass]="showContacts ? 'active' : ''" (click)="toggleContacts()">
           <i class="material-icons">wechat</i>
         </div>
         <div class="contacts-section" [ngClass]="showContacts ? 'active' : ''">
@@ -38,7 +38,7 @@
 
     <div class="ui-settings">
       <div class="ui-btn-wrapper">
-        <div class="ui-btn" (click)="openUiSettings()">
+        <div class="ui-btn" [ngClass]="isUiSettings ? 'active' : ''" (click)="openUiSettings()">
           <i class="material-icons">settings</i>
         </div>
         <div class="ui-settings-body" [ngClass]="isUiSettings ? 'active' : ''">
@@ -87,7 +87,7 @@
 
     <div class="translate">
       <div class="lang-btn-wrapper">
-        <div class="lang-btn" (click)="clickTranslate()">
+        <div class="lang-btn" [ngClass]="isTranslator ? 'active' : ''" (click)="clickTranslate()">
           <i class="material-icons">translate</i>
         </div>
         <div id="google_translate_element" [ngClass]="isTranslator ? 'active' : ''"></div>
