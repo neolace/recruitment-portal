@@ -70,4 +70,10 @@ public class EmailService {
         String body = "Dear " + candidateName + ",\n\nWe are happy to inform your application was selected in first round. Applied company will contact you shortly.\n\nBest regards,\nTeam Talent Boozt.";
         sendSimpleEmail(to, subject, body);
     }
+
+    public void subscribedNewsLatter(String to) {
+        String subject = "Talent Boozt Newsletter";
+        String body = "Dear valuable user,\n\nWe are happy to inform you that you have subscribed to our newsletter. We promise not to spam your inbox :) \n\nBest regards,\nTeam Talent Boozt.";
+        sendSimpleEmail(to, subject, body);
+    }
 }

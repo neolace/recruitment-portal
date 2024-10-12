@@ -121,4 +121,13 @@ export class AuthService {
     return cookie.length !== 0;
   }
 
+  public newsletter() {
+    this.cookieService.set('newsletter', 'true', 60*60*24*30);
+  }
+
+  public isNewsletter() {
+    let newsletter = this.cookieService.get('newsletter');
+    return newsletter.length !== 0;
+  }
+
 }
