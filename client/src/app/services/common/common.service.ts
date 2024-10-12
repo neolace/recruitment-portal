@@ -17,4 +17,11 @@ export class CommonService {
     });
     return this.http.post(`${this.baseUrl}/email/contact/${email}`, {}, {headers});
   }
+
+  subscribeNewsLatter(email: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.put(`${this.baseUrl}/news-latter/subscribe`, {email: email}, {headers});
+  }
 }
