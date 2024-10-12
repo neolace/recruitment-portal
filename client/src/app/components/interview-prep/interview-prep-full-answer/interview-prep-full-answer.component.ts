@@ -3,6 +3,7 @@ import {InterviewPrepDataStore} from "../../../shared/data-store/interview-prep-
 import {ActivatedRoute} from "@angular/router";
 import { Location } from '@angular/common';
 import {DomSanitizer} from "@angular/platform-browser";
+import {NavigationService} from "../../../services/navigation.service";
 
 @Component({
   selector: 'app-interview-prep-full-answer',
@@ -15,7 +16,7 @@ export class InterviewPrepFullAnswerComponent {
   selectedQuestion: any;
   selectedAnswer: any;
 
-  constructor(private route: ActivatedRoute, private location: Location, private sanitizer: DomSanitizer) {}
+  constructor(private route: ActivatedRoute, private navigation: NavigationService, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -55,6 +56,6 @@ export class InterviewPrepFullAnswerComponent {
   }
 
   goBack() {
-    this.location.back();
+    this.navigation.back();
   }
 }

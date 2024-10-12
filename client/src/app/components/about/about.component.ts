@@ -12,9 +12,9 @@ export class AboutComponent implements OnInit, AfterViewInit {
   @ViewChild(GoogleMap, { static: false }) map: GoogleMap | any;
   @ViewChild(MapInfoWindow, { static: false }) info: MapInfoWindow | any;
 
-  jobsAch: number = 1548;
-  branchesAch: number = 25;
-  countriesAch: number = 6;
+  jobsAch: number = 0;
+  branchesAch: number = 0;
+  countriesAch: number = 2;
   jobsAchValue: number = 0;
   branchesAchValue: number = 0;
   countriesAchValue: number = 0;
@@ -62,6 +62,8 @@ export class AboutComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.jobsAch = localStorage.getItem('jobsAch') ? Number(localStorage.getItem('jobsAch')) : 0;
+    this.branchesAch = localStorage.getItem('branchesAch') ? Number(localStorage.getItem('branchesAch')) : 0;
     this.center = {
       lat: 6.918604,
       lng: 79.865564,
@@ -73,8 +75,8 @@ export class AboutComponent implements OnInit, AfterViewInit {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           // Element is in view, start the animation
-          this.incrementJobsValue(this.jobsAch, 0);
-          this.incrementBranchesValue(this.branchesAch, 50);
+          this.incrementJobsValue(this.jobsAch, 100);
+          this.incrementBranchesValue(this.branchesAch, 100);
           this.incrementCountriesValue(this.countriesAch, 100);
           // Once the animation has started, we can stop observing this element
           observer.unobserve(entry.target);
