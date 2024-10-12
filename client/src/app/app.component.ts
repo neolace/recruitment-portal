@@ -56,6 +56,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isTranslator: boolean = false;
   isUiSettings: boolean = false;
+  showContacts: boolean = false;
   isSubscribe: boolean = false;
   loading: boolean = false;
 
@@ -337,6 +338,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   openUiSettings() {
     this.isUiSettings = !this.isUiSettings;
+  }
+
+  toggleContacts() {
+    this.showContacts = !this.showContacts;
   }
 
   subscribeNewsLatter() {
