@@ -39,6 +39,7 @@ export class AuthService {
     this.cookieService.delete('organization');
     this.cookieService.delete('admin-token');
     this.cookieService.delete('level');
+    this.cookieService.deleteAll();
     sessionStorage.clear();
   }
 

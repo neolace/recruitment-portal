@@ -1796,6 +1796,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     align-items: center;
     justify-content: flex-start;
     gap: 5px;
+    cursor: pointer;
 
     i{
       color: var(--color-text-300);
@@ -1806,6 +1807,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       background-color: var(--color-primary-600-opacity-3);
       color: var(--color-text-100);
     }
+  }
+  .dropdown-item.active{
+    background-color: var(--color-primary-600-opacity-3);
+    color: var(--color-text-100);
   }
 
   .dropdown-divider{
