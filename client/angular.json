@@ -15,9 +15,10 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "ngx-build-plus:browser",
           "options": {
-            "outputPath": "dist/client",
+            "extraWebpackConfig": "src/custom-webpack.config.js",
+            "outputPath": "test/dist/client",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -30,7 +31,10 @@
               "src/assets",
               "src/_redirects",
               "src/manifest.webmanifest",
-              "src/.nojekyll"
+              "src/.nojekyll",
+              "src/sitemap.xml",
+              "src/robots.txt",
+              "src/netlify.toml"
             ],
             "styles": [
               "src/styles.scss"
@@ -106,7 +110,10 @@
               "src/assets",
               "src/_redirects",
               "src/manifest.webmanifest",
-              "src/.nojekyll"
+              "src/.nojekyll",
+              "src/sitemap.xml",
+              "src/robots.txt",
+              "src/netlify.toml"
             ],
             "styles": [
               "src/styles.scss"

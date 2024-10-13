@@ -113,7 +113,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (sessionStorage.getItem('newsLatter') != 'true' && !this.isSubscribe) {
       setTimeout(() => {
-        const model_open = document.getElementById('news_model_open');
+        const model_open = document.getElementById('news_model_open_main');
         model_open?.click();
         sessionStorage.setItem('newsLatter', 'true');
       }, 10000)
@@ -354,7 +354,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
           this.cookieService.newsletter();
           this.loading = false;
           this.newsLetterForm.reset();
-          const model_close = document.getElementById('news_model_close');
+          const model_close = document.getElementById('news_model_close_main');
           model_close?.click();
           return;
         }, (error) => {
