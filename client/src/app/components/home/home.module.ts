@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {HomeComponent} from "./home.component";
-import {CommonModule} from "@angular/common";
+import {CommonModule, NgOptimizedImage} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 import {RouterModule} from "@angular/router";
@@ -20,7 +20,8 @@ import {SharedCardsComponentModule} from "../../shared/modules/shared-cards-comp
         RouterModule,
         SharedPipesModule,
         SharedCardsComponentModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NgOptimizedImage
     ],
   providers: [
   ],

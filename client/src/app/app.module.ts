@@ -21,7 +21,7 @@ import {AngularFireModule} from "@angular/fire/compat";
 import {SharedPipesModule} from "./shared/modules/shared-pipes.module";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ToastrModule} from "ngx-toastr";
-import {LocationStrategy, PathLocationStrategy} from "@angular/common";
+import {LocationStrategy, NgOptimizedImage, PathLocationStrategy} from "@angular/common";
 import {OAuthModule} from "angular-oauth2-oidc";
 import {SkipXsrfInterceptor} from "./Config/SkipXsrfInterceptor";
 import {SharedComponentModule} from "./shared/modules/shared-component.module";
@@ -30,35 +30,36 @@ import {SharedComponentModule} from "./shared/modules/shared-component.module";
   declarations: [
     AppComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatIconModule,
-    GoogleMapsModule,
-    MatMenuModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatSidenavModule,
-    MatExpansionModule,
-    MatTooltipModule,
-    MatProgressSpinnerModule,
-    FormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    AngularFireStorageModule,
-    AngularFireAuthModule,
-    SharedPipesModule,
-    HttpClientModule,
-    ToastrModule.forRoot({
-      positionClass: 'toast-bottom-right',
-      preventDuplicates: true,
-      maxOpened: 3,
-      timeOut: 5000,
-    }),
-    OAuthModule.forRoot(),
-    SharedComponentModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatIconModule,
+        GoogleMapsModule,
+        MatMenuModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatSidenavModule,
+        MatExpansionModule,
+        MatTooltipModule,
+        MatProgressSpinnerModule,
+        FormsModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFirestoreModule,
+        AngularFireStorageModule,
+        AngularFireAuthModule,
+        SharedPipesModule,
+        HttpClientModule,
+        ToastrModule.forRoot({
+            positionClass: 'toast-bottom-right',
+            preventDuplicates: true,
+            maxOpened: 3,
+            timeOut: 5000,
+        }),
+        OAuthModule.forRoot(),
+        SharedComponentModule,
+        NgOptimizedImage
+    ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: SkipXsrfInterceptor, multi: true},
     {provide: LocationStrategy, useClass: PathLocationStrategy}
