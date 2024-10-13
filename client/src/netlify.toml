@@ -1,0 +1,10 @@
+[build]
+publish = "dist/client" # Path to your build folder
+
+[[headers]]
+for = "/*"
+[headers.values]
+# Enable Brotli and Gzip compression
+"Content-Encoding" = ["br", "gzip"]
+# Add any other caching headers if needed
+"Cache-Control" = "public, max-age=31536000"

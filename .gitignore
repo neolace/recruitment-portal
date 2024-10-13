@@ -38,3 +38,6 @@ build/
 
 ### temp assets ###
 /client/src/assets/temp/
+
+### test files ###
+/client/test/
