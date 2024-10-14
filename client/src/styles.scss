@@ -56,6 +56,7 @@
   --color-accent-100: #FF69B4; /* Hot Pink */
   --color-neutral-accent-100: #8B0000; /* Dark Red */
   --color-box-shadow-100: rgba(0, 0, 0, 0.3);
+  --color-nav-bar-100: #1B2631;
 }
 
 .theme-blue-dark {
@@ -111,6 +112,7 @@
   --color-accent-100: #f0e68c;
   --color-neutral-accent-100: #4682b4;
   --color-box-shadow-100: rgba(0, 0, 0, 0.3);
+  --color-nav-bar-100: #cccccc;
 }
 
 .theme-green-light {
@@ -165,6 +167,7 @@
   --color-accent-100: #0366d6;
   --color-neutral-accent-100: #6f42c1;
   --color-box-shadow-100: rgba(27, 31, 35, 0.15);
+  --color-nav-bar-100: #333333;
 }
 
 .theme-green-dark {
@@ -219,6 +222,7 @@
   --color-accent-100: #6f42c1;
   --color-neutral-accent-100: #2f81f7;
   --color-box-shadow-100: rgba(0, 0, 0, 0.3);
+  --color-nav-bar-100: #d1d1d1;
 }
 
 .theme-orange-light {
@@ -273,6 +277,7 @@
   --color-accent-100: #0366d6;
   --color-neutral-accent-100: #6f42c1;
   --color-box-shadow-100: rgba(27, 31, 35, 0.15);
+  --color-nav-bar-100: #1C2833;
 }
 
 .theme-orange-dark {
@@ -327,6 +332,7 @@
   --color-accent-100: #6f42c1;
   --color-neutral-accent-100: #2f81f7;
   --color-box-shadow-100: rgba(0, 0, 0, 0.3);
+  --color-nav-bar-100: #d1d1d1;
 }
 
 .theme-red-light {
@@ -381,6 +387,7 @@
   --color-accent-100: #0366d6;
   --color-neutral-accent-100: #6f42c1;
   --color-box-shadow-100: rgba(27, 31, 35, 0.15);
+  --color-nav-bar-100: #333333;
 }
 
 .theme-red-dark {
@@ -435,6 +442,7 @@
   --color-accent-100: #6f42c1;
   --color-neutral-accent-100: #2f81f7;
   --color-box-shadow-100: rgba(0, 0, 0, 0.3);
+  --color-nav-bar-100: #d1d1d1;
 }
 
 .theme-purple-light {
@@ -489,6 +497,7 @@
   --color-accent-100: #0366d6;
   --color-neutral-accent-100: #6f42c1;
   --color-box-shadow-100: rgba(27, 31, 35, 0.15);
+  --color-nav-bar-100: #333333;
 }
 
 .theme-purple-dark {
@@ -543,6 +552,7 @@
   --color-accent-100: #6f42c1;
   --color-neutral-accent-100: #2f81f7;
   --color-box-shadow-100: rgba(0, 0, 0, 0.3);
+  --color-nav-bar-100: #d1d1d1;
 }
 
 .theme-mixed-light {
@@ -599,6 +609,7 @@
   --color-accent-100: #FF69B4; /* Hot Pink */
   --color-neutral-accent-100: #8B0000; /* Dark Red */
   --color-box-shadow-100: rgba(0, 0, 0, 0.3);
+  --color-nav-bar-100: #333333;
 }
 
 .theme-mixed-dark {
@@ -654,6 +665,7 @@
   --color-accent-100: #f0e68c; /* Khaki */
   --color-neutral-accent-100: #4682b4; /* Steel Blue */
   --color-box-shadow-100: rgba(0, 0, 0, 0.3);
+  --color-nav-bar-100: #d1d1d1;
 }
 
 
@@ -869,7 +881,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     height: 100%;
     min-height: max(380px, 60vh);
     overflow: hidden;
-    background-image: url("https://jobstack-shreethemes.vercel.app/static/media/bg.9f5fc6c84f7a4eb68e0c.jpg");
+    background-image: url("./assets/imgs/shared/default-main-banner.webp");
     background-position: center top;
     background-size: cover;
     background-repeat: no-repeat;
@@ -883,7 +895,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     top: 0;
     left: 0;
     background-color: var(--color-primary-200);
-    opacity: .5;
+    opacity: .7;
     z-index: 2;
   }
 
@@ -1289,6 +1301,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .card-4-section{
   .card-4{
     width: 100%;
+    height: 100%;
     border-radius: 8px;
     padding: 30px;
     min-height: 140px;

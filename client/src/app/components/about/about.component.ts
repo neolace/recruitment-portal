@@ -51,6 +51,11 @@ export class AboutComponent implements OnInit, AfterViewInit {
   ];
   infoContent = '';
 
+  card1: any = '24 / 7 assistance to help you locate the greatest employment prospects.';
+  card2: any = 'Look through innovative IT jobs and rapidly expanding startups.';
+  card3: any = 'Seamless application process—find and apply for jobs with just a few clicks.';
+  card4: any = 'Streamline your job search and focus on opportunities that match your skills.';
+
   constructor(private valueIncrementService: ValueIncrementService) { }
 
   ngAfterViewInit(): void {
