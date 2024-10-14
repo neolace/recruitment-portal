@@ -15,5 +15,6 @@ export var commonSearchResults = [
   { id: 14, name: 'Privacy Policy', routerLink: '/privacy-policy' },
   { id: 15, name: 'Terms & Conditions', routerLink: '/terms-and-conditions' },
   { id: 16, name: 'Frequently Asked Questions', routerLink: '/faq' },
-  { id: 17, name: 'Blogs', routerLink: '/blogs' }
+  { id: 17, name: 'Blogs', routerLink: '/blogs' },
+  { id: 18, name: 'Technologies', routerLink: '/we-built-with' },
 ]
