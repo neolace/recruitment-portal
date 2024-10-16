@@ -12,25 +12,79 @@
 
 <div class="container">
 
-  <div class="row">
-    <div class="col-12 col-md-2 col-lg-3 d-none d-md-flex">
-      <div class="top-hr">
-        <div class="hr"></div>
+  <div class="d-lg-flex flex-lg-row-reverse">
+    <div class="col-12 col-lg-6">
+      <div class="svg-wrapper">
+        <svg width="100%" height="100%" viewBox="0 0 80 60" version="1.1">
+          <defs>
+            <clipPath id="mainBanner">
+              <path d="
+    M2 2H10V10H2z
+    M12 2H20V10H12z
+    M22 2H30V10H22z
+    M32 2H40V10H32z
+    M42 2H60V10H42z
+    M52 2H60V10H52z
+    M62 2H70V10H62z
+    M72 2H80V10H72z
+    M2 12H10V20H2z
+    M12 12H30V20H12z
+    M22 12H30V20H22z
+    M32 12H40V20H32z
+    M42 12H50V20H42z
+    M52 12H60V20H52z
+    M62 12H70V20H62z
+    M72 2H80V20H72z
+    M2 22H10V30H2z
+    M12 12H30V30H12z
+    M22 22H30V30H22z
+    M32 22H50V30H32z
+    M42 22H60V30H42z
+    M52 22H70V30H52z
+    M62 22H70V30H62z
+    M72 22H80V30H72z
+    M2 32H10V40H2z
+    M12 32H20V40H12z
+    M22 32H30V40H22z
+    M32 22H50V40H32z
+    M42 22H60V40H42z
+    M52 22H70V40H52z
+    M62 32H70V40H62z
+    M72 32H80V40H72z
+    M2 42H10V50H2z
+    M12 42H20V50H12z
+    M22 42H30V50H22z
+    M32 32H50V50H32z
+    M42 32H60V50H42z
+    M52 32H70V50H52z
+    M62 42H70V50H62z
+    M72 42H80V50H72z
+    M2 42H20V60H2z
+    M12 52H20V60H12z
+    M22 52H30V60H22z
+    M32 52H40V60H32z
+    M42 52H50V60H42z
+    M52 52H60V60H52z
+    M62 52H80V70H62z
+    M72 52H80V60H72z" fill="none"></path>
+            </clipPath>
+          </defs>
+          <image width="100%" height="100%" clip-path="url(#mainBanner)"
+                 xlink:href="./assets/imgs/for-companies/for-companies.webp"></image>
+        </svg>
       </div>
     </div>
-    <div class="col-12 col-md-8 col-lg-6">
-      <div class="sub-topic-section">
-        <h3>Welcome to Talent Boozt</h3>
-        <p>Talent Boozt focuses on helping companies navigate hiring challenges by offering customized solutions
-          tailored to their unique needs. Their platform supports workforce expansion, providing tools for hiring
-          success and a user-friendly process for connecting with top talent. They offer comprehensive recruitment
-          management systems and support for the expansion of the workforce, ensuring a smooth and efficient hiring
-          process.</p>
-      </div>
-    </div>
-    <div class="col-12 col-md-2 col-lg-3 d-none d-md-flex">
-      <div class="top-hr">
-        <div class="hr"></div>
+
+    <div class="col-12 col-lg-6">
+      <div class="d-flex align-items-center justify-content-center w-100 h-100">
+        <div class="sub-topic-section">
+          <h3>Welcome to Talent Boozt</h3>
+          <p>Talent Boozt focuses on helping companies navigate hiring challenges by offering customized solutions
+            tailored to their unique needs. Their platform supports workforce expansion, providing tools for hiring
+            success and a user-friendly process for connecting with top talent. They offer comprehensive recruitment
+            management systems and support for the expansion of the workforce, ensuring a smooth and efficient hiring
+            process.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -57,7 +111,8 @@
     <div class="col-12 col-lg-7">
       <div class="sub-topic-section">
         <h3>Why Partner with Us?</h3>
-        <p>Unlock your hiring potential with us—experience tailored solutions, expert support, and access to top talent that drives your business forward</p>
+        <p>Unlock your hiring potential with us—experience tailored solutions, expert support, and access to top talent
+          that drives your business forward</p>
       </div>
 
       <ul class="tick-list d-none d-md-block">
@@ -221,12 +276,13 @@
     </div>
   </div>
 
-  <div class="sub-topic-section">
+  <div class="sub-topic-section" *ngIf="paginatedCompanies">
     <h3>Companies who trust the Talent Boozt</h3>
-    <p>Leading companies trust Talent Boozt to connect them with top-tier talent and innovative HR solutions, fueling their growth and success</p>
+    <p>Leading companies trust Talent Boozt to connect them with top-tier talent and innovative HR solutions, fueling
+      their growth and success</p>
   </div>
 
-  <div class="popular-companies">
+  <div class="popular-companies" *ngIf="paginatedCompanies">
     <div class="row">
       <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 pt-4" *ngFor="let c of paginatedCompanies; let i = index;">
         <div class="card-2">

@@ -32,14 +32,13 @@ import {CommonService} from "./services/common/common.service";
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('navbarNav') navbarNav: ElementRef | any;
   @ViewChild('openForm') openForm!: ElementRef;
   @ViewChild('modelClose') modelClose!: ElementRef;
-  title = 'SPARKC HR System';
+  title = 'Talent Boozt -Unlock Your Future with the Perfect Job';
 
   showNavbar = true;
   showFooter = true;
