@@ -58,6 +58,24 @@
   }
 }
 
+.svg-wrapper {
+  position: relative;
+  border-radius: 0 0 50px 0;
+  display: inline-block;
+  overflow: hidden;
+  width: 100%;
+}
+
+.svg-wrapper svg {
+  transition: transform 0.3s ease-in-out, scale 0.3s ease-in-out;
+}
+
+.svg-wrapper:hover path {
+  transition: transform 0.3s ease-in-out;
+  transform: scale(1.2) rotate(5deg);
+  stroke: #FFD700;
+}
+
 .pricing-wrapper {
   padding: 30px 0;
   height: 100%;
