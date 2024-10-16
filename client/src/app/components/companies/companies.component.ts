@@ -48,6 +48,16 @@ export class CompaniesComponent implements OnInit, AfterViewInit{
       this.updatePaginationRange();
       this.updatePaginatedCompanies();
       this.prefetchJobCounts();
+    }, (error: HttpErrorResponse) => {
+      if (error.status === 404) {
+        this.notFound = true;
+      } else if (error.status === 403) {
+        this.forbidden = true;
+      } else if (error.status === 0) {
+        this.corsError = true;
+      } else {
+        this.unexpectedError = true;
+      }
     });
   }
 

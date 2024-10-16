@@ -122,12 +122,12 @@
     </div>
   </div>
 
-  <div class="sub-topic-section">
+  <div class="sub-topic-section" *ngIf="filterJobsAds().length > 0">
     <h3>Popular Jobs</h3>
     <p>Discover opportunities around the world. Get salary insights and company reviews from trusted sources.</p>
   </div>
 
-  <div class="container popular-jobs">
+  <div class="container popular-jobs" *ngIf="filterJobsAds().length > 0">
     <div class="container">
       <div class="row">
         <div class="col-12 col-md-6 mb-4" *ngFor="let p of filterJobsAds() | truncateComments: 4; let i = index">
@@ -206,12 +206,12 @@
     </div>
   </div>
 
-  <div class="sub-topic-section">
+  <div class="sub-topic-section" *ngIf="filteredCompanies">
     <h3>Find Best Companies</h3>
     <p>Discover the best workplaces and unlock your potential.</p>
   </div>
 
-  <div class="popular-companies">
+  <div class="popular-companies" *ngIf="filteredCompanies">
     <div class="row">
       <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 pt-4" *ngFor="let c of filteredCompanies | truncateComments: 4; let i = index">
         <app-company-card1 [c]="c" [jobCount]="getJobCount(c.id)"></app-company-card1>
