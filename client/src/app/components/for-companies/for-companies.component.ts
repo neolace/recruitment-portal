@@ -40,7 +40,7 @@ export class ForCompaniesComponent implements OnInit, AfterViewInit {
   async ngOnInit() : Promise<any> {
     // Initialize the pagination
     await this.getAllCompanies().subscribe((data) => {
-      this.filteredCompanies = this.companyDataStore;
+      this.filteredCompanies = this.companyDataStore ? this.companyDataStore : data;
       this.sortCompaniesByType();
       this.totalPages = Math.ceil(this.companyDataStore?.length / this.itemsPerPage);
       this.updatePaginationRange();
