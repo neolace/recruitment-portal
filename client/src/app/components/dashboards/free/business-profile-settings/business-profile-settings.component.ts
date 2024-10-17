@@ -270,7 +270,7 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit, 
         }
       }, error => {
         this.loading = false;
-        this.alertService.warningMessage('Path created! Not updated your profile! Reload & choose again!!', 'Warning');
+        this.alertService.warningMessage('We are creating specific path just for you. Please re upload', 'Request');
       });
     }
   }

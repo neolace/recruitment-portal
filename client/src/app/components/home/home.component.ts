@@ -142,6 +142,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     return this.companyService.fetchCompanies().pipe(
       tap(data => {
         this.companyDataStore = data;
+        this.companyDataStore = this.companyDataStore?.filter((data:any) => data.name !== null && data.shortDescription !== null || data.companyStory !== null);
         this.branchesAch = this.companyDataStore?.length || 0;
         localStorage.setItem('branchesAch', this.branchesAch.toString());
         this.loading = false;
