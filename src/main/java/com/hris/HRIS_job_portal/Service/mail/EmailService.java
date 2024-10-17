@@ -2,6 +2,7 @@ package com.hris.HRIS_job_portal.Service.mail;
 
 import com.hris.HRIS_job_portal.Config.ConfigUtility;
 import com.hris.HRIS_job_portal.DTO.mail.ContactUsDTO;
+import com.hris.HRIS_job_portal.DTO.mail.PersonalContactDTO;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.Session;
@@ -64,6 +65,14 @@ public class EmailService {
         String to = configUtil.getProperty("CONTACT_ME_EMAIL");
         String mailSubject = contactUsDTO.getSubject() + " - " + contactUsDTO.getName();
         String body = "Name: " + contactUsDTO.getName() + "\nEmail: " + contactUsDTO.getEmail() + "\n\n" + contactUsDTO.getMessage();
+
+        sendSimpleEmail(to, mailSubject, body);
+    }
+
+    public void personalContact(PersonalContactDTO personalContactDTO) {
+        String to = personalContactDTO.getToEmail();
+        String mailSubject = personalContactDTO.getSubject() + " - " + personalContactDTO.getName();
+        String body = "Dear Valued User,\n\n" + "You have received a new message from " + personalContactDTO.getName() + ".\n\n" + personalContactDTO.getMessage() + "\nContact Sender: " + personalContactDTO.getFromEmail() + "\n\nBest regards,\nTeam Talent Boozt.";
 
         sendSimpleEmail(to, mailSubject, body);
     }

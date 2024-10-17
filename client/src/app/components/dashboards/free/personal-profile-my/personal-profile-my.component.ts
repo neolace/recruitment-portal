@@ -4,6 +4,9 @@ import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
 import {EmployeeService} from "../../../../services/employee.service";
 import {AuthService} from "../../../../services/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {CommonService} from "../../../../services/common/common.service";
+import {AlertsService} from "../../../../services/alerts.service";
 
 @Component({
   selector: 'app-personal-profile-my',
@@ -25,7 +28,20 @@ export class PersonalProfileMyComponent implements OnInit, AfterViewInit {
   corsError: boolean = false;
   unexpectedError: boolean = false;
 
-  constructor(private employeeService: EmployeeService, private cookieService: AuthService, private route: ActivatedRoute, private router: Router ) {}
+  contactUsForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    subject: new FormControl('', [Validators.required]),
+    message: new FormControl('', [Validators.required])
+  })
+  mailLoading: boolean = false;
+
+  constructor(private employeeService: EmployeeService,
+              private cookieService: AuthService,
+              private commonService: CommonService,
+              private alertService: AlertsService,
+              private route: ActivatedRoute,
+              private router: Router ) {}
 
   async ngOnInit(): Promise<any> {
     this.employeeId = this.cookieService.userID();
@@ -90,6 +106,32 @@ export class PersonalProfileMyComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/dashboard/personal-profile-settings']);
     } else if (this.router.url === '/pro/personal-profile') {
       this.router.navigate(['/pro/personal-profile-settings']);
+    }
+  }
+
+  contact() {
+    if (this.contactUsForm.valid) {
+      if (this.employee?.employee?.email) {
+        this.mailLoading = true;
+        this.commonService.personalContact({
+          name: this.contactUsForm.get('name')?.value,
+          fromEmail: this.contactUsForm.get('email')?.value,
+          toEmail: this.employee?.employee?.email,
+          subject: this.contactUsForm.get('subject')?.value,
+          message: this.contactUsForm.get('message')?.value
+        }).subscribe((res: any) => {
+          this.mailLoading = false;
+          this.contactUsForm.reset();
+          this.alertService.successMessage('Your message has been sent.', 'Contact Candidate');
+        }, (err: any) => {
+          this.mailLoading = false;
+          this.alertService.errorMessage('Something went wrong. Please try again.', 'Contact Candidate');
+        })
+      } else {
+        this.alertService.warningMessage('Sorry! this candidate is not provided a public email address.', 'Contact Candidate');
+      }
+    } else {
+      this.alertService.errorMessage('Please fill in all the required fields.', 'Contact Candidate');
     }
   }
 }
