@@ -10,22 +10,10 @@
 </div>
 
 <div class="container">
-  <div class="spec-card-1">
-    <div class="d-md-flex align-items-center justify-content-between w-100">
-      <div>
-        <div class="title">
-          Are you looking for employees?
-        </div>
-        <div class="sub-title">
-          Start to post your jobs <span>FREE</span> today!
-        </div>
-      </div>
-
-      <button class="btn-1" (click)="moveToRegister()">Get Started</button>
-    </div>
-  </div>
+  <app-hire-card1></app-hire-card1>
 
   <div class="popular-jobs">
+    <p>Public Job Ads of Total Posted Jobs({{postedJobs?.postedJobs?.length}})</p>
     <div class="row">
       <div class="col-12 col-md-4 mb-3" *ngFor="let job of postedJobs?.postedJobs">
         <div class="card-1" *ngIf="isExpired(job.expiryDate)">
@@ -73,5 +61,18 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <div *ngIf="!loading && serverError">
+    <app-failed-to-load-data></app-failed-to-load-data>
+  </div>
+  <div *ngIf="notFound && !postedJobs?.postedJobs">
+    <app-result-not-found></app-result-not-found>
+  </div>
+  <div *ngIf="corsError">
+    <app-network-error></app-network-error>
+  </div>
+  <div *ngIf="forbidden && !postedJobs?.postedJobs || unexpectedError">
+    <app-forbidden></app-forbidden>
   </div>
 </div>
