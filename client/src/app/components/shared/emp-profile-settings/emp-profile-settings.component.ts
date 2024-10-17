@@ -614,6 +614,9 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
           default:
             break;
         }
+      }, error => {
+        this.loading = false;
+        this.alertService.warningMessage('We are creating specific path just for you. Please re upload', 'Request');
       });
     }
   }

@@ -30,7 +30,10 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
 
   queryId: any;
 
-  constructor(private employeeService: EmployeeService, private cookieService: AuthService, private router: Router, private route: ActivatedRoute) {}
+  constructor(private employeeService: EmployeeService,
+              public cookieService: AuthService,
+              private router: Router,
+              private route: ActivatedRoute) {}
 
   async ngOnInit(): Promise<any> {
     this.employeeId = this.cookieService.userID();

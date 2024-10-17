@@ -575,6 +575,9 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
           default:
             break;
         }
+      }, (error) => {
+        this.loading = false;
+        this.alertService.warningMessage('We are creating specific path just for you. Please re upload', 'Request');
       });
     }
   }
