@@ -4,6 +4,9 @@ import {EmployeeService} from "../../../services/employee.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {AuthService} from "../../../services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {CommonService} from "../../../services/common/common.service";
+import {AlertsService} from "../../../services/alerts.service";
 
 @Component({
   selector: 'app-emp-profile',
@@ -30,8 +33,18 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
 
   queryId: any;
 
+  contactUsForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    subject: new FormControl('', [Validators.required]),
+    message: new FormControl('', [Validators.required])
+  })
+  mailLoading: boolean = false;
+
   constructor(private employeeService: EmployeeService,
               public cookieService: AuthService,
+              private commonService: CommonService,
+              private alertService: AlertsService,
               private router: Router,
               private route: ActivatedRoute) {}
 
@@ -117,6 +130,32 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
       setTimeout(() => {
         window.location.reload();
       }, 500)
+    }
+  }
+
+  contact() {
+    if (this.contactUsForm.valid) {
+      if (this.employee?.employee?.email) {
+        this.mailLoading = true;
+        this.commonService.personalContact({
+          name: this.contactUsForm.get('name')?.value,
+          fromEmail: this.contactUsForm.get('email')?.value,
+          toEmail: this.employee?.employee?.email,
+          subject: this.contactUsForm.get('subject')?.value,
+          message: this.contactUsForm.get('message')?.value
+        }).subscribe((res: any) => {
+          this.mailLoading = false;
+          this.contactUsForm.reset();
+          this.alertService.successMessage('Your message has been sent.', 'Contact Candidate');
+        }, (err: any) => {
+          this.mailLoading = false;
+          this.alertService.errorMessage('Something went wrong. Please try again.', 'Contact Candidate');
+        })
+      } else {
+        this.alertService.warningMessage('Sorry! this candidate is not provided a public email address.', 'Contact Candidate');
+      }
+    } else {
+      this.alertService.errorMessage('Please fill in all the required fields.', 'Contact Candidate');
     }
   }
 }

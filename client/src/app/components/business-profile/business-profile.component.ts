@@ -2,6 +2,9 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
 import {CompanyService} from "../../services/company.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {CommonService} from "../../services/common/common.service";
+import {AlertsService} from "../../services/alerts.service";
 
 @Component({
   selector: 'app-business-profile',
@@ -28,7 +31,15 @@ export class BusinessProfileComponent implements OnInit, AfterViewInit{
   corsError: boolean = false;
   unexpectedError: boolean = false;
 
-  constructor(private router: Router, private companyService: CompanyService ) { }
+  contactUsForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    subject: new FormControl('', [Validators.required]),
+    message: new FormControl('', [Validators.required])
+  })
+  mailLoading: boolean = false;
+
+  constructor(private router: Router, private companyService: CompanyService, private commonService: CommonService, private alertService: AlertsService) { }
 
   ngOnInit(): void {
     this.companyId = this.router.url.split('/')[2];
@@ -107,6 +118,32 @@ export class BusinessProfileComponent implements OnInit, AfterViewInit{
   filterPostedJobsData(): any[] {
     this.filteredPostedJobsDataStore = this.postedJobsDataStore[0]?.filter((data: any) => data.companyId === this.companyId);
     return this.filteredPostedJobsDataStore;
+  }
+
+  contact() {
+    if (this.contactUsForm.valid) {
+      if (this.companyDataStore[0]?.contactEmail) {
+        this.mailLoading = true;
+        this.commonService.personalContact({
+          name: this.contactUsForm.get('name')?.value,
+          fromEmail: this.contactUsForm.get('email')?.value,
+          toEmail: this.companyDataStore[0]?.contactEmail,
+          subject: this.contactUsForm.get('subject')?.value,
+          message: this.contactUsForm.get('message')?.value
+        }).subscribe((res: any) => {
+          this.mailLoading = false;
+          this.contactUsForm.reset();
+          this.alertService.successMessage('Your message has been sent.', 'Contact Us');
+        }, (err: any) => {
+          this.mailLoading = false;
+          this.alertService.errorMessage('Something went wrong. Please try again.', 'Contact Us');
+        })
+      } else {
+        this.alertService.warningMessage('Sorry! this company is not provided a public email address.', 'Contact Us');
+      }
+    } else {
+      this.alertService.errorMessage('Please fill in all the required fields.', 'Contact Us');
+    }
   }
 
 }

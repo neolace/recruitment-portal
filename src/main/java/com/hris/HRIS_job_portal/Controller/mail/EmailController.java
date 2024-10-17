@@ -2,6 +2,7 @@ package com.hris.HRIS_job_portal.Controller.mail;
 
 import com.hris.HRIS_job_portal.DTO.ApiResponse;
 import com.hris.HRIS_job_portal.DTO.mail.ContactUsDTO;
+import com.hris.HRIS_job_portal.DTO.mail.PersonalContactDTO;
 import com.hris.HRIS_job_portal.Service.mail.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,12 @@ public class EmailController {
     @PostMapping("/contact-us")
     public ResponseEntity<ApiResponse> contactUs(@RequestBody ContactUsDTO contactUsDTO) {
         emailService.contactUs(contactUsDTO);
+        return ResponseEntity.ok(new ApiResponse("Email sent successfully"));
+    }
+
+    @PostMapping("/personal-contact")
+    public ResponseEntity<ApiResponse> personalContact(@RequestBody PersonalContactDTO personalContactDTO) {
+        emailService.personalContact(personalContactDTO);
         return ResponseEntity.ok(new ApiResponse("Email sent successfully"));
     }
 }
