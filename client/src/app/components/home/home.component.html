@@ -135,7 +135,7 @@
         </div>
       </div>
 
-      <div class="see-more">
+      <div class="see-more" *ngIf="filterJobsAds().length >= 4">
         <div class="see-more-btn" routerLink="/job">See More Jobs <i class="material-icons">arrow_right_alt</i></div>
       </div>
     </div>
@@ -218,7 +218,7 @@
       </div>
     </div>
 
-    <div class="see-more">
+    <div class="see-more" *ngIf="filteredCompanies.length >= 4">
       <div class="see-more-btn" routerLink="/companies">See More Companies <i class="material-icons">arrow_right_alt</i></div>
     </div>
   </div>

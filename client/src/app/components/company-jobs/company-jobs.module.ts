@@ -3,6 +3,8 @@ import {CompanyJobsComponent} from "./company-jobs.component";
 import {CommonModule} from "@angular/common";
 import {CompanyJobsRoutingModule} from "./company-jobs-routing.module";
 import {SharedPipesModule} from "../../shared/modules/shared-pipes.module";
+import {SharedCardsComponentModule} from "../../shared/modules/shared-cards-component.module";
+import {SharedComponentModule} from "../../shared/modules/shared-component.module";
 
 @NgModule({
   declarations: [
@@ -11,7 +13,9 @@ import {SharedPipesModule} from "../../shared/modules/shared-pipes.module";
   imports: [
     CommonModule,
     CompanyJobsRoutingModule,
-    SharedPipesModule
+    SharedPipesModule,
+    SharedCardsComponentModule,
+    SharedComponentModule
   ]
 })
 export class CompanyJobsModule { }
