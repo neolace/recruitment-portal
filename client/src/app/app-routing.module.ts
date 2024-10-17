@@ -38,6 +38,7 @@ const routes: Routes = [
   { path: 'interview-prep', loadChildren: () => import('./components/interview-prep/interview-prep/interview-prep.module').then(m => m.InterviewPrepModule) },
   { path: 'interview-prep-answer/:qid/:aid', loadChildren: () => import('./components/interview-prep/interview-prep-full-answer/interview-prep-full-answer.module').then(m => m.InterviewPrepFullAnswerModule) },
   { path: 'we-built-with', loadChildren: () => import('./components/built-with/built-with.module').then(m => m.BuiltWithModule) },
+  { path: 'employees', loadChildren: () => import('./components/employee/employee.module').then(m => m.EmployeeModule) },
   { path: '**', redirectTo: '/404' }
 ];
 
