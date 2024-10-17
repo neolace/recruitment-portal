@@ -4,6 +4,7 @@ import {CommonModule} from "@angular/common";
 import {AboutRoutingModule} from "./about-routing.module";
 import {GoogleMapsModule} from "@angular/google-maps";
 import {SharedPipesModule} from "../../shared/modules/shared-pipes.module";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import {SharedPipesModule} from "../../shared/modules/shared-pipes.module";
         CommonModule,
         AboutRoutingModule,
         GoogleMapsModule,
-        SharedPipesModule
+        SharedPipesModule,
+        ReactiveFormsModule
     ]
 })
 export class AboutModule { }

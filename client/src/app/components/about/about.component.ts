@@ -1,6 +1,9 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ValueIncrementService} from "../../services/value-increment.service";
 import {GoogleMap, MapInfoWindow, MapMarker} from "@angular/google-maps";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {CommonService} from "../../services/common/common.service";
+import {AlertsService} from "../../services/alerts.service";
 
 @Component({
   selector: 'app-about',
@@ -56,7 +59,15 @@ export class AboutComponent implements OnInit, AfterViewInit {
   card3: any = 'Seamless application process—find and apply for jobs with just a few clicks.';
   card4: any = 'Streamline your job search and focus on opportunities that match your skills.';
 
-  constructor(private valueIncrementService: ValueIncrementService) { }
+  contactUsForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    subject: new FormControl('', [Validators.required]),
+    message: new FormControl('', [Validators.required])
+  })
+  loading: boolean = false;
+
+  constructor(private valueIncrementService: ValueIncrementService, private commonService: CommonService, private alertService: AlertsService) { }
 
   ngAfterViewInit(): void {
     this.setupIntersectionObserver();
@@ -127,4 +138,24 @@ export class AboutComponent implements OnInit, AfterViewInit {
     this.info.open(mark);
   }
 
+  contactUs() {
+    if (this.contactUsForm.valid) {
+      this.loading = true;
+      this.commonService.contactUs({
+        name: this.contactUsForm.get('name')?.value,
+        email: this.contactUsForm.get('email')?.value,
+        subject: this.contactUsForm.get('subject')?.value,
+        message: this.contactUsForm.get('message')?.value
+      }).subscribe((res: any) => {
+        this.loading = false;
+        this.contactUsForm.reset();
+        this.alertService.successMessage('Thank you for contacting us. We will get back to you shortly.', 'Contact Us');
+      }, (err: any) => {
+        this.loading = false;
+        this.alertService.errorMessage('Something went wrong. Please try again.', 'Contact Us');
+      })
+    } else {
+      this.alertService.errorMessage('Please fill in all the required fields.', 'Contact Us');
+    }
+  }
 }

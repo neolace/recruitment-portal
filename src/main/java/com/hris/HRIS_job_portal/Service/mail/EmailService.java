@@ -1,6 +1,7 @@
 package com.hris.HRIS_job_portal.Service.mail;
 
 import com.hris.HRIS_job_portal.Config.ConfigUtility;
+import com.hris.HRIS_job_portal.DTO.mail.ContactUsDTO;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.Session;
@@ -57,6 +58,14 @@ public class EmailService {
         String body = "Hi, I would like to know more about your services. I'm, \n\n" + email + "\n\n Thank you.";
 
         sendSimpleEmail(to, subject, body);
+    }
+
+    public void contactUs(ContactUsDTO contactUsDTO) {
+        String to = configUtil.getProperty("CONTACT_ME_EMAIL");
+        String mailSubject = contactUsDTO.getSubject() + " - " + contactUsDTO.getName();
+        String body = "Name: " + contactUsDTO.getName() + "\nEmail: " + contactUsDTO.getEmail() + "\n\n" + contactUsDTO.getMessage();
+
+        sendSimpleEmail(to, mailSubject, body);
     }
 
     public void sendRejectionNotification(String to, String candidateName) {
