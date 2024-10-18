@@ -2,12 +2,13 @@
   <div class="row">
     <div class="col-12 col-md-7 col-lg-6">
       <div class="hero-left">
-        <h1>Unlock <span>Your</span> </h1>
+        <h1>Unlock <span>Your</span></h1>
         <h1><span>Future</span> with the </h1>
         <h1>Perfect Job</h1>
 
         <div>
-          <p>Explore Thousands of Job Openings & Career Options. Partnered with Top Companies to help you find the perfect fit.</p>
+          <p>Explore Thousands of Job Openings & Career Options. Partnered with Top Companies to help you find the
+            perfect fit.</p>
         </div>
 
         <div class="search-box">
@@ -41,33 +42,38 @@
               <img ngSrc="./assets/imgs/home/home-hero.webp"
                    alt="lg-img" width="650" height="500" loading="lazy">
             </div>
-            <div class="subscribe-element" (click)="openSubscribeModal()">
-              <mat-icon>notifications_active</mat-icon>
-              <p>Job Alert Subscribe</p>
-            </div>
-            <div class="candidate-element">
-              <p>5k+ candidates get job</p>
-              <div class="candidates-wrapper">
-                <div class="candidate">
-                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/01.6ac85de7298319b1f8d5.jpg" alt="pro" loading="lazy" width="30" height="30">
-                </div>
-                <div class="candidate">
-                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/02.7df14e12e444ad660802.jpg" alt="pro" loading="lazy" width="30" height="30">
-                </div>
-                <div class="candidate">
-                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/03.ba5f8794c055cc1488b5.jpg" alt="pro" loading="lazy" width="30" height="30">
-                </div>
-                <div class="candidate">
-                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/04.35463172278c4051b5f4.jpg" alt="pro" loading="lazy" width="30" height="30">
-                </div>
-                <div class="candidate">
-                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/05.a7ab2c82813cb95da9d6.jpg" alt="pro" loading="lazy" width="30" height="30">
-                </div>
-                <div class="candidate">
-                  <mat-icon>add</mat-icon>
-                </div>
-              </div>
-            </div>
+<!--            <div class="subscribe-element" (click)="openSubscribeModal()">-->
+<!--              <mat-icon>notifications_active</mat-icon>-->
+<!--              <p>Job Alert Subscribe</p>-->
+<!--            </div>-->
+<!--            <div class="candidate-element">-->
+<!--              <p>5k+ candidates get job</p>-->
+<!--              <div class="candidates-wrapper">-->
+<!--                <div class="candidate">-->
+<!--                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/01.6ac85de7298319b1f8d5.jpg"-->
+<!--                       alt="pro" loading="lazy" width="30" height="30">-->
+<!--                </div>-->
+<!--                <div class="candidate">-->
+<!--                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/02.7df14e12e444ad660802.jpg"-->
+<!--                       alt="pro" loading="lazy" width="30" height="30">-->
+<!--                </div>-->
+<!--                <div class="candidate">-->
+<!--                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/03.ba5f8794c055cc1488b5.jpg"-->
+<!--                       alt="pro" loading="lazy" width="30" height="30">-->
+<!--                </div>-->
+<!--                <div class="candidate">-->
+<!--                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/04.35463172278c4051b5f4.jpg"-->
+<!--                       alt="pro" loading="lazy" width="30" height="30">-->
+<!--                </div>-->
+<!--                <div class="candidate">-->
+<!--                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/05.a7ab2c82813cb95da9d6.jpg"-->
+<!--                       alt="pro" loading="lazy" width="30" height="30">-->
+<!--                </div>-->
+<!--                <div class="candidate">-->
+<!--                  <mat-icon>add</mat-icon>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
           </div>
         </div>
       </div>
@@ -78,7 +84,8 @@
 
   <div class="sub-topic-section">
     <h3>Popular Categories</h3>
-    <p>Explore top job categories tailored for you. Discover the roles that match your skills and interests, with trusted companies ready to hire.</p>
+    <p>Explore top job categories tailored for you. Discover the roles that match your skills and interests, with
+      trusted companies ready to hire.</p>
   </div>
 
   <div class="container popular-categories">
@@ -89,7 +96,7 @@
             <i class="fa fa-gitlab" aria-hidden="true"></i>
           </div>
           <div class="job-title">Business Development</div>
-          <div class="job-count">{{j.businessDevelopmentJobs?j.businessDevelopmentJobs:0}} Jobs</div>
+          <div class="job-count">{{j.businessDevelopmentJobs ? j.businessDevelopmentJobs : 0}} Jobs</div>
         </div>
       </div>
       <div class="col-12 col-sm-6 col-md-3 mb-2">
@@ -98,7 +105,7 @@
             <i class="fa fa-database" aria-hidden="true"></i>
           </div>
           <div class="job-title">Data Entry Operator</div>
-          <div class="job-count">{{j.dataEntryOperatorJobs?j.dataEntryOperatorJobs:0}} Jobs</div>
+          <div class="job-count">{{j.dataEntryOperatorJobs ? j.dataEntryOperatorJobs : 0}} Jobs</div>
         </div>
       </div>
       <div class="col-12 col-sm-6 col-md-3 mb-2">
@@ -107,7 +114,7 @@
             <i class="fa fa-paint-brush" aria-hidden="true"></i>
           </div>
           <div class="job-title">Graphic Designer</div>
-          <div class="job-count">{{j.graphicDesignerJobs?j.graphicDesignerJobs:0}} Jobs</div>
+          <div class="job-count">{{j.graphicDesignerJobs ? j.graphicDesignerJobs : 0}} Jobs</div>
         </div>
       </div>
       <div class="col-12 col-sm-6 col-md-3 mb-2">
@@ -116,7 +123,7 @@
             <i class="fa fa-code" aria-hidden="true"></i>
           </div>
           <div class="job-title">Web Developer</div>
-          <div class="job-count">{{j.webDeveloperJobs?j.webDeveloperJobs:0}} Jobs</div>
+          <div class="job-count">{{j.webDeveloperJobs ? j.webDeveloperJobs : 0}} Jobs</div>
         </div>
       </div>
     </div>
@@ -131,7 +138,8 @@
     <div class="container">
       <div class="row">
         <div class="col-12 col-md-6 mb-4" *ngFor="let p of filterJobsAds() | truncateComments: 4; let i = index">
-          <app-job-post-card1 [p]="p" [userSavedIds]="userSavedIds" [employeeId]="employeeId" (savedJobChanged)="onJobSavedOrRemoved()"></app-job-post-card1>
+          <app-job-post-card1 [p]="p" [userSavedIds]="userSavedIds" [employeeId]="employeeId"
+                              (savedJobChanged)="onJobSavedOrRemoved()"></app-job-post-card1>
         </div>
       </div>
 
@@ -160,17 +168,20 @@
       </div>
       <div class="col-12 col-md-6 col-lg-7">
         <div class="popular-2-right">
-          <h3>Millions of jobs.</h3>
+          <h3>A World of Opportunities.</h3>
           <h3>Find the one that's right for you.</h3>
           <div class="my-3">
-            <p>Explore a world of job opportunities. Personalize your search, compare salaries, and access in-depth company reviews. With thousands of openings from top employers. Get closer to the career of your dreams.</p>
+            <p>Explore a world of job opportunities. Personalize your search, compare salaries, and access in-depth
+              company reviews. With thousands of openings from top employers. Get closer to the career of your
+              dreams.</p>
           </div>
           <ul>
             <li>Partnering with Leading Global Companies</li>
             <li>Elevate Your Skills with Targeted Job Matches</li>
             <li>Expert Guidance for Your Next Career Move</li>
           </ul>
-          <button class="btn-1" routerLink="/contact"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact us</button>
+          <button class="btn-1" routerLink="/contact"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact us
+          </button>
         </div>
       </div>
     </div>
@@ -182,8 +193,9 @@
   <div class="container">
     <div class="d-flex flex-column align-items-center justify-content-center banner-content">
       <div class="overlay-banner-title">Get the job that's right for you</div>
-      <div class="overlay-banner-text">Search all the open positions on the web. Get your own personalized salary
-        estimate. Read reviews on over 30000+ companies worldwide.
+      <div class="overlay-banner-text">We help you find the job of your dreams by providing you a world of opportunities
+        for you. Our Platform gives you personalized job recommendations and provided you with tools and resources to
+        tune up you Skills.
       </div>
       <div class="overlay-banner-button"><i class="fa fa-play" aria-hidden="true"></i></div>
     </div>
@@ -213,13 +225,15 @@
 
   <div class="popular-companies" *ngIf="filteredCompanies">
     <div class="row">
-      <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 pt-4" *ngFor="let c of filteredCompanies | truncateComments: 4; let i = index">
+      <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 pt-4"
+           *ngFor="let c of filteredCompanies | truncateComments: 4; let i = index">
         <app-company-card1 [c]="c" [jobCount]="getJobCount(c.id)"></app-company-card1>
       </div>
     </div>
 
     <div class="see-more" *ngIf="filteredCompanies.length >= 4">
-      <div class="see-more-btn" routerLink="/companies">See More Companies <i class="material-icons">arrow_right_alt</i></div>
+      <div class="see-more-btn" routerLink="/companies">See More Companies <i class="material-icons">arrow_right_alt</i>
+      </div>
     </div>
   </div>
 
@@ -227,7 +241,8 @@
 </div>
 
 <button type="button" id="news_model_open" class="d-none" data-bs-toggle="modal" data-bs-target="#newsLatter"></button>
-<div class="modal fade" id="newsLatter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="newsLatterLabel" aria-hidden="true">
+<div class="modal fade" id="newsLatter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="newsLatterLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -243,12 +258,14 @@
               <input type="email" class="form-control" id="email" formControlName="email">
             </div>
           </form>
-          <p class="mb-0">By clicking on Subscribe, you agree to our <a href="/terms-and-conditions">Terms of Service</a> and <a href="/privacy-policy">Privacy Policy</a>.</p>
+          <p class="mb-0">By clicking on Subscribe, you agree to our <a href="/terms-and-conditions">Terms of
+            Service</a> and <a href="/privacy-policy">Privacy Policy</a>.</p>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" id="news_model_close" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn-1" [disabled]="loading" (click)="subscribeNewsLatter()">{{loading ? 'Subscribing...' : 'Subscribe'}}</button>
+        <button type="button" class="btn-1" [disabled]="loading"
+                (click)="subscribeNewsLatter()">{{loading ? 'Subscribing...' : 'Subscribe'}}</button>
       </div>
     </div>
   </div>
