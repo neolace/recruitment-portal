@@ -31,7 +31,8 @@ jobs:
         key: ${{ secrets.AWS_KEY }}
         port: 22
         script: |
-          sudo pkill -f 'java -jar' || true  # Stop any running app
+          set -x  # Enable debug mode
+          sudo pkill -9 -f 'java -jar' || true  # Force stop any running app
           cd /home/ubuntu/app/
           rm -rf *  # Clear the directory
 
