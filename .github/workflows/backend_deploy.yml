@@ -31,10 +31,14 @@ jobs:
         key: ${{ secrets.AWS_KEY }}
         port: 22
         script: |
-          set -x  # Enable debug mode
-          sudo pkill -9 -f 'java -jar' || true  # Force stop any running app
+          set -x  # Enable debugging
+          sudo pkill -9 -f 'HRIS_job_portal.jar' || true  # Force stop only the Spring Boot app
           cd /home/ubuntu/app/
           rm -rf *  # Clear the directory
+          sudo fallocate -l 1G /swapfile  # Add swap memory if necessary
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
 
     - name: Transfer Jar File to EC2
       uses: appleboy/scp-action@master
@@ -65,4 +69,5 @@ jobs:
         port: 22
         script: |
           cd /home/ubuntu/app/
+          sleep 10  # Delay before starting the app
           nohup java -jar your-spring-boot-app.jar &
