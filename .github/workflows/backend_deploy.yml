@@ -24,7 +24,7 @@ jobs:
       run: mvn clean package -DskipTests
 
     - name: Deploy to EC2
-      uses: appleboy/ssh-action@v0.1.9
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.AWS_HOST }}
         username: ${{ secrets.AWS_USER }}
@@ -36,7 +36,7 @@ jobs:
           rm -rf *  # Clear the directory
 
     - name: Transfer Jar File to EC2
-      uses: appleboy/scp-action@v0.1.9
+      uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.AWS_HOST }}
         username: ${{ secrets.AWS_USER }}
@@ -46,7 +46,7 @@ jobs:
         target: /home/ubuntu/app/your-spring-boot-app.jar
 
     - name: Copy .env file to EC2
-      uses: appleboy/ssh-action@v0.1.9
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.AWS_HOST }}
         username: ${{ secrets.AWS_USER }}
@@ -56,7 +56,7 @@ jobs:
           echo "${{ secrets.ENV_FILE_CONTENT }}" > /home/ubuntu/app/.env
 
     - name: Start Spring Boot App
-      uses: appleboy/ssh-action@v0.1.9
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.AWS_HOST }}
         username: ${{ secrets.AWS_USER }}
