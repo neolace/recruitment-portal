@@ -34,8 +34,7 @@ jobs:
           sudo pkill -f 'java -jar' || true  # Stop any running app
           cd /home/ubuntu/app/
           rm -rf *  # Clear the directory
-          exit
-          
+
     - name: Transfer Jar File to EC2
       uses: appleboy/scp-action@v0.1.9
       with:
@@ -45,6 +44,16 @@ jobs:
         port: 22
         source: target/your-spring-boot-app.jar
         target: /home/ubuntu/app/your-spring-boot-app.jar
+
+    - name: Copy .env file to EC2
+      uses: appleboy/ssh-action@v0.1.9
+      with:
+        host: ${{ secrets.AWS_HOST }}
+        username: ${{ secrets.AWS_USER }}
+        key: ${{ secrets.AWS_KEY }}
+        port: 22
+        script: |
+          echo "${{ secrets.ENV_FILE_CONTENT }}" > /home/ubuntu/app/.env
 
     - name: Start Spring Boot App
       uses: appleboy/ssh-action@v0.1.9
