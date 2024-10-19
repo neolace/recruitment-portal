@@ -26,6 +26,7 @@ import {AlertsService} from "./services/alerts.service";
 import {FileUploadService} from "./services/file-upload.service";
 import {ReportIssueService} from "./services/report-issue.service";
 import {CommonService} from "./services/common/common.service";
+import {Utilities} from "./shared/utilities/utilities";
 
 @Component({
   selector: 'app-root',
@@ -59,6 +60,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   showContacts: boolean = false;
   isSubscribe: boolean = false;
   loading: boolean = false;
+
+  utilities = Utilities;
 
   reportIssueForm = new FormGroup({
     issueType: new FormControl('', [Validators.required]),

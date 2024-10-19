@@ -42,3 +42,7 @@ build/
 ### test files ###
 /client/test/
 /client/dist/
+
+/client/src/app/shared/utilities/utilities.ts
+/client/src/app/shared/utilities/pricing.utilities.ts
+client/src/app/components/*/*.*.*~

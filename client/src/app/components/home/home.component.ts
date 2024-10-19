@@ -9,6 +9,7 @@ import {CompanyService} from "../../services/company.service";
 import {AlertsService} from "../../services/alerts.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CommonService} from "../../services/common/common.service";
+import {Utilities} from "../../shared/utilities/utilities";
 
 @Component({
   selector: 'app-home',
@@ -53,6 +54,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   unexpectedError: boolean = false;
 
   isSubscribed: boolean = false;
+
+  utilities = Utilities;
 
   newsLetterForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -212,20 +215,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
   }
 
-  filterJobs(): any[] {
-    this.webDeveloperJobs = this.jobAdDataStore?.filter((item: any) => item.title?.toLowerCase().trim() === 'web developer').length;
-    this.graphicDesignerJobs = this.jobAdDataStore?.filter((item: any) => item.title?.toLowerCase().trim() === 'graphic designer').length;
-    this.dataEntryOperatorJobs = this.jobAdDataStore?.filter((item: any) => item.title?.toLowerCase().trim() === 'data entry operator').length;
-    this.businessDevelopmentJobs = this.jobAdDataStore?.filter((item: any) => item.title?.toLowerCase().trim() === 'business development').length;
-
-    return [
-      {
-        webDeveloperJobs: this.webDeveloperJobs,
-        graphicDesignerJobs: this.graphicDesignerJobs,
-        dataEntryOperatorJobs: this.dataEntryOperatorJobs,
-        businessDevelopmentJobs: this.businessDevelopmentJobs
-      }
-    ]
+  filterJobs(name: any): any {
+    return this.jobAdDataStore?.filter((item: any) => item.title?.toLowerCase().trim() === name.toLowerCase().trim()).length;
   }
 
   incrementJobsValue(targetValue: number, interval: number) {
