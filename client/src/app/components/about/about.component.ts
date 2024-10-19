@@ -4,6 +4,7 @@ import {GoogleMap, MapInfoWindow, MapMarker} from "@angular/google-maps";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CommonService} from "../../services/common/common.service";
 import {AlertsService} from "../../services/alerts.service";
+import {Utilities} from "../../shared/utilities/utilities";
 
 @Component({
   selector: 'app-about',
@@ -66,6 +67,8 @@ export class AboutComponent implements OnInit, AfterViewInit {
     message: new FormControl('', [Validators.required])
   })
   loading: boolean = false;
+
+  utilities = Utilities;
 
   constructor(private valueIncrementService: ValueIncrementService, private commonService: CommonService, private alertService: AlertsService) { }
 

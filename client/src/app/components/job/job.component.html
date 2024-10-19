@@ -42,7 +42,7 @@
           <img src="./assets/imgs/shared/not-found.svg" alt="404">
         </div>
 
-        <div class="search-result-not-found" *ngIf="isSearchResultNotFound">
+        <div class="search-result-not-found" *ngIf="isSearchResultNotFound && jobAdDataStore.length > 0">
           <h3>No search results found</h3>
           <img src="./assets/imgs/shared/result_not_found.svg" alt="404">
           <p>Try different keywords or location</p>
