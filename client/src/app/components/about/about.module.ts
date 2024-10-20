@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {AboutComponent} from "./about.component";
-import {CommonModule} from "@angular/common";
+import {CommonModule, NgOptimizedImage} from "@angular/common";
 import {AboutRoutingModule} from "./about-routing.module";
 import {GoogleMapsModule} from "@angular/google-maps";
 import {SharedPipesModule} from "../../shared/modules/shared-pipes.module";
@@ -15,7 +15,8 @@ import {ReactiveFormsModule} from "@angular/forms";
         AboutRoutingModule,
         GoogleMapsModule,
         SharedPipesModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NgOptimizedImage
     ]
 })
 export class AboutModule { }

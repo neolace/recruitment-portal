@@ -68,66 +68,6 @@
   }
 }
 
-.section-3{
-  width: 100%;
-  background-color: var(--color-primary-200);
-  border-radius: 5px;
-  overflow: hidden;
-  margin: max(20px, 5vw) 0;
-
-  .img-wrapper{
-    width: 100%;
-    height: 100%;
-    position: relative;
-
-    img{
-      width: 100%;
-      object-fit: cover;
-    }
-  }
-
-  .section-3-right{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding: max(20px, 3vw);
-
-
-    h2{
-      color: #fefefe;
-    }
-
-    p{
-      color: #ddd;
-    }
-
-    ul{
-      margin: 0;
-      padding: 0;
-      list-style: none;
-
-      li{
-        margin: 8px 0;
-        position: relative;
-        text-align: left;
-        display: flex;
-        align-items: center;
-        color: #ddd;
-      }
-      li:before{
-        content: 'check_circle_outline';
-        font-family: 'Material Icons';
-        font-size: 18px;
-        color: #fff;
-        margin-right: 6px;
-      }
-    }
-  }
-}
-
 .achievements{
   padding: 12px;
 
