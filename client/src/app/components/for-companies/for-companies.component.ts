@@ -4,6 +4,9 @@ import {CompanyService} from "../../services/company.service";
 import {Observable, tap} from "rxjs";
 import {Utilities} from "../../shared/utilities/utilities";
 import {PricingUtilities} from "../../shared/utilities/pricing.utilities";
+import {ProductsUtilities} from "../../shared/utilities/products.utilities";
+import _default from "chart.js/dist/plugins/plugin.tooltip";
+import numbers = _default.defaults.animations.numbers;
 
 @Component({
   selector: 'app-for-companies',
@@ -31,6 +34,9 @@ export class ForCompaniesComponent implements OnInit, AfterViewInit {
 
   loading: boolean = false;
 
+  isAllProductsVisible: boolean = false;
+  maxProductsDisplayed: number = 2;
+
   serverError: boolean = false;
   notFound: boolean = false;
   forbidden: boolean = false;
@@ -39,6 +45,7 @@ export class ForCompaniesComponent implements OnInit, AfterViewInit {
 
   utilities = Utilities;
   pricingUtilities = PricingUtilities;
+  productsUtilities = ProductsUtilities;
 
   constructor(private router: Router, private companyService: CompanyService) { }
 
@@ -119,5 +126,14 @@ export class ForCompaniesComponent implements OnInit, AfterViewInit {
       this.endPage = this.totalPages;
     }
     this.pages = Array.from({ length: this.endPage - this.startPage + 1 }, (_, i) => i + this.startPage);
+  }
+
+  toggleAllProducts() {
+    this.isAllProductsVisible = !this.isAllProductsVisible;
+    if (this.isAllProductsVisible) {
+      this.maxProductsDisplayed = Infinity;
+    } else {
+      this.maxProductsDisplayed = 2;
+    }
   }
 }
