@@ -406,58 +406,32 @@
     <p>Beyond job postings, showcase the additional HR products companies can purchase.</p>
   </div>
 
-  <div class="row flex-row-reverse mb-2">
-    <div class="col-12 col-md-6">
-      <div class="product-image-wrapper">
-        <img src="https://img.avery.com/f_auto,q_auto,c_scale,w_700/web/campaign/dpo-landing-hero-banner" alt="image">
+  <div *ngFor="let p of productsUtilities.products | truncateComments: maxProductsDisplayed">
+    <div class="row mb-2 {{p.imageAlign == 'left' ? 'flex-row-reverse' : ''}}">
+      <div class="col-12 col-md-6">
+        <div class="product-image-wrapper">
+          <img src="{{p.image}}" alt="image">
+        </div>
       </div>
-    </div>
-    <div class="col-12 col-md-6">
-      <div class="product-wrapper">
-        <div class="product-title">Lorem ipsum dolor.</div>
-        <div class="product-sub-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga, quod?</div>
-        <div class="product-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consequuntur
-          corporis ea, enim eos id iure quod recusandae reiciendis sed sint ut voluptates! Eligendi est excepturi illum
-          labore laborum laudantium magnam non obcaecati! Distinctio earum est harum nobis sunt voluptatibus?
+      <div class="col-12 col-md-6">
+        <div class="product-wrapper">
+          <div class="product-title">{{p.name}}</div>
+          <div class="product-sub-title">{{p.subtitle}}</div>
+          <div class="product-desc" *ngFor="let pd of p.description.split('\n')">
+            {{pd}}
+          </div>
+          <div class="product-button">learn more</div>
         </div>
-        <div class="product-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consequuntur
-          corporis ea, enim eos id iure quod recusandae reiciendis sed sint ut voluptates! Eligendi est excepturi illum
-          labore laborum laudantium magnam non obcaecati! Distinctio earum est harum nobis sunt voluptatibus?
-        </div>
-        <div class="product-button">learn more</div>
       </div>
     </div>
   </div>
 
-  <div class="row mb-2">
-    <div class="col-12 col-md-6">
-      <div class="product-image-wrapper">
-        <img src="https://img.avery.com/f_auto,q_auto,c_scale,w_700/web/campaign/dpo-landing-hero-banner" alt="image">
-      </div>
-    </div>
-    <div class="col-12 col-md-6">
-      <div class="product-wrapper">
-        <div class="product-title">Lorem ipsum dolor.</div>
-        <div class="product-sub-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga, quod?</div>
-        <div class="product-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consequuntur
-          corporis ea, enim eos id iure quod recusandae reiciendis sed sint ut voluptates! Eligendi est excepturi illum
-          labore laborum laudantium magnam non obcaecati! Distinctio earum est harum nobis sunt voluptatibus?
-        </div>
-        <div class="product-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consequuntur
-          corporis ea, enim eos id iure quod recusandae reiciendis sed sint ut voluptates! Eligendi est excepturi illum
-          labore laborum laudantium magnam non obcaecati! Distinctio earum est harum nobis sunt voluptatibus?
-        </div>
-        <div class="product-button">learn more</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="d-flex align-items-center justify-content-center">
+  <div class="d-flex align-items-center justify-content-center" *ngIf="productsUtilities.products.length > maxProductsDisplayed">
     <div class="top-hr">
       <div class="hr"></div>
     </div>
-    <div class="view-section-btn">
-      <p class="m-0">View all products</p>
+    <div class="view-section-btn" (click)="toggleAllProducts()">
+      <p class="m-0">{{isAllProductsVisible?'Collapse':'View all'}} products</p>
     </div>
     <div class="top-hr">
       <div class="hr"></div>

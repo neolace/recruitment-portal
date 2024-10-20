@@ -45,4 +45,5 @@ build/
 
 /client/src/app/shared/utilities/utilities.ts
 /client/src/app/shared/utilities/pricing.utilities.ts
-client/src/app/components/*/*.*.*~
+/client/src/app/shared/utilities/products.utilities.ts
+*.*~
