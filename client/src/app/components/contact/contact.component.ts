@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ValueIncrementService} from "../../services/value-increment.service";
 import {CommonService} from "../../services/common/common.service";
 import {AlertsService} from "../../services/alerts.service";
+import {Utilities} from "../../shared/utilities/utilities";
 
 @Component({
   selector: 'app-contact',
@@ -50,6 +51,8 @@ export class ContactComponent implements OnInit, AfterViewInit {
     message: new FormControl('', [Validators.required])
   })
   loading: boolean = false;
+
+  utilities = Utilities;
 
   constructor(private commonService: CommonService, private alertService: AlertsService) { }
 

@@ -1,0 +1,190 @@
+export var PricingUtilities = {
+  packages: [
+    {
+      id: 1,
+      name: "Free",
+      shortDescription: "The basics for individuals and organizations",
+      price: 0,
+      currency: "USD",
+      payPeriod: "month",
+      buttons: [
+        {
+          text: "Join for free",
+          link: "#",
+          class: "btn-2"
+        }
+      ],
+      staticFeature: null,
+      features: [
+        {
+          id: 1,
+          name: "Maintain 3 jobs",
+          description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        },
+        {
+          id: 2,
+          name: "Simplified Dashboard",
+          description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        },
+        {
+          id: 3,
+          name: "Customize your profile",
+          description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        }
+      ],
+      recommended: false
+    },
+    {
+      id: 2,
+      name: "Pro",
+      shortDescription: "The basics for individuals and organizations",
+      price: 10,
+      currency: "USD",
+      payPeriod: "month",
+      buttons: [
+        {
+          text: "Continue with Pro",
+          link: "#",
+          class: "btn-2"
+        }
+      ],
+      staticFeature: "Everything included in Free, plus...",
+      features: [
+        {
+          id: 1,
+          name: "Maintain 10 jobs",
+          description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        },
+        {
+          id: 2,
+          name: "Verified",
+          description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        },
+        {
+          id: 3,
+          name: "Track Ads",
+          description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        },
+        {
+          id: 4,
+          name: "Monitor Applicants",
+          description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        },
+        {
+          id: 5,
+          name: "Customize Ads",
+          description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        },
+        {
+          id: 6,
+          name: "Help Support",
+          description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        },
+        {
+          id: 7,
+          name: "Customize Ad expiration",
+          description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        }
+      ],
+      recommended: true
+    },
+    {
+      id: 3,
+      name: "Premium",
+      shortDescription: "The basics for individuals and organizations",
+      price: 20,
+      currency: "USD",
+      payPeriod: "month",
+      buttons: [
+        {
+          text: "Start Free Trial",
+          link: "#",
+          class: "btn-2"
+        },
+        {
+          text: "Contact Sales",
+          link: "#",
+          class: "btn-1"
+        }
+      ],
+      staticFeature: "Everything included in Pro, plus...",
+      features: [
+        {
+          id: 1,
+          name: "Maintain unlimited jobs",
+          description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        },
+        {
+          id: 2,
+          name: "Hiring Process",
+          description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        },
+        {
+          id: 3,
+          name: "Setting up demo questions",
+          description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        },
+        {
+          id: 4,
+          name: "Top rating",
+          description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        },
+        {
+          id: 5,
+          name: "Premium Support",
+          description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        },
+        {
+          id: 6,
+          name: "Separate tool",
+          description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        }
+      ],
+      recommended: false
+    }
+  ],
+  faq: [
+    {
+      id: 1,
+      category: "Subscriptions & Payments",
+      questions: [
+        {
+          id: 1,
+          question: "How do I subscribe?",
+          answer: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        },
+        {
+          id: 2,
+          question: "How do I cancel my subscription?",
+          answer: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        },
+        {
+          id: 3,
+          question: "What payment methods does the company accept?",
+          answer: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        }
+      ]
+    },
+    {
+      id: 2,
+      category: "Account",
+      questions: [
+        {
+          id: 1,
+          question: "How do I change my password?",
+          answer: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        },
+        {
+          id: 2,
+          question: "How do I change my email address?",
+          answer: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        },
+        {
+          id: 3,
+          question: "What happens if I forget my password?",
+          answer: "lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, totam."
+        }
+      ]
+    }
+  ]
+}

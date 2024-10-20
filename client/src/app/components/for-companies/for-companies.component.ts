@@ -2,6 +2,8 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {CompanyService} from "../../services/company.service";
 import {Observable, tap} from "rxjs";
+import {Utilities} from "../../shared/utilities/utilities";
+import {PricingUtilities} from "../../shared/utilities/pricing.utilities";
 
 @Component({
   selector: 'app-for-companies',
@@ -34,6 +36,9 @@ export class ForCompaniesComponent implements OnInit, AfterViewInit {
   forbidden: boolean = false;
   corsError: boolean = false;
   unexpectedError: boolean = false;
+
+  utilities = Utilities;
+  pricingUtilities = PricingUtilities;
 
   constructor(private router: Router, private companyService: CompanyService) { }
 
