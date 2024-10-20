@@ -37,6 +37,32 @@
     </div>
   </div>
 
+  <div class="container" style="position: relative;">
+    <div class="d-flex flex-column align-items-start justify-content-start mb-4 mb-md-0">
+      <h3>What we do our mission</h3>
+      <p style="max-width: 800px">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto error illum laboriosam modi nemo non placeat
+        praesentium vitae! Ab at facilis minus non repudiandae sed soluta. Consectetur esse iste provident quos recusandae
+        repellat? Adipisci beatae earum eum nobis nostrum perferendis quidem totam ut? Aut consequuntur delectus fuga
+        modi, nam, nulla porro qui quia quisquam repellat, totam ut voluptate voluptatum. Ad aliquid aperiam consequuntur
+        debitis deserunt dignissimos dolores doloribus eius.</p>
+    </div>
+
+    <img src="./assets/imgs/about/goal.gif" alt="" width="250" height="250" style="position: absolute; top: 0; right: 7%; backdrop-filter: blur(50px); opacity: .1">
+
+    <div class="d-flex flex-column align-items-end justify-content-start mb-4">
+      <h3>How we work</h3>
+      <p style="max-width: 800px; text-align: right">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, iure libero. Accusamus amet autem, cumque
+        dolores dolorum libero, maiores nulla officia, qui reiciendis repellendus totam veritatis voluptates? Dolore enim
+        fugit maiores numquam obcaecati quasi sequi vel voluptatem? Ab aperiam aspernatur at consequatur cupiditate
+        distinctio et expedita fuga fugiat harum impedit ipsum, nisi nobis nulla odit repudiandae, temporibus ullam ut
+        veniam voluptates. Ab beatae delectus deserunt doloremque dolorum eligendi enim excepturi fugiat fugit incidunt
+        ipsum iusto minus, nemo nihil quos, rem sapiente tenetur vel! Beatae cumque deserunt dicta iste? Dicta dolor,
+        doloremque dolorum laborum magnam maiores?</p>
+    </div>
+
+    <img src="./assets/imgs/about/celebrate.gif" alt="" style="position: absolute; bottom: 20px; left: 5%; opacity: .4">
+  </div>
+
   <div class="sub-topic-section">
     <h3>Here's why you'll love it</h3>
     <p>Discover top job opportunities, get personalized salary estimates, and read reviews from employees. Let us help
@@ -89,28 +115,6 @@
   </div>
 
   <div class="container">
-    <div class="section-3">
-      <div class="row">
-        <div class="col-12 col-md-6">
-          <div class="img-wrapper">
-            <img src="https://jobstack-shreethemes.vercel.app/static/media/ab05.a7fa93ab5b124c959a1e.jpg" alt="banner">
-          </div>
-        </div>
-        <div class="col-12 col-md-6">
-          <div class="section-3-right">
-            <h2>Get the job of your dreams quickly.</h2>
-            <p>Search all the open positions on the web. Get your own personalized salary estimate. Read reviews on over
-              30000+ companies worldwide.</p>
-            <ul>
-              <li>Digital Marketing Solutions for Tomorrow</li>
-              <li>Our Talented & Experienced Marketing Agency</li>
-              <li>Create your own skin to match your brand</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="row achievements" #achievementsSection>
       <div class="col-12 col-sm-6 col-md-4 achievement">
         <div class="achievement-score" translate="no">{{jobsAchValue}}+</div>
@@ -241,27 +245,31 @@
               <div class="col-12">
                 <div class="form-group">
                   <label for="email">Email Address</label>
-                  <input type="email" class="form-control" id="email" placeholder="XwVpP@example.com" formControlName="email">
+                  <input type="email" class="form-control" id="email" placeholder="XwVpP@example.com"
+                         formControlName="email">
                 </div>
               </div>
 
               <div class="col-12">
                 <div class="form-group">
                   <label for="subject">Subject</label>
-                  <input type="text" class="form-control" id="subject" placeholder="Your Question" formControlName="subject">
+                  <input type="text" class="form-control" id="subject" placeholder="Your Question"
+                         formControlName="subject">
                 </div>
               </div>
 
               <div class="col-12">
                 <div class="form-group">
                   <label for="comment">Comment</label>
-                  <textarea class="form-control" id="comment" rows="5" placeholder="Your Message" formControlName="message"></textarea>
+                  <textarea class="form-control" id="comment" rows="5" placeholder="Your Message"
+                            formControlName="message"></textarea>
                 </div>
               </div>
 
               <div class="col-12">
                 <div class="form-group">
-                  <button type="submit" class="btn-1" (click)="contactUs()" [disabled]="loading">{{loading?'Sending...':'Send Message'}}</button>
+                  <button type="submit" class="btn-1" (click)="contactUs()"
+                          [disabled]="loading">{{loading ? 'Sending...' : 'Send Message'}}</button>
                 </div>
               </div>
             </div>
