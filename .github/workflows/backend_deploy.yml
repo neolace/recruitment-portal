@@ -11,18 +11,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Checkout the code
     - name: Checkout code
       uses: actions/checkout@v3
 
+    # Set up Java
     - name: Set up Java
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
 
+    # Build the Spring Boot project using Maven
     - name: Build project using Maven
       run: mvn clean package -DskipTests
 
+    # Deploy to EC2 instance: stop app, clean directory, and configure swap memory
     - name: Deploy to EC2
       uses: appleboy/ssh-action@master
       with:
@@ -32,14 +36,18 @@ jobs:
         port: 22
         script: |
           set -x  # Enable debugging
-          sudo pkill -9 -f 'HRIS_job_portal.jar' || true  # Force stop only the Spring Boot app
+          # Force stop the Spring Boot app if it's running
+          sudo pkill -9 -f 'HRIS_job_portal.jar' || true
+          # Navigate to the app directory and clear it
           cd /home/ubuntu/app/
-          rm -rf *  # Clear the directory
-          sudo fallocate -l 1G /swapfile  # Add swap memory if necessary
-          sudo chmod 600 /swapfile
-          sudo mkswap /swapfile
-          sudo swapon /swapfile
+          rm -rf *
+          # Add swap memory if necessary
+          sudo fallocate -l 1G /swapfile || true
+          sudo chmod 600 /swapfile || true
+          sudo mkswap /swapfile || true
+          sudo swapon /swapfile || true
 
+    # Transfer the built JAR file to EC2
     - name: Transfer Jar File to EC2
       uses: appleboy/scp-action@master
       with:
@@ -47,9 +55,10 @@ jobs:
         username: ${{ secrets.AWS_USER }}
         key: ${{ secrets.AWS_KEY }}
         port: 22
-        source: target/your-spring-boot-app.jar
+        source: target/HRIS_job_portal.jar
         target: /home/ubuntu/app/your-spring-boot-app.jar
 
+    # Copy the .env file to EC2 instance
     - name: Copy .env file to EC2
       uses: appleboy/ssh-action@master
       with:
@@ -60,6 +69,7 @@ jobs:
         script: |
           echo "${{ secrets.ENV_FILE_CONTENT }}" > /home/ubuntu/app/.env
 
+    # Start the Spring Boot application on EC2
     - name: Start Spring Boot App
       uses: appleboy/ssh-action@master
       with:
@@ -69,5 +79,5 @@ jobs:
         port: 22
         script: |
           cd /home/ubuntu/app/
-          sleep 10  # Delay before starting the app
-          nohup java -jar your-spring-boot-app.jar &
+          sleep 10  # Wait for 10 seconds before starting the app
+          nohup java -jar HRIS_job_portal.jar &
