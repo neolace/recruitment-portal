@@ -48,7 +48,7 @@ jobs:
           # Navigate to the app directory and clear any existing files
           cd /home/ubuntu/app/
           rm -rf *
-          # Optionally add swap memory if necessary
+          
           sudo fallocate -l 1G /swapfile || true
           sudo chmod 600 /swapfile || true
           sudo mkswap /swapfile || true
