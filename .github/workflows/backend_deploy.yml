@@ -86,5 +86,5 @@ jobs:
         port: 22
         script: |
           cd /home/ubuntu/app/
-          sleep 10  # Wait for 10 seconds before starting the app
+          sleep 10
           nohup java -jar HRIS_job_portal.jar &
