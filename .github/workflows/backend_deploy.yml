@@ -38,8 +38,13 @@ jobs:
           set -x  # Enable debugging
           # Create the app directory if it doesn't exist
           mkdir -p /home/ubuntu/app/
-          # Check if the app is running, stop if found, ignore errors if not
-          sudo pkill -9 -f 'HRIS_job_portal.jar' || true
+          # Check if the process is running before killing it
+          if pgrep -f 'HRIS_job_portal.jar'; then
+            echo "Stopping existing app..."
+            sudo pkill -9 -f 'HRIS_job_portal.jar'
+          else
+            echo "No app running, skipping stop."
+          fi
           # Navigate to the app directory and clear any existing files
           cd /home/ubuntu/app/
           rm -rf *
