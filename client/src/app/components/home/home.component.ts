@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {ValueIncrementService} from "../../services/value-increment.service";
 import {EmployeeService} from "../../services/employee.service";
@@ -10,6 +10,8 @@ import {AlertsService} from "../../services/alerts.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CommonService} from "../../services/common/common.service";
 import {Utilities} from "../../shared/utilities/utilities";
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +20,8 @@ import {Utilities} from "../../shared/utilities/utilities";
 })
 export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('achievementsSection') achievementsSection!: ElementRef;
+  @ViewChild('mainBanner', { static: true }) mainBanner!: ElementRef<HTMLDivElement>;
+  @ViewChild('contentSection', { static: true }) contentSection!: ElementRef<HTMLDivElement>;
 
   companyDataStore: any;
   filteredCompanies: any[] = [];
@@ -68,7 +72,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
               private cookieService: AuthService,
               private alertService: AlertsService,
               private commonService: CommonService,
+              private ngZone: NgZone,
               private toastr: ToastrService) {
+    this.ngZone.runOutsideAngular(() => {
+      gsap.registerPlugin(ScrollTrigger);
+    });
   }
 
   async ngOnInit(): Promise<any> {
@@ -86,6 +94,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.ngZone.runOutsideAngular(() => {
+      this.initAnimations();
+    });
     this.setupIntersectionObserver()
     const icons = document.querySelectorAll('.material-icons');
     icons.forEach((icon) => {
@@ -273,6 +284,39 @@ export class HomeComponent implements OnInit, AfterViewInit {
       const model = document.getElementById('news_model_open');
       model?.click();
     }
+  }
+
+  initAnimations(): void {
+    // Initial main banner animation
+    gsap.from(this.mainBanner.nativeElement, {
+      duration: 1,
+      opacity: 0,
+      y: -50,
+      ease: 'power1.out',
+    });
+
+    // Scroll-triggered animation for content overlap
+    ScrollTrigger.create({
+      trigger: this.contentSection.nativeElement,
+      start: 'top top',
+      pin: true,
+      scrub: 1,
+      end: '+=300%', // Adjust based on content size
+    });
+
+    gsap.from(this.contentSection.nativeElement, {
+      scrollTrigger: {
+        trigger: this.contentSection.nativeElement,
+        start: 'top top',
+        scrub: true,
+        pin: true,
+        end: 'bottom top',
+      },
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      ease: 'power2.out',
+    });
   }
 
   successMessage(msg: string, title: string) {
