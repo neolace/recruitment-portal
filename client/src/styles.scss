@@ -705,6 +705,7 @@ p, ol, ul, li {
 
 .main-body {
   width: 100% !important;
+  position: relative;
   min-height: 100vh;
   height: 100vh;
   background-color: var(--color-surface-mixed-100);
