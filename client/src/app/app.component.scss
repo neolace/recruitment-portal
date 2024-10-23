@@ -281,7 +281,7 @@
 }
 
 .translate{
-  position: absolute;
+  position: fixed;
   bottom: 20px;
   right: 20px;
   z-index: 99;
@@ -362,7 +362,8 @@
   -webkit-box-shadow: 0 2px 8px -4px var(--color-box-shadow-100);
   -moz-box-shadow: 0 2px 8px -4px var(--color-box-shadow-100);
   box-shadow: 0 2px 8px -4px var(--color-box-shadow-100);
-  position: relative;
+  position: sticky;
+  top: 0;
 
   .menu{
     width: 100%;
