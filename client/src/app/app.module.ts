@@ -25,6 +25,7 @@ import {LocationStrategy, NgOptimizedImage, PathLocationStrategy} from "@angular
 import {OAuthModule} from "angular-oauth2-oidc";
 import {SkipXsrfInterceptor} from "./Config/SkipXsrfInterceptor";
 import {SharedComponentModule} from "./shared/modules/shared-component.module";
+import {FooterModule} from "./components/shared/footer/footer.module";
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import {SharedComponentModule} from "./shared/modules/shared-component.module";
         }),
         OAuthModule.forRoot(),
         SharedComponentModule,
-        NgOptimizedImage
+        NgOptimizedImage,
+        FooterModule
     ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: SkipXsrfInterceptor, multi: true},

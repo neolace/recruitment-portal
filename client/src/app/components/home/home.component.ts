@@ -10,8 +10,6 @@ import {AlertsService} from "../../services/alerts.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CommonService} from "../../services/common/common.service";
 import {Utilities} from "../../shared/utilities/utilities";
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 @Component({
   selector: 'app-home',
@@ -70,12 +68,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
               private cookieService: AuthService,
               private alertService: AlertsService,
               private commonService: CommonService,
-              private ngZone: NgZone,
-              private toastr: ToastrService) {
-    // this.ngZone.runOutsideAngular(() => {
-    //   gsap.registerPlugin(ScrollTrigger);
-    // });
-  }
+              private toastr: ToastrService) {}
 
   async ngOnInit(): Promise<any> {
     this.employeeId = this.cookieService.userID();
@@ -92,9 +85,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this.ngZone.runOutsideAngular(() => {
-    //   this.initAnimations();
-    // });
     this.setupIntersectionObserver()
     const icons = document.querySelectorAll('.material-icons');
     icons.forEach((icon) => {
@@ -283,39 +273,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       model?.click();
     }
   }
-
-  // initAnimations(): void {
-  //   gsap
-  //     .timeline({
-  //       scrollTrigger:{
-  //         trigger:'.scrollDist',
-  //         start:'0 0',
-  //         end:'100% 100%',
-  //         scrub:1
-  //       }})
-  //     .fromTo('.sky', {y:0},{y:-200}, 0)
-  //     .fromTo('.cloud1', {y:100},{y:-800}, 0)
-  //     .fromTo('.cloud2', {y:-150},{y:-500}, 0)
-  //     .fromTo('.cloud3', {y:-50},{y:-650}, 0)
-  //     .fromTo('.mountBg', {y:-10},{y:-100}, 0)
-  //     .fromTo('.mountMg', {y:-30},{y:-250}, 0)
-  //     .fromTo('.mountFg', {y:-50},{y:-600}, 0)
-  //
-  //
-  //   const arrowBtn = document.querySelector('#arrow-btn') as HTMLButtonElement
-  //
-  //   arrowBtn.addEventListener('mouseenter', ()=>{
-  //     gsap.to('.arrow', {y:10, duration:0.8, ease:'back.inOut(3)', overwrite:'auto'})
-  //   })
-  //
-  //   arrowBtn.addEventListener('mouseleave', ()=> {
-  //     gsap.to('.arrow', {y:0, duration:0.5, ease:'power3.out', overwrite:'auto'})
-  //   })
-  //
-  //   arrowBtn.addEventListener('click', ()=> {
-  //     gsap.to(window, {scrollTo:innerHeight, duration:1.5, ease:'power1.inOut'})
-  //   })
-  // }
 
   successMessage(msg: string, title: string) {
     this.toastr.success(msg, title, {

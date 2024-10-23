@@ -27,6 +27,7 @@ import {FileUploadService} from "./services/file-upload.service";
 import {ReportIssueService} from "./services/report-issue.service";
 import {CommonService} from "./services/common/common.service";
 import {Utilities} from "./shared/utilities/utilities";
+import {HomeComponent} from "./components/home/home.component";
 
 @Component({
   selector: 'app-root',
@@ -36,8 +37,6 @@ import {Utilities} from "./shared/utilities/utilities";
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('navbarNav') navbarNav: ElementRef | any;
-  @ViewChild('openForm') openForm!: ElementRef;
-  @ViewChild('modelClose') modelClose!: ElementRef;
   title = 'Talent Boozt -Unlock Your Future with the Perfect Job';
 
   showNavbar = true;
@@ -62,15 +61,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   loading: boolean = false;
 
   utilities = Utilities;
-
-  reportIssueForm = new FormGroup({
-    issueType: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required]),
-  })
-
-  requestInfoForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-  })
 
   newsLetterForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -109,10 +99,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getEmployee(this.employeeId);
 
     this.isSubscribe = this.cookieService.isNewsletter();
-
-    if (sessionStorage.getItem('in_issue_progress') == 'true') {
-      this.continueReportProgress();
-    }
 
     if (sessionStorage.getItem('newsLatter') != 'true' && !this.isSubscribe) {
       setTimeout(() => {
@@ -201,6 +187,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     } else if (component instanceof ProDashboardComponent) {
       this.showNavbar = false;
       this.showFooter = false;
+    } else if (component instanceof HomeComponent) {
+      this.showFooter = false;
+      this.showNavbar = true;
     } else {
       this.showNavbar = true;
       this.showFooter = true;
@@ -235,104 +224,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cookieService.logout()
     this.removeUnwantedSession()
     this.router.navigate(['/login']);
-  }
-
-  uploadFile(event: any, filePath: string, location: string) {
-    const file = event.target.files[0];
-    const maxFileSize = 2 * 1024 * 1024;
-    const allowedFileTypes = ['image/png', 'image/jpeg', 'application/pdf'];
-    if (file) {
-      if (file.size > maxFileSize) {
-        this.alertService.warningMessage('File size exceeds the maximum limit of 2MB.', 'Warning');
-        return;
-      }
-      if (!allowedFileTypes.includes(file.type)) {
-        this.alertService.warningMessage('Only PNG, JPEG, and PDF files are allowed.', 'Warning');
-        return;
-      }
-      this.fileUploadService.uploadFile(filePath, file).subscribe(url => {
-        this.downloadURL = url;
-        sessionStorage.setItem('downloadURL', this.downloadURL);
-      });
-    }
-  }
-
-  generateRandomId(): any {
-    let id: string;
-    if (!sessionStorage.getItem('issue_id')) {
-      id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-      sessionStorage.setItem('issue_id', id);
-      return id;
-    } else {
-      return sessionStorage.getItem('issue_id');
-    }
-  }
-
-  reportIssue() {
-    if (this.reportIssueForm.valid) {
-      sessionStorage.setItem('report_issue_form', JSON.stringify(this.reportIssueForm.value));
-      if (this.downloadURL) {
-        this.reportIssueService.addIssue({
-          issueType: this.reportIssueForm.get('issueType')?.value,
-          description: this.reportIssueForm.get('description')?.value,
-          attachment: sessionStorage.getItem('downloadURL')
-        }).subscribe((data) => {
-          sessionStorage.clear();
-          this.alertService.successMessage('Issue reported successfully.', 'Success');
-          this.reportIssueForm.reset();
-          this.downloadURL = null;
-          const model_close = this.modelClose.nativeElement;
-          model_close.click();
-          return;
-        }, (error) => {
-          this.alertService.errorMessage('Something went wrong. Please try again.', 'Error');
-        })
-      } else {
-        const model_close = this.modelClose.nativeElement;
-        model_close.click();
-        sessionStorage.setItem('in_issue_progress', 'true');
-        window.location.reload();
-      }
-    } else {
-      this.alertService.errorMessage('Please fill in all required fields.', 'Error');
-    }
-  }
-
-  continueReportProgress() {
-    setTimeout(() => {
-      const button: HTMLButtonElement = document.getElementById('openForm') as HTMLButtonElement;
-      button.click();
-    }, 1000)
-
-    const reportIssueFormValue = sessionStorage.getItem('report_issue_form');
-    if (reportIssueFormValue) {
-      this.reportIssueForm.patchValue(JSON.parse(reportIssueFormValue));
-      this.downloadURL = sessionStorage.getItem('downloadURL');
-
-      if (this.downloadURL) {
-        this.reportIssue()
-      } else {
-        this.alertService.errorMessage('Please add or upload again the attachment.', 'Error');
-      }
-    }
-  }
-
-  contactMe() {
-    if (this.requestInfoForm.valid) {
-      const mail = this.requestInfoForm.get('email')?.value;
-      if (mail) {
-        this.commonService.requestMoreData(mail).subscribe((data) => {
-          this.alertService.successMessage('Email sent successfully.', 'Success');
-          this.requestInfoForm.reset();
-          return;
-        }, (error) => {
-          this.requestInfoForm.get('email')?.setValue('Error');
-          this.alertService.errorMessage('Something went wrong. Please try again.', 'Error');
-        })
-      }
-    } else {
-      this.alertService.errorMessage('Field is empty or invalid.', 'Error');
-    }
   }
 
   clickTranslate() {

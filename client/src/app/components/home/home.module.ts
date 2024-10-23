@@ -7,6 +7,7 @@ import {RouterModule} from "@angular/router";
 import {HomeRoutingModule} from "./home-routing.module";
 import {SharedPipesModule} from "../../shared/modules/shared-pipes.module";
 import {SharedCardsComponentModule} from "../../shared/modules/shared-cards-component.module";
+import {FooterModule} from "../shared/footer/footer.module";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {SharedCardsComponentModule} from "../../shared/modules/shared-cards-comp
         SharedPipesModule,
         SharedCardsComponentModule,
         ReactiveFormsModule,
-        NgOptimizedImage
+        NgOptimizedImage,
+        FooterModule
     ],
   providers: [
   ],
