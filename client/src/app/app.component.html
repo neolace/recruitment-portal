@@ -68,7 +68,7 @@
               <button class="theme-btn" (click)="toggleTheme()" title="Theme">
                 <img ngSrc="./assets/imgs/shared/moon.svg" alt="dark" height="24" width="24">
                 <img
-                  [ngSrc]="themeService.isDarkMode()?'./assets/imgs/shared/toggle-off.svg':'./assets/imgs/shared/toggle-on.svg'"
+                  [src]="themeService.isDarkMode()?'./assets/imgs/shared/toggle-off.svg':'./assets/imgs/shared/toggle-on.svg'"
                   alt="theme" height="40" width="40">
                 <img ngSrc="./assets/imgs/shared/sun.svg" alt="light" height="24" width="24">
               </button>
@@ -105,7 +105,7 @@
                   <li class="nav-item" (click)="collapseNavbar()">
                     <a class="nav-link" routerLink="/home" [class.active]="isActive('/home')">Home</a>
                   </li>
-                  <li class="nav-item dropdown" (click)="collapseNavbar()">
+                  <li class="nav-item dropdown d-none d-lg-block" (click)="collapseNavbar()">
                     <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Explore
                       Jobs</a>
 
@@ -120,6 +120,28 @@
                       </li>
                     </ul>
                   </li>
+                  <div class="d-lg-none accordion nav" id="jobs">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#exjobs" aria-expanded="false" aria-controls="exjobs">
+                          Explore Jobs
+                        </button>
+                      </h2>
+                      <div id="exjobs" class="accordion-collapse collapse" data-bs-parent="#jobs">
+                        <div class="accordion-body">
+                          <li>
+                            <a class="dropdown-item" routerLink="/job" [class.active]="isActive('/job')"
+                               (click)="collapseNavbar()">Jobs</a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item" routerLink="/companies" [class.active]="isActive('/companies')"
+                               (click)="collapseNavbar()">Companies</a>
+                          </li>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <li class="nav-item" (click)="collapseNavbar()">
                     <a class="nav-link" routerLink="/about" [class.active]="isActive('/about')">About Us</a>
                   </li>
@@ -129,13 +151,19 @@
                   <li class="nav-item" (click)="collapseNavbar()">
                     <a class="nav-link" routerLink="/for-companies" [class.active]="isActive('/for-companies')">Companies</a>
                   </li>
+                  <li *ngIf="!employeeType" class="d-lg-none nav-item" (click)="collapseNavbar()">
+                    <a class="nav-link" routerLink="/login" [class.active]="isActive('/login')">Login</a>
+                  </li>
                   <li class="nav-item">
                     <div class="d-flex align-items-center justify-content-end w-100 h-100 s-bar">
                       <input type="text" placeholder="Search..." (keyup)="handleSearch($event.target)"/>
                       <i class="material-icons">search</i>
                     </div>
                   </li>
-                  <li class="nav-item d-none d-lg-block ms-2 dropdown">
+                  <li *ngIf="!employeeType" class="d-none d-lg-block nav-item" (click)="collapseNavbar()">
+                    <a class="nav-link btn-border" routerLink="/login" [class.active]="isActive('/login')">Sign in</a>
+                  </li>
+                  <li *ngIf="employeeType" class="nav-item d-none d-lg-block ms-2 dropdown">
                     <div class="profile-wrapper" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                       <img [src]="employee?.image?employee.image:'./assets/imgs/shared/default_emp_dp.svg'"
                            alt="profile" width="40" height="40">
