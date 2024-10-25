@@ -367,6 +367,9 @@
 
   .menu{
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     .navbar{
       //background-color: var(--color-surface-mixed-100) !important;
       background-color: transparent !important;

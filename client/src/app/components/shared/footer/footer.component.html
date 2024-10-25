@@ -63,9 +63,9 @@
   </div>
 </div>
 
-<div class="modal fade" id="issueModel" tabindex="-1" aria-labelledby="issueModelLabel" aria-hidden="true">
+<div class="modal" id="issueModel" tabindex="-1" aria-labelledby="issueModelLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
+    <div style="max-height: calc(100vh - 200px)" class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="issueModelLabel">Want to report an issue?</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -110,17 +110,17 @@
             <li>If the problem is still persists, contact us.</li>
           </ul>
         </ol>
-        <p><strong style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#issueReportModel">Click
+        <p><strong style="cursor: pointer" (click)="closeAndOPenReportForm()">Click
           here</strong> if you still have something to report/suggest.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #model1Close>Close</button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="modal fade" id="issueReportModel" tabindex="-1" aria-labelledby="issueReportModelLabel"
+<div class="modal" id="issueReportModel" tabindex="-1" aria-labelledby="issueReportModelLabel"
      aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
