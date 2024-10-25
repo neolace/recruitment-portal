@@ -13,7 +13,7 @@
   <app-hire-card1></app-hire-card1>
 
   <div class="popular-jobs">
-    <p>Public Job Ads of Total Posted Jobs({{postedJobs?.postedJobs?.length}})</p>
+    <p>Public Job Ads of Total Posted Jobs({{postedJobs?.postedJobs?.length ? postedJobs?.postedJobs?.length : 0}})</p>
     <div class="row">
       <div class="col-12 col-md-4 mb-3" *ngFor="let job of postedJobs?.postedJobs">
         <div class="card-1" *ngIf="isExpired(job.expiryDate)">
