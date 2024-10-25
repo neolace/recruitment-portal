@@ -47,7 +47,7 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
   cphone: any = '';
   chq: any = '';
   cLogo: any = '';
-  formLocked: boolean = true;
+  formLocked: boolean = false;
 
   postedJobs: any = [];
 
@@ -180,6 +180,7 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
 
   getCompany(id: any) {
     this.loading = true;
+    this.formLocked = true;
     if (id) {
       this.companyService.fetchFullCompany(id).subscribe(
         (data) => {
@@ -263,7 +264,7 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
     }]
 
     if (this.companyLevel === '2'){
-      if (this.postedJobs[0].postedJobs.length >= 3) {
+      if (this.postedJobs[0]?.postedJobs?.length >= 3) {
         this.alertService.warningMessage('You Reached Maximum Job Post Limit. Upgrade to Add More!', 'Warning');
         return;
       }
