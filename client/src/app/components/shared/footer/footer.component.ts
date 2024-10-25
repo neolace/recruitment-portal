@@ -16,6 +16,7 @@ import {AlertsService} from "../../../services/alerts.service";
 export class FooterComponent implements OnInit{
   @ViewChild('openForm') openForm!: ElementRef;
   @ViewChild('modelClose') modelClose!: ElementRef;
+  @ViewChild('model1Close') model1Close!: ElementRef;
 
   utilities = Utilities;
 
@@ -140,5 +141,12 @@ export class FooterComponent implements OnInit{
     } else {
       this.alertService.errorMessage('Field is empty or invalid.', 'Error');
     }
+  }
+
+  closeAndOPenReportForm() {
+    const model_close = this.model1Close.nativeElement;
+    model_close.click();
+    const button: HTMLButtonElement = document.getElementById('openForm') as HTMLButtonElement;
+    button.click();
   }
 }

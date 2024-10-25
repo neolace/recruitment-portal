@@ -13,7 +13,7 @@
             <div class="right-cont">
               <div class="d-flex align-items-center mb-3 mb-sm-0">
                 <div class="company-logo">
-                  <img [src]="c.logo"
+                  <img [src]="c.logo ? c.logo : './assets/imgs/shared/default_org_logo.svg'"
                        alt="{{c.name}}">
                 </div>
                 <div class="d-flex flex-column">
