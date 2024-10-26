@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import {InterviewPrepDataStore} from "../../../shared/data-store/interview-prep-data-store";
 import {ActivatedRoute} from "@angular/router";
-import { Location } from '@angular/common';
 import {DomSanitizer} from "@angular/platform-browser";
 import {NavigationService} from "../../../services/navigation.service";
+import {Observable, tap} from "rxjs";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-interview-prep-full-answer',
@@ -13,27 +14,32 @@ import {NavigationService} from "../../../services/navigation.service";
 export class InterviewPrepFullAnswerComponent {
   questionId: any;
   answerId: any;
+  questionsDataStore: any[] = [];
   selectedQuestion: any;
   selectedAnswer: any;
 
-  constructor(private route: ActivatedRoute, private navigation: NavigationService, private sanitizer: DomSanitizer) {}
+  baseUrl = environment.apiUrl
 
-  ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.questionId = params.get('qid');
-      this.answerId = params.get('aid');
+  constructor(private route: ActivatedRoute, private navigation: NavigationService, private sanitizer: DomSanitizer, private http: HttpClient) {}
 
-      this.selectedQuestion = InterviewPrepDataStore.data
-        .flatMap(q => q.questions)
-        .find(question => question.id === this.questionId);
+  async ngOnInit(): Promise<any> {
+    await this.getAllQuestions().subscribe((data) => {
+      this.route.paramMap.subscribe(params => {
+        this.questionId = params.get('qid');
+        this.answerId = params.get('aid');
 
-      this.selectedQuestion.answers.forEach((answer: any) => {
-        if (answer.id === this.answerId) {
-          this.selectedAnswer = answer;
-          this.incrementViewCount(answer);
-        }
-      })
-    });
+        this.selectedQuestion = this.questionsDataStore
+          .flatMap(q => q.questions)
+          .find(question => question.id === this.questionId);
+
+        this.selectedQuestion?.answers.forEach((answer: any) => {
+          if (answer.id === this.answerId) {
+            this.selectedAnswer = answer;
+            this.incrementViewCount(answer);
+          }
+        })
+      });
+    })
   }
 
   getVideoUrl(url: string): any {
@@ -49,13 +55,33 @@ export class InterviewPrepFullAnswerComponent {
   }
 
   incrementViewCount(answer: any) {
-    if (!sessionStorage.getItem(`token_${this.selectedAnswer.id}`)) {
-      answer.viewCount++;
-      sessionStorage.setItem(`token_${this.selectedAnswer.id}`, 'true');
-    }
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    })
+    this.http.put(`${this.baseUrl}/interview-questions/increment-answer-view/${answer.id}`, {}, {headers})
+      .subscribe(() => answer.viewCount++);
+    // if (!sessionStorage.getItem(`token_${answer.id}`)) {
+    //   sessionStorage.setItem(`token_${answer.id}`, 'true');
+    //   const headers = new HttpHeaders({
+    //     'Authorization': 'Basic ' + btoa('admin:password')
+    //   })
+    //   this.http.put(`${this.baseUrl}/interview-questions/increment-answer-view/${answer.id}`, {}, {headers})
+    //     .subscribe(() => answer.viewCount++);
+    // }
   }
 
   goBack() {
     this.navigation.back();
+  }
+
+  getAllQuestions(): Observable<any>{
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    })
+    return this.http.get(`${this.baseUrl}/interview-questions/get`, {headers}).pipe(
+      tap((data:any) => {
+        this.questionsDataStore = data;
+      })
+    );
   }
 }

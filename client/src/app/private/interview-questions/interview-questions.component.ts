@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
+import {AlertsService} from "../../services/alerts.service";
 
 @Component({
   selector: 'app-interview-questions',
@@ -12,7 +13,7 @@ export class InterviewQuestionsComponent {
   interviewForm: FormGroup;
   baseUrl = environment.apiUrl;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private alertService: AlertsService) {
     this.interviewForm = this.fb.group({
       category: ['', Validators.required],
       questions: this.fb.array([this.initQuestion()])
@@ -31,7 +32,7 @@ export class InterviewQuestionsComponent {
 
   initAnswer(): FormGroup {
     return this.fb.group({
-      id: [''],
+      id: [this.generateRandomId(), Validators.required],
       by: ['', Validators.required],
       position: [''],
       date: [''],
@@ -74,9 +75,15 @@ export class InterviewQuestionsComponent {
       });
       this.http.post(this.baseUrl+'/interview-questions/add', this.interviewForm.value, {headers})
         .subscribe(response => {
-          console.log('Question submitted successfully:', response);
           this.interviewForm.reset();
+          this.alertService.successMessage('Question submitted successfully', 'Success');
+        }, error => {
+          this.alertService.errorMessage('Something went wrong. Please try again.', 'Error');
         });
     }
+  }
+
+  generateRandomId(): string {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   }
 }

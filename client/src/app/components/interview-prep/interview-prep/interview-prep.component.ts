@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import {InterviewPrepDataStore} from "../../../shared/data-store/interview-prep-data-store";
-import {HttpClient} from "@angular/common/http";
+import {Component, OnInit} from '@angular/core';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
 import {Observable, tap} from "rxjs";
 
@@ -9,10 +8,10 @@ import {Observable, tap} from "rxjs";
   templateUrl: './interview-prep.component.html',
   styleUrls: ['./interview-prep.component.scss']
 })
-export class InterviewPrepComponent {
+export class InterviewPrepComponent implements OnInit{
 
-  interviewPrepData:any[] = InterviewPrepDataStore.data;
-  selectedQuestion: any = this.interviewPrepData[0].questions[0];
+  interviewPrepData:any[] = [];
+  selectedQuestion: any;
 
   baseUrl = environment.apiUrl;
 
@@ -20,10 +19,9 @@ export class InterviewPrepComponent {
 
   async ngOnInit(): Promise<any> {
     await this.getAllQuestions().subscribe((data) => {
-      this.interviewPrepData = [data];
       this.selectedQuestion = this.interviewPrepData[0].questions[0];
+      this.incrementViewCount(this.selectedQuestion);
     })
-    this.incrementViewCount(this.selectedQuestion);
   }
 
   selectQuestion(question: any) {
@@ -32,16 +30,29 @@ export class InterviewPrepComponent {
   }
 
   incrementViewCount(question: any) {
-    if (!sessionStorage.getItem(`token_${question.id}`)) {
-      sessionStorage.setItem(`token_${question.id}`, 'true');
-      question.viewCount++;
-    }
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    })
+    this.http.put(`${this.baseUrl}/interview-questions/increment-question-view/${question.id}`, {}, {headers})
+      .subscribe(() => question.viewCount++);
+
+    // if (!sessionStorage.getItem(`token_${question.id}`)) {
+    //   sessionStorage.setItem(`token_${question.id}`, 'true');
+    //   const headers = new HttpHeaders({
+    //     'Authorization': 'Basic ' + btoa('admin:password')
+    //   })
+    //   this.http.put(`${this.baseUrl}/interview-questions/increment-question-view/${question.id}`, {}, {headers})
+    //     .subscribe(() => question.viewCount++);
+    // }
   }
 
   getAllQuestions(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/interview-questions/get`).pipe(
-      tap(data => {
-        this.interviewPrepData = [data];
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    })
+    return this.http.get(`${this.baseUrl}/interview-questions/get`, {headers}).pipe(
+      tap((data:any) => {
+        this.interviewPrepData = data;
       })
     );
   }

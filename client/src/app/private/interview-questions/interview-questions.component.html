@@ -32,11 +32,6 @@
         <div *ngIf="question.get('answers')" class="answer-list">
           <div *ngFor="let answer of getAnswersFormArray(i).controls; let j = index" [formGroupName]="j" class="answer-block">
             <div class="form-group">
-              <label>Answer ID:</label>
-              <input formControlName="id" required class="form-control" placeholder="a-1">
-            </div>
-
-            <div class="form-group">
               <label>Answer by:</label>
               <input formControlName="by" required class="form-control">
             </div>
