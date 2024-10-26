@@ -40,7 +40,7 @@ const routes: Routes = [
   { path: 'we-built-with', loadChildren: () => import('./components/built-with/built-with.module').then(m => m.BuiltWithModule) },
   { path: 'employees', loadChildren: () => import('./components/employee/employee.module').then(m => m.EmployeeModule) },
   { path: 'footer', loadChildren: () => import('./components/shared/footer/footer.module').then(m => m.FooterModule) },
-  { path: 'interview-questions', loadChildren: () => import('./private/interview-questions/interview-questions.module').then(m => m.InterviewQuestionsModule) },
+  { path: 'private/interview-questions', loadChildren: () => import('./private/interview-questions/interview-questions.module').then(m => m.InterviewQuestionsModule) },
   { path: '**', redirectTo: '/404' }
 ];
 
