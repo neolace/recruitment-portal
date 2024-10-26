@@ -6,8 +6,8 @@ export var InterviewPrepDataStore = {
       questions: [
         {
           id: "1",
-          question: "Tell me about yourself.",
-          overview: "I am an overview",
+          question: "Tell me about yourself",
+          overview: "This question is moslty asked to break the ice.  But it is also an opportunity for you to provide a summary about you stating your background, key experiences and your career goals. How you answer the question will probaly set the tone for the rest of the interview. ",
           viewCount: 0,
           answers: [
             {
@@ -41,8 +41,8 @@ export var InterviewPrepDataStore = {
         },
         {
           id: "2",
-          question: "What is your greatest fear?",
-          overview: "I am an overview",
+          question: "Why do you want to work here?Why did you apply for this job?",
+          overview: "This question is asked to understand whether you have done research about  the company and if your interests and skills match that of the company. The reason this is important for the employer is decide if you are culturally fit and also maybe to understand if you will be a successful lont term recruit. When answering this question, mention what made you interested in the company and the job. You can align what the company does wtih your interests and the role with your skills and experience. Mentioning why you think that the company will suit you in the long term will gain you more points. Below is a sample answer. ",
           viewCount: 0,
           answers: [
             {
@@ -50,28 +50,9 @@ export var InterviewPrepDataStore = {
               by: "John Doe",
               position: "Software Engineer",
               date: "11/02/2023",
-              answer: "I am the first sample answer",
-              video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+              answer: "I applied for this job because the role aligns perfectly with my experience and interests. I’ve been working in marketing for the past three years, and I’m particularly skilled at content strategy and social media management. When I saw that this position focused on developing creative campaigns and expanding your digital reach, I knew it was a great fit for my skills. I’m excited about the opportunity to contribute to a company that values creativity and collaboration, and I believe I can make a real impact on your team.",
               viewCount: 0
             },
-            {
-              id: "a-2",
-              by: "Sarah Doe",
-              position: "Business Analyst",
-              date: "11/02/2023",
-              answer: "I am the second sample answer",
-              video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-              viewCount: 0
-            },
-            {
-              id: "a-3",
-              by: "Mary Doe",
-              position: "Product Manager",
-              date: "11/02/2023",
-              answer: "I am the third sample answer",
-              video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-              viewCount: 0
-            }
           ]
         }
       ]

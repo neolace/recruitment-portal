@@ -71,7 +71,7 @@ export class LoginComponent implements AfterViewInit, OnInit {
           return;
         }
 
-        const encryptedPassword = this.encryptionService.decryptPassword(response.password.toString());
+        const encryptedPassword = this.encryptionService.decryptPassword(response.password?.toString());
 
         if (sessionStorage.getItem('LgnAtT') != '0'){
           if (formData.password === encryptedPassword) {

@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import {InterviewPrepDataStore} from "../../../shared/data-store/interview-prep-data-store";
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../../environments/environment";
+import {Observable, tap} from "rxjs";
 
 @Component({
   selector: 'app-interview-prep',
@@ -11,9 +14,15 @@ export class InterviewPrepComponent {
   interviewPrepData:any[] = InterviewPrepDataStore.data;
   selectedQuestion: any = this.interviewPrepData[0].questions[0];
 
-  constructor() {}
+  baseUrl = environment.apiUrl;
 
-  ngOnInit(): void {
+  constructor(private http: HttpClient) {}
+
+  async ngOnInit(): Promise<any> {
+    await this.getAllQuestions().subscribe((data) => {
+      this.interviewPrepData = [data];
+      this.selectedQuestion = this.interviewPrepData[0].questions[0];
+    })
     this.incrementViewCount(this.selectedQuestion);
   }
 
@@ -27,5 +36,13 @@ export class InterviewPrepComponent {
       sessionStorage.setItem(`token_${question.id}`, 'true');
       question.viewCount++;
     }
+  }
+
+  getAllQuestions(): Observable<any>{
+    return this.http.get(`${this.baseUrl}/interview-questions/get`).pipe(
+      tap(data => {
+        this.interviewPrepData = [data];
+      })
+    );
   }
 }
