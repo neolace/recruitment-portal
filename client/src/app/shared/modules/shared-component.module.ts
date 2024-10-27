@@ -3,10 +3,14 @@ import {UnderDevelopmentComponent} from "../../components/shared/under-developme
 import {FailedToLoadDataComponent} from "../../components/shared/failed-to-load-data/failed-to-load-data.component";
 import {RouterLink} from "@angular/router";
 import {PageLoadingComponent} from "../../components/shared/page-loading/page-loading.component";
-import {NgIf} from "@angular/common";
+import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {ResultNotFoundComponent} from "../../components/shared/result-not-found/result-not-found.component";
 import {NetworkErrorComponent} from "../../components/shared/network-error/network-error.component";
 import {ForbiddenComponent} from "../../components/shared/forbidden/forbidden.component";
+import {
+  SystemNotificationViewComponent
+} from "../../components/shared/system-notification-view/system-notification-view.component";
+import {SharedPipesModule} from "./shared-pipes.module";
 
 @NgModule({
   declarations: [
@@ -15,11 +19,14 @@ import {ForbiddenComponent} from "../../components/shared/forbidden/forbidden.co
     PageLoadingComponent,
     ResultNotFoundComponent,
     NetworkErrorComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    SystemNotificationViewComponent
   ],
   imports: [
     RouterLink,
-    NgIf
+    NgIf,
+    NgForOf,
+    NgClass
   ],
   exports: [
     UnderDevelopmentComponent,
@@ -27,7 +34,8 @@ import {ForbiddenComponent} from "../../components/shared/forbidden/forbidden.co
     PageLoadingComponent,
     ResultNotFoundComponent,
     NetworkErrorComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    SystemNotificationViewComponent
   ]
 })
 export class SharedComponentModule { }
