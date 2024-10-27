@@ -3,6 +3,7 @@ package com.hris.HRIS_job_portal.Service.mail;
 import com.hris.HRIS_job_portal.Config.ConfigUtility;
 import com.hris.HRIS_job_portal.DTO.mail.ContactUsDTO;
 import com.hris.HRIS_job_portal.DTO.mail.PersonalContactDTO;
+import com.hris.HRIS_job_portal.Service.security.ValidateTokenService;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.Session;
@@ -14,12 +15,19 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 @Service
 public class EmailService {
     private final JavaMailSender javaMailSender;
 
     @Autowired
     ConfigUtility configUtil;
+
+    @Autowired
+    ValidateTokenService validateTokenService;
 
     @Autowired
     public EmailService(JavaMailSender javaMailSender) {
@@ -92,6 +100,16 @@ public class EmailService {
     public void subscribedNewsLatter(String to) {
         String subject = "Talent Boozt Newsletter";
         String body = "Dear valuable user,\n\nWe are happy to inform you that you have subscribed to our newsletter. We promise not to spam your inbox :) \n\nBest regards,\nTeam Talent Boozt.";
+        sendSimpleEmail(to, subject, body);
+    }
+
+    public void sendInterviewPreparationQuestionAccess(String to) throws UnsupportedEncodingException {
+        String userName = to.split("@")[0];
+        String token = validateTokenService.generateToken(userName);
+        String link = "http://localhost:4200/private/interview-questions?token=" + URLEncoder.encode(token, StandardCharsets.UTF_8);
+        String subject = "Your Interview Question Access Link";
+        String body = "Dear User,\n\n" + "Click on the link below to access the interview preparation questions. \n\n" + link + "\n\nBest regards,\nTeam Talent Boozt.";
+
         sendSimpleEmail(to, subject, body);
     }
 }
