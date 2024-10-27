@@ -64,7 +64,7 @@
                     <div class="logo-icon-wrapper">
                       <div class="logo-icon">
                         <img
-                          [src]="pj.companyLogo"
+                          [src]="pj.companyLogo ? pj.companyLogo : './assets/imgs/shared/default_org_logo.svg'"
                           alt="{{pj.companyName}}">
                       </div>
                     </div>
