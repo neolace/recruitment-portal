@@ -37,3 +37,20 @@
   color: red;
   font-size: 12px;
 }
+
+.delete, .change-visibility {
+  cursor: pointer;
+  padding: 5px 10px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  color: #FFFFFF;
+}
+
+.delete{
+  background-color: red;
+}
+
+.change-visibility{
+  background-color: green;
+}

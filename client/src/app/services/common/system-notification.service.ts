@@ -19,6 +19,13 @@ export class SystemNotificationService {
     return this.http.get(`${this.apiUrl}/system-notifications/active`, {headers});
   }
 
+  getAllNotifications(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.get(`${this.apiUrl}/system-notifications/all`, {headers});
+  }
+
   createNotification(notification: any): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:password')
@@ -38,5 +45,12 @@ export class SystemNotificationService {
       'Authorization': 'Basic ' + btoa('admin:password')
     });
     return this.http.delete(`${this.apiUrl}/system-notifications/delete/${id}`, {headers});
+  }
+
+  updateStatus(id: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.put(`${this.apiUrl}/system-notifications/update-status/${id}`, {}, {headers});
   }
 }

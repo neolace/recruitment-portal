@@ -18,6 +18,11 @@ public class SystemNotificationsController {
         return notificationService.getActiveNotifications();
     }
 
+    @GetMapping("/all")
+    public List<SystemNotificationsModel> getAllNotifications() {
+        return notificationService.getAllNotifications();
+    }
+
     @PostMapping("/add")
     public SystemNotificationsModel createNotification(@RequestBody SystemNotificationsModel notification) {
         return notificationService.createNotification(notification);
@@ -27,6 +32,11 @@ public class SystemNotificationsController {
     public SystemNotificationsModel updateNotification(@PathVariable String id, @RequestBody SystemNotificationsModel notification) {
         notification.setId(id);
         return notificationService.updateNotification(notification);
+    }
+
+    @PutMapping("/update-status/{id}")
+    public SystemNotificationsModel updateNotificationStatus(@PathVariable String id) {
+        return notificationService.updateNotificationStatus(id);
     }
 
     @DeleteMapping("/delete/{id}")
