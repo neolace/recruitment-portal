@@ -108,7 +108,7 @@ public class EmailService {
         String token = validateTokenService.generateToken(userName);
         String link = "http://localhost:4200/private/interview-questions?token=" + URLEncoder.encode(token, StandardCharsets.UTF_8);
         String subject = "Your Interview Question Access Link";
-        String body = "Dear User,\n\n" + "Click on the link below to access the interview preparation questions. \n\n" + link + "\n\nBest regards,\nTeam Talent Boozt.";
+        String body = "Dear User,\n\n" + "Click on the link below to access the interview preparation questions. \n\n" + link + "\nNote: This link will expire in 24 hours and only be used once(if you reload the page the link will be expired). Don't share this link with anyone.\nIf you did not request this, please ignore this email.\n\nThank You.\nBest regards,\nTeam Talent Boozt.";
 
         sendSimpleEmail(to, subject, body);
     }
