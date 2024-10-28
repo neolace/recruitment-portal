@@ -11,7 +11,8 @@
                 <h1>Perfect Job</h1>
 
                 <div>
-                  <p>Explore Thousands of Job Openings & Career Options. Partnered with Top Companies to help you find the
+                  <p>Explore Thousands of Job Openings & Career Options. Partnered with Top Companies to help you find
+                    the
                     perfect fit.</p>
                 </div>
 
@@ -33,7 +34,8 @@
                 </div>
 
                 <div class="my-2">
-                  <p><span class="bold-p">Popular Searches : </span>Designer, Developer, Web, IOS, PHP Senior Engineer</p>
+                  <p><span class="bold-p">Popular Searches : </span>Designer, Developer, Web, IOS, PHP Senior Engineer
+                  </p>
                 </div>
 
               </div>
@@ -88,13 +90,15 @@
 
           <div class="sub-topic-section">
             <h3>Popular Categories</h3>
-            <p>Explore top job categories tailored for you. Discover the roles that match your skills and interests, with
+            <p>Explore top job categories tailored for you. Discover the roles that match your skills and interests,
+              with
               trusted companies ready to hire.</p>
           </div>
 
           <div class="container popular-categories">
             <div class="row">
-              <div class="col-12 col-sm-6 col-md-3 mb-2" *ngFor="let j of utilities.popularJobCategories; let i = index">
+              <div class="col-12 col-sm-6 col-md-3 mb-2"
+                   *ngFor="let j of utilities.popularJobCategories; let i = index">
                 <div class="popular-item-wrapper">
                   <div class="icon-wrapper">
                     <i class="{{j.icon}}" aria-hidden="true"></i>
@@ -108,13 +112,15 @@
 
           <div class="sub-topic-section" *ngIf="filterJobsAds().length > 0">
             <h3>Popular Jobs</h3>
-            <p>Discover opportunities around the world. Get salary insights and company reviews from trusted sources.</p>
+            <p>Discover opportunities around the world. Get salary insights and company reviews from trusted
+              sources.</p>
           </div>
 
           <div class="container popular-jobs" *ngIf="filterJobsAds().length > 0">
             <div class="container">
               <div class="row">
-                <div class="col-12 col-md-6 mb-4" *ngFor="let p of filterJobsAds() | truncateComments: 4; let i = index">
+                <div class="col-12 col-md-6 mb-4"
+                     *ngFor="let p of filterJobsAds() | truncateComments: 4; let i = index">
                   <app-job-post-card1 [p]="p" [userSavedIds]="userSavedIds" [employeeId]="employeeId"
                                       (savedJobChanged)="onJobSavedOrRemoved()"></app-job-post-card1>
                 </div>
@@ -132,14 +138,16 @@
               <div class="col-12 col-md-6 col-lg-5">
                 <div class="popular-2-left">
                   <div class="lg-img">
-                    <img ngSrc="./assets/imgs/home/home-b-h-1.webp" alt="banner" loading="lazy" height="508" width="342">
+                    <img ngSrc="./assets/imgs/home/home-b-h-1.webp" alt="banner" loading="lazy" height="508"
+                         width="342">
 
                     <div class="play-btn">
                       <i class="fa fa-play" aria-hidden="true"></i>
                     </div>
 
                     <div class="sm-img">
-                      <img ngSrc="./assets/imgs/home/home-b-v-1.webp" alt="banner" loading="lazy" height="275" width="408">
+                      <img ngSrc="./assets/imgs/home/home-b-v-1.webp" alt="banner" loading="lazy" height="275"
+                           width="408">
                     </div>
                   </div>
                 </div>
@@ -149,7 +157,8 @@
                   <h3>A World of Opportunities.</h3>
                   <h3>Find the one that's right for you.</h3>
                   <div class="my-3">
-                    <p>Explore a world of job opportunities. Personalize your search, compare salaries, and access in-depth
+                    <p>Explore a world of job opportunities. Personalize your search, compare salaries, and access
+                      in-depth
                       company reviews. With thousands of openings from top employers. Get closer to the career of your
                       dreams.</p>
                   </div>
@@ -158,7 +167,8 @@
                     <li>Elevate Your Skills with Targeted Job Matches</li>
                     <li>Expert Guidance for Your Next Career Move</li>
                   </ul>
-                  <button class="btn-1" routerLink="/contact"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact us
+                  <button class="btn-1" routerLink="/contact"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact
+                    us
                   </button>
                 </div>
               </div>
@@ -174,7 +184,8 @@
               <div class="container">
                 <div class="overlay-banner-text">We help you find the job of your dreams by providing you a world of
                   opportunities
-                  for you. Our Platform gives you personalized job recommendations and provided you with tools and resources
+                  for you. Our Platform gives you personalized job recommendations and provided you with tools and
+                  resources
                   to
                   tune up you Skills.
                 </div>
@@ -232,28 +243,21 @@
   <div class="main">
     <div class="main-cont">
       <div class="main-l">
-        <div class="overlay-l"></div>
-        <div class="content">
-          <div class="icon-wrapper"><i class="fa fa-building" aria-hidden="true"></i></div>
-          <div class="h1">Do You Need Talented Professionals for Your Team?</div>
-          <button class="get-started" routerLink="/for-companies">Learn More</button>
-        </div>
+        <div class="l-banner"></div>
       </div>
       <div class="main-r">
-        <div class="overlay-r"></div>
-        <div class="content">
-          <div class="icon-wrapper"><i class="fa fa-users" aria-hidden="true"></i></div>
-          <div class="h1">Searching for Your Next Career Opportunity?</div>
-          <button class="get-started" routerLink="/job">Find a Job</button>
-        </div>
+        <div class="r-banner"></div>
       </div>
-      <div class="overlay"></div>
 
       <div class="scroll-here">
         <p>Scroll Here :)</p>
-        <svg width="30px" height="100%" viewBox="0 0 247 390" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+        <svg width="30px" height="100%" viewBox="0 0 247 390" version="1.1" xmlns="http://www.w3.org/2000/svg"
+             xmlns:xlink="http://www.w3.org/1999/xlink"
+             style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
           <path id="wheel" d="M123.359,79.775l0,72.843" style="fill:none;stroke:#fff;stroke-width:20px;"/>
-          <path id="mouse" d="M236.717,123.359c0,-62.565 -50.794,-113.359 -113.358,-113.359c-62.565,0 -113.359,50.794 -113.359,113.359l0,143.237c0,62.565 50.794,113.359 113.359,113.359c62.564,0 113.358,-50.794 113.358,-113.359l0,-143.237Z" style="fill:none;stroke:#fff;stroke-width:20px;"/>
+          <path id="mouse"
+                d="M236.717,123.359c0,-62.565 -50.794,-113.359 -113.358,-113.359c-62.565,0 -113.359,50.794 -113.359,113.359l0,143.237c0,62.565 50.794,113.359 113.359,113.359c62.564,0 113.358,-50.794 113.358,-113.359l0,-143.237Z"
+                style="fill:none;stroke:#fff;stroke-width:20px;"/>
         </svg>
       </div>
     </div>

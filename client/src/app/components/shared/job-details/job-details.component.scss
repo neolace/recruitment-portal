@@ -8,6 +8,10 @@
   position: sticky;
   height: fit-content;
   top: 80px;
+
+  @media screen and (max-width: 768px) {
+    position: static;
+  }
 }
 .job-details-card{
   background-color: var(--color-surface-200);
