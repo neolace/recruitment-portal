@@ -761,7 +761,8 @@
 .main {
   position: fixed;
   background:#fff;
-  width:calc(100% - 24px);
+  width:100%;
+  max-width: 100vw;
   align-self: flex-start;
   top:0;
   left:50%;
@@ -793,110 +794,41 @@
       width: 100%;
       height: 100%;
       min-height: 50vh;
+      max-width: 600px;
+      max-height: 500px;
       position: relative;
-      overflow: hidden;
+      //overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
 
-      .overlay-l, .overlay-r{
-        position: absolute;
-        top: 0;
-        left: 0;
+      .l-banner, .r-banner{
+        transform-origin: 0 0;
         width: 100%;
         height: 100%;
-        z-index: 2;
-      }
-
-      .content{
-        width: 100%;
-        height: fit-content;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 16px;
-        position: static;
-        z-index: 3;
-
-        .icon-wrapper{
-          width: max(60px, 6vw);
-          height: max(60px, 6vw);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 5px;
-          border-radius: 50%;
-          background-color: var(--color-primary-100);
-          border: 1px solid var(--color-primary-100);
-
-          i{
-            font-size: max(40px, 2.5vw);
-            color: #fff;
-          }
-        }
-
-        .h1{
-          font-size: max(24px, 2.2vw);
-          width: 100%;
-          max-width: max(350px, 35vw);
-          background-clip: text;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          color: transparent;
-          text-align: center;
-          font-family: 'Merriweather', serif;
-          font-weight: 600;
-          background-size: 400% 400%;
-          -webkit-animation: gradient 30s ease infinite;
-          -moz-animation: gradient 30s ease infinite;
-          animation: gradient 30s ease infinite;
-        }
-
-        .get-started{
-          padding: 8px 24px;
-          border: 2px solid #fff;
-          border-radius: 25px;
-          background-color: #fff;
-          color: #000;
-          cursor: pointer;
-          transition: all .3s ease-in-out;
-          font-size: max(16px, 1.2vw);
-
-          &:hover{
-            background-color: transparent;
-            color: var(--color-primary-100);
-            border: 2px solid var(--color-primary-100);
-          }
-        }
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: absolute;
+        top: 70px;
       }
     }
 
     .main-l{
-      .overlay-l{
-        background-image: linear-gradient(to left, var(--color-secondary-100), var(--color-secondary-300), #fff);
-        opacity: .7;
-        transform: skewY(30deg);
-      }
-
-      .content{
-        .h1{
-          background-image: linear-gradient(to right, #000, var(--color-primary-600), #fff);
-        }
+      .l-banner{
+        left: 20px;
+        transform: translate(-300px, -5.633px) translate(354.388px, 236.259px) rotate(-180deg) translate(-354.388px, -236.259px);
+        background-image: url(../../../assets/imgs/home/1-ud.webp);
+        clip-path: path("M78.1998,31.956461559425467L7.4476,173.99638060431658C-5.41217825224567,198.29135611164003 -2.004510463794692,228.93730032004805 14.6354,249.6031508553232L172.2474,448.60017015597265C182.63940000000002,461.8061526931485 197.3614,469.26602069124783 212.6896,469.26602069124783L377.83580000000006,469.26602069124783C408.23240000000004,469.26602069124783 432.9134000000001,440.5354479958653 432.9134000000001,405.1514795183942L432.9134000000001,150.10464120499847C432.9134000000001,136.89865866782264 429.4494,123.99510321165083 422.8678,113.20853732250724L370.90780000000007,27.21843729036237C360.60240000000005,10.181711727135546 343.802,0 325.8758,0L125.8298,0C106.1716,0 87.9856,12.197892267162402 78.1998,31.956461559425467Z");
       }
     }
 
     .main-r{
-      .overlay-r{
-        background-image: linear-gradient(to right, var(--color-primary-100), var(--color-primary-300), #fff);
-        opacity: .6;
-        transform: skewY(-30deg);
-      }
-
-      .content{
-        .h1{
-          background-image: linear-gradient(to left, #000, var(--color-primary-600), #fff);
-        }
+      .r-banner{
+        right: 20px;
+        transform: translate(190px, -100.082px) translate(218.125px, 327.187px) rotate(0deg) translate(-218.125px, -327.187px);
+        background-image: url(../../../assets/imgs/home/2.webp);
+        clip-path: path("M 78.7416 30.9312 L 7.4992 168.414 C -5.44968 191.929 -2.0184 221.592 14.7368 241.595 L 173.441 434.207 C 183.905 446.989 198.729 454.21 214.163 454.21 L 380.454 454.21 C 411.061 454.21 435.913 426.401 435.913 392.152 L 435.913 145.289 C 435.913 132.506 432.425 120.017 425.798 109.576 L 373.478 26.3451 C 363.101 9.85504 346.184 0 328.134 0 L 126.702 0 C 106.907 0 88.5952 11.8065 78.7416 30.9312 Z");
       }
     }
 
