@@ -243,11 +243,23 @@
   <div class="main">
     <div class="main-cont">
       <div class="main-l">
-        <div class="l-banner"></div>
+        <div class="l-banner" loading="lazy"></div>
+        <div class="content">
+<!--          <div class="h1">Do You Need Talented Professionals for Your Team?</div>-->
+          <div class="h1" [innerHTML]="destination"></div>
+          <button class="get-started" routerLink="/for-companies">Learn More</button>
+        </div>
       </div>
       <div class="main-r">
-        <div class="r-banner"></div>
+        <div class="r-banner" loading="lazy"></div>
+        <div class="content">
+<!--          <div class="h1">Searching for Your Next Career Opportunity?</div>-->
+          <div class="h1" [innerHTML]="destination2"></div>
+          <button class="get-started" routerLink="/job">Find a Job</button>
+        </div>
       </div>
+
+      <div class="overlay"></div>
 
       <div class="scroll-here">
         <p>Scroll Here :)</p>
