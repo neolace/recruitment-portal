@@ -34,4 +34,10 @@ public class TokenController {
         emailService.sendInterviewPreparationQuestionAccess(email);
         return ResponseEntity.ok(new ApiResponse("Email sent successfully"));
     }
+
+    @PostMapping("/api/v2/send-notification-token/{email}")
+    public ResponseEntity<ApiResponse> sendResetPassword(@PathVariable String email) throws UnsupportedEncodingException {
+        emailService.sendNotificationToken(email);
+        return ResponseEntity.ok(new ApiResponse("Email sent successfully"));
+    }
 }
