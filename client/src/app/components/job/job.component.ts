@@ -78,7 +78,7 @@ export class JobComponent implements OnInit, AfterViewInit {
         this.userSavedIds = this.employee.employee.savedJobs.map((job: any) => job.jobId);
       },
       (error: any) => {
-        this.alertService.warningMessage('Please Login First to Apply Jobs', 'Reminder');
+        this.alertService.warningMessage('Please login first to apply for jobs', 'Reminder');
       }
     );
   }
