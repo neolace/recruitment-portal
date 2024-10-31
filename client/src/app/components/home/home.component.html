@@ -11,9 +11,7 @@
                 <h1>Perfect Job</h1>
 
                 <div>
-                  <p>Explore Thousands of Job Openings & Career Options. Partnered with Top Companies to help you find
-                    the
-                    perfect fit.</p>
+                  <p>Explore Exciting Opportunities in Top Companies. Find the perfet fit</p>
                 </div>
 
                 <div class="search-box">
@@ -90,9 +88,8 @@
 
           <div class="sub-topic-section">
             <h3>Popular Categories</h3>
-            <p>Explore top job categories tailored for you. Discover the roles that match your skills and interests,
-              with
-              trusted companies ready to hire.</p>
+            <p>Explore in-demand roles across industries. Whether you're just starting or looking to level up your
+              career, these popular job roles have plenty of opportunities waiting for you:</p>
           </div>
 
           <div class="container popular-categories">
@@ -133,6 +130,26 @@
             </div>
           </div>
 
+          <div class="sub-topic-section" *ngIf="filteredCompanies?.length ? filteredCompanies.length > 0 : false">
+            <h3>Find top Employers</h3>
+            <p>Discover the best workplaces and unlock your potential.</p>
+          </div>
+
+          <div class="popular-companies" *ngIf="filteredCompanies">
+            <div class="row">
+              <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 pt-4"
+                   *ngFor="let c of filteredCompanies | truncateComments: 4; let i = index">
+                <app-company-card1 [c]="c" [jobCount]="getJobCount(c.id)"></app-company-card1>
+              </div>
+            </div>
+
+            <div class="see-more" *ngIf="filteredCompanies.length >= 4">
+              <div class="see-more-btn" routerLink="/companies">See More Companies <i
+                class="material-icons">arrow_right_alt</i>
+              </div>
+            </div>
+          </div>
+
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-6 col-lg-5">
@@ -157,15 +174,14 @@
                   <h3>A World of Opportunities.</h3>
                   <h3>Find the one that's right for you.</h3>
                   <div class="my-3">
-                    <p>Explore a world of job opportunities. Personalize your search, compare salaries, and access
-                      in-depth
-                      company reviews. With thousands of openings from top employers. Get closer to the career of your
-                      dreams.</p>
+                    <p>Explore a world of job opportunities. Our platforms helps you get closer to the career of your dreams.</p>
                   </div>
                   <ul>
-                    <li>Partnering with Leading Global Companies</li>
-                    <li>Elevate Your Skills with Targeted Job Matches</li>
-                    <li>Expert Guidance for Your Next Career Move</li>
+                    <li>Personalized Job Matches -Get jobs tailored to your skills and preferences with our smart matching algorithm.</li>
+                    <li>Access to Premium Employers- Connect with top companies actively seeking qualified candidates.</li>
+                    <li>Skill Assessments and Growth -  Take skill assessments to showcase your strengths and attract the right opportunities.</li>
+                    <li>Career Resources and Guidance -  Access career advice, interview tips, and resources to excel in your job search.</li>
+                    <li>One-Click Apply-Apply to jobs quickly and easily with our streamlined application process.</li>
                   </ul>
                   <button class="btn-1" routerLink="/contact"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact
                     us
@@ -176,7 +192,7 @@
           </div>
         </div>
 
-        <div class="overlay-banner-lg">
+        <div class="overlay-banner-lg" *ngIf="false">
           <div class="overlay"></div>
           <div class="container">
             <div class="d-flex flex-column align-items-center justify-content-center banner-content">
@@ -211,26 +227,6 @@
             </div>
           </div>
 
-          <div class="sub-topic-section" *ngIf="filteredCompanies?.length ? filteredCompanies.length > 0 : false">
-            <h3>Find Best Companies</h3>
-            <p>Discover the best workplaces and unlock your potential.</p>
-          </div>
-
-          <div class="popular-companies" *ngIf="filteredCompanies">
-            <div class="row">
-              <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 pt-4"
-                   *ngFor="let c of filteredCompanies | truncateComments: 4; let i = index">
-                <app-company-card1 [c]="c" [jobCount]="getJobCount(c.id)"></app-company-card1>
-              </div>
-            </div>
-
-            <div class="see-more" *ngIf="filteredCompanies.length >= 4">
-              <div class="see-more-btn" routerLink="/companies">See More Companies <i
-                class="material-icons">arrow_right_alt</i>
-              </div>
-            </div>
-          </div>
-
           <div style="padding: max(30px, 3vw) 0;">
             <app-hire-card1></app-hire-card1>
           </div>
@@ -245,7 +241,7 @@
       <div class="main-l">
         <div class="l-banner" loading="lazy"></div>
         <div class="content">
-<!--          <div class="h1">Do You Need Talented Professionals for Your Team?</div>-->
+          <!--          <div class="h1">Do You Need Talented Professionals for Your Team?</div>-->
           <div class="h1" [innerHTML]="destination"></div>
           <button class="get-started" routerLink="/for-companies">Learn More</button>
         </div>
@@ -253,7 +249,7 @@
       <div class="main-r">
         <div class="r-banner" loading="lazy"></div>
         <div class="content">
-<!--          <div class="h1">Searching for Your Next Career Opportunity?</div>-->
+          <!--          <div class="h1">Searching for Your Next Career Opportunity?</div>-->
           <div class="h1" [innerHTML]="destination2"></div>
           <button class="get-started" routerLink="/job">Find a Job</button>
         </div>
@@ -287,7 +283,7 @@
       </div>
       <div class="modal-body">
         <div class="d-flex flex-column gap-2">
-          <p class="mb-0">We will send you our latest news and updates. We hates spams more than you do.</p>
+          <p class="mb-0">We will send you our latest news and updates. We hate spams more than you do.</p>
           <form [formGroup]="newsLetterForm" class="w-100">
             <div class="form-group">
               <label for="email">Enter your valid email address *</label>

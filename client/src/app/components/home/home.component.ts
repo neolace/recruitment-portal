@@ -58,12 +58,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   utilities = Utilities;
 
   aText: string[] = [
-    "Do You Need Talented",
-    "Professionals for Your Team?"
+    "Looking to hire the",
+    "best Talent?"
   ];
   bText: string[] = [
-    "Searching for Your Next",
-    "Career Opportunity?"
+    "Looking for your",
+    "dream job?"
   ];
   iSpeed: number = 100;
   iIndex: number = 0;
