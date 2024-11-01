@@ -83,6 +83,10 @@ export class AboutComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.jobsAch = localStorage.getItem('jobsAch') ? Number(localStorage.getItem('jobsAch')) : 0;
     this.branchesAch = localStorage.getItem('branchesAch') ? Number(localStorage.getItem('branchesAch')) : 0;
+    this.initMap();
+  }
+
+  initMap(){
     this.center = {
       lat: 6.918604,
       lng: 79.865564,

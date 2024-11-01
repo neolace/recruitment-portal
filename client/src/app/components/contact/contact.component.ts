@@ -57,6 +57,10 @@ export class ContactComponent implements OnInit, AfterViewInit {
   constructor(private commonService: CommonService, private alertService: AlertsService) { }
 
   ngOnInit() {
+    this.initMap();
+  }
+
+  initMap(){
     this.center = {
       lat: 6.918604,
       lng: 79.865564,

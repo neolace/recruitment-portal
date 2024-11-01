@@ -895,7 +895,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     height: 100%;
     top: 0;
     left: 0;
-    background-color: var(--color-primary-200);
+    background-image: linear-gradient(to bottom, var(--color-surface-mixed-100) 0%, var(--color-primary-500) 20%, var(--color-primary-200) 100%);
     opacity: .7;
     z-index: 2;
   }
