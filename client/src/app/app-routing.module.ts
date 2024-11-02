@@ -42,6 +42,10 @@ const routes: Routes = [
   { path: 'footer', loadChildren: () => import('./components/shared/footer/footer.module').then(m => m.FooterModule) },
   { path: 'private/interview-questions', loadChildren: () => import('./private/interview-questions/interview-questions.module').then(m => m.InterviewQuestionsModule) },
   { path: 'private/system-notifications', loadChildren: () => import('./private/system-notifications/system-notifications.module').then(m => m.SystemNotificationsModule) },
+  { path: 'support', loadChildren: () => import('./components/shared/content/support/support.module').then(m => m.SupportModule) },
+  { path: 'tech-and-startup-jobs', loadChildren: () => import('./components/shared/content/tech-and-startup/tech-and-startup.module').then(m => m.TechAndStartupModule) },
+  { path: 'quick-and-easy', loadChildren: () => import('./components/shared/content/quick-and-easy/quick-and-easy.module').then(m => m.QuickAndEasyModule) },
+  { path: 'save-time', loadChildren: () => import('./components/shared/content/save-time/save-time.module').then(m => m.SaveTimeModule) },
   { path: '**', redirectTo: '/404' }
 ];
 
