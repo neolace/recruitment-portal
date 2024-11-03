@@ -79,6 +79,17 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    setTimeout(() => {
+      const loadingScreen = document.getElementById('loading-screen');
+      if (loadingScreen) {
+        loadingScreen.style.display = 'none';
+      }
+    },1500);
+    const appRoot = document.querySelector('app-root') as HTMLElement;
+    if (appRoot) {
+      appRoot.style.display = 'block';
+    }
+
     this.employeeId = this.cookieService.userID();
     this.employeeLevel = this.cookieService.level();
     this.themeService.applyTheme();
