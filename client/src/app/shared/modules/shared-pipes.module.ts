@@ -7,6 +7,7 @@ import {RoundFloats} from "../../DTO/RoundFloats";
 import {TimeFormatPipe} from "../../DTO/TimeFormatPipe";
 import {TruncateCommentsPipe} from "../../DTO/TruncateCommentsPipe";
 import {TruncatePipe} from "../../DTO/TruncatePipe";
+import {SortPipe} from "../../DTO/SortPipe";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {TruncatePipe} from "../../DTO/TruncatePipe";
     TimeAgoPipe,
     TimeFormatPipe,
     TruncateCommentsPipe,
-    TruncatePipe
+    TruncatePipe,
+    SortPipe
   ],
   imports: [
     CommonModule
@@ -28,7 +30,8 @@ import {TruncatePipe} from "../../DTO/TruncatePipe";
     TimeAgoPipe,
     TimeFormatPipe,
     TruncateCommentsPipe,
-    TruncatePipe
+    TruncatePipe,
+    SortPipe
   ]
 })
 export class SharedPipesModule { }
