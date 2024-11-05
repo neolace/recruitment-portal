@@ -5,6 +5,7 @@ import {BusinessProfileRoutingModule} from "./business-profile-routing.module";
 import {SharedPipesModule} from "../../shared/modules/shared-pipes.module";
 import {SharedComponentModule} from "../../shared/modules/shared-component.module";
 import {ReactiveFormsModule} from "@angular/forms";
+import {SharedCardsComponentModule} from "../../shared/modules/shared-cards-component.module";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {ReactiveFormsModule} from "@angular/forms";
         BusinessProfileRoutingModule,
         SharedPipesModule,
         SharedComponentModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        SharedCardsComponentModule
     ],
 })
 export class BusinessProfileModule { }
