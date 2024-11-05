@@ -17,6 +17,9 @@
         <p><span (click)="navigateSection('general')" #general>General Questions</span></p>
         <p><span (click)="navigateSection('payments')" #payments>Payments Questions</span></p>
         <p><span (click)="navigateSection('support')" #support>Support Questions</span></p>
+        <p><span (click)="navigateSection('account')" #account>Account Questions</span></p>
+        <p><span (click)="navigateSection('company')" #company>Company Questions</span></p>
+        <p><span (click)="navigateSection('legal')" #legal>Legal Questions</span></p>
         <p><span (click)="navigateSection('other')" #other>Other Questions</span></p>
       </div>
     </div>
@@ -24,48 +27,19 @@
       <div id="buying" #buyingSec>
         <h5>Buying Questions</h5>
 
-        <div class="accordion faq" id="fq1">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#1fqOne" aria-expanded="false" aria-controls="1fqOne">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit?
-              </button>
-            </h2>
-            <div id="1fqOne" class="accordion-collapse collapse" data-bs-parent="#fq1">
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur delectus est incidunt iusto nihil
-                quam quasi quibusdam. Reprehenderit, saepe, ullam!
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#1fqTwo" aria-expanded="false" aria-controls="1fqTwo">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, sed?
-              </button>
-            </h2>
-            <div id="1fqTwo" class="accordion-collapse collapse" data-bs-parent="#fq1">
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias cumque distinctio incidunt iusto
-                laboriosam modi nisi quis rem repellat voluptatem?
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#1fqThree" aria-expanded="false" aria-controls="1fqThree">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias beatae dignissimos saepe?
-              </button>
-            </h2>
-            <div id="1fqThree" class="accordion-collapse collapse" data-bs-parent="#fq1">
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid aspernatur commodi debitis doloremque
-                ipsum officiis quae quisquam reprehenderit repudiandae!
+        <div class="accordion faq" *ngFor="let bq of utilities.faqs" [id]="bq.id">
+          <div *ngIf="bq.category == 'Buying'">
+            <div class="accordion-item" *ngFor="let q of bq.questions">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#' + q.id" aria-expanded="false" [attr.aria-controls]="q.id">
+                  {{q.question}}
+                </button>
+              </h2>
+              <div [id]="q.id" class="accordion-collapse collapse" [attr.data-bs-parent]="'#' + bq.id">
+                <div class="accordion-body">
+                  {{q.answer}}
+                </div>
               </div>
             </div>
           </div>
@@ -74,48 +48,19 @@
       <div id="general" #generalSec>
         <h5>General Questions</h5>
 
-        <div class="accordion faq" id="fq2">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#2fqOne" aria-expanded="false" aria-controls="2fqOne">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit?
-              </button>
-            </h2>
-            <div id="2fqOne" class="accordion-collapse collapse" data-bs-parent="#fq2">
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur delectus est incidunt iusto
-                nihil quam quasi quibusdam. Reprehenderit, saepe, ullam!
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#2fqTwo" aria-expanded="false" aria-controls="2fqTwo">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, sed?
-              </button>
-            </h2>
-            <div id="2fqTwo" class="accordion-collapse collapse" data-bs-parent="#fq2">
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias cumque distinctio incidunt iusto
-                laboriosam modi nisi quis rem repellat voluptatem?
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#2fqThree" aria-expanded="false" aria-controls="2fqThree">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias beatae dignissimos saepe?
-              </button>
-            </h2>
-            <div id="2fqThree" class="accordion-collapse collapse" data-bs-parent="#fq2">
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid aspernatur commodi debitis
-                doloremque ipsum officiis quae quisquam reprehenderit repudiandae!
+        <div class="accordion faq" *ngFor="let bq of utilities.faqs" [id]="bq.id">
+          <div *ngIf="bq.category == 'General'">
+            <div class="accordion-item" *ngFor="let q of bq.questions">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#' + q.id" aria-expanded="false" [attr.aria-controls]="q.id">
+                  {{q.question}}
+                </button>
+              </h2>
+              <div [id]="q.id" class="accordion-collapse collapse" [attr.data-bs-parent]="'#' + bq.id">
+                <div class="accordion-body">
+                  {{q.answer}}
+                </div>
               </div>
             </div>
           </div>
@@ -124,48 +69,19 @@
       <div id="payments" #paymentsSec>
         <h5>Payments Questions</h5>
 
-        <div class="accordion faq" id="fq3">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#3fqOne" aria-expanded="false" aria-controls="3fqOne">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit?
-              </button>
-            </h2>
-            <div id="3fqOne" class="accordion-collapse collapse" data-bs-parent="#fq3">
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur delectus est incidunt iusto
-                nihil quam quasi quibusdam. Reprehenderit, saepe, ullam!
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#3fqTwo" aria-expanded="false" aria-controls="3fqTwo">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, sed?
-              </button>
-            </h2>
-            <div id="3fqTwo" class="accordion-collapse collapse" data-bs-parent="#fq3">
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias cumque distinctio incidunt iusto
-                laboriosam modi nisi quis rem repellat voluptatem?
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#3fqThree" aria-expanded="false" aria-controls="3fqThree">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias beatae dignissimos saepe?
-              </button>
-            </h2>
-            <div id="3fqThree" class="accordion-collapse collapse" data-bs-parent="#fq3">
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid aspernatur commodi debitis
-                doloremque ipsum officiis quae quisquam reprehenderit repudiandae!
+        <div class="accordion faq" *ngFor="let bq of utilities.faqs" [id]="bq.id">
+          <div *ngIf="bq.category == 'Payments'">
+            <div class="accordion-item" *ngFor="let q of bq.questions">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#' + q.id" aria-expanded="false" [attr.aria-controls]="q.id">
+                  {{q.question}}
+                </button>
+              </h2>
+              <div [id]="q.id" class="accordion-collapse collapse" [attr.data-bs-parent]="'#' + bq.id">
+                <div class="accordion-body">
+                  {{q.answer}}
+                </div>
               </div>
             </div>
           </div>
@@ -174,48 +90,82 @@
       <div id="support" #supportSec>
         <h5>Support Questions</h5>
 
-        <div class="accordion faq" id="fq4">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#4fqOne" aria-expanded="false" aria-controls="4fqOne">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit?
-              </button>
-            </h2>
-            <div id="4fqOne" class="accordion-collapse collapse" data-bs-parent="#fq4">
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur delectus est incidunt iusto
-                nihil quam quasi quibusdam. Reprehenderit, saepe, ullam!
+        <div class="accordion faq" *ngFor="let bq of utilities.faqs" [id]="bq.id">
+          <div *ngIf="bq.category == 'Support'">
+            <div class="accordion-item" *ngFor="let q of bq.questions">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#' + q.id" aria-expanded="false" [attr.aria-controls]="q.id">
+                  {{q.question}}
+                </button>
+              </h2>
+              <div [id]="q.id" class="accordion-collapse collapse" [attr.data-bs-parent]="'#' + bq.id">
+                <div class="accordion-body">
+                  {{q.answer}}
+                </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div id="account" #accountSec>
+        <h5>Account Questions</h5>
 
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#4fqTwo" aria-expanded="false" aria-controls="4fqTwo">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, sed?
-              </button>
-            </h2>
-            <div id="4fqTwo" class="accordion-collapse collapse" data-bs-parent="#fq4">
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias cumque distinctio incidunt iusto
-                laboriosam modi nisi quis rem repellat voluptatem?
+        <div class="accordion faq" *ngFor="let bq of utilities.faqs" [id]="bq.id">
+          <div *ngIf="bq.category == 'Account'">
+            <div class="accordion-item" *ngFor="let q of bq.questions">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#' + q.id" aria-expanded="false" [attr.aria-controls]="q.id">
+                  {{q.question}}
+                </button>
+              </h2>
+              <div [id]="q.id" class="accordion-collapse collapse" [attr.data-bs-parent]="'#' + bq.id">
+                <div class="accordion-body">
+                  {{q.answer}}
+                </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div id="company" #companySec>
+        <h5>Company Questions</h5>
 
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#4fqThree" aria-expanded="false" aria-controls="4fqThree">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias beatae dignissimos saepe?
-              </button>
-            </h2>
-            <div id="4fqThree" class="accordion-collapse collapse" data-bs-parent="#fq4">
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid aspernatur commodi debitis
-                doloremque ipsum officiis quae quisquam reprehenderit repudiandae!
+        <div class="accordion faq" *ngFor="let bq of utilities.faqs" [id]="bq.id">
+          <div *ngIf="bq.category == 'Company'">
+            <div class="accordion-item" *ngFor="let q of bq.questions">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#' + q.id" aria-expanded="false" [attr.aria-controls]="q.id">
+                  {{q.question}}
+                </button>
+              </h2>
+              <div [id]="q.id" class="accordion-collapse collapse" [attr.data-bs-parent]="'#' + bq.id">
+                <div class="accordion-body">
+                  {{q.answer}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="legal" #legalSec>
+        <h5>Legal Questions</h5>
+
+        <div class="accordion faq" *ngFor="let bq of utilities.faqs" [id]="bq.id">
+          <div *ngIf="bq.category == 'Legal'">
+            <div class="accordion-item" *ngFor="let q of bq.questions">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#' + q.id" aria-expanded="false" [attr.aria-controls]="q.id">
+                  {{q.question}}
+                </button>
+              </h2>
+              <div [id]="q.id" class="accordion-collapse collapse" [attr.data-bs-parent]="'#' + bq.id">
+                <div class="accordion-body">
+                  {{q.answer}}
+                </div>
               </div>
             </div>
           </div>
@@ -224,48 +174,19 @@
       <div id="other" #otherSec>
         <h5>Other Questions</h5>
 
-        <div class="accordion faq" id="fq5">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#5fqOne" aria-expanded="false" aria-controls="5fqOne">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit?
-              </button>
-            </h2>
-            <div id="5fqOne" class="accordion-collapse collapse" data-bs-parent="#fq5">
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur delectus est incidunt iusto
-                nihil quam quasi quibusdam. Reprehenderit, saepe, ullam!
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#5fqTwo" aria-expanded="false" aria-controls="5fqTwo">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, sed?
-              </button>
-            </h2>
-            <div id="5fqTwo" class="accordion-collapse collapse" data-bs-parent="#fq5">
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias cumque distinctio incidunt iusto
-                laboriosam modi nisi quis rem repellat voluptatem?
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#5fqThree" aria-expanded="false" aria-controls="5fqThree">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias beatae dignissimos saepe?
-              </button>
-            </h2>
-            <div id="5fqThree" class="accordion-collapse collapse" data-bs-parent="#fq5">
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid aspernatur commodi debitis
-                doloremque ipsum officiis quae quisquam reprehenderit repudiandae!
+        <div class="accordion faq" *ngFor="let bq of utilities.faqs" [id]="bq.id">
+          <div *ngIf="bq.category == 'Other'">
+            <div class="accordion-item" *ngFor="let q of bq.questions">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#' + q.id" aria-expanded="false" [attr.aria-controls]="q.id">
+                  {{q.question}}
+                </button>
+              </h2>
+              <div [id]="q.id" class="accordion-collapse collapse" [attr.data-bs-parent]="'#' + bq.id">
+                <div class="accordion-body">
+                  {{q.answer}}
+                </div>
               </div>
             </div>
           </div>

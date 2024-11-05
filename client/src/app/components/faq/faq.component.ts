@@ -1,4 +1,5 @@
 import {AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {FAQUtilities} from "../../shared/utilities/faq.utilities";
 
 @Component({
   selector: 'app-faq',
@@ -10,9 +11,14 @@ export class FaqComponent implements AfterViewInit{
   @ViewChild('generalSec') generalSec!: ElementRef;
   @ViewChild('paymentsSec') paymentsSec!: ElementRef;
   @ViewChild('supportSec') supportSec!: ElementRef;
+  @ViewChild('accountSec') accountSec!: ElementRef;
+  @ViewChild('companySec') companySec!: ElementRef;
+  @ViewChild('legalSec') legalSec!: ElementRef;
   @ViewChild('otherSec') otherSec!: ElementRef;
 
-  @ViewChildren('buying, general, payments, support, other') sectionButtons!: QueryList<ElementRef>;
+  @ViewChildren('buying, general, payments, support, account, company, legal, other') sectionButtons!: QueryList<ElementRef>;
+
+  utilities = FAQUtilities;
 
   ngAfterViewInit() {
     const icons = document.querySelectorAll('.material-icons');
@@ -32,6 +38,9 @@ export class FaqComponent implements AfterViewInit{
       general: this.generalSec,
       payments: this.paymentsSec,
       support: this.supportSec,
+      account: this.accountSec,
+      company: this.companySec,
+      legal: this.legalSec,
       other: this.otherSec
     };
 
