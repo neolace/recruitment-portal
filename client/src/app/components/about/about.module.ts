@@ -5,6 +5,7 @@ import {AboutRoutingModule} from "./about-routing.module";
 import {GoogleMapsModule} from "@angular/google-maps";
 import {SharedPipesModule} from "../../shared/modules/shared-pipes.module";
 import {ReactiveFormsModule} from "@angular/forms";
+import {SharedCardsComponentModule} from "../../shared/modules/shared-cards-component.module";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {ReactiveFormsModule} from "@angular/forms";
         GoogleMapsModule,
         SharedPipesModule,
         ReactiveFormsModule,
-        NgOptimizedImage
+        NgOptimizedImage,
+        SharedCardsComponentModule
     ]
 })
 export class AboutModule { }
