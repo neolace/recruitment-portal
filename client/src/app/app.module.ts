@@ -26,6 +26,7 @@ import {OAuthModule} from "angular-oauth2-oidc";
 import {SkipXsrfInterceptor} from "./Config/SkipXsrfInterceptor";
 import {SharedComponentModule} from "./shared/modules/shared-component.module";
 import {FooterModule} from "./components/shared/footer/footer.module";
+import {HeaderModule} from "./components/shared/header/header.module";
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import {FooterModule} from "./components/shared/footer/footer.module";
         OAuthModule.forRoot(),
         SharedComponentModule,
         NgOptimizedImage,
-        FooterModule
+        FooterModule,
+        HeaderModule
     ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: SkipXsrfInterceptor, multi: true},

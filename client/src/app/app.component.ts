@@ -9,7 +9,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {ThemeService} from "./services/theme.service";
-import {NavigationEnd, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {LockScreenComponent} from "./components/lock-screen/lock-screen.component";
 import {LoginComponent} from "./components/login/login.component";
 import {RegisterComponent} from "./components/register/register.component";
@@ -18,7 +18,6 @@ import {FreeDashboardComponent} from "./components/dashboards/free/free-dashboar
 import {ProDashboardComponent} from "./components/dashboards/pro/pro-dashboard/pro-dashboard.component";
 import {commonSearchResults} from "./shared/data-store/common-search-results";
 import {AuthService} from "./services/auth.service";
-import {HttpErrorResponse} from "@angular/common/http";
 import {EmployeeService} from "./services/employee.service";
 import {CredentialService} from "./services/credential.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -93,21 +92,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.employeeId = this.cookieService.userID();
     this.employeeLevel = this.cookieService.level();
     this.themeService.applyTheme();
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        // Logic to update active class based on the current route
-        this.updateActiveClass();
-
-        const mainBody = document.querySelector('.main-body');
-        if (mainBody) {
-          mainBody.scrollTop = 0;
-        } else {
-          window.scrollTo(0, 0);
-        }
-      }
-    });
-
-    this.getEmployee(this.employeeId);
 
     this.isSubscribe = this.cookieService.isNewsletter();
 
@@ -131,52 +115,12 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.removeUnwantedSession()
   }
 
-  getEmployee(id: any) {
-    this.employeeService.getEmployee(id).subscribe(
-      (data) => {
-        this.employee = data;
-        this.credentialsService.fetchCredentialByEmployeeId(this.employeeId).subscribe(
-          (data) => {
-            this.employeeType = data?.role
-          }
-        )
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error)
-      }
-    );
-  }
-
-  updateActiveClass() {
-    const currentRoute = this.router.url;
-
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.classList.remove('active');
-    });
-
-    const activeLink = document.querySelector(`.nav-link[href="${currentRoute}"]`);
-    if (activeLink) {
-      activeLink.classList.add('active');
-    }
-  }
-
   toggleTheme() {
     this.themeService.toggleTheme();
   }
 
   changeColorShading(color: string) {
     this.themeService.changeColorShading(color);
-  }
-
-  isActive(s: string) {
-    return this.router.url === s;
-  }
-
-  collapseNavbar() {
-    const navbar = this.navbarNav.nativeElement;
-    if (navbar.classList.contains('show')) {
-      this.renderer.removeClass(navbar, 'show');
-    }
   }
 
   toggleCommonComponent(component: any) {
@@ -200,41 +144,15 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       this.showFooter = false;
     } else if (component instanceof HomeComponent) {
       this.showFooter = false;
-      this.showNavbar = true;
+      this.showNavbar = false;
     } else {
       this.showNavbar = true;
       this.showFooter = true;
     }
   }
 
-  filterSearchResults(): any[] {
-    if (this.targetInput === undefined) {
-      this.filteredSearchResults = this.commonSearchResults
-    }
-    return this.filteredSearchResults;
-  }
-
-  handleSearch(data: any) {
-    this.openSearchResults = !this.openSearchResults;
-    this.targetInput = data as HTMLInputElement;
-    const value = this.targetInput.value
-    if (value) {
-      this.filteredSearchResults = this.commonSearchResults.filter((data: any) =>
-        data.name.toLowerCase().includes(value.toLowerCase())
-      );
-    } else {
-      this.filteredSearchResults = this.commonSearchResults;
-    }
-  }
-
   removeUnwantedSession() {
     sessionStorage.clear();
-  }
-
-  logout() {
-    this.cookieService.logout()
-    this.removeUnwantedSession()
-    this.router.navigate(['/login']);
   }
 
   clickTranslate() {

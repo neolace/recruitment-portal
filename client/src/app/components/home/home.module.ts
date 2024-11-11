@@ -8,6 +8,7 @@ import {HomeRoutingModule} from "./home-routing.module";
 import {SharedPipesModule} from "../../shared/modules/shared-pipes.module";
 import {SharedCardsComponentModule} from "../../shared/modules/shared-cards-component.module";
 import {FooterModule} from "../shared/footer/footer.module";
+import {HeaderModule} from "../shared/header/header.module";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {FooterModule} from "../shared/footer/footer.module";
         SharedCardsComponentModule,
         ReactiveFormsModule,
         NgOptimizedImage,
-        FooterModule
+        FooterModule,
+        HeaderModule
     ],
   providers: [
   ],

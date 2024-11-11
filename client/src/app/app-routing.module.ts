@@ -46,6 +46,7 @@ const routes: Routes = [
   { path: 'tech-and-startup-jobs', loadChildren: () => import('./components/shared/content/tech-and-startup/tech-and-startup.module').then(m => m.TechAndStartupModule) },
   { path: 'quick-and-easy', loadChildren: () => import('./components/shared/content/quick-and-easy/quick-and-easy.module').then(m => m.QuickAndEasyModule) },
   { path: 'save-time', loadChildren: () => import('./components/shared/content/save-time/save-time.module').then(m => m.SaveTimeModule) },
+  { path: 'header', loadChildren: () => import('./components/shared/header/header.module').then(m => m.HeaderModule) },
   { path: '**', redirectTo: '/404' }
 ];
 

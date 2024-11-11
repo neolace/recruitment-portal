@@ -699,7 +699,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: #050f19;
-  z-index: 1000;
+  z-index: 1000000;
 
   img {
     width: 30%;
@@ -760,7 +760,7 @@ p, ol, ul, li {
   background: var(--color-surface-mixed-300);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-surface-mixed-400);
+  background: var(--color-surface-mixed-500);
   border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:hover {
