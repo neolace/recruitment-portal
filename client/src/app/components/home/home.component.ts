@@ -80,6 +80,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   destination: string = '';
   destination2: string = '';
 
+  showNavBar: boolean = false;
+
   newsLetterForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
   })
