@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
 import {environment} from "../../environments/environment";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class EncryptionService {
 
   private secretKey: string = environment.encryptionKey;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   private getKeySpec(key: string): any {
     const hashedKey = CryptoJS.SHA256(CryptoJS.enc.Utf8.parse(key)).toString(CryptoJS.enc.Hex);
@@ -45,5 +46,18 @@ export class EncryptionService {
     });
 
     return decrypted.toString(CryptoJS.enc.Utf8);
+  }
+
+  checkLeakedPassword(password: string) {
+    const sha1Hash = CryptoJS.SHA1(password).toString(CryptoJS.enc.Hex).toUpperCase();
+    const hashPrefix = sha1Hash.substring(0, 5);
+    const hashSuffix = sha1Hash.substring(5);
+
+    return this.http.get(`https://api.pwnedpasswords.com/range/${hashPrefix}`, { responseType: 'text' })
+      .toPromise()
+      .then((response: any) => {
+        const lines = response.split('\n');
+        return lines.some((line:any) => line.startsWith(hashSuffix));
+      });
   }
 }
