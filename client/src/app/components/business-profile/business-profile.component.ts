@@ -151,4 +151,12 @@ export class BusinessProfileComponent implements OnInit, AfterViewInit{
     }
   }
 
+  viewProfile(id: any) {
+    if (id) {
+      this.router.navigate([`/business-profile/${id}`]);
+      setTimeout(() => {
+        window.location.reload();
+      }, 500)
+    }
+  }
 }
