@@ -47,11 +47,19 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     });
   }
 
-  registerUser() {
+  async registerUser() {
     if (this.registerForm.valid) {
       const formData = this.registerForm.value;
-      if (formData.password){
-        const encryptedPassword = this.encryptionService.encryptPassword(formData.password);
+      const password = formData.password;
+
+      if (password && password.length >= 6) {
+        const isPwned = await this.encryptionService.checkLeakedPassword(password);
+        if (isPwned) {
+          this.alertService.errorMessage('This password has been compromised in data breaches. Please choose a different one.', 'Weak Password');
+          return;
+        }
+
+        const encryptedPassword = this.encryptionService.encryptPassword(password);
 
         this.credentialService.addCredential({
           firstname: formData.name?.split(' ')[0],
@@ -79,6 +87,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         }, error => {
           this.alertService.errorMessage('User already exists or an unexpected error has occurred', 'Unexpected Error');
         });
+      } else {
+        this.alertService.errorMessage('Password must be at least 6 characters long', 'Weak Password');
       }
     } else {
       this.alertService.errorMessage('Please fill in all required fields', 'Missing Fields');
