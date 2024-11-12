@@ -29,10 +29,6 @@
 </div>
 
 <div class="container">
-  <div *ngIf="targetInput1 === undefined && targetInput2 === undefined">
-    <app-hire-card1></app-hire-card1>
-  </div>
-
   <div class="popular-companies">
     <div class="row">
       <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 pt-4" *ngFor="let c of paginatedCompanies; let i = index;">
@@ -98,7 +94,9 @@
     </nav>
   </div>
 
-  <app-job-ad-card1></app-job-ad-card1>
+  <div *ngIf="targetInput1 === undefined && targetInput2 === undefined">
+    <app-hire-card1></app-hire-card1>
+  </div>
 
   <div *ngIf="!loading && serverError">
     <app-failed-to-load-data></app-failed-to-load-data>

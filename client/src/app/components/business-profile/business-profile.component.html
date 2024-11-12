@@ -267,7 +267,7 @@
 
             <div class="card-content">
               <div class="d-flex flex-column align-items-start">
-                <div class="company-name">{{rc.name ? rc.name : 'Not Provided'}}</div>
+                <div class="company-name" (click)="viewProfile(rc?.id)">{{rc.name ? rc.name : 'Not Provided'}}</div>
                 <div class="company-description">{{rc.shortDescription ? rc.shortDescription : rc.description | truncate:40}}</div>
               </div>
             </div>
