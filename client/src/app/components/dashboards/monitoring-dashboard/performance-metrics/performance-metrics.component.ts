@@ -1,79 +1,48 @@
-import {Component, OnInit} from '@angular/core';
-import {ChartDataset, ChartOptions} from "chart.js";
+import { Component, OnInit } from '@angular/core';
 import {MonitoringService} from "../../../../services/monitoring.service";
-import {ThemeService} from "../../../../services/theme.service";
 
 @Component({
   selector: 'app-performance-metrics',
   templateUrl: './performance-metrics.component.html',
   styleUrls: ['./performance-metrics.component.scss']
 })
-export class PerformanceMetricsComponent implements OnInit{
-  performanceMetrics: ChartDataset<'line'>[] = [];
-  labels: string[] = [];
-  lineChartOptions: ChartOptions<'line'> = {
+export class PerformanceMetricsComponent implements OnInit {
+  metrics: string[] = []; // To store all available metrics
+  selectedMetric: string = ''; // To store the selected metric
+  chartData: any = []; // To store chart data
+  labels: string[] = []; // To store labels for the chart
+
+  // Chart Options
+  public lineChartOptions = {
     responsive: true,
-    plugins: { legend: { position: 'bottom' } }
+    plugins: {
+      legend: {
+        position: 'bottom',
+      },
+    },
   };
 
-  constructor(private monitoringService: MonitoringService, private themeService: ThemeService ) {}
+  constructor(private monitoringService: MonitoringService) {}
 
-  ngOnInit() {
-    this.monitoringService.getPerformanceMetrics().subscribe(data => {
-      this.performanceMetrics = [
-        {
-          data: data.names, // Replace with the correct field from your API response
-          label: 'Performance',
-          backgroundColor: 'rgba(75,192,192,0.4)',
-          borderColor: 'rgba(75,192,192,1)',
-          fill: true
-        }
-      ];
-      this.labels = data.names; // Replace with the correct field from your API response
+  ngOnInit(): void {
+    // Fetch all metric names
+    this.monitoringService.getPerformanceMetrics().subscribe((response: any) => {
+      this.metrics = response.names;
     });
-
-    this.applyTheme()
   }
 
-  applyTheme(): void {
-    const axisColor = this.themeService.isDarkMode() ? '#fff' : '#222';
-    const gridColor = this.themeService.isDarkMode() ? '#444444' : '#e0e0e0';
-    const tooltipBackgroundColor = this.themeService.isDarkMode() ? '#333333' : '#ffffff';
-    const tooltipFontColor = this.themeService.isDarkMode() ? '#fff' : '#222';
-
-    this.lineChartOptions = {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'top',
-          labels: {
-            color: axisColor
-          }
-        },
-        tooltip: {
-          backgroundColor: tooltipBackgroundColor,
-          titleColor: tooltipFontColor,
-          bodyColor: tooltipFontColor,
-        }
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: axisColor
+  onMetricSelect(): void {
+    if (this.selectedMetric) {
+      // Fetch data for the selected metric
+      this.monitoringService.getMetricData(this.selectedMetric).subscribe((response: any) => {
+        this.labels = response.measurements.map((_: any, index: any) => `Label ${index + 1}`);
+        this.chartData = [
+          {
+            data: response.measurements.map((measurement: any) => measurement.value),
+            label: this.selectedMetric,
           },
-          grid: {
-            color: gridColor
-          }
-        },
-        y: {
-          ticks: {
-            color: axisColor
-          },
-          grid: {
-            color: gridColor
-          }
-        }
-      }
-    };
+        ];
+      });
+    }
   }
 }

@@ -1,6 +1,18 @@
-<canvas baseChart
-        [datasets]="performanceMetrics"
-        [labels]="labels"
-        [options]="lineChartOptions"
-        chartType="line">
-</canvas>
+<div class="metrics-container">
+  <h2>Performance Metrics</h2>
+  <label for="metrics-dropdown">Select a Metric:</label>
+  <select id="metrics-dropdown" [(ngModel)]="selectedMetric" (change)="onMetricSelect()">
+    <option *ngFor="let metric of metrics" [value]="metric">{{ metric }}</option>
+  </select>
+
+  <div *ngIf="chartData.length">
+    <canvas
+      baseChart
+      [datasets]="chartData"
+      [labels]="labels"
+      [options]="lineChartOptions"
+      [legend]="true"
+      chartType="line"
+    ></canvas>
+  </div>
+</div>
