@@ -1,0 +1,31 @@
+<div class="health-dashboard">
+  <h2>Health Metrics</h2>
+  <div class="overall-status">
+    <p><strong>Overall Status:</strong> {{ overallStatus }}</p>
+  </div>
+
+  <table class="health-table">
+    <thead>
+    <tr>
+      <th>Component</th>
+      <th>Status</th>
+      <th>Details</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let metric of healthMetrics">
+      <td>{{ metric.name }}</td>
+      <td [class.up]="metric.status === 'UP'" [class.down]="metric.status !== 'UP'">
+        {{ metric.status }} <i [ngClass]="metric.status === 'UP' ? 'fa fa-caret-up' : 'fa fa-caret-down'" aria-hidden="true"></i>
+      </td>
+      <td>
+        <ul>
+          <li *ngFor="let detail of metric.details | keyvalue">
+            {{ detail.key }}: {{ detail.value }}
+          </li>
+        </ul>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
