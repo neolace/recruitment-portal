@@ -1,10 +1,5 @@
 <div class="container">
-  <canvas baseChart
-          [datasets]="performanceMetrics"
-          [labels]="labels"
-          [options]="lineChartOptions"
-          chartType="line">
-  </canvas>
+  <app-performance-metrics></app-performance-metrics>
 
   <app-health-metrics></app-health-metrics>
 </div>

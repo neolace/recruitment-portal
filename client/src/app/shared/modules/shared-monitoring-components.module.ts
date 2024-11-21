@@ -4,10 +4,14 @@ import {
 } from "../../components/dashboards/monitoring-dashboard/health-metrics/health-metrics.component";
 import {NgChartsModule} from "ng2-charts";
 import {CommonModule, NgIf} from "@angular/common";
+import {
+  PerformanceMetricsComponent
+} from "../../components/dashboards/monitoring-dashboard/performance-metrics/performance-metrics.component";
 
 @NgModule({
   declarations: [
-    HealthMetricsComponent
+    HealthMetricsComponent,
+    PerformanceMetricsComponent
   ],
   imports: [
     CommonModule,
@@ -15,7 +19,8 @@ import {CommonModule, NgIf} from "@angular/common";
     NgIf
   ],
   exports: [
-    HealthMetricsComponent
+    HealthMetricsComponent,
+    PerformanceMetricsComponent
   ]
 })
 export class SharedMonitoringComponentsModule {}
