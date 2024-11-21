@@ -47,6 +47,7 @@ const routes: Routes = [
   { path: 'quick-and-easy', loadChildren: () => import('./components/shared/content/quick-and-easy/quick-and-easy.module').then(m => m.QuickAndEasyModule) },
   { path: 'save-time', loadChildren: () => import('./components/shared/content/save-time/save-time.module').then(m => m.SaveTimeModule) },
   { path: 'header', loadChildren: () => import('./components/shared/header/header.module').then(m => m.HeaderModule) },
+  { path: 'monitor', loadChildren: () => import('./components/dashboards/monitoring-dashboard/monitoring-dashboard.module').then(m => m.MonitoringDashboardModule) },
   { path: '**', redirectTo: '/404' }
 ];
 

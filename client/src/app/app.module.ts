@@ -27,6 +27,7 @@ import {SkipXsrfInterceptor} from "./Config/SkipXsrfInterceptor";
 import {SharedComponentModule} from "./shared/modules/shared-component.module";
 import {FooterModule} from "./components/shared/footer/footer.module";
 import {HeaderModule} from "./components/shared/header/header.module";
+import {AngularFirePerformanceModule} from "@angular/fire/compat/performance";
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import {HeaderModule} from "./components/shared/header/header.module";
         AngularFirestoreModule,
         AngularFireStorageModule,
         AngularFireAuthModule,
+        AngularFirePerformanceModule,
         SharedPipesModule,
         HttpClientModule,
         ToastrModule.forRoot({
