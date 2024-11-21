@@ -10,6 +10,12 @@ export class HealthMetricsComponent implements OnInit {
   healthMetrics: any = [];
   overallStatus: string = '';
 
+  freeDiskSpace: number = 0;
+  totalDiskSpace: number = 0;
+  freeSpacePercentage: number = 0;
+  usedSpacePercentage: number = 0;
+  progressBarClass: string = '';
+
   constructor(private monitoringService: MonitoringService) {}
 
   ngOnInit(): void {
@@ -23,6 +29,22 @@ export class HealthMetricsComponent implements OnInit {
           details: value.details
         };
       });
+      // Extract disk space data
+      const diskSpace = data.components.diskSpace.details;
+      console.log(diskSpace)
+      this.freeDiskSpace = diskSpace.free / 1024 / 1024 / 1024;
+      this.totalDiskSpace = diskSpace.total / 1024 / 1024 / 1024;
+
+      // Calculate the percentage of free space
+      this.freeSpacePercentage = (this.freeDiskSpace / this.totalDiskSpace) * 100;
+      this.usedSpacePercentage = ((this.totalDiskSpace - this.freeDiskSpace) / this.totalDiskSpace) * 100;
+      if (this.freeSpacePercentage < 20 || this.usedSpacePercentage > 80) {
+        this.progressBarClass = 'low';
+      } else if (this.freeSpacePercentage < 50 || this.usedSpacePercentage > 50) {
+        this.progressBarClass = 'medium';
+      } else if(this.freeSpacePercentage < 80 || this.usedSpacePercentage > 20) {
+        this.progressBarClass = 'high';
+      }
     });
   }
 }
