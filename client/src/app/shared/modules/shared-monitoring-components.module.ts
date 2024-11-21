@@ -7,6 +7,7 @@ import {CommonModule, NgIf} from "@angular/common";
 import {
   PerformanceMetricsComponent
 } from "../../components/dashboards/monitoring-dashboard/performance-metrics/performance-metrics.component";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {
   imports: [
     CommonModule,
     NgChartsModule,
-    NgIf
+    NgIf,
+    FormsModule
   ],
   exports: [
     HealthMetricsComponent,
