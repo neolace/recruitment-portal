@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MonitoringDashboardRoutingModule } from './monitoring-dashboard-routing.module';
 import { MonitoringDashboardComponent } from './monitoring-dashboard.component';
 import {NgChartsModule} from "ng2-charts";
+import {SharedMonitoringComponentsModule} from "../../../shared/modules/shared-monitoring-components.module";
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {NgChartsModule} from "ng2-charts";
     imports: [
         CommonModule,
         MonitoringDashboardRoutingModule,
-        NgChartsModule
+        NgChartsModule,
+        SharedMonitoringComponentsModule
     ]
 })
 export class MonitoringDashboardModule { }

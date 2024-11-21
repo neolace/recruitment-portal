@@ -1,0 +1,33 @@
+.health-dashboard {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.health-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.health-table th, .health-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.health-table th {
+  background-color: #f4f4f4;
+}
+
+.up {
+  color: green;
+}
+
+.down {
+  color: red;
+}
+
+ul {
+  margin: 0;
+  padding-left: 20px;
+}
