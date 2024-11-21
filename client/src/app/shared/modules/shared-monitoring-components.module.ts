@@ -8,18 +8,20 @@ import {
   PerformanceMetricsComponent
 } from "../../components/dashboards/monitoring-dashboard/performance-metrics/performance-metrics.component";
 import {FormsModule} from "@angular/forms";
+import {CdkDragPlaceholder} from "@angular/cdk/drag-drop";
 
 @NgModule({
   declarations: [
     HealthMetricsComponent,
     PerformanceMetricsComponent
   ],
-  imports: [
-    CommonModule,
-    NgChartsModule,
-    NgIf,
-    FormsModule
-  ],
+    imports: [
+        CommonModule,
+        NgChartsModule,
+        NgIf,
+        FormsModule,
+        CdkDragPlaceholder
+    ],
   exports: [
     HealthMetricsComponent,
     PerformanceMetricsComponent

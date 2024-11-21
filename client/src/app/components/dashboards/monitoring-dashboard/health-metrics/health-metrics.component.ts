@@ -31,7 +31,6 @@ export class HealthMetricsComponent implements OnInit {
       });
       // Extract disk space data
       const diskSpace = data.components.diskSpace.details;
-      console.log(diskSpace)
       this.freeDiskSpace = diskSpace.free / 1024 / 1024 / 1024;
       this.totalDiskSpace = diskSpace.total / 1024 / 1024 / 1024;
 

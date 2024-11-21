@@ -30,6 +30,6 @@ export class MonitoringService {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:password')
     });
-    return this.http.get(`${this.baseUrl}/metrics/${metricName}`, {headers});
+    return this.http.get(`${this.baseUrl}/actuator/metrics/${metricName}`, {headers});
   }
 }

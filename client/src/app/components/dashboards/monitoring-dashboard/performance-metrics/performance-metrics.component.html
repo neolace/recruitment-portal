@@ -1,6 +1,6 @@
 <div class="metrics-container">
   <h2>Performance Metrics</h2>
-  <label for="metrics-dropdown">Select a Metric:</label>
+  <label for="metrics-dropdown" style="color: var(--color-text-200);">Select a Metric: &nbsp;</label>
   <select id="metrics-dropdown" [(ngModel)]="selectedMetric" (change)="onMetricSelect()">
     <option *ngFor="let metric of metrics" [value]="metric">{{ metric }}</option>
   </select>
@@ -12,7 +12,7 @@
       [labels]="labels"
       [options]="lineChartOptions"
       [legend]="true"
-      chartType="line"
+      chartType="bar"
     ></canvas>
   </div>
 </div>
