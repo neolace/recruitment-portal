@@ -1,6 +1,6 @@
 package com.hris.HRIS_job_portal.Service.security;
 
-import com.hris.HRIS_job_portal.Config.ConfigUtility;
+import com.hris.HRIS_job_portal.Utils.ConfigUtility;
 import com.hris.HRIS_job_portal.Model.security.TokenModel;
 import com.hris.HRIS_job_portal.Repository.security.TokenRepository;
 import io.jsonwebtoken.JwtParser;

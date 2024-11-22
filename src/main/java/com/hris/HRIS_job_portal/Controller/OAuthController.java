@@ -1,13 +1,12 @@
 package com.hris.HRIS_job_portal.Controller;
 
-import com.hris.HRIS_job_portal.Config.ConfigUtility;
+import com.hris.HRIS_job_portal.Utils.ConfigUtility;
 import com.hris.HRIS_job_portal.Model.CredentialsModel;
 import com.hris.HRIS_job_portal.Service.CredentialsService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;

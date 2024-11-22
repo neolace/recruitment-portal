@@ -2,6 +2,7 @@ package com.hris.HRIS_job_portal.Config;
 
 import com.hris.HRIS_job_portal.Model.CredentialsModel;
 import com.hris.HRIS_job_portal.Service.CredentialsService;
+import com.hris.HRIS_job_portal.Utils.ConfigUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

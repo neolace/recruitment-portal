@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TokenGuardGuard } from './token-guard.guard';
+import { TokenGuard } from './token-guard.guard';
 
 describe('TokenGuardGuard', () => {
-  let guard: TokenGuardGuard;
+  let guard: TokenGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    guard = TestBed.inject(TokenGuardGuard);
+    guard = TestBed.inject(TokenGuard);
   });
 
   it('should be created', () => {
