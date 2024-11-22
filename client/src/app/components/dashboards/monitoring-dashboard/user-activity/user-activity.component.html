@@ -1,0 +1,21 @@
+<div class="dashboard">
+  <h2>User Activity Metrics</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>User ID</th>
+      <th>IP Address</th>
+      <th>Timestamp</th>
+      <th>Endpoint Accessed</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let activity of userActivities">
+      <td>{{ activity.userId }}</td>
+      <td>{{ activity.ipAddress }}</td>
+      <td>{{ activity.timestamp }}</td>
+      <td>{{ activity.endpointAccessed }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
