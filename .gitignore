@@ -48,3 +48,5 @@ build/
 /client/src/app/shared/utilities/products.utilities.ts
 /client/src/app/shared/utilities/faq.utilities.ts
 *.*~
+
+/GeoLite2-City.mmdb
