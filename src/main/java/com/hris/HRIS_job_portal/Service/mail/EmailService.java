@@ -1,6 +1,6 @@
 package com.hris.HRIS_job_portal.Service.mail;
 
-import com.hris.HRIS_job_portal.Config.ConfigUtility;
+import com.hris.HRIS_job_portal.Utils.ConfigUtility;
 import com.hris.HRIS_job_portal.DTO.mail.ContactUsDTO;
 import com.hris.HRIS_job_portal.DTO.mail.PersonalContactDTO;
 import com.hris.HRIS_job_portal.Service.security.ValidateTokenService;

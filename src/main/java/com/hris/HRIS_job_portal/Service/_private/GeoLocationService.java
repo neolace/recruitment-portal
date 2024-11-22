@@ -1,13 +1,12 @@
 package com.hris.HRIS_job_portal.Service._private;
 
-import com.hris.HRIS_job_portal.Config.ConfigUtility;
+import com.hris.HRIS_job_portal.Utils.ConfigUtility;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.hris.HRIS_job_portal.Config;
+package com.hris.HRIS_job_portal.Utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
