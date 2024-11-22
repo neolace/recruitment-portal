@@ -9,6 +9,7 @@ import {environment} from "../../environments/environment";
 export class MonitoringService {
 
   baseUrl = environment.apiUrlSimple;
+  cBaseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -31,5 +32,19 @@ export class MonitoringService {
       'Authorization': 'Basic ' + btoa('admin:password')
     });
     return this.http.get(`${this.baseUrl}/actuator/metrics/${metricName}`, {headers});
+  }
+
+  getTaskExecutionMetrics(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.get(`${this.cBaseUrl}/metrics/task-executor`, {headers});
+  }
+
+  getUserActivityMetrics(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.get(`${this.cBaseUrl}/metrics/user-activity`, {headers});
   }
 }
