@@ -1,6 +1,8 @@
 package com.hris.HRIS_job_portal.Controller._private;
 
 import com.hris.HRIS_job_portal.Service._private.GeoLocationService;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,15 +45,16 @@ public class MetricsController {
         return metrics;
     }
 
-    @GetMapping("/geolocation")
-    public JsonObject getGeoLocation(@RequestParam String ipAddress) {
+    @GetMapping(value = "/geolocation", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, String>> getGeoLocation(@RequestParam String ipAddress) {
         try {
-            return geoLocationService.getGeoLocation(ipAddress);
+            Map<String, String> location = geoLocationService.getGeoLocation(ipAddress);
+            return ResponseEntity.ok(location);
         } catch (Exception e) {
             e.printStackTrace();
-            JsonObject error = new JsonObject();
-            error.addProperty("error", e.getMessage());
-            return error;
+            Map<String, String> error = new HashMap<>();
+            error.put("error", e.getMessage());
+            return ResponseEntity.status(500).body(error);
         }
     }
 }
