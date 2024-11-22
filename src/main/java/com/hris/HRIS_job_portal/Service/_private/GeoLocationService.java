@@ -2,31 +2,46 @@ package com.hris.HRIS_job_portal.Service._private;
 
 import com.hris.HRIS_job_portal.Config.ConfigUtility;
 import okhttp3.OkHttpClient;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import okhttp3.Request;
 import okhttp3.Response;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class GeoLocationService {
 
     @Autowired
-    private ConfigUtility configUtil;
+    ConfigUtility configUtility;
 
     private final OkHttpClient httpClient = new OkHttpClient();
 
-    public JsonObject getGeoLocation(String ipAddress) throws Exception {
-        String url = "https://ipinfo.io/" + ipAddress + "/json?token=" + configUtil.getProperty("IPINFO_TOKEN");
-        Request request = new Request.Builder() .url(url) .build();
+    public Map<String, String> getGeoLocation(String ipAddress) throws Exception {
+        String url = "https://ipinfo.io/" + ipAddress + "/json?token=" + configUtility.getProperty("IPINFO_TOKEN");
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
 
         try (Response response = httpClient.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new RuntimeException("Unexpected code " + response);
-            Gson gson = new Gson();
+
             assert response.body() != null;
-            return gson.fromJson(response.body().string(), JsonObject.class);
+            JsonObject json = JsonParser.parseString(response.body().string()).getAsJsonObject();
+            Map<String, String> location = new HashMap<>();
+            location.put("ip", json.get("ip").getAsString());
+            location.put("city", json.get("city").getAsString());
+            location.put("region", json.get("region").getAsString());
+            location.put("country", json.get("country").getAsString());
+            location.put("loc", json.get("loc").getAsString());
+            location.put("org", json.get("org").getAsString());
+            return location;
         }
     }
 }
+
 
