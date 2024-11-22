@@ -1,6 +1,7 @@
 package com.hris.HRIS_job_portal.Controller._private;
 
 import com.hris.HRIS_job_portal.Service._private.GeoLocationService;
+import com.hris.HRIS_job_portal.Service._private.UserActivityService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import io.micrometer.core.instrument.MeterRegistry;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -20,6 +23,9 @@ public class MetricsController {
 
     @Autowired
     private GeoLocationService geoLocationService;
+
+    @Autowired
+    private UserActivityService userActivityService;
 
     private final MeterRegistry meterRegistry;
 
@@ -53,6 +59,19 @@ public class MetricsController {
             e.printStackTrace();
             Map<String, String> error = new HashMap<>();
             error.put("error", e.getMessage());
+            return ResponseEntity.status(500).body(error);
+        }
+    }
+
+    @GetMapping(value = "/user-activities", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Map<String, String>>> getUserActivity() {
+        try {
+            List<Map<String, String>> activity = userActivityService.getAllUserActivities();
+            return ResponseEntity.ok(activity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            List<Map<String, String>> error = new ArrayList<>();
+            error.add(Map.of("error", e.getMessage()));
             return ResponseEntity.status(500).body(error);
         }
     }
