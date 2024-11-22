@@ -9,6 +9,7 @@ import {MonitoringService} from "../../../../services/monitoring.service";
 export class HealthMetricsComponent implements OnInit {
   healthMetrics: any = [];
   overallStatus: string = '';
+  serverUpTime: string = '';
 
   freeDiskSpace: number = 0;
   totalDiskSpace: number = 0;
@@ -22,6 +23,7 @@ export class HealthMetricsComponent implements OnInit {
     this.monitoringService.getHealthMetrics().subscribe((data: any) => {
       // Extract and transform the health metrics
       this.overallStatus = data.status;
+      this.serverUpTime = data.components.uptime.details.uptime;
       this.healthMetrics = Object.entries(data.components).map(([key, value]: any) => {
         return {
           name: key,
