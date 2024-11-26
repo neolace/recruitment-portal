@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
@@ -69,6 +70,19 @@ public class UserActivityService {
     public long getActiveUserCount() {
         Instant activeSince = Instant.now().minus(15, ChronoUnit.MINUTES);
         return repository.countActiveUsers(activeSince);
+    }
+
+    public Map<String, Long> getActivityOverTime(String interval) {
+        List<UserActivity> activities = repository.findAll();
+        DateTimeFormatter formatter = interval.equals("hourly") ?
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH") :
+                DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        return activities.stream()
+                .collect(Collectors.groupingBy(
+                        activity -> activity.getTimestamp().format(formatter),
+                        Collectors.counting()
+                ));
     }
 }
 

@@ -81,5 +81,12 @@ public class MetricsController {
         long activeUsers = userActivityService.getActiveUserCount();
         return ResponseEntity.ok(activeUsers);
     }
+
+    @GetMapping("/activity-trends")
+    public ResponseEntity<Map<String, Long>> getActivityTrends(
+            @RequestParam(defaultValue = "hourly") String interval) {
+        Map<String, Long> trends = userActivityService.getActivityOverTime(interval);
+        return ResponseEntity.ok(trends);
+    }
 }
 

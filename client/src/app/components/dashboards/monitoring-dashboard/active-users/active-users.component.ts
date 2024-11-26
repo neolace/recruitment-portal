@@ -14,11 +14,11 @@ export class ActiveUsersComponent {
   constructor(private monitoringService: MonitoringService) {}
 
   ngOnInit() {
-    interval(10000).subscribe(() => {
-      this.monitoringService.getActiveUsers().subscribe((count) => {
-        this.activeUserCount = count;
-      });
-    });
+    // interval(10000).subscribe(() => {
+    //   this.monitoringService.getActiveUsers().subscribe((count) => {
+    //     this.activeUserCount = count;
+    //   });
+    // });
 
     this.monitoringService.fetchUserActivities().subscribe((data) => {
       const endpointCounts = data.reduce((acc: any, activity: any) => {
