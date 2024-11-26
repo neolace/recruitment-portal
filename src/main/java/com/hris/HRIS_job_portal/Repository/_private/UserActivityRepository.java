@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface UserActivityRepository extends MongoRepository<UserActivity, String> {
-    @Query("{'lastActive': { $gte: ?0 }}")
+    @Query(value = "{ 'lastActive': { $gte: ?0 } }", count = true)
     long countActiveUsers(Instant activeSince);
 
     @Query("{'encryptedIpAddress': ?0, 'endpointAccessed': ?1, 'timestamp': { $gte: ?2 }}")
