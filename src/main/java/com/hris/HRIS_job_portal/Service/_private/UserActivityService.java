@@ -6,10 +6,13 @@ import com.hris.HRIS_job_portal.Utils.EncryptionUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,16 +24,24 @@ public class UserActivityService {
     public void logUserActivity(String userId, String ipAddress, String endpointAccessed) {
         try {
             String encryptedIp = EncryptionUtility.encrypt(ipAddress);
+            LocalDateTime recentWindow = LocalDateTime.now().minusMinutes(1);
 
-            UserActivity activity = new UserActivity();
-            activity.setUserId(userId);
-            activity.setEncryptedIpAddress(encryptedIp);
-            activity.setTimestamp(LocalDateTime.now());
-            activity.setEndpointAccessed(endpointAccessed);
+            Optional<UserActivity> recentActivity = repository.findRecentActivity(encryptedIp, endpointAccessed, recentWindow);
 
+            UserActivity activity;
+            if (recentActivity.isPresent()) {
+                activity = recentActivity.get();
+            } else {
+                activity = new UserActivity();
+                activity.setUserId(userId);
+                activity.setEncryptedIpAddress(encryptedIp);
+                activity.setEndpointAccessed(endpointAccessed);
+                activity.setTimestamp(LocalDateTime.now());
+            }
+            activity.setLastActive(Instant.now());
             repository.save(activity);
         } catch (Exception e) {
-            e.printStackTrace(); // Handle encryption exceptions
+            System.err.println("Error logging activity: " + e.getMessage());
         }
     }
 
@@ -49,9 +60,15 @@ public class UserActivityService {
             data.put("userId", activity.getUserId());
             data.put("ipAddress", decryptIpAddress(activity.getEncryptedIpAddress()));
             data.put("timestamp", activity.getTimestamp().toString());
+            data.put("lastActive", activity.getLastActive().toString());
             data.put("endpointAccessed", activity.getEndpointAccessed());
             return data;
         }).collect(Collectors.toList());
+    }
+
+    public long getActiveUserCount() {
+        Instant activeSince = Instant.now().minus(15, ChronoUnit.MINUTES);
+        return repository.countActiveUsers(activeSince);
     }
 }
 

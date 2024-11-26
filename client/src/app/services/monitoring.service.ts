@@ -54,4 +54,11 @@ export class MonitoringService {
     });
     return this.http.get<any[]>(`${this.cBaseUrl}/metrics/user-activities`, {headers});
   }
+
+  getActiveUsers(): Observable<number> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.get<number>(`${this.cBaseUrl}/metrics/active-users`);
+  }
 }

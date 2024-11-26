@@ -75,5 +75,11 @@ public class MetricsController {
             return ResponseEntity.status(500).body(error);
         }
     }
+
+    @GetMapping("/active-users")
+    public ResponseEntity<Long> getActiveUsers() {
+        long activeUsers = userActivityService.getActiveUserCount();
+        return ResponseEntity.ok(activeUsers);
+    }
 }
 

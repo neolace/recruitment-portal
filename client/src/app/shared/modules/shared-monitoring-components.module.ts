@@ -12,24 +12,31 @@ import {CdkDragPlaceholder} from "@angular/cdk/drag-drop";
 import {
   UserActivityComponent
 } from "../../components/dashboards/monitoring-dashboard/user-activity/user-activity.component";
+import {SharedPipesModule} from "./shared-pipes.module";
+import {
+  ActiveUsersComponent
+} from "../../components/dashboards/monitoring-dashboard/active-users/active-users.component";
 
 @NgModule({
   declarations: [
     HealthMetricsComponent,
     PerformanceMetricsComponent,
-    UserActivityComponent
+    UserActivityComponent,
+    ActiveUsersComponent
   ],
     imports: [
         CommonModule,
         NgChartsModule,
         NgIf,
         FormsModule,
-        CdkDragPlaceholder
+        CdkDragPlaceholder,
+        SharedPipesModule
     ],
   exports: [
     HealthMetricsComponent,
     PerformanceMetricsComponent,
-    UserActivityComponent
+    UserActivityComponent,
+    ActiveUsersComponent
   ]
 })
 export class SharedMonitoringComponentsModule {}
