@@ -59,6 +59,16 @@ export class MonitoringService {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:password')
     });
-    return this.http.get<number>(`${this.cBaseUrl}/metrics/active-users`);
+    return this.http.get<number>(`${this.cBaseUrl}/metrics/active-users`, {headers});
   }
+
+  getActivityTrends(interval: string): Observable<{ [key: string]: number }> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    })
+    return this.http.get<{ [key: string]: number }>(
+      `${this.cBaseUrl}/metrics/activity-trends?interval=${interval}`, {headers}
+    );
+  }
+
 }

@@ -16,13 +16,17 @@ import {SharedPipesModule} from "./shared-pipes.module";
 import {
   ActiveUsersComponent
 } from "../../components/dashboards/monitoring-dashboard/active-users/active-users.component";
+import {
+  ActivityTrendsComponent
+} from "../../components/dashboards/monitoring-dashboard/activity-trends/activity-trends.component";
 
 @NgModule({
   declarations: [
     HealthMetricsComponent,
     PerformanceMetricsComponent,
     UserActivityComponent,
-    ActiveUsersComponent
+    ActiveUsersComponent,
+    ActivityTrendsComponent
   ],
     imports: [
         CommonModule,
@@ -36,7 +40,8 @@ import {
     HealthMetricsComponent,
     PerformanceMetricsComponent,
     UserActivityComponent,
-    ActiveUsersComponent
+    ActiveUsersComponent,
+    ActivityTrendsComponent
   ]
 })
 export class SharedMonitoringComponentsModule {}
