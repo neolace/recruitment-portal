@@ -6,6 +6,7 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Getter
@@ -20,4 +21,7 @@ public class UserActivity {
     private String encryptedIpAddress;
     private LocalDateTime timestamp;
     private String endpointAccessed;
+    private Instant lastActive;
+    private LocalDateTime sessionStart;
+    private LocalDateTime sessionEnd;
 }
