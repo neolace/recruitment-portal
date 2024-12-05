@@ -358,8 +358,8 @@
       <div class="pricing-wrapper" [ngClass]="p.recommended?'recommended':''">
         <div class="h-100" [ngClass]="p.recommended?'ribbon':''">
           <span *ngIf="p.recommended">Recommended</span>
-          <div class="pricing-card">
-            <div class="title">{{p.name}}</div>
+          <div class="pricing-card" [ngClass]="p.name == 'Premium' ? 'gold-shade': p.name == 'Free'?'blue-shade':''">
+            <div class="title" [ngClass]="p.name == 'Premium' ? 'gold-title':''">{{p.name}}</div>
             <div class="desc">{{p.shortDescription}}</div>
             <div class="d-flex align-items center justify-content-center w-100">
             <span class="d-flex align-items-center">

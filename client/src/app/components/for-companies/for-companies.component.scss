@@ -97,6 +97,10 @@
       color: var(--color-text-100);
     }
 
+    .gold-title{
+      color: var(--color-highlight-100);
+    }
+
     .desc{
       font-size: 16px;
       text-align: center;
@@ -136,7 +140,7 @@
       color: var(--color-text-100);
       background-color: transparent;
       border-radius: 8px;
-      border: 2px solid var(--color-surface-mixed-400);
+      border: 2px solid var(--color-highlight-100);
       transition: all .3s ease-in-out;
       cursor: pointer;
 
@@ -176,6 +180,15 @@
         cursor: default;
       }
     }
+  }
+
+  .pricing-card.gold-shade{
+    --new-color: color-mix(in srgb,var(--color-highlight-100),#0000 60%);
+    background-image: linear-gradient(220deg, var(--new-color), var(--color-surface-mixed-100) 40%);
+  }
+  .pricing-card.blue-shade{
+    --new-color: color-mix(in srgb,var(--color-secondary-200),#0000 60%);
+    background-image: linear-gradient(145deg, var(--new-color), var(--color-surface-mixed-100) 30%);
   }
 }
 
