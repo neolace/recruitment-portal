@@ -6,8 +6,8 @@
   min-height: 400px;
   text-align: justify;
 
-  h5{
-    margin-bottom: 16px;
+  h4{
+    margin: 16px 0;
   }
 
   ul{
@@ -26,6 +26,10 @@
       color: var(--color-primary-200);
       margin-right: 6px;
     }
+  }
+
+  strong{
+    font-weight: 450;
   }
 
   .date-tag{
