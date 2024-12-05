@@ -25,7 +25,10 @@
 
             <div class="col-12">
               <label for="password">Password:</label>
-              <input type="password" placeholder="Password:" id="password" formControlName="password">
+              <div class="input-group w-100 d-flex">
+                <input type="password" placeholder="Password:" id="password" formControlName="password" aria-label="Password:" aria-describedby="button-addon" style="flex:1">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon" (click)="togglePasswordVisibility()"><i [ngClass]="isp1open? 'fa fa-eye-slash':'fa fa-eye'" aria-hidden="true"></i></button>
+              </div>
             </div>
 
             <div class="col-12">
