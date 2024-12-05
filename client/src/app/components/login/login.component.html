@@ -1,12 +1,15 @@
 <div class="shared-background">
   <div class="overlay"></div>
 
-  <div class="container">
-    <div class="content-holder">
+  <div class="content-holder">
+    <div class="main-content-wrapper">
+      <div class="img-card-1">
+        <img src="./assets/imgs/login/login.webp" alt="login image">
+      </div>
       <div class="form-card-1">
         <div class="logo" [ngStyle]="{'background-image': themeService.isDarkMode() ? 'url(./assets/imgs/logo/top-w.svg)' : 'url(./assets/imgs/logo/top-b.svg)'}">
         </div>
-        <h5 class="title">Login</h5>
+        <h5 class="title">Login to your account</h5>
 
         <form [formGroup]="loginForm">
           <div class="row form-wrapper">
@@ -34,7 +37,7 @@
             </div>
 
             <div class="col-12">
-              <button class="btn-1 w-100" (click)="loginUser()" [disabled]="disabled">login/sign in</button>
+              <button class="btn-1 w-100" (click)="loginUser()" [disabled]="disabled">Login</button>
             </div>
 
             <div class="d-flex align-items-center justify-content-center">
@@ -44,40 +47,54 @@
             </div>
 
             <div class="col-12">
-              <div class="row">
-                <div class="col-6">
-                  <div class="btn-2" (click)="loginWithGoogle()">
-                    <div class="icon-wrapper">
-                      <img src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
-                    </div>
-                    <span>Google</span>
-                  </div>
+              <div class="d-flex align-items-center justify-content-around w-100">
+                <div class="s-login-btn" (click)="loginWithGoogle()">
+                  <img src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo">
                 </div>
-                <div class="col-6">
-                  <div class="btn-2" (click)="loginWithGithub()">
-                    <div class="icon-wrapper">
-                      <img src="https://img.icons8.com/ios-glyphs/60/github.png" alt="github"/>
-                    </div>
-                    <span>Github</span>
-                  </div>
+                <div class="s-login-btn" (click)="loginWithGithub()">
+                  <img src="https://img.icons8.com/ios-glyphs/60/github.png" alt="github">
                 </div>
-                <div class="col-6">
-                  <div class="btn-2" (click)="loginWithLinkedin()">
-                    <div class="icon-wrapper">
-                      <img src="https://img.icons8.com/color/48/linkedin.png" alt="linkedin"/>
-                    </div>
-                    <span>Linkedin</span>
-                  </div>
+                <div class="s-login-btn" (click)="loginWithLinkedin()">
+                  <img src="https://img.icons8.com/color/48/linkedin.png" alt="linkedin">
                 </div>
-                <div class="col-6">
-                  <div class="btn-2" (click)="loginWithFacebook()">
-                    <div class="icon-wrapper">
-                      <img src="https://img.icons8.com/color/48/facebook-new.png" alt="facebook-new"/>
-                    </div>
-                    <span>Facebook</span>
-                  </div>
+                <div class="s-login-btn" (click)="loginWithFacebook()">
+                  <img src="https://img.icons8.com/color/48/facebook-new.png" alt="facebook-new">
                 </div>
               </div>
+<!--              <div class="row">-->
+<!--                <div class="col-6">-->
+<!--                  <div class="btn-2" (click)="loginWithGoogle()">-->
+<!--                    <div class="icon-wrapper">-->
+<!--                      <img src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>-->
+<!--                    </div>-->
+<!--                    <span>Google</span>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="col-6">-->
+<!--                  <div class="btn-2" (click)="loginWithGithub()">-->
+<!--                    <div class="icon-wrapper">-->
+<!--                      <img src="https://img.icons8.com/ios-glyphs/60/github.png" alt="github"/>-->
+<!--                    </div>-->
+<!--                    <span>Github</span>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="col-6">-->
+<!--                  <div class="btn-2" (click)="loginWithLinkedin()">-->
+<!--                    <div class="icon-wrapper">-->
+<!--                      <img src="https://img.icons8.com/color/48/linkedin.png" alt="linkedin"/>-->
+<!--                    </div>-->
+<!--                    <span>Linkedin</span>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="col-6">-->
+<!--                  <div class="btn-2" (click)="loginWithFacebook()">-->
+<!--                    <div class="icon-wrapper">-->
+<!--                      <img src="https://img.icons8.com/color/48/facebook-new.png" alt="facebook-new"/>-->
+<!--                    </div>-->
+<!--                    <span>Facebook</span>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
             </div>
 
             <div class="col-12">
