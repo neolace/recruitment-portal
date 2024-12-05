@@ -25,6 +25,8 @@ export class LoginComponent implements AfterViewInit, OnInit {
     password: new FormControl('', [Validators.required])
   });
 
+  isp1open: boolean = true;
+
   constructor(
     private router: Router,
     private credentialService: CredentialService,
@@ -129,5 +131,16 @@ export class LoginComponent implements AfterViewInit, OnInit {
 
   loginWithFacebook() {
 
+  }
+
+  togglePasswordVisibility(){
+    const input: HTMLInputElement = document.getElementById('password') as HTMLInputElement;
+    if (input.type === 'password'){
+      input.type = 'text';
+      this.isp1open = false;
+    } else {
+      input.type = 'password';
+      this.isp1open = true;
+    }
   }
 }
