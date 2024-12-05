@@ -1,12 +1,15 @@
 <div class="shared-background">
   <div class="overlay"></div>
 
-  <div class="container">
-    <div class="content-holder">
+  <div class="content-holder">
+    <div class="main-content-wrapper">
+      <div class="img-card-1">
+        <img src="./assets/imgs/login/register.webp" alt="register image">
+      </div>
       <div class="form-card-1">
         <div class="logo" [ngStyle]="{'background-image': themeService.isDarkMode() ? 'url(./assets/imgs/logo/top-w.svg)' : 'url(./assets/imgs/logo/top-b.svg)'}">
         </div>
-        <h5 class="title">Sign up</h5>
+        <h5 class="title">Create an account</h5>
 
         <form [formGroup]="registerForm">
           <div class="row form-wrapper">
@@ -55,11 +58,11 @@
             </div>
 
             <div class="col-12">
-              <button class="btn-1 w-100" [disabled]="!registerForm.get('termsCheck')?.value" (click)="registerUser()">Register</button>
+              <button class="btn-1 w-100" [disabled]="!registerForm.get('termsCheck')?.value" (click)="registerUser()">Sign Up</button>
             </div>
 
             <div class="col-12">
-              <p class="navigation-text text-center">Already have an account ? <a routerLink="/login">Sign In</a></p>
+              <p class="navigation-text text-center">Already have an account ? <a routerLink="/login">Login</a></p>
             </div>
           </div>
         </form>
