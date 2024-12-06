@@ -14,6 +14,28 @@
     <div class="col-12 col-md-4 col-lg-3 left-side">
       <div class="job-details-card">
         <div class="job-details-card-top">
+          <div class="title-1">Recruiter Information</div>
+        </div>
+        <hr>
+        <div class="job-details-card-content">
+          <div class="job-info-item">
+            <i class="material-icons">business</i>
+            <div class="d-flex flex-column">
+              <p class="tag">Company:</p>
+              <p class="tag-data">{{companyName}}</p>
+            </div>
+          </div>
+          <div class="job-info-item">
+            <i class="material-icons">call_made</i>
+            <div class="d-flex flex-column">
+              <p class="tag">Visit Us:</p>
+              <a class="tag-data" routerLink="/business-profile/{{j.companyId}}" target="_blank">talentboozt/{{companyName}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="job-details-card">
+        <div class="job-details-card-top">
           <div class="title-1">Job Information</div>
         </div>
         <hr>
