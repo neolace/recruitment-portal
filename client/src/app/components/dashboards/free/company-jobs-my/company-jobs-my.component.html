@@ -16,8 +16,8 @@
 
   <div class="d-flex align-items-center justify-content-between">
     <p>Job Ads <span>({{postedJobs?.postedJobs.length ? postedJobs?.postedJobs.length : 0}})</span></p>
-    <p>Remaining Ads for this month
-      <span>({{postedJobs?.companyLevel == 2 ? 3 - postedJobs?.postedJobs.length : postedJobs?.companyLevel == 3 ? 10 - postedJobs?.postedJobs.length : postedJobs?.companyLevel == 4 ? 'Unlimited' : 'Not Initialized'}})</span></p>
+    <p><span>({{postedJobs?.companyLevel == 2 ? 3 - postedJobs?.postedJobs.length : postedJobs?.companyLevel == 3 ? 10 - postedJobs?.postedJobs.length : postedJobs?.companyLevel == 4 ? 'Unlimited' : 'Not Initialized'}})</span>
+      Ads remaining in your package</p>
   </div>
 
   <div>
