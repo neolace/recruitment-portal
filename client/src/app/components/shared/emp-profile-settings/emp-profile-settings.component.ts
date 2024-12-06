@@ -107,6 +107,9 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
     unsubscribe: new FormControl(false)
   });
 
+  isp1open: boolean = true;
+  isp2open: boolean = true;
+
   constructor(private fileUploadService: FileUploadService,
               private employeeService: EmployeeService,
               private credentialService: CredentialService,
@@ -471,7 +474,8 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
       const encryptedPassword = this.encryptionService.encryptPassword(password);
       this.credentialService.fetchCredentialByEmployeeId(this.employeeId).subscribe((data) => {
         if (data) {
-          if (data.password === this.changePassForm.get('oldPass')?.value) {
+          const oldPassword: string = this.encryptionService.decryptPassword(data.password);
+          if (oldPassword === this.changePassForm.get('oldPass')?.value) {
             if (this.changePassForm.get('newPass')?.value === this.changePassForm.get('confirmPass')?.value) {
               this.credentialService.updateCredential(this.employeeId, {
                 id:data.id,
@@ -642,6 +646,25 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
         break;
       case 'changePass':
         this.changePassForm.reset();
+        break;
+      default:
+        break;
+    }
+  }
+
+  togglePasswordVisibility(id: string){
+    const input: HTMLInputElement = document.getElementById(id) as HTMLInputElement;
+    if (input.type === 'password'){
+      input.type = 'text';
+    } else {
+      input.type = 'password';
+    }
+    switch (id) {
+      case 'old-password':
+        this.isp1open = !this.isp1open;
+        break;
+      case 'new-password':
+        this.isp2open = !this.isp2open;
         break;
       default:
         break;
