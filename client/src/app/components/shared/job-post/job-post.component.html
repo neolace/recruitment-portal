@@ -139,7 +139,13 @@
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="ageRange">Age Range</label>
-                <input type="text" id="ageRange" class="form-control" placeholder="5" formControlName="ageRange">
+                <select class="form-control" id="ageRange" formControlName="ageRange">
+                  <option>18-</option>
+                  <option>18-30</option>
+                  <option>20-40</option>
+                  <option>25-50</option>
+                  <option>50+</option>
+                </select>
               </div>
             </div>
           </div>
@@ -147,11 +153,13 @@
           <div class="row">
             <div class="col-12 col-md-6">
               <div class="form-group">
-                <label for="employeeType">Employee Type *</label>
+                <label for="employeeType">Employement Type *</label>
                 <select class="form-control" id="employeeType" formControlName="employeeType">
                   <option>Full Time</option>
                   <option>Part Time</option>
-                  <option>On Contract</option>
+                  <option>Fixed Term Contract</option>
+                  <option>Internship</option>
+                  <option>Volunteer</option>
                   <option>Other</option>
                 </select>
               </div>
@@ -164,9 +172,6 @@
                   <option>On Site</option>
                   <option>Remote</option>
                   <option>Hybrid</option>
-                  <option>Permanent</option>
-                  <option>Internship</option>
-                  <option>Volunteer</option>
                   <option>Other</option>
                 </select>
               </div>
@@ -179,7 +184,7 @@
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="skills">Skills</label>
-                <textarea class="form-control" id="skills" rows="5" placeholder="Use new line(enter) for multiple skills"
+                <textarea class="form-control" id="skills" rows="5" placeholder="Press enter to add a new skill"
                           formControlName="skills"></textarea>
               </div>
             </div>
@@ -187,7 +192,7 @@
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="qualifications">Qualifications</label>
-                <textarea class="form-control" id="qualifications" rows="5" placeholder="Use new line(enter) for multiple qualifications"
+                <textarea class="form-control" id="qualifications" rows="5" placeholder="Press enter to add a new qualification"
                           formControlName="qualifications"></textarea>
               </div>
             </div>
@@ -197,7 +202,7 @@
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="education">Education</label>
-                <textarea class="form-control" id="education" rows="5" placeholder="Use new line(enter) for multiple education"
+                <textarea class="form-control" id="education" rows="5" placeholder="Press enter to add a new Educational Qualification"
                           formControlName="education"></textarea>
               </div>
             </div>
@@ -205,7 +210,7 @@
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="experience">Experience</label>
-                <textarea class="form-control" id="experience" rows="5" placeholder="Use new line(enter) for multiple experience"
+                <textarea class="form-control" id="experience" rows="5" placeholder="Press enter to add a new Experience"
                           formControlName="experience"></textarea>
               </div>
             </div>
@@ -215,14 +220,26 @@
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="es">Education (short) *</label>
-                <input class="form-control" id="es" placeholder="BSc" formControlName="es">
+                <select class="form-control" id="es" formControlName="es">
+                  <option value="BSc">Bachelor's Degree</option>
+                  <option value="MSc">Master's Degree</option>
+                  <option value="O/L">Ordinary Level</option>
+                  <option value="A/L">Advances level</option>
+                  <option value="not specified">Other</option>
+                </select>
               </div>
             </div>
 
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="es">Experience (short) *</label>
-                <input class="form-control" id="exs" placeholder="+2 years" formControlName="exs">
+                <select class="form-control" id="exs" formControlName="exs">
+                  <option value="0-2 years">0-2 years</option>
+                  <option value="3-5 years">3-5 years</option>
+                  <option value="5-10 years">5-10 years</option>
+                  <option value="10-15 years">10-15 years</option>
+                  <option value="above 15 years">above 15 years</option>
+                </select>
               </div>
             </div>
           </div>
@@ -247,12 +264,12 @@
             </div>
           </div>
 
-          <h5>We will offer...</h5>
+          <h5>what we offer</h5>
 
           <div class="row">
             <div class="col-12">
               <div class="form-group">
-                <label for="offer">We offers...</label>
+                <label for="offer">our package includes,</label>
                 <textarea class="form-control" id="offer" rows="5" placeholder="Use new line(enter) for multiple offers"
                           formControlName="offer"></textarea>
               </div>
@@ -303,10 +320,10 @@
             </div>
             <div class="col-6">
               <div class="form-group">
-                <label for="expdate">Date Expired <i class="fa fa-question-circle" data-bs-toggle="tooltip"
+                <label for="expdate">Closing Date <i class="fa fa-question-circle" data-bs-toggle="tooltip"
                                                      data-bs-placement="top"
                                                      data-bs-custom-class="custom-tooltip"
-                                                     data-bs-title="Only PRO version can set custom expiration date. Your job ad will expire after 10 days."></i></label>
+                                                     data-bs-title="Only pro version can set a custom expiration date. Your job ad will expire after 10 days. "></i></label>
                 <input type="date" class="form-control" id="expdate" formControlName="expdate">
               </div>
             </div>
