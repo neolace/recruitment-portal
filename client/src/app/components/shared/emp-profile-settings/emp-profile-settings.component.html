@@ -305,15 +305,17 @@
         <form [formGroup]="changePassForm">
           <div class="row form-wrapper">
             <div class="col-12">
-              <div class="form-group">
-                <label for="old-password">Old Password</label>
-                <input type="password" class="form-control" id="old-password" formControlName="oldPass" autocomplete="section-blue password old-password">
+              <label for="new-password">Old Password</label>
+              <div class="input-group w-100 d-flex">
+                <input type="password" id="old-password" formControlName="oldPass" aria-describedby="button-addon" style="flex:1" autocomplete="section-blue password old-password">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon" (click)="togglePasswordVisibility('old-password')"><i [ngClass]="isp1open? 'fa fa-eye-slash':'fa fa-eye'" aria-hidden="true"></i></button>
               </div>
             </div>
             <div class="col-12">
-              <div class="form-group">
-                <label for="new-password">New Password</label>
-                <input type="password" class="form-control" id="new-password" formControlName="newPass" autocomplete="section-blue password new-password">
+              <label for="new-password">New Password</label>
+              <div class="input-group w-100 d-flex">
+                <input type="password" id="new-password" formControlName="newPass" aria-describedby="button-addon2" style="flex:1" autocomplete="section-blue password new-password">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="togglePasswordVisibility('new-password')"><i [ngClass]="isp2open? 'fa fa-eye-slash':'fa fa-eye'" aria-hidden="true"></i></button>
               </div>
             </div>
             <div class="col-12">
