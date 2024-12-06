@@ -94,7 +94,7 @@
             <i class="material-icons">favorite_border</i>
             <div class="d-flex flex-column">
               <p class="tag">Save for later:</p>
-              <button class="btn-1" (click)="userSavedIds.includes(j.id) ? removeFav(j.id) :saveFav(j.id)">{{userSavedIds.includes(j.id) ? 'Saved' : 'Save'}}</button>
+              <button class="btn-1" [disabled]="userAppliedIds.includes(j.id)" (click)="userSavedIds.includes(j.id) ? removeFav(j.id) :saveFav(j.id)">{{userSavedIds.includes(j.id) ? 'Saved' : userAppliedIds.includes(j.id) ? 'Applied' : 'Save'}}</button>
             </div>
           </div>
         </div>
@@ -149,7 +149,7 @@
             </ul>
           </div>
 
-          <button class="btn-1" (click)="navigateToApplyJob()">Apply Now</button>
+          <button class="btn-1" (click)="navigateToApplyJob()" [disabled]="userAppliedIds.includes(j.id)">{{userAppliedIds.includes(j.id) ? 'Applied' : 'Apply Now'}}</button>
         </div>
       </div>
     </div>

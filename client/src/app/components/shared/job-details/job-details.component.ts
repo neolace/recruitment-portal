@@ -29,6 +29,7 @@ export class JobDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   viewerId: any;
   companyId: any;
   userSavedIds: any[] = [];
+  userAppliedIds: any[] = [];
 
   loading: boolean = false;
 
@@ -71,7 +72,8 @@ export class JobDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
       (data) => {
         this.employee = data;
         this.employeeName = this.employee.employee.firstname + ' ' + this.employee.employee.lastname;
-        this.userSavedIds = this.employee.employee.savedJobs.map((job: any) => job.jobId);
+        this.userSavedIds = this.employee.employee.savedJobs.filter((item: any) => item.status === 'saved').map((job: any) => job.jobId);
+        this.userAppliedIds = this.employee.employee.savedJobs.filter((item: any) => item.status === 'applied').map((job: any) => job.jobId);
       },
       (error: any) => {
         this.warningMessage('Please Login First to Apply Jobs', 'Reminder');
