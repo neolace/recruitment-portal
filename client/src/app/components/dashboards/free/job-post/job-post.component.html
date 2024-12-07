@@ -374,14 +374,14 @@
 <button type="button" id="preview_model_open" class="d-none" data-bs-toggle="modal" data-bs-target="#preview"></button>
 <div class="modal fade" id="preview" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="previewLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="previewLabel">Job Post Preview</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="top-banner">
+        <div class="top-banner" style="overflow: hidden">
           <div class="curved-div" [ngStyle]="{'background-image': downloadURL ? 'url(' + downloadURL + ')' : ''}">
             <div class="overlay" *ngIf="!downloadURL"></div>
           </div>
@@ -412,7 +412,7 @@
                     <i class="material-icons">call_made</i>
                     <div class="d-flex flex-column">
                       <p class="tag">Visit Us:</p>
-                      <a class="tag-data" href="https://talentboozt.com/" target="_blank">talentboozt/YPUR COMPANY</a>
+                      <a class="tag-data" href="https://talentboozt.com/" target="_blank">talentboozt/YOUR COMPANY</a>
                     </div>
                   </div>
                 </div>
@@ -448,7 +448,7 @@
                     <i class="material-icons">cases</i>
                     <div class="d-flex flex-column">
                       <p class="tag">Experience:</p>
-                      <p class="tag-data">{{jobPostForm.get('experience')?.value}}</p>
+                      <p class="tag-data">{{jobPostForm.get('exs')?.value}}</p>
                     </div>
                   </div>
                   <div class="job-info-item">

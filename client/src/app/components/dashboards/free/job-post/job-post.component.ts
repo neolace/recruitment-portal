@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {HttpErrorResponse} from "@angular/common/http";
 import {EmployeeService} from "../../../../services/employee.service";
 import {AuthService} from "../../../../services/auth.service";
@@ -92,6 +92,7 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
               private fileUploadService: FileUploadService,
               private unloadService: UnloadService,
               private router: Router,
+              private cdr: ChangeDetectorRef,
               private companyService: CompanyService) {
     this.jobPostForm.valueChanges.subscribe(() => {
       this.unloadService.setUnsavedChanges(this.jobPostForm.dirty);
@@ -438,8 +439,10 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
   }
 
   preview(){
-    const model = document.getElementById('preview_model_open');
-    model?.click();
+    setTimeout(() => {
+      const model = document.getElementById('preview_model_open');
+      model?.click();
+    }, 100);
   }
 
   filterJobData(): any[] {
