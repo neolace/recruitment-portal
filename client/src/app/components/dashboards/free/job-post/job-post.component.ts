@@ -436,4 +436,13 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
       this.router.navigate(['/pro/overview']);
     }
   }
+
+  preview(){
+    const model = document.getElementById('preview_model_open');
+    model?.click();
+  }
+
+  filterJobData(): any[] {
+    return [this.jobPostForm?.value];
+  }
 }

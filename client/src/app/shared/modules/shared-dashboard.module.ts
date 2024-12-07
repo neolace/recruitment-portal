@@ -21,6 +21,7 @@ import {SharedPipesModule} from "./shared-pipes.module";
 import {BillingAndUsageComponent} from "../../components/dashboards/free/billing-and-usage/billing-and-usage.component";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {JobPostComponent} from "../../components/dashboards/free/job-post/job-post.component";
+import {JobDetailsModule} from "../../components/shared/job-details/job-details.module";
 
 
 
@@ -34,16 +35,17 @@ import {JobPostComponent} from "../../components/dashboards/free/job-post/job-po
     BillingAndUsageComponent,
     JobPostComponent
   ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        MatProgressSpinnerModule,
-        ReactiveFormsModule,
-        RouterLink,
-        SharedComponentModule,
-        SharedPipesModule,
-        MatProgressBarModule
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatProgressSpinnerModule,
+    ReactiveFormsModule,
+    RouterLink,
+    SharedComponentModule,
+    SharedPipesModule,
+    MatProgressBarModule,
+    JobDetailsModule
+  ],
   exports: [
     PersonalProfileMyComponent,
     PersonalProfileSettingsComponent,
