@@ -1,8 +1,12 @@
-<div class="container">
+<div class="container" style="position: relative;">
+  <div class="back-btn" (click)="goBack()">
+    <i class="material-icons">arrow_back</i>Back to Dashboard
+  </div>
+
   <div *ngIf="loading">
     <app-page-loading></app-page-loading>
   </div>
-  <div *ngIf="formLocked">
+  <div *ngIf="!formLocked" style="margin-top: max(30px, 5vw);">
     <h5>At least You have to provide the following details in your business profile to unlock this form.</h5>
     <div class="d-flex align-items-center justify-content-center w-100 my-5 px-5">
       <div class="check-ball" [ngClass]="cname?'active':''" title="Company Name">
@@ -31,7 +35,8 @@
       </div>
     </div>
   </div>
-  <div class="d-flex align-items-center justify-content-center w-100">
+
+  <div class="d-md-flex align-items-start justify-content-center w-100 gap-2">
 
     <div class="form-card-1">
       <form [formGroup]="jobPostForm">
@@ -319,14 +324,28 @@
           </div>
 
           <div class="col-12">
-            <div class="form-group">
-              <button type="submit" [disabled]="formLocked" class="btn-1"
-                      (click)="jobId ? updateJob() : saveJobPost()">{{formLocked ? 'Locked' : jobId ? 'Update' : 'Post Now'}}</button>
+            <div class="d-flex align-items-center justify-content-start gap-2">
+              <div class="form-group">
+                <button type="submit" [disabled]="formLocked" class="btn-1"
+                        (click)="jobId ? updateJob() : saveJobPost()">{{formLocked ? 'Locked' : jobId ? 'Update' : 'Post Now'}}</button>
+              </div>
+              <div class="form-group">
+                <button type="submit" [disabled]="formLocked" class="btn-1">Preview</button>
+              </div>
             </div>
           </div>
         </div>
       </form>
     </div>
+
+    <div class="form-card-2">
+      <h5>Copy from existing Ad:</h5>
+      <div class="d-flex align-items-center justify-content-end w-100 h-100 s-bar">
+        <input type="text" placeholder="Search..." (keyup)="handleSearch($event.target)"/>
+        <i class="material-icons">search</i>
+      </div>
+    </div>
+
   </div>
   <div *ngIf="!loading && serverError">
     <app-failed-to-load-data></app-failed-to-load-data>

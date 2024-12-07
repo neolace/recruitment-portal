@@ -407,4 +407,11 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
       });
     }
   }
+
+  handleSearch(data: any) {
+  }
+
+  goBack() {
+
+  }
 }
