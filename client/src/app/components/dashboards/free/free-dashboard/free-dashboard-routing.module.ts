@@ -12,6 +12,7 @@ import {AuthGuard} from "../../../../guards/auth.guard";
 import {ApplicantsDbComponent} from "../applicants-db/applicants-db.component";
 import {CompanyAnalysisComponent} from "../company-analysis/company-analysis.component";
 import {BillingAndUsageComponent} from "../billing-and-usage/billing-and-usage.component";
+import {JobPostComponent} from "../job-post/job-post.component";
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
       { path: 'personal-profile-settings', component: PersonalProfileSettingsComponent, canActivate: [AdminGuard] },
       { path: 'business-profile-my', component: BusinessProfileMyComponent, canActivate: [AdminGuard] },
       { path: 'business-profile-settings', component: BusinessProfileSettingsComponent, canActivate: [AdminGuard] },
+      { path: 'post-job', component: JobPostComponent, canActivate: [AdminGuard] },
       { path: 'company-jobs', component: CompanyJobsMyComponent, canActivate: [AdminGuard] },
       { path: 'applicants', component: ApplicantsDbComponent, canActivate: [AdminGuard] },
       { path: 'company-analysis', component: CompanyAnalysisComponent, canActivate: [AdminGuard] },
