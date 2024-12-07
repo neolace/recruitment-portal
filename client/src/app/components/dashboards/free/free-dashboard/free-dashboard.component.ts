@@ -42,7 +42,7 @@ export class FreeDashboardComponent implements AfterViewInit, OnInit {
   getEmployee(id: any) {
     this.employeeService.fetchFullEmployee(id).subscribe(
       (data) => {
-        this.employeeEmail = data?.employee?.email;
+        this.employeeEmail = data?.employee?.occupation;
         this.employeeName = data?.employee?.firstname + ' ' + data?.employee?.lastname;
         this.employeeProfile = data?.employee?.image;
       },
