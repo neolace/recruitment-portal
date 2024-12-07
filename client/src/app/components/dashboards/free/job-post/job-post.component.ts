@@ -315,7 +315,6 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
   patchValues(jobId: any) {
     this.companyService.getPostedJob(this.companyId, jobId).subscribe(
       (data) => {
-        console.log(data)
         this.jobPostForm.get('title')?.setValue(data.title);
         this.jobPostForm.get('description')?.setValue(data.description);
         this.jobPostForm.get('category')?.setValue(data.category);
@@ -340,6 +339,8 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
         this.jobPostForm.get('state')?.setValue(data.location.split(',')[1]);
         this.jobPostForm.get('postdate')?.setValue(data.datePosted);
         this.jobPostForm.get('expdate')?.setValue(data.expiryDate);
+        this.selectedCategory = data.category;
+        this.selectedJobType = data.jobType;
       }
     )
   }
