@@ -6,7 +6,7 @@ import {CompanyService} from "../../../../services/company.service";
 import {jobCategories} from "../../../../shared/data-store/job-categories-data-store";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AlertsService} from "../../../../services/alerts.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {FileUploadService} from "../../../../services/file-upload.service";
 import {CanComponentDeactivate} from "../../../../guards/can-deactivate.guard";
 import {UnloadService} from "../../../../services/common/unload.service";
@@ -87,6 +87,7 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
               private route: ActivatedRoute,
               private fileUploadService: FileUploadService,
               private unloadService: UnloadService,
+              private router: Router,
               private companyService: CompanyService) {
     this.jobPostForm.valueChanges.subscribe(() => {
       this.unloadService.setUnsavedChanges(this.jobPostForm.dirty);
@@ -412,6 +413,10 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
   }
 
   goBack() {
-
+    if (this.companyLevel == 2) {
+      this.router.navigate(['/dashboard/overview']);
+    } else {
+      this.router.navigate(['/pro/overview']);
+    }
   }
 }

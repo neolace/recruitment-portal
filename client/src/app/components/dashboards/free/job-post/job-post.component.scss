@@ -10,7 +10,7 @@
 .form-card-2{
   width: 100%;
   max-width: 400px;
-  margin: max(30px, 5vw) auto;
+  margin: max(50px, 5vw) auto;
   padding: 20px;
   border-radius: 8px;
   background-color: var(--color-surface-200);
@@ -48,7 +48,7 @@
 
 .back-btn{
   position: absolute;
-  top: max(-20px, -5vw);
+  top: 20px;
   right: 20px;
   display: flex;
   align-items: center;
@@ -58,10 +58,19 @@
   border-radius: 5px;
   cursor: pointer;
   color: var(--color-text-100);
+  transition: all .3s ease-in-out;
 
   .material-icons{
     padding: 0;
     margin: 0;
+  }
+
+  &:hover{
+    background-color: var(--color-surface-mixed-400);
+  }
+
+  @media screen and (max-width: 992px) {
+    top: -40px;
   }
 }
 
