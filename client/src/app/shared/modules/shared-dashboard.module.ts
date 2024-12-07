@@ -20,6 +20,7 @@ import {SharedComponentModule} from "./shared-component.module";
 import {SharedPipesModule} from "./shared-pipes.module";
 import {BillingAndUsageComponent} from "../../components/dashboards/free/billing-and-usage/billing-and-usage.component";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {JobPostComponent} from "../../components/dashboards/free/job-post/job-post.component";
 
 
 
@@ -30,7 +31,8 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     BusinessProfileMyComponent,
     BusinessProfileSettingsComponent,
     CompanyJobsMyComponent,
-    BillingAndUsageComponent
+    BillingAndUsageComponent,
+    JobPostComponent
   ],
     imports: [
         CommonModule,
@@ -48,7 +50,8 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     BusinessProfileMyComponent,
     BusinessProfileSettingsComponent,
     CompanyJobsMyComponent,
-    BillingAndUsageComponent
+    BillingAndUsageComponent,
+    JobPostComponent
   ]
 })
 export class SharedDashboardModule { }
