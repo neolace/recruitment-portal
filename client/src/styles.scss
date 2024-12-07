@@ -2580,3 +2580,18 @@ $accordion-icon-transform3: rotate(270deg);
     }
   }
 }
+
+.pro-title{
+  position: relative;
+
+  .pro-tag{
+    position: absolute;
+    top: -12px;
+    right: -16px;
+    background-color: var(--color-primary-200);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 16px;
+    font-size: 10px;
+  }
+}

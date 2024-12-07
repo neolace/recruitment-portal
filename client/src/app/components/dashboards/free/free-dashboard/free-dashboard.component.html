@@ -31,8 +31,8 @@
           </ul>
         </div>
         <div class="d-none d-md-flex flex-column justify-content-between profile-tag">
-          <h6>{{employeeName ? employeeName : 'not available'}}</h6>
-          <span>{{employeeEmail ? employeeEmail : 'not available'}}</span>
+          <h6>{{employeeName ? employeeName : ''}}</h6>
+          <span>{{employeeEmail ? employeeEmail : ' '}}</span>
         </div>
       </div>
     </div>
@@ -53,7 +53,10 @@
             <li routerLink="/dashboard/applicants">Applicants</li>
             <li routerLink="/dashboard/company-analysis">Company Analysis</li>
             <li routerLink="/dashboard/billing">Billing and Usage</li>
-            <li>Teams</li>
+            <div class="pro-title">
+              <li>Teams</li>
+              <div class="pro-tag" style="top: 5px; right: 10px">pro</div>
+            </div>
           </ul>
         </mat-accordion>
       </div>
