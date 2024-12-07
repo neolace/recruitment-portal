@@ -87,6 +87,11 @@
       </div>
     </div>
 
+    <div class="cookie-banner" *ngIf="!isCookiesAccepted">
+      <p>This website uses cookies to ensure you get the best experience on our website. <a routerLink="/privacy-policy">Privacy Policy</a></p>
+      <button (click)="acceptCookies()">GOT IT</button>
+    </div>
+
     <app-header *ngIf="showNavbar"></app-header>
 
     <app-system-notification-view></app-system-notification-view>

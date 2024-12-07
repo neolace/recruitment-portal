@@ -57,6 +57,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   isUiSettings: boolean = false;
   showContacts: boolean = false;
   isSubscribe: boolean = false;
+  isCookiesAccepted: boolean = false;
   loading: boolean = false;
 
   utilities = Utilities;
@@ -94,6 +95,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.themeService.applyTheme();
 
     this.isSubscribe = this.cookieService.isNewsletter();
+    if (this.cookieService.isCookiesAccepted()) {
+      this.isCookiesAccepted = true;
+    }
 
     if (sessionStorage.getItem('newsLatter') != 'true' && !this.isSubscribe) {
       setTimeout(() => {
@@ -189,5 +193,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.alertService.errorMessage('Field is empty or invalid.', 'Error');
     }
+  }
+
+  acceptCookies() {
+    this.cookieService.acceptAllCookies();
+    this.isCookiesAccepted = true;
   }
 }
