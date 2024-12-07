@@ -81,6 +81,10 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
     expdate: new FormControl(''),
   })
 
+  searchResults: any[] = [];
+  targetInput: any;
+  isResultFound: boolean = false;
+
   constructor(private employeeService: EmployeeService,
               private cookieService: AuthService,
               private alertService: AlertsService,
@@ -194,7 +198,7 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
           if (this.cname && this.cemail && this.cphone && this.chq) {
             this.formLocked = false;
           }
-          this.postedJobs = this.company?.postedJobs;
+          this.postedJobs = this.company?.postedJobs[0]?.postedJobs;
           this.loading = false;
         },
         (error: HttpErrorResponse) => {
@@ -410,6 +414,18 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
   }
 
   handleSearch(data: any) {
+    this.targetInput = data.value;
+
+    if (this.targetInput) {
+      this.isResultFound = true;
+      this.searchResults = this.postedJobs.filter((data: any) => {
+        return this.targetInput ? data.title?.toLowerCase().includes(this.targetInput.toLowerCase()) : true;
+      });
+    } else {
+      this.isResultFound = false;
+      this.searchResults = [];
+    }
+
   }
 
   goBack() {
