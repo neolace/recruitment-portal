@@ -78,7 +78,10 @@ export class CompanyJobsMyComponent implements AfterViewInit, OnInit{
 
   edit(id:any) {
     if (id){
-      this.router.navigate(['/job-post'], {relativeTo: this.route, queryParams: {id: id}});
+      if (this.companyLevel == 3){
+        this.router.navigate(['/pro/post-job'], {relativeTo: this.route, queryParams: {id: id}});
+        return;
+      }
     }
   }
 
@@ -89,7 +92,7 @@ export class CompanyJobsMyComponent implements AfterViewInit, OnInit{
       return;
     }
     if (id){
-      this.router.navigate(['/job-post'], {relativeTo: this.route, queryParams: {id: id}});
+      this.router.navigate(['/pro/post-job'], {relativeTo: this.route, queryParams: {id: id}});
     }
   }
 
