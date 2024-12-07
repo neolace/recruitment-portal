@@ -44,6 +44,16 @@
         <input type="text" placeholder="Search..." (keyup)="handleSearch($event.target)"/>
         <i class="material-icons">search</i>
       </div>
+
+      <div class="search-results-wrapper" *ngIf="isResultFound">
+        <div class="not-found" *ngIf="!searchResults?.length">Not Found :(</div>
+        <div class="search-results" *ngFor="let ad of searchResults">
+          <div class="search-result">
+            <div class="post">{{ad.title}}</div>
+            <div class="posted-date">{{ad.datePosted | timeAgo}}</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="form-card-1">
