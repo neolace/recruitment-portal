@@ -348,7 +348,7 @@
                         (click)="jobId ? updateJob() : saveJobPost()">{{formLocked ? 'Locked' : jobId ? 'Update' : 'Post Now'}}</button>
               </div>
               <div class="form-group">
-                <button type="submit" [disabled]="formLocked" class="btn-1">Preview</button>
+                <button type="submit" [disabled]="formLocked" class="btn-1" (click)="preview()">Preview</button>
               </div>
             </div>
           </div>
@@ -368,5 +368,180 @@
   </div>
   <div *ngIf="forbidden && !employee?.employee || unexpectedError">
     <app-forbidden></app-forbidden>
+  </div>
+</div>
+
+<button type="button" id="preview_model_open" class="d-none" data-bs-toggle="modal" data-bs-target="#preview"></button>
+<div class="modal fade" id="preview" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="previewLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="previewLabel">Job Post Preview</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="top-banner">
+          <div class="curved-div" [ngStyle]="{'background-image': downloadURL ? 'url(' + downloadURL + ')' : ''}">
+            <div class="overlay" *ngIf="!downloadURL"></div>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-center flex-column w-100 h100 banner-cont">
+            <h1>{{jobPostForm.get('title')?.value}}</h1>
+            <p>Talent Boozt > Job Details > <span>{{jobPostForm.get('title')?.value}}</span></p>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-4 col-lg-3 left-side">
+              <div class="job-details-card">
+                <div class="job-details-card-top">
+                  <div class="title-1">Recruiter Information</div>
+                </div>
+                <hr>
+                <div class="job-details-card-content">
+                  <div class="job-info-item">
+                    <i class="material-icons">business</i>
+                    <div class="d-flex flex-column">
+                      <p class="tag">Company:</p>
+                      <p class="tag-data">YOUR COMPANY</p>
+                    </div>
+                  </div>
+                  <div class="job-info-item">
+                    <i class="material-icons">call_made</i>
+                    <div class="d-flex flex-column">
+                      <p class="tag">Visit Us:</p>
+                      <a class="tag-data" href="https://talentboozt.com/" target="_blank">talentboozt/YPUR COMPANY</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="job-details-card">
+                <div class="job-details-card-top">
+                  <div class="title-1">Job Information</div>
+                </div>
+                <hr>
+                <div class="job-details-card-content">
+                  <div class="job-info-item">
+                    <i class="material-icons">how_to_reg</i>
+                    <div class="d-flex flex-column">
+                      <p class="tag">Employee Type:</p>
+                      <p class="tag-data">{{jobPostForm.get('employeeType')?.value}}</p>
+                    </div>
+                  </div>
+                  <div class="job-info-item">
+                    <i class="material-icons">location_pin</i>
+                    <div class="d-flex flex-column">
+                      <p class="tag">Location:</p>
+                      <p class="tag-data">{{jobPostForm.get('location')?.value}}</p>
+                    </div>
+                  </div>
+                  <div class="job-info-item">
+                    <i class="material-icons">personal_video</i>
+                    <div class="d-flex flex-column">
+                      <p class="tag">Job Type:</p>
+                      <p class="tag-data">{{jobPostForm.get('jobType')?.value}}</p>
+                    </div>
+                  </div>
+                  <div class="job-info-item">
+                    <i class="material-icons">cases</i>
+                    <div class="d-flex flex-column">
+                      <p class="tag">Experience:</p>
+                      <p class="tag-data">{{jobPostForm.get('experience')?.value}}</p>
+                    </div>
+                  </div>
+                  <div class="job-info-item">
+                    <i class="material-icons">book</i>
+                    <div class="d-flex flex-column">
+                      <p class="tag">Qualifications:</p>
+                      <p class="tag-data">{{jobPostForm.get('qualifications')?.value}}</p>
+                    </div>
+                  </div>
+                  <div class="job-info-item">
+                    <i class="material-icons">attach_money</i>
+                    <div class="d-flex flex-column">
+                      <p class="tag">Salary:</p>
+                      <p class="tag-data">${{jobPostForm.get('minSalary')?.value}} - ${{jobPostForm.get('maxSalary')?.value}}</p>
+                    </div>
+                  </div>
+                  <div class="job-info-item">
+                    <i class="material-icons">access_time</i>
+                    <div class="d-flex flex-column">
+                      <p class="tag">Date Posted:</p>
+                      <p class="tag-data">{{jobPostForm.get('postdate')?.value}}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="job-info-item">
+                    <i class="material-icons">favorite_border</i>
+                    <div class="d-flex flex-column">
+                      <p class="tag">Save for later:</p>
+                      <button class="btn-1">Save</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-8 col-lg-9">
+              <div class="d-flex align-items-center justify-content-center w-100">
+                <div class="job-description">
+                  <div class="title-1 mb-2">Job Description:</div>
+                  <p *ngFor="let d of jobPostForm.get('description')?.value?.split('\n')">{{d}}</p>
+
+                  <div *ngIf="jobPostForm.get('requirements')?.value">
+                    <div class="title-1 mb-2">Requirements:</div>
+                    <ul *ngFor="let re of jobPostForm.get('requirements')?.value?.split('\n')">
+                      <li>{{re}}</li>
+                    </ul>
+                  </div>
+                  <div *ngIf="jobPostForm.get('experience')?.value">
+                    <div class="title-1 mb-2">Required Experience:</div>
+                    <ul *ngFor="let ex of jobPostForm.get('experience')?.value?.split('\n')">
+                      <li>{{ex}}</li>
+                    </ul>
+                  </div>
+                  <div *ngIf="jobPostForm.get('education')?.value">
+                    <div class="title-1 mb-2">Required Educational Qualifications:</div>
+                    <ul *ngFor="let ed of jobPostForm.get('education')?.value?.split('\n')">
+                      <li>{{ed}}</li>
+                    </ul>
+                  </div>
+                  <div *ngIf="jobPostForm.get('qualifications')?.value">
+                    <div class="title-1 mb-2">Required Additional Qualifications:</div>
+                    <ul *ngFor="let q of jobPostForm.get('qualifications')?.value?.split('\n')">
+                      <li>{{q}}</li>
+                    </ul>
+                  </div>
+                  <div *ngIf="jobPostForm.get('skills')?.value">
+                    <div class="title-1 mb-2">Skills:</div>
+                    <ul *ngFor="let sk of jobPostForm.get('skills')?.value?.split('\n')">
+                      <li>{{sk}}</li>
+                    </ul>
+                  </div>
+                  <div *ngIf="jobPostForm.get('responsibilities')?.value">
+                    <div class="title-1 mb-2">Responsibilities and Duties:</div>
+                    <ul *ngFor="let r of jobPostForm.get('responsibilities')?.value?.split('\n')">
+                      <li>{{r}}</li>
+                    </ul>
+                  </div>
+                  <div *ngIf="jobPostForm.get('offer')?.value">
+                    <div class="title-1 mb-2">What You Will Get:</div>
+                    <ul *ngFor="let o of jobPostForm.get('offer')?.value?.split('\n')">
+                      <li>{{o}}</li>
+                    </ul>
+                  </div>
+
+                  <button class="btn-1">Apply Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="preview_model_close" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>

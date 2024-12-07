@@ -7,9 +7,12 @@ import {SharedComponentModule} from "../../../shared/modules/shared-component.mo
 import {SharedCardsComponentModule} from "../../../shared/modules/shared-cards-component.module";
 
 @NgModule({
-  declarations: [
-    JobDetailsComponent
-  ],
+    declarations: [
+        JobDetailsComponent
+    ],
+    exports: [
+        JobDetailsComponent
+    ],
     imports: [
         CommonModule,
         JobDetailsRoutingModule,
