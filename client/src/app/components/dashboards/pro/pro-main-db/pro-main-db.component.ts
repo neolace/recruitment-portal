@@ -6,6 +6,7 @@ import {JobApplyService} from "../../../../services/job-apply.service";
 import {AuthService} from "../../../../services/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AlertsService} from "../../../../services/alerts.service";
 
 @Component({
   selector: 'app-pro-main-db',
@@ -57,6 +58,7 @@ export class ProMainDbComponent implements AfterViewInit{
   constructor(private employeeService: EmployeeService,
               private companyService: CompanyService,
               private jobApplyService: JobApplyService,
+              private alertService: AlertsService,
               private cookieService: AuthService ) {}
 
   async ngOnInit(): Promise<any> {
@@ -193,7 +195,30 @@ export class ProMainDbComponent implements AfterViewInit{
 
   completeActivation() {
     if (this.profileCompletionForm.valid){
-
+      this.companyService.updateCompany({
+        id: this.companyId,
+        ...this.company.company,
+        name: this.profileCompletionForm.get('cname')?.value,
+        contactEmail: this.profileCompletionForm.get('cemail')?.value,
+        contactNumber: this.profileCompletionForm.get('cphone')?.value,
+        location: this.profileCompletionForm.get('chq')?.value
+      }).subscribe((data) => {
+        this.employeeService.updateEmployee({
+          id: this.employeeId,
+          ...this.employee.employee,
+          username: this.profileCompletionForm.get('uname')?.value,
+          occupation: this.profileCompletionForm.get('udesignation')?.value
+        }).subscribe((data) => {
+          const model = document.getElementById('quick_details_model_close');
+          model?.click();
+          this.formLocked = false;
+          this.alertService.successMessage('Profile updated successfully! REFRESH to see changes', 'Success');
+        }, (error) => {
+          this.alertService.errorMessage('Company details updated but personal details could not be updated', 'Error');
+        })
+      }, (error) => {
+        this.alertService.errorMessage('Something went wrong', 'Error');
+      })
     } else {
       this.profileCompletionForm.markAllAsTouched();
     }

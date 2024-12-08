@@ -4,7 +4,7 @@
       <h2 class="h2-1 mt-5">Hi,</h2>
       <h2 class="h2-2">{{employee?.employee?.firstname ? employee?.employee?.firstname : 'User'}}</h2>
 
-      <div class="d-flex align-items-center justify-content-center w-100 my-5 c-j-progress">
+      <div class="d-flex align-items-center justify-content-center w-100 my-5 c-j-progress" *ngIf="formLocked">
         <div class="check-ball" [ngClass]="'active'" title="Account Creation">
           <i class="material-icons">check</i>
           <div class="tag">Account Creation</div>
@@ -124,7 +124,7 @@
       </div>
       <div class="modal-body">
         <div class="d-flex flex-column gap-2">
-          <p class="mb-0">We will send you our latest news and updates. We hate spams more than you do.</p>
+          <p class="mb-0">These fields are required to unlock your profile!</p>
           <form [formGroup]="profileCompletionForm" class="w-100">
             <h6>Required Company Details:</h6>
             <div class="row">
@@ -170,8 +170,8 @@
               </div>
             </div>
           </form>
-          <p class="mb-0">By clicking on Subscribe, you agree to our <a href="/terms-and-conditions">Terms of
-            Service</a> and <a href="/privacy-policy">Privacy Policy</a>.</p>
+          <p class="mb-0">These are the minimalistic details required to unlock your profile. Please complete all information
+            to better looking from business settings page :)</p>
         </div>
       </div>
       <div class="modal-footer">
