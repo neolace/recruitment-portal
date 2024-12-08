@@ -85,22 +85,22 @@
       @media screen and (max-width: 660px) {
         display: none;
       }
+    }
 
-      button{
-        position: absolute;
-        bottom: -70px;
-        transform: translateX(-50%);
-        white-space: nowrap;
-        font-size: 12px;
+    button{
+      position: absolute;
+      bottom: -70px;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-size: 12px;
 
-        @media screen and (max-width: 660px) {
-          bottom: -40px;
-        }
+      @media screen and (max-width: 660px) {
+        bottom: -40px;
+      }
 
-        &:disabled{
-          color: var(--color-text-200);
-          cursor: not-allowed;
-        }
+      &:disabled{
+        color: var(--color-text-200);
+        cursor: not-allowed;
       }
     }
 
