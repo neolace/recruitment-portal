@@ -22,11 +22,6 @@ export class ProApplicantsDbComponent implements AfterViewInit, OnInit {
   companyId: any;
   jobApplicants: any[] = [];
 
-  viewers: any[] = [];
-  selectedJobId: any;
-
-  maxApplicantsDisplayed: number = 1;
-
   loading: boolean = false;
 
   serverError: boolean = false;
@@ -57,7 +52,6 @@ export class ProApplicantsDbComponent implements AfterViewInit, OnInit {
     this.companyId = this.cookieService.organization();
     this.companyLevel = this.cookieService.level();
     this.getCompany(this.companyId)
-    this.fetchApplicants();
   }
 
   ngAfterViewInit() {
@@ -70,17 +64,6 @@ export class ProApplicantsDbComponent implements AfterViewInit, OnInit {
     tooltipTriggerList.map(function (tooltipTriggerEl) {
       return new bootstrap.Tooltip(tooltipTriggerEl);
     });
-
-    const viewsModal = document.getElementById('viewsModel');
-    if (viewsModal) {
-      viewsModal.addEventListener('show.bs.modal', (event: any) => {
-        const button = event.relatedTarget;
-        const jobId = button.getAttribute('data-bs-whatever');
-
-        this.selectedJobId = jobId;
-        this.fetchJobViewers(this.selectedJobId);
-      });
-    }
   }
 
   fetchApplicants() {
@@ -106,15 +89,6 @@ export class ProApplicantsDbComponent implements AfterViewInit, OnInit {
       }
 
       this.loading = false;
-    });
-  }
-
-  fetchJobViewers(jobId: any) {
-    this.jobApplyService.fetchJobViewerByJobId(jobId).subscribe((data: any) => {
-      this.viewers = data;
-    }, (error: HttpErrorResponse) => {
-      console.error('Error fetching job viewers', error);
-      this.viewers = [];
     });
   }
 
@@ -171,108 +145,6 @@ export class ProApplicantsDbComponent implements AfterViewInit, OnInit {
     a.setAttribute('download', filename);
     a.click();
     window.URL.revokeObjectURL(url);
-  }
-
-  setEmployeeJobStatus(employeeId: any, jobId: string, status: string) {
-    if (employeeId == null) {
-      return;
-    }
-    this.employeeService.editFavJobStatus(employeeId, {
-      jobId: jobId,
-      status: status
-    }).subscribe((data) => {
-      // console.log(data);
-    }, (error: any) => {
-      console.error(error);
-    });
-  }
-
-  selectToInterview(jobId: any, job: any) {
-    if (job) {
-      this.jobApplyService.updateSingleApplicant(jobId, job.id, {
-        ...job,
-        status: 'Selected'
-      }).subscribe((data:any) => {
-        this.setEmployeeJobStatus(job.employeeId, jobId, 'inprogress');
-        this.alertService.successMessage('Candidate Selected for Interview', 'Success');
-      }, (error: any) => {
-        this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
-      })
-    }
-  }
-
-  removeFromStack(jobId: any, job: any) {
-    if (job) {
-      this.jobApplyService.updateSingleApplicant(jobId, job.id, {
-        ...job,
-        status: 'Rejected'
-      }).subscribe((data:any) => {
-        this.setEmployeeJobStatus(job.employeeId, jobId, 'rejected');
-        this.alertService.successMessage('Candidate Rejected', 'Success');
-      }, (error: any) => {
-        this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
-      })
-    }
-  }
-
-  deleteSingleApplicant(jobId: any, job: any) {
-    if (job) {
-      this.jobApplyService.deleteSingleApplicant(this.companyId, jobId, job.id).subscribe((data:any) => {
-        this.setEmployeeJobStatus(job.employeeId, jobId, 'deleted');
-        this.dismissModal('delete')
-        this.alertService.successMessage('Candidate Deleted', 'Success');
-        this.jobApplyService.clearCacheCompanyId();
-        this.fetchApplicants();
-      }, (error: any) => {
-        this.dismissModal('delete')
-        this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
-      })
-    }
-  }
-
-  deleteAllApplicants(jobId: any) {
-    if (jobId) {
-      this.jobApplyService.deleteCompleteApply(jobId).subscribe((data:any) => {
-        this.dismissModal('deleteJob')
-        this.alertService.successMessage('All Applicants Deleted', 'Success');
-        this.jobApplyService.clearCacheCompanyId();
-        this.fetchApplicants();
-      }, (error: any) => {
-        this.dismissModal('deleteJob')
-        this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
-      })
-    }
-  }
-
-  openDeleteModal(jobId: string, applicantData: any, value?: any) {
-    switch (value) {
-      case 'delete':
-        this.jobId = jobId;
-        this.applicantData = applicantData;
-        break;
-      case 'deleteJob':
-        this.jobId = jobId;
-        break;
-      default:
-        this.jobId = jobId;
-        this.applicantData = applicantData;
-        break;
-    }
-  }
-
-  dismissModal(val:any) {
-    switch (val) {
-      case 'delete':
-        const button = this.closeModal.nativeElement;
-        button.click();
-        break;
-      case 'deleteJob':
-        const button2 = this.closeModal2.nativeElement;
-        button2.click();
-        break;
-      default:
-        break;
-    }
   }
 
   getCompany(id: any) {

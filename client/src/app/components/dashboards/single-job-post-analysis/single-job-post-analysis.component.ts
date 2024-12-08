@@ -3,10 +3,12 @@ import {JobApplyService} from "../../../services/job-apply.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../../services/auth.service";
 import {ThemeService} from "../../../services/theme.service";
-import {HttpErrorResponse} from "@angular/common/http";
 import {EmployeeService} from "../../../services/employee.service";
 import {CompanyService} from "../../../services/company.service";
 import {AlertsService} from "../../../services/alerts.service";
+import {HttpErrorResponse} from "@angular/common/http";
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-single-job-post-analysis',
@@ -36,7 +38,7 @@ export class SingleJobPostAnalysisComponent implements AfterViewInit, OnInit {
   viewers: any[] = [];
   selectedJobId: any;
 
-  maxApplicantsDisplayed: number = 1;
+  maxApplicantsDisplayed: number = 3;
 
   loading: boolean = false;
 
@@ -63,7 +65,6 @@ export class SingleJobPostAnalysisComponent implements AfterViewInit, OnInit {
     this.route.params.subscribe(params => {
       this.jobId = params['id'];
     })
-    this.fetchApplicants();
     this.fetchJobData();
   }
 
@@ -71,6 +72,11 @@ export class SingleJobPostAnalysisComponent implements AfterViewInit, OnInit {
     const icons = document.querySelectorAll('.material-icons');
     icons.forEach((icon) => {
       icon.setAttribute('translate', 'no');
+    });
+
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
     });
   }
 
@@ -80,20 +86,7 @@ export class SingleJobPostAnalysisComponent implements AfterViewInit, OnInit {
         ...job,
         showAllApplicants: false
       }));
-      console.log(this.jobData)
-    });
-  }
-
-  fetchApplicants() {
-    this.loading = true;
-    this.jobApplyService.fetchJobApplyByCompanyId(this.companyId).subscribe((data: any) => {
-      this.jobApplicants = data?.map((job: any) => ({
-        ...job,
-        showAllApplicants: false
-      }));
-      this.loading = false;
     }, (error: HttpErrorResponse) => {
-      // Check for different error types
       if (error.status === 404) {
         this.notFound = true;
       } else if (error.status === 500) {
@@ -105,17 +98,6 @@ export class SingleJobPostAnalysisComponent implements AfterViewInit, OnInit {
       } else {
         this.unexpectedError = true;
       }
-
-      this.loading = false;
-    });
-  }
-
-  fetchJobViewers(jobId: any) {
-    this.jobApplyService.fetchJobViewerByJobId(jobId).subscribe((data: any) => {
-      this.viewers = data;
-    }, (error: HttpErrorResponse) => {
-      console.error('Error fetching job viewers', error);
-      this.viewers = [];
     });
   }
 
@@ -130,15 +112,6 @@ export class SingleJobPostAnalysisComponent implements AfterViewInit, OnInit {
 
   toggleApplicants(job: any) {
     job.showAllApplicants = !job.showAllApplicants;
-  }
-
-  analyzeJob(jobId: any) {
-    if (jobId) {
-      const url = this.router.serializeUrl(
-        this.router.createUrlTree(['/job-analysis', jobId])
-      );
-      window.open(url, '_blank');
-    }
   }
 
   exportToCsv(jobId: any, applicants: any) {
@@ -225,7 +198,7 @@ export class SingleJobPostAnalysisComponent implements AfterViewInit, OnInit {
         this.dismissModal('delete')
         this.alertService.successMessage('Candidate Deleted', 'Success');
         this.jobApplyService.clearCacheCompanyId();
-        this.fetchApplicants();
+        this.fetchJobData();
       }, (error: any) => {
         this.dismissModal('delete')
         this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
@@ -239,7 +212,7 @@ export class SingleJobPostAnalysisComponent implements AfterViewInit, OnInit {
         this.dismissModal('deleteJob')
         this.alertService.successMessage('All Applicants Deleted', 'Success');
         this.jobApplyService.clearCacheCompanyId();
-        this.fetchApplicants();
+        this.fetchJobData();
       }, (error: any) => {
         this.dismissModal('deleteJob')
         this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
