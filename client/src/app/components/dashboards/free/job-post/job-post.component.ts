@@ -277,7 +277,7 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
     }
 
     if (this.companyLevel === '3'){
-      if (this.postedJobs[0]?.postedJobs.length >= 10) {
+      if (this.postedJobs[0]?.postedJobs?.length >= 10) {
         this.alertService.warningMessage('You Reached Maximum Job Post Limit. Upgrade to Add More!', 'Warning');
         return;
       }
