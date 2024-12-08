@@ -55,7 +55,7 @@ import {AngularFirePerformanceModule} from "@angular/fire/compat/performance";
         SharedPipesModule,
         HttpClientModule,
         ToastrModule.forRoot({
-            positionClass: 'toast-bottom-right',
+            positionClass: 'toast-top-right',
             preventDuplicates: true,
             maxOpened: 3,
             timeOut: 5000,

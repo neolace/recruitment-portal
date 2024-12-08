@@ -1,10 +1,11 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {JobApplyService} from "../../../../services/job-apply.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../../../services/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {EmployeeService} from "../../../../services/employee.service";
 import {AlertsService} from "../../../../services/alerts.service";
+import {CompanyService} from "../../../../services/company.service";
 
 declare var bootstrap: any;
 
@@ -37,15 +38,25 @@ export class ProApplicantsDbComponent implements AfterViewInit, OnInit {
   jobId: string | undefined;
   applicantData: any;
 
+  companyLevel: any;
+  company: any;
+  postedJobs: any;
+
+  gridView: boolean = true;
+
   constructor(
     private jobApplyService: JobApplyService,
     private employeeService: EmployeeService,
+    private companyService: CompanyService,
     private router: Router,
+    private route: ActivatedRoute,
     private alertService: AlertsService,
     private cookieService: AuthService) { }
 
   ngOnInit(): void {
     this.companyId = this.cookieService.organization();
+    this.companyLevel = this.cookieService.level();
+    this.getCompany(this.companyId)
     this.fetchApplicants();
   }
 
@@ -130,6 +141,7 @@ export class ProApplicantsDbComponent implements AfterViewInit, OnInit {
   }
 
   exportToCsv(jobId: any, applicants: any) {
+    console.log(applicants)
     if (!applicants || !applicants.length) {
       this.alertService.warningMessage('No data to export', 'Warning');
       return;
@@ -262,5 +274,97 @@ export class ProApplicantsDbComponent implements AfterViewInit, OnInit {
       default:
         break;
     }
+  }
+
+  getCompany(id: any) {
+    this.loading = true;
+    this.companyService.fetchFullCompany(id).subscribe(
+      (data) => {
+        this.company = data;
+        this.postedJobs = data?.postedJobs[0];
+        this.loading = false;
+      },
+      (error: HttpErrorResponse) => {
+        // Check for different error types
+        if (error.status === 404) {
+          this.notFound = true;
+        } else if (error.status === 500) {
+          this.serverError = true;
+        } else if (error.status === 0) {
+          this.corsError = true;
+        } else if (error.status === 403) {
+          this.forbidden = true;
+        } else {
+          this.unexpectedError = true;
+        }
+        this.loading = false;
+      }
+    )
+  }
+
+  isExpired(expiryDate: any) {
+    return new Date(expiryDate) < new Date();
+  }
+
+  edit(id:any) {
+    if (id){
+      if (this.companyLevel == 3){
+        this.router.navigate(['/pro/post-job'], {relativeTo: this.route, queryParams: {id: id}});
+        return;
+      }
+    }
+  }
+
+  reopen(id:any) {
+    const cid: number = parseInt(this.companyLevel)
+    if (cid <= 2){
+      this.alertService.warningMessage('This feature is only available for verified companies', 'Warning');
+      return;
+    }
+    if (id){
+      this.router.navigate(['/pro/post-job'], {relativeTo: this.route, queryParams: {id: id}});
+    }
+  }
+
+  close(id:any, job: any) {
+    if (id){
+      this.companyService.updatePostedJob(this.companyId, id,{
+        ...job,
+        expiryDate: new Date()
+      }).subscribe((data) => {
+        this.alertService.successMessage('Job closed successfully', 'Success');
+        this.getCompany(this.companyId)
+        location.reload();
+      }, (error: HttpErrorResponse) => {
+        this.alertService.errorMessage('Job closing failed', 'Error');
+      })
+    }
+  }
+
+  deleteJobPost(id:any) {
+    if (id){
+      this.companyService.deletePostedJob(this.companyId, id).subscribe((data) => {
+        this.alertService.successMessage('Job deleted successfully', 'Success');
+        this.getCompany(this.companyId);
+        location.reload();
+      }, (error: HttpErrorResponse) => {
+        this.alertService.errorMessage('Job deletion failed', 'Error');
+      })
+    }
+  }
+
+  changeView() {
+    this.gridView = !this.gridView
+  }
+
+  getApplicants(id: any) {
+    let applicantsCont = 0;
+    this.jobApplicants.forEach(applicants => {
+      if (applicants.jobId == id) {
+        applicantsCont = applicants.applicants.length;
+      }
+    })
+
+    return applicantsCont
   }
 }
