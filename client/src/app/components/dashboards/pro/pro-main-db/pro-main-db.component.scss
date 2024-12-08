@@ -82,8 +82,25 @@
       color: var(--color-text-200);
       font-weight: 450;
 
-      @media screen and (max-width: 1000px) {
+      @media screen and (max-width: 660px) {
         display: none;
+      }
+    }
+
+    button{
+      position: absolute;
+      bottom: -70px;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-size: 12px;
+
+      @media screen and (max-width: 660px) {
+        bottom: -40px;
+      }
+
+      &:disabled{
+        color: var(--color-text-200);
+        cursor: not-allowed;
       }
     }
 
@@ -116,7 +133,7 @@
     background-color: var(--color-primary-200);
   }
 
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 660px) {
     padding: 0;
   }
 }

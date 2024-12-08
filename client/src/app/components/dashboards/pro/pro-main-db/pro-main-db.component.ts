@@ -5,6 +5,7 @@ import {CompanyService} from "../../../../services/company.service";
 import {JobApplyService} from "../../../../services/job-apply.service";
 import {AuthService} from "../../../../services/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-pro-main-db',
@@ -43,6 +44,15 @@ export class ProMainDbComponent implements AfterViewInit{
   cphone: any = '';
   chq: any = '';
   formLocked: boolean = true;
+
+  profileCompletionForm = new FormGroup({
+    cname: new FormControl('', [Validators.required]),
+    cemail: new FormControl('', [Validators.required, Validators.email]),
+    cphone: new FormControl('', [Validators.required]),
+    chq: new FormControl('', [Validators.required]),
+    uname: new FormControl('', [Validators.required]),
+    udesignation: new FormControl('', [Validators.required]),
+  })
 
   constructor(private employeeService: EmployeeService,
               private companyService: CompanyService,
@@ -172,5 +182,20 @@ export class ProMainDbComponent implements AfterViewInit{
 
   getViews(jobPostId: string): number {
     return this.viewsMap[jobPostId] || 0;
+  }
+
+  open_form(){
+    setTimeout(() => {
+      const model = document.getElementById('quick_details_model_open');
+      model?.click();
+    }, 100);
+  }
+
+  completeActivation() {
+    if (this.profileCompletionForm.valid){
+
+    } else {
+      this.profileCompletionForm.markAllAsTouched();
+    }
   }
 }

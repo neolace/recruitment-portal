@@ -5,29 +5,21 @@
       <h2 class="h2-2">{{employee?.employee?.firstname ? employee?.employee?.firstname : 'User'}}</h2>
 
       <div class="d-flex align-items-center justify-content-center w-100 my-5 c-j-progress">
-        <div class="check-ball" [ngClass]="cname?'active':''" title="Company Name">
+        <div class="check-ball" [ngClass]="'active'" title="Account Creation">
           <i class="material-icons">check</i>
-          <div class="tag">Name</div>
+          <div class="tag">Account Creation</div>
         </div>
         <div class="check-line"></div>
-        <div class="check-ball" [ngClass]="cemail?'active':''" title="Company Email">
+        <div class="check-ball" [ngClass]="cname&&cemail&&cphone&&chq?'active':''" title="Company Details">
           <i class="material-icons">check</i>
-          <div class="tag">Email</div>
+          <div class="tag">Company Details</div>
+          <button class="btn-1" (click)="open_form()">Quick Add</button>
         </div>
         <div class="check-line"></div>
-        <div class="check-ball" [ngClass]="cphone?'active':''" title="Company Phone">
-          <i class="material-icons">check</i>
-          <div class="tag">Phone</div>
-        </div>
-        <div class="check-line"></div>
-        <div class="check-ball" [ngClass]="chq?'active':''" title="Head Quarter">
-          <i class="material-icons">check</i>
-          <div class="tag">Location</div>
-        </div>
-        <div class="check-line"></div>
-        <div class="check-ball ready" [ngClass]="formLocked?'':'active'" title="Ready to go">
+        <div class="check-ball ready" [ngClass]="formLocked?'':'active'" title="Post Your Job">
           <i class="material-icons">{{formLocked?'lock_outline':'lock_open'}}</i>
-          <div class="tag">Ready to go</div>
+          <div class="tag">Post Your Job</div>
+          <button class="btn-1" [disabled]="formLocked" routerLink="/dashboard/post-job">Post Job</button>
         </div>
       </div>
 
@@ -119,4 +111,74 @@
 </div>
 <div *ngIf="forbidden && company.length == 0 || unexpectedError">
   <app-forbidden></app-forbidden>
+</div>
+
+<button type="button" id="quick_details_model_open" class="d-none" data-bs-toggle="modal" data-bs-target="#quick_details"></button>
+<div class="modal fade" id="quick_details" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="quick_detailsLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="quick_detailsLabel">Quick Profile Unlocking</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex flex-column gap-2">
+          <p class="mb-0">We will send you our latest news and updates. We hate spams more than you do.</p>
+          <form [formGroup]="profileCompletionForm" class="w-100">
+            <h6>Required Company Details:</h6>
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="cname">Company Name *</label>
+                  <input type="text" class="form-control" id="cname" formControlName="cname">
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="cemail">Company Email *</label>
+                  <input type="email" class="form-control" id="cemail" formControlName="cemail">
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="cphone">Company Phone *</label>
+                  <input type="text" class="form-control" id="cphone" formControlName="cphone">
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="chq">Company HQ *</label>
+                  <input type="text" class="form-control" id="chq" formControlName="chq">
+                </div>
+              </div>
+            </div>
+
+            <h6 class="mt-2">Required Employer Details:</h6>
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="uname">Your Name *</label>
+                  <input type="text" class="form-control" id="uname" formControlName="uname">
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="udesignation">Your Designation *</label>
+                  <input type="text" class="form-control" id="udesignation" formControlName="udesignation">
+                </div>
+              </div>
+            </div>
+          </form>
+          <p class="mb-0">By clicking on Subscribe, you agree to our <a href="/terms-and-conditions">Terms of
+            Service</a> and <a href="/privacy-policy">Privacy Policy</a>.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="quick_details_model_close" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn-1" [disabled]="loading"
+                (click)="completeActivation()">{{loading ? 'Saving...' : 'Save'}}</button>
+      </div>
+    </div>
+  </div>
 </div>
