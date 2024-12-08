@@ -5,17 +5,19 @@ import { SingleJobPostAnalysisRoutingModule } from './single-job-post-analysis-r
 import { SingleJobPostAnalysisComponent } from './single-job-post-analysis.component';
 import {SharedComponentModule} from "../../../shared/modules/shared-component.module";
 import {SharedChartsComponentModule} from "../../../shared/modules/shared-charts-component.module";
+import {SharedPipesModule} from "../../../shared/modules/shared-pipes.module";
 
 
 @NgModule({
   declarations: [
     SingleJobPostAnalysisComponent
   ],
-  imports: [
-    CommonModule,
-    SingleJobPostAnalysisRoutingModule,
-    SharedComponentModule,
-    SharedChartsComponentModule
-  ]
+    imports: [
+        CommonModule,
+        SingleJobPostAnalysisRoutingModule,
+        SharedComponentModule,
+        SharedChartsComponentModule,
+        SharedPipesModule
+    ]
 })
 export class SingleJobPostAnalysisModule { }
