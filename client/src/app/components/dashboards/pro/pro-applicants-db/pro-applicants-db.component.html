@@ -2,7 +2,7 @@
   <div class="popular-jobs">
     <div class="row">
       <div class="col-12 heading-tag">
-        <h1>Ongoing Jobs</h1>
+        <h1>Ongoing Recruitments</h1>
         <div class="options">
           <button [ngClass]="gridView ? 'active' : ''" (click)="changeView()"><i class="material-icons">grid_view</i></button>
           <button [ngClass]="!gridView ? 'active' : ''" (click)="changeView()"><i class="material-icons">view_list</i></button>
@@ -39,6 +39,7 @@
                   <i class="material-icons">more_horiz</i>
                 </div>
                 <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" (click)="analyzeJob(p.id)">Analyze</a></li>
                   <li *ngIf="!isExpired(p.expiryDate)"><a class="dropdown-item" routerLink="/job-details/{{p.id}}">View</a></li>
                   <li *ngIf="!isExpired(p.expiryDate)"><a class="dropdown-item" (click)="edit(p.id)">Edit and Update</a></li>
                   <li><a class="dropdown-item" (click)="isExpired(p.expiryDate) ? reopen(p.id) : close(p.id, p)">{{isExpired(p.expiryDate) ? 'Reopen' : 'Close'}} the Job</a></li>
@@ -51,7 +52,7 @@
             </div>
           </div>
           <hr>
-          <div class="card-content">
+          <div class="card-content" (click)="analyzeJob(p.id)">
             <div class="card-content-left">
               <div class="d-flex flex-column align-items-start">
                 <div class="job-title">{{p.title ? p.title : 'N/A'}}</div>
@@ -88,7 +89,7 @@
             </tr>
             </thead>
             <tbody class="w-100">
-            <tr>
+            <tr (click)="analyzeJob(p.id)">
               <td>{{i + 1}}</td>
               <td>{{p.title ? p.title : 'N/A'}}</td>
               <td>{{p.totalOpenings ? p.totalOpenings : 'N/A'}}</td>
@@ -103,7 +104,7 @@
 
     <div class="row">
       <div class="col-12 heading-tag">
-        <h1>Completed Jobs</h1>
+        <h1>Completed Recruitments</h1>
       </div>
       <div [ngClass]="gridView ? 'col-12 col-md-4 mb-3' : 'col-12'" *ngFor="let p of postedJobs?.postedJobs; let i = index">
         <div class="card-1" *ngIf="isExpired(p.expiryDate) && gridView">
@@ -127,6 +128,7 @@
                   <i class="material-icons">more_horiz</i>
                 </div>
                 <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" (click)="analyzeJob(p.id)">Analyze</a></li>
                   <li *ngIf="!isExpired(p.expiryDate)"><a class="dropdown-item" routerLink="/job-details/{{p.id}}">View</a></li>
                   <li *ngIf="!isExpired(p.expiryDate)"><a class="dropdown-item" (click)="edit(p.id)">Edit and Update</a></li>
                   <li><a class="dropdown-item" (click)="isExpired(p.expiryDate) ? reopen(p.id) : close(p.id, p)">{{isExpired(p.expiryDate) ? 'Reopen' : 'Close'}} the Job</a></li>
@@ -139,7 +141,7 @@
             </div>
           </div>
           <hr>
-          <div class="card-content">
+          <div class="card-content" (click)="analyzeJob(p.id)">
             <div class="card-content-left">
               <div class="d-flex flex-column align-items-start">
                 <div class="job-title">{{p.title ? p.title : 'N/A'}}</div>
@@ -176,7 +178,7 @@
             </tr>
             </thead>
             <tbody class="w-100">
-            <tr>
+            <tr (click)="analyzeJob(p.id)">
               <td>{{i + 1}}</td>
               <td>{{p.title ? p.title : 'N/A'}}</td>
               <td>{{p.totalOpenings ? p.totalOpenings : 'N/A'}}</td>
