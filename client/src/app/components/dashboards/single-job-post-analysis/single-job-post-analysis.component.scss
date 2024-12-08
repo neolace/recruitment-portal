@@ -3,6 +3,37 @@ h3{
   text-align: center;
 }
 
+.applicants-list-row{
+  border-bottom: 1px solid var(--color-secondary-600);
+}
+
+.see-more-btn{
+  cursor: pointer;
+  border: 1px solid var(--color-secondary-600);
+  border-radius: 5px;
+  background-color: var(--color-surface-mixed-200);
+  color: var(--color-text-200);
+  padding: 2px 8px;
+
+  i{
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+  }
+
+  &:hover{
+    background-color: var(--color-surface-mixed-300);
+  }
+}
+
+.danger{
+  color: var(--color-danger-200);
+
+  &:hover{
+    color: var(--color-danger-100);
+  }
+}
+
 .fa.fa-star{
   color: #FFD700;
   font-size: 16px;

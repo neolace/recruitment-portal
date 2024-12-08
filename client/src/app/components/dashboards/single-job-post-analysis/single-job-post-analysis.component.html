@@ -20,7 +20,7 @@
                  data-bs-title="Check the job details"></i>
             </div>
             <div class="d-flex align-items-center justify-content-between">
-              <button class="see-more-btn me-1" (click)="toggleApplicants(j)">
+              <button class="see-more-btn me-1"*ngIf="j.applicants?.length > maxApplicantsDisplayed" (click)="toggleApplicants(j)">
                 <p class="d-none d-sm-block m-0">See {{ j.showAllApplicants ? 'less' : 'all' }}</p>
                 <i class="d-block d-sm-none material-icons">{{ j.showAllApplicants ? 'expand' : 'compress' }}</i>
               </button>
@@ -197,10 +197,10 @@
         <h1 class="modal-title fs-5" id="viewsModelLabel">Job Viewers</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <table class="table table-hover table-borderless w-100" *ngIf="viewers && viewers.length > 0">
+      <div class="modal-body" *ngFor="let jd of jobData">
+        <table class="table table-hover table-borderless w-100" *ngIf="jd?.viewers && jd?.viewers.length > 0">
           <tbody class="w-100">
-          <tr *ngFor="let viewer of viewers[0].viewers; let i = index" class="applicants-list-row">
+          <tr *ngFor="let viewer of jd?.viewers; let i = index" class="applicants-list-row">
             <td>{{i + 1}}</td>
             <td>{{viewer.name}}</td>
             <td>
@@ -214,7 +214,7 @@
           </tr>
           </tbody>
         </table>
-        <p *ngIf="!viewers || viewers.length === 0">No viewers found for this job.</p>
+        <p *ngIf="!jd?.viewers || jd?.viewers.length === 0">No viewers found for this job.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -235,7 +235,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger" (click)="deleteSingleApplicant(jobId, applicantData)">Delete</button>
+        <button type="button" class="btn btn-danger" (click)="deleteSingleApplicant(jobData[0].jobId, applicantData)">Delete</button>
       </div>
     </div>
   </div>
@@ -253,7 +253,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" (click)="deleteAllApplicants(jobId)">Delete</button>
+        <button type="button" class="btn btn-danger" (click)="deleteAllApplicants(jobData[0].jobId)">Delete</button>
       </div>
     </div>
   </div>
