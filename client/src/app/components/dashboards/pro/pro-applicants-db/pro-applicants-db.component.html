@@ -6,7 +6,14 @@
         <div class="options">
           <button [ngClass]="gridView ? 'active' : ''" (click)="changeView()"><i class="material-icons">grid_view</i></button>
           <button [ngClass]="!gridView ? 'active' : ''" (click)="changeView()"><i class="material-icons">view_list</i></button>
-          <button><i class="material-icons">sort</i></button>
+          <div class="dropdown">
+            <button data-bs-toggle="dropdown" aria-expanded="false" style="border-left: none; border-radius: 0 5px 5px 0;"><i class="material-icons">sort</i></button>
+            <ul class="dropdown-menu">
+              <li class="dropdown-item" (click)="sortJobs('desc')">Newest</li>
+              <li class="dropdown-item" (click)="sortJobs('asc')">Oldest</li>
+              <li class="dropdown-item" (click)="sortJobs('alpha')">Alphabetical</li>
+            </ul>
+          </div>
           <button class="btn-1" (click)="exportToCsv('posted jobs', postedJobs?.postedJobs)">Export</button>
         </div>
       </div>
@@ -69,7 +76,7 @@
           </div>
         </div>
 
-        <div class="list-view" *ngIf="!gridView">
+        <div class="list-view" *ngIf="!isExpired(p.expiryDate) && !gridView">
           <div class="table table-hover table-borderless w-100">
             <thead class="w-100">
             <tr>
@@ -157,7 +164,7 @@
           </div>
         </div>
 
-        <div class="list-view" *ngIf="!gridView">
+        <div class="list-view" *ngIf="isExpired(p.expiryDate) && !gridView">
           <div class="table table-hover table-borderless w-100">
             <thead class="w-100">
             <tr>
@@ -182,6 +189,22 @@
       </div>
     </div>
   </div>
+</div>
+
+<div *ngIf="!loading && serverError">
+  <app-failed-to-load-data></app-failed-to-load-data>
+</div>
+<div *ngIf="notFound && !company?.company">
+  <app-result-not-found></app-result-not-found>
+</div>
+<div *ngIf="!postedJobs?.postedJobs">
+  <app-result-not-found></app-result-not-found>
+</div>
+<div *ngIf="corsError">
+  <app-network-error></app-network-error>
+</div>
+<div *ngIf="forbidden && !company?.company || unexpectedError">
+  <app-forbidden></app-forbidden>
 </div>
 
 <div class="container">

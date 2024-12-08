@@ -141,7 +141,6 @@ export class ProApplicantsDbComponent implements AfterViewInit, OnInit {
   }
 
   exportToCsv(jobId: any, applicants: any) {
-    console.log(applicants)
     if (!applicants || !applicants.length) {
       this.alertService.warningMessage('No data to export', 'Warning');
       return;
@@ -366,5 +365,17 @@ export class ProApplicantsDbComponent implements AfterViewInit, OnInit {
     })
 
     return applicantsCont
+  }
+
+  sortJobs(sortBy: string) {
+    this.postedJobs.postedJobs.sort((a: any, b: any) => {
+      if (sortBy === 'asc') {
+        return new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime();
+      } else if (sortBy === 'desc') {
+        return new Date(b.datePosted).getTime() - new Date(a.datePosted).getTime();
+      } else {
+        return a.title.localeCompare(b.title);
+      }
+    })
   }
 }
