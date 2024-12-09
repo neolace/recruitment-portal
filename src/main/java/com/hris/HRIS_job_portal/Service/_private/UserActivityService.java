@@ -60,9 +60,9 @@ public class UserActivityService {
             Map<String, String> data = new HashMap<>();
             data.put("userId", activity.getUserId() != null ? activity.getUserId() : "Unknown");
             data.put("ipAddress", decryptIpAddress(activity.getEncryptedIpAddress()) != null ? decryptIpAddress(activity.getEncryptedIpAddress()) : "Unknown");
-            data.put("timestamp", activity.getTimestamp().toString());
-            data.put("lastActive", activity.getLastActive().toString());
-            data.put("endpointAccessed", activity.getEndpointAccessed());
+            data.put("timestamp", activity.getTimestamp() != null ? activity.getTimestamp().toString() : "N/A");
+            data.put("lastActive", activity.getLastActive() != null ? activity.getLastActive().toString() : "N/A");
+            data.put("endpointAccessed", activity.getEndpointAccessed() != null ? activity.getEndpointAccessed() : "N/A");
             return data;
         }).collect(Collectors.toList());
     }
