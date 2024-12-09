@@ -17,7 +17,7 @@
         </div>
 
         <div class="profile-btn" routerLink="/candidate-profile-setting" *ngIf="employee.employee.id === cookieService.userID()">
-          <button><i class="material-icons">settings</i></button>
+          <button><i class="material-icons">edit</i><span class="d-none d-sm-block">_edit_</span></button>
         </div>
       </div>
 
