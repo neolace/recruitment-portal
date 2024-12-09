@@ -15,10 +15,6 @@ declare var bootstrap: any;
   styleUrls: ['./pro-applicants-db.component.scss']
 })
 export class ProApplicantsDbComponent implements AfterViewInit, OnInit {
-  @ViewChild('table', { static: false }) table: ElementRef | any;
-  @ViewChild('closeModal') closeModal!: ElementRef;
-  @ViewChild('closeModal2') closeModal2!: ElementRef;
-
   companyId: any;
   jobApplicants: any[] = [];
 
