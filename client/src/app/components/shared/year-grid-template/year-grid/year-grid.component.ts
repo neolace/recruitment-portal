@@ -34,7 +34,7 @@ export class YearGridComponent implements OnInit, OnChanges {
     );
 
     for (let i = 0; i < totalDays; i++) {
-      const currentDate = new Date(year, 0, 1 + i);
+      const currentDate = new Date(year, 0, 1 + i + 1);
       const week = Math.floor((startDayOfWeek + i) / 7);
       const dayOfWeek = (startDayOfWeek + i) % 7;
 

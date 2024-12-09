@@ -38,6 +38,21 @@
   font-size: 0.8rem;
 }
 
+.days-count{
+  width: 100%;
+  max-width: 644px;
+  min-width: 640px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+
+  p{
+    color: var(--color-text-100);
+    font-weight: 450;
+  }
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(53, 10px); /* 53 weeks max */
@@ -49,6 +64,7 @@
   width: 10px;
   height: 10px;
   background-color: var(--color-surface-mixed-300); /* Default */
+  border-radius: 2px;
 }
 
 .day-square.logged-in {

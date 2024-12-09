@@ -1,10 +1,11 @@
 .year-navigation {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   margin-bottom: 10px;
   gap: 15px;
-
+  max-width: 644px;
+  min-width: 640px;
   color: var(--color-text-100);
 }
 
@@ -15,7 +16,7 @@ button {
   outline: none;
   padding: 5px 10px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 12px;
 
   &:nth-child(1){
     border-radius: 5px 0 0 5px;
