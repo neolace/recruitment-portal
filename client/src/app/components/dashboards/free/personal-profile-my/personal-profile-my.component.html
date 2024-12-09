@@ -22,7 +22,7 @@
       </div>
 
       <div class="row my-3 second-content">
-        <div class="col-12 col-md-6 col-lg-8 left-side">
+        <div class="col-12 col-lg-8 left-side">
           <div *ngIf="employee.employee.intro">
             <h5>{{employee.employee.firstname}} {{employee.employee.lastname}}</h5>
             <p *ngFor="let intro of employee.employee.intro.split('\n')">{{intro}}</p>
@@ -88,6 +88,10 @@
                 </div>
               </div>
             </div>
+          </div>
+
+          <div class="container">
+            <app-year-view></app-year-view>
           </div>
 
           <div class="contact-form-wrapper">

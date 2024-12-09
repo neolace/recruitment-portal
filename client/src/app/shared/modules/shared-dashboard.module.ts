@@ -22,6 +22,7 @@ import {BillingAndUsageComponent} from "../../components/dashboards/free/billing
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {JobPostComponent} from "../../components/dashboards/free/job-post/job-post.component";
 import {JobDetailsModule} from "../../components/shared/job-details/job-details.module";
+import {YearGridComponentModule} from "./year-grid-component.module";
 
 
 
@@ -35,17 +36,18 @@ import {JobDetailsModule} from "../../components/shared/job-details/job-details.
     BillingAndUsageComponent,
     JobPostComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatProgressSpinnerModule,
-    ReactiveFormsModule,
-    RouterLink,
-    SharedComponentModule,
-    SharedPipesModule,
-    MatProgressBarModule,
-    JobDetailsModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatProgressSpinnerModule,
+        ReactiveFormsModule,
+        RouterLink,
+        SharedComponentModule,
+        SharedPipesModule,
+        MatProgressBarModule,
+        JobDetailsModule,
+        YearGridComponentModule
+    ],
   exports: [
     PersonalProfileMyComponent,
     PersonalProfileSettingsComponent,
