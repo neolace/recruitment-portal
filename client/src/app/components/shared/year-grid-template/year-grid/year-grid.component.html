@@ -1,4 +1,10 @@
 <div class="year-wrapper">
+  <div class="d-flex align-items-center justify-content-center w-100">
+    <div class="days-count">
+      <p>{{loginDates?.length ? loginDates?.length: 0}} active days in the last year</p>
+    </div>
+  </div>
+
   <!-- Month Labels -->
   <div class="month-labels">
     <div *ngFor="let month of months" class="month-label">{{ month }}</div>
@@ -15,7 +21,7 @@
       <div
         *ngFor="let day of yearDays"
         class="day-square"
-        [ngClass]="{'logged-in': loginDates.includes(day.date)}"
+        [ngClass]="{'logged-in': loginDates?.includes(day.date)}"
         [attr.title]="day.date || ''">
       </div>
     </div>

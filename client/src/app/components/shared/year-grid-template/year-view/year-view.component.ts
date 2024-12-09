@@ -28,7 +28,7 @@ export class YearViewComponent implements OnInit{
     if (year === 2023) {
       return ['2023-01-01', '2023-02-14', '2023-12-25'];
     } else if (year === 2024) {
-      return ['2024-01-01', '2024-03-17', '2024-10-12'];
+      return ['2024-01-01', '2024-03-17', '2024-10-12', '2024-12-09'];
     }
     return [];
   }
