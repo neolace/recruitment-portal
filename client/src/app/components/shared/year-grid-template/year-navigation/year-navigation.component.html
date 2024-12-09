@@ -1,0 +1,5 @@
+<div class="year-navigation">
+  <button (click)="changeYear(-1)" [disabled]="year <= 2022">&#9664; Previous</button>
+  <span>{{ year }}</span>
+  <button (click)="changeYear(1)" [disabled]="year >= thisYear">Next &#9654;</button>
+</div>

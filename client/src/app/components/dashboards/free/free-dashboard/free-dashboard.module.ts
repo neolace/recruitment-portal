@@ -17,6 +17,7 @@ import {ApplicantsDbComponent} from "../applicants-db/applicants-db.component";
 import {SharedChartsComponentModule} from "../../../../shared/modules/shared-charts-component.module";
 import {SharedComponentModule} from "../../../../shared/modules/shared-component.module";
 import {CompanyAnalysisComponent} from "../company-analysis/company-analysis.component";
+import {YearGridComponentModule} from "../../../../shared/modules/year-grid-component.module";
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {CompanyAnalysisComponent} from "../company-analysis/company-analysis.com
     SharedPipesModule,
     SharedDashboardModule,
     SharedChartsComponentModule,
-    SharedComponentModule
+    SharedComponentModule,
+    YearGridComponentModule
   ],
   exports: []
 })

@@ -7,6 +7,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CommonService} from "../../../../services/common/common.service";
 import {AlertsService} from "../../../../services/alerts.service";
+import {checkinDataStore} from "../../../../shared/data-store/checkin-data-store";
 
 @Component({
   selector: 'app-personal-profile-my',
@@ -36,6 +37,8 @@ export class PersonalProfileMyComponent implements OnInit, AfterViewInit {
   })
   mailLoading: boolean = false;
 
+  loginDates: any[] = [];
+
   constructor(private employeeService: EmployeeService,
               private cookieService: AuthService,
               private commonService: CommonService,
@@ -44,6 +47,7 @@ export class PersonalProfileMyComponent implements OnInit, AfterViewInit {
               private router: Router ) {}
 
   async ngOnInit(): Promise<any> {
+    this.loginDates = checkinDataStore
     this.employeeId = this.cookieService.userID();
     this.getEmployee(this.employeeId)
   }
