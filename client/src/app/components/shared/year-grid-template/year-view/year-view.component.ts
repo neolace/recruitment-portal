@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {LoginService} from "../../../../services/common/login.service";
+import {AuthService} from "../../../../services/auth.service";
 
 @Component({
   selector: 'app-year-view',
@@ -8,6 +10,8 @@ import {Component, OnInit} from '@angular/core';
 export class YearViewComponent implements OnInit{
   currentYear: number = new Date().getFullYear();
   loginDates: string[] = []; // Replace this with actual API data
+
+  constructor(private loginService: LoginService, private cookieService: AuthService) {}
 
   ngOnInit(): void {
     this.fetchLoginDatesForYear(this.currentYear);
@@ -19,8 +23,10 @@ export class YearViewComponent implements OnInit{
   }
 
   fetchLoginDatesForYear(year: number): void {
-    // Simulate an API call to fetch login dates for the given year
-    this.loginDates = this.getMockedDataForYear(year);
+    const userId = this.cookieService.userID();
+    this.loginService.getLoginDates(userId, year).subscribe((dates) => {
+      this.loginDates = dates;
+    });
   }
 
   getMockedDataForYear(year: number): string[] {
