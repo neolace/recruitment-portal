@@ -36,6 +36,8 @@ export class ProApplicantsDbComponent implements AfterViewInit, OnInit {
   companyLevel: any;
   company: any;
   postedJobs: any;
+  ongoingPostedJobs: any;
+  closedPostedJobs: any;
 
   gridView: boolean = true;
 
@@ -153,6 +155,8 @@ export class ProApplicantsDbComponent implements AfterViewInit, OnInit {
       (data) => {
         this.company = data;
         this.postedJobs = data?.postedJobs[0];
+        this.ongoingPostedJobs = this.postedJobs.postedJobs.filter((job: any) => !this.isExpired(job.expiryDate));
+        this.closedPostedJobs = this.postedJobs.postedJobs.filter((job: any) => this.isExpired(job.expiryDate));
         this.loading = false;
       },
       (error: HttpErrorResponse) => {
