@@ -2,6 +2,35 @@
   width: 100%;
   overflow-x: auto;
   margin: 12px 0;
+  position: relative;
+
+  .expired{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    min-height: 16px;
+    background-color: var(--color-danger-100);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    padding: 10px;
+
+    p{
+      color: white;
+      margin: 0;
+    }
+  }
+}
+
+.dropdown{
+  .dropdown-menu{
+    .dropdown-item.danger{
+      color: var(--color-danger-100);
+    }
+  }
 }
 
 .btn-1{
@@ -111,4 +140,19 @@
   width: 100%;
   max-height: 400px;
   overflow: auto;
+}
+
+.not-found-posts{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px 0;
+  text-align: center;
+
+  p{
+    color: var(--color-text-300);
+    font-size: 16px;
+  }
 }
