@@ -58,8 +58,8 @@ public class UserActivityService {
     public List<Map<String, String>> getAllUserActivities() {
         return repository.findAll().stream().map(activity -> {
             Map<String, String> data = new HashMap<>();
-            data.put("userId", activity.getUserId());
-            data.put("ipAddress", decryptIpAddress(activity.getEncryptedIpAddress()));
+            data.put("userId", activity.getUserId() != null ? activity.getUserId() : "Unknown");
+            data.put("ipAddress", decryptIpAddress(activity.getEncryptedIpAddress()) != null ? decryptIpAddress(activity.getEncryptedIpAddress()) : "Unknown");
             data.put("timestamp", activity.getTimestamp().toString());
             data.put("lastActive", activity.getLastActive().toString());
             data.put("endpointAccessed", activity.getEndpointAccessed());

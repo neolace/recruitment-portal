@@ -29,7 +29,7 @@ public class IpCaptureFilter extends OncePerRequestFilter {
         if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        return ip;
+        return ip != null ? ip : "0.0.0.0";
     }
 
     @Override
