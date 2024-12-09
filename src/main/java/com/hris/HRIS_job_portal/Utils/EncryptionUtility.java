@@ -21,6 +21,9 @@ public class EncryptionUtility {
     }
 
     public static String encrypt(String data) throws Exception {
+        if (data == null || data.isEmpty()) {
+            throw new IllegalArgumentException("Value to encrypt cannot be null or empty");
+        }
         SecretKey secretKey = new SecretKeySpec(KEY, ALGORITHM);
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
@@ -29,6 +32,9 @@ public class EncryptionUtility {
     }
 
     public static String decrypt(String encryptedData) throws Exception {
+        if (encryptedData == null || encryptedData.isEmpty()) {
+            throw new IllegalArgumentException("Value to decrypt cannot be null or empty");
+        }
         SecretKey secretKey = new SecretKeySpec(KEY, ALGORITHM);
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.DECRYPT_MODE, secretKey);
