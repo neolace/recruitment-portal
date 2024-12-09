@@ -51,21 +51,34 @@ public class UserActivityService {
             return EncryptionUtility.decrypt(encryptedIp);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return "Unknown";
         }
     }
 
     public List<Map<String, String>> getAllUserActivities() {
-        return repository.findAll().stream().map(activity -> {
+        List<UserActivity> activities = repository.findAll();
+
+        activities.forEach(activity -> System.out.println("Fetched Activity: " + activity));
+
+        return activities.stream().map(activity -> {
             Map<String, String> data = new HashMap<>();
             data.put("userId", activity.getUserId() != null ? activity.getUserId() : "Unknown");
-            data.put("ipAddress", decryptIpAddress(activity.getEncryptedIpAddress()) != null ? decryptIpAddress(activity.getEncryptedIpAddress()) : "Unknown");
-            data.put("timestamp", activity.getTimestamp() != null ? activity.getTimestamp().toString() : "N/A");
-            data.put("lastActive", activity.getLastActive() != null ? activity.getLastActive().toString() : "N/A");
-            data.put("endpointAccessed", activity.getEndpointAccessed() != null ? activity.getEndpointAccessed() : "N/A");
+            data.put("ipAddress", activity.getEncryptedIpAddress() != null
+                    ? decryptIpAddress(activity.getEncryptedIpAddress())
+                    : "Unknown");
+            data.put("timestamp", activity.getTimestamp() != null
+                    ? activity.getTimestamp().toString()
+                    : "N/A");
+            data.put("lastActive", activity.getLastActive() != null
+                    ? activity.getLastActive().toString()
+                    : "N/A");
+            data.put("endpointAccessed", activity.getEndpointAccessed() != null
+                    ? activity.getEndpointAccessed()
+                    : "N/A");
             return data;
         }).collect(Collectors.toList());
     }
+
 
     public long getActiveUserCount() {
         Instant activeSince = Instant.now().minus(15, ChronoUnit.MINUTES);
