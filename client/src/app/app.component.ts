@@ -27,6 +27,7 @@ import {ReportIssueService} from "./services/report-issue.service";
 import {CommonService} from "./services/common/common.service";
 import {Utilities} from "./shared/utilities/utilities";
 import {HomeComponent} from "./components/home/home.component";
+import {LoginService} from "./services/common/login.service";
 
 @Component({
   selector: 'app-root',
@@ -75,6 +76,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
               private reportIssueService: ReportIssueService,
               private commonService: CommonService,
               private alertService: AlertsService,
+              private loginService: LoginService,
               private cookieService: AuthService) {
   }
 
@@ -113,10 +115,22 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     icons.forEach((icon) => {
       icon.setAttribute('translate', 'no');
     });
+
+    this.markAttendance()
   }
 
   ngOnDestroy() {
     this.removeUnwantedSession()
+  }
+
+  markAttendance(){
+    if (this.employeeId){
+      this.loginService.recordLogin(this.employeeId).subscribe(data => {
+        this.alertService.successMessage('Good to see you back :)', 'Welcome')
+      }, error => {
+        // do nothing
+      });
+    }
   }
 
   toggleTheme() {
