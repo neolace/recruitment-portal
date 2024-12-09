@@ -13,6 +13,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {SharedComponentModule} from "../../../shared/modules/shared-component.module";
 import {SharedPipesModule} from "../../../shared/modules/shared-pipes.module";
 import {SharedCardsComponentModule} from "../../../shared/modules/shared-cards-component.module";
+import {YearGridComponentModule} from "../../../shared/modules/year-grid-component.module";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {SharedCardsComponentModule} from "../../../shared/modules/shared-cards-c
         FormsModule,
         SharedComponentModule,
         SharedPipesModule,
-        SharedCardsComponentModule
+        SharedCardsComponentModule,
+        YearGridComponentModule
     ],
   providers: [],
 })

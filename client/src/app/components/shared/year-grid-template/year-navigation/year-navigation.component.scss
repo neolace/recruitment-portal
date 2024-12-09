@@ -5,8 +5,12 @@
   margin-bottom: 10px;
   gap: 15px;
   max-width: 644px;
-  min-width: 640px;
+  min-width: 650px;
   color: var(--color-text-100);
+
+  @media screen and (max-width: 992px){
+    min-width: 350px;
+  }
 }
 
 button {

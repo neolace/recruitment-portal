@@ -41,7 +41,7 @@
 .days-count{
   width: 100%;
   max-width: 644px;
-  min-width: 640px;
+  min-width: auto;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -69,4 +69,8 @@
 
 .day-square.logged-in {
   background-color: #4caf50; /* Highlighted */
+}
+
+.day-square.hide {
+  background-color: var(--color-surface-mixed-100);
 }

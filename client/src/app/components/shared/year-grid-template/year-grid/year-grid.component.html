@@ -21,7 +21,7 @@
       <div
         *ngFor="let day of yearDays"
         class="day-square"
-        [ngClass]="{'logged-in': loginDates.includes(day.date)}"
+        [ngClass]="{'logged-in': loginDates.includes(day.date), 'hide': !day.date}"
         [attr.title]="day.date || ''">
       </div>
     </div>
