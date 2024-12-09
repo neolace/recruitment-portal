@@ -39,7 +39,9 @@ public class UserActivityService {
                 activity.setEndpointAccessed(endpointAccessed);
                 activity.setTimestamp(LocalDateTime.now());
             }
-            activity.setLastActive(Instant.now());
+            Instant instant = Instant.now();
+            Instant truncatedToMicros = instant.truncatedTo(ChronoUnit.MICROS);
+            activity.setLastActive(truncatedToMicros);
             repository.save(activity);
         } catch (Exception e) {
             System.err.println("Error logging activity: " + e.getMessage());
@@ -71,7 +73,7 @@ public class UserActivityService {
                     : "N/A");
             data.put("lastActive", activity.getLastActive() != null
                     ? activity.getLastActive().toString()
-                    : "N/A");
+                    : String.valueOf(Instant.now()));
             data.put("endpointAccessed", activity.getEndpointAccessed() != null
                     ? activity.getEndpointAccessed()
                     : "N/A");
