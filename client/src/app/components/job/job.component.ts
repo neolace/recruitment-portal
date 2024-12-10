@@ -68,7 +68,9 @@ export class JobComponent implements OnInit, AfterViewInit {
       });
     })
 
-    this.getEmployee(this.employeeId);
+    if (this.employee){
+      this.getEmployee(this.employeeId);
+    }
   }
 
   getEmployee(id: any) {

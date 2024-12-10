@@ -99,9 +99,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.employeeId = this.cookieService.userID();
     this.typewriter();
     this.typewriter2();
-    await this.getEmployee(this.employeeId).subscribe((data) => {
+    if (this.employeeId){
+      await this.getEmployee(this.employeeId).subscribe((data) => {
 
-    });
+      });
+    }
     await this.getAllCompanies().subscribe((data) => {
       this.filteredCompanies = this.companyDataStore;
       this.sortCompaniesByType();

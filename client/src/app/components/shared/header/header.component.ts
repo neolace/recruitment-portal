@@ -56,7 +56,9 @@ export class HeaderComponent {
       }
     });
 
-    this.getEmployee(this.employeeId);
+    if (this.employeeId){
+      this.getEmployee(this.employeeId);
+    }
   }
 
   ngAfterViewInit() {
