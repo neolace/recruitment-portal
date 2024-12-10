@@ -49,6 +49,7 @@ const routes: Routes = [
   { path: 'header', loadChildren: () => import('./components/shared/header/header.module').then(m => m.HeaderModule) },
   { path: 'monitor', loadChildren: () => import('./components/dashboards/monitoring-dashboard/monitoring-dashboard.module').then(m => m.MonitoringDashboardModule) },
   { path: 'sitemap', loadChildren: () => import('./components/shared/main-sitemap/main-sitemap.module').then(m => m.MainSitemapModule) },
+  { path: 'cart', loadChildren: () => import('./components/payments/cart/cart.module').then(m => m.CartModule) },
   { path: '**', redirectTo: '/404' }
 ];
 
