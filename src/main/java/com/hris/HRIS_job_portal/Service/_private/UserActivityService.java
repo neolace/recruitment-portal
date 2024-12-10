@@ -39,9 +39,7 @@ public class UserActivityService {
                 activity.setEndpointAccessed(endpointAccessed);
                 activity.setTimestamp(LocalDateTime.now());
             }
-            Instant instant = Instant.now();
-            Instant truncatedToMicros = instant.truncatedTo(ChronoUnit.MICROS);
-            activity.setLastActive(truncatedToMicros);
+            activity.setLastActive(LocalDateTime.now());
             repository.save(activity);
         } catch (Exception e) {
             System.err.println("Error logging activity: " + e.getMessage());
@@ -73,7 +71,7 @@ public class UserActivityService {
                     : "N/A");
             data.put("lastActive", activity.getLastActive() != null
                     ? activity.getLastActive().toString()
-                    : String.valueOf(Instant.now()));
+                    : String.valueOf(LocalDateTime.now()));
             data.put("endpointAccessed", activity.getEndpointAccessed() != null
                     ? activity.getEndpointAccessed()
                     : "N/A");
@@ -83,7 +81,7 @@ public class UserActivityService {
 
 
     public long getActiveUserCount() {
-        Instant activeSince = Instant.now().minus(15, ChronoUnit.MINUTES);
+        LocalDateTime activeSince = LocalDateTime.now().minus(15, ChronoUnit.MINUTES);
         return repository.countActiveUsers(activeSince);
     }
 

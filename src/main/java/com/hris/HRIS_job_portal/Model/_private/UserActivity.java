@@ -21,7 +21,7 @@ public class UserActivity {
     private String encryptedIpAddress;
     private LocalDateTime timestamp;
     private String endpointAccessed;
-    private Instant lastActive;
+    private LocalDateTime lastActive;
     private LocalDateTime sessionStart;
     private LocalDateTime sessionEnd;
 }

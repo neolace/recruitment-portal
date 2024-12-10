@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface UserActivityRepository extends MongoRepository<UserActivity, String> {
     @Query(value = "{ 'lastActive': { $gte: ?0 } }", count = true)
-    long countActiveUsers(Instant activeSince);
+    long countActiveUsers(LocalDateTime activeSince);
 
     @Query("{'encryptedIpAddress': ?0, 'endpointAccessed': ?1, 'timestamp': { $gte: ?2 }}")
     Optional<UserActivity> findRecentActivity(String encryptedIpAddress, String endpointAccessed, LocalDateTime fromTimestamp);
