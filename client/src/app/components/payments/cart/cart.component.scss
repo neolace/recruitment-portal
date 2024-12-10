@@ -1,0 +1,136 @@
+.card-1{
+  border: none;
+  border-radius: 0;
+  background-color: var(--color-surface-100);
+  padding: 0;
+
+  .hr{
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-surface-mixed-400);
+  }
+
+  .card-title, .card-body, .card-bottom{
+    padding: 12px max(20px, 2.5vw);
+  }
+
+  .card-title{
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--color-text-100);
+  }
+
+  .card-title.sm{
+    font-size: 22px;
+  }
+
+  .card-body{
+    .cart-items-wrapper{
+      width: 100%;
+      min-height: 100px;
+
+      .cart-item{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: all .3s ease-in-out;
+
+        .image{
+          width: 80px;
+
+          img{
+            width: 100%;
+          }
+        }
+
+        .product{
+          width: 100%;
+          height: 100%;
+          padding: 0 16px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
+
+          .product-title{
+            font-weight: 450;
+            color: var(--color-text-100);
+            font-size: 22px;
+          }
+
+          .product-desc{
+            color: var(--color-text-300);
+            font-size: 16px;
+          }
+        }
+
+        .price{
+          width: 80px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          span{
+            color: var(--color-text-100);
+            font-weight: 500;
+          }
+        }
+
+        .action{
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          i{
+            color: red;
+            cursor: pointer;
+          }
+        }
+
+        &:hover{
+          background-color: var(--color-surface-200);
+        }
+      }
+    }
+  }
+
+  .card-bottom{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px max(20px, 2.5vw);
+
+    p{
+      color: red;
+      font-weight: bold;
+    }
+  }
+}
+
+.card-1.payment{
+  .card-body{
+    width: 100%;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .form-check{
+      .payment-option{
+        .image{
+          width: 40px;
+
+          img{
+            width: 100%;
+          }
+        }
+        .image.sm{
+          width: 35px;
+        }
+      }
+    }
+  }
+}
