@@ -58,7 +58,7 @@
         <div class="popular-jobs">
           <div class="row" *ngFor="let pj of filterPostedJobsData()">
             <div class="col-12 col-lg-6 mb-3 mb-lg-0" *ngFor="let j of pj.postedJobs | sort:'expiryDate':'desc' | truncateComments: 2; let i = index">
-              <div class="card-1" *ngIf="notExpired(j.expiryDate)">
+              <div class="card-1" *ngIf="notExpired(j.expiryDate, j.datePosted)">
                 <div class="card-top">
                   <div class="card-top-left d-flex align-items-center">
                     <div class="logo-icon-wrapper">
@@ -101,7 +101,7 @@
                   </div>
                 </div>
               </div>
-              <div class="card-1" *ngIf="!notExpired(j.expiryDate)">
+              <div class="card-1" *ngIf="!notExpired(j.expiryDate, j.datePosted)">
                 <div class="card-top">
                   <div class="card-top-left d-flex align-items-center">
                     <div class="logo-icon-wrapper">
@@ -140,7 +140,7 @@
                   </div>
                   <div class="card-bottom-right" style="color: red">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                    <span>Expired</span>
+                    <span>Unavailable</span>
                   </div>
                 </div>
               </div>
@@ -268,7 +268,7 @@
             <div class="card-content">
               <div class="d-flex flex-column align-items-start">
                 <div class="company-name" (click)="viewProfile(rc?.id)">{{rc.name ? rc.name : 'Not Provided'}}</div>
-                <div class="company-description">{{rc.shortDescription ? rc.shortDescription : rc.description | truncate:40}}</div>
+                <div class="company-description">{{rc.shortDescription ? (rc.shortDescription | truncate:40) : rc.description | truncate:40}}</div>
               </div>
             </div>
             <hr>

@@ -202,7 +202,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   filterJobsAds(): any[] {
-    this.filteredJobs = this.jobAdDataStore.filter((job: any) => job.title !== null && new Date(job.expiryDate).getTime() > new Date().getTime());
+    this.filteredJobs = this.jobAdDataStore.filter((job: any) => job.title !== null && new Date(job.expiryDate).getTime() > new Date().getTime() && new Date(job.datePosted).getTime() <= new Date().getTime());
     this.sortJobsByType();
     return this.filteredJobs;
   }

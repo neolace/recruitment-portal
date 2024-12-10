@@ -117,12 +117,11 @@ export class BusinessProfileComponent implements OnInit, AfterViewInit{
 
   filterPostedJobsData(): any[] {
     this.filteredPostedJobsDataStore = this.postedJobsDataStore[0]?.filter((data: any) => data.companyId === this.companyId);
-    // this.filteredPostedJobsDataStore = this.filteredPostedJobsDataStore[0].postedJobs.filter((job: any) =>  new Date(job.expiryDate).getTime() > new Date().getTime());
     return this.filteredPostedJobsDataStore;
   }
 
-  notExpired(date: any) {
-    return new Date(date).getTime() > new Date().getTime();
+  notExpired(date: any, postedDate: any) {
+    return new Date(date).getTime() > new Date().getTime() && new Date(postedDate).getTime() <= new Date().getTime();
   }
 
   contact() {
