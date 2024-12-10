@@ -65,15 +65,17 @@ public class MetricsController {
 
     @GetMapping(value = "/user-activities", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Map<String, String>>> getUserActivity() {
-        try {
-            List<Map<String, String>> activity = userActivityService.getAllUserActivities();
-            return ResponseEntity.ok(activity);
-        } catch (Exception e) {
-            e.printStackTrace();
-            List<Map<String, String>> error = new ArrayList<>();
-            error.add(Map.of("error", e.getMessage()));
-            return ResponseEntity.status(500).body(error);
-        }
+        List<Map<String, String>> activity = userActivityService.getAllUserActivities();
+        return ResponseEntity.ok(activity);
+//        try {
+//            List<Map<String, String>> activity = userActivityService.getAllUserActivities();
+//            return ResponseEntity.ok(activity);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            List<Map<String, String>> error = new ArrayList<>();
+//            error.add(Map.of("error", e.getMessage()));
+//            return ResponseEntity.status(500).body(error);
+//        }
     }
 
     @GetMapping("/active-users")
