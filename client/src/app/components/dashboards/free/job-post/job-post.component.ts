@@ -87,6 +87,8 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
   targetInput: any;
   isResultFound: boolean = false;
 
+  draftKey = 'jobPostDraft';
+
   constructor(private employeeService: EmployeeService,
               private cookieService: AuthService,
               private alertService: AlertsService,
@@ -459,5 +461,31 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
 
   filterJobData(): any[] {
     return [this.jobPostForm?.value];
+  }
+
+  saveDraft(): void {
+    const formData = this.jobPostForm.value;
+    localStorage.setItem(this.draftKey, JSON.stringify(formData));
+    this.jobPostForm.reset();
+    this.alertService.successMessage('Draft saved successfully!', 'Success');
+  }
+
+  loadDraft(): void {
+    const draft = localStorage.getItem(this.draftKey);
+    if (draft) {
+      this.jobPostForm.patchValue(JSON.parse(draft));
+      this.jobPostForm.markAsPristine();
+    } else {
+      this.alertService.warningMessage('No draft found.', 'Warning');
+    }
+  }
+
+  isDraftFound(){
+    return !!localStorage.getItem(this.draftKey);
+  }
+
+  clearDraft(): void {
+    localStorage.removeItem(this.draftKey);
+    this.jobPostForm.reset();
   }
 }
