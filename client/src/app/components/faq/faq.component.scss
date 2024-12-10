@@ -33,6 +33,11 @@
         }
       }
     }
+
+    @media screen and (max-width: 768px){
+      position: relative;
+      margin-bottom: 25px;
+    }
   }
 
   .right-side{
