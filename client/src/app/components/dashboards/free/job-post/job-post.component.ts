@@ -53,6 +53,8 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
 
   downloadURL?: any;
 
+  commonErrorMsg = '';
+
   jobPostForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
@@ -230,6 +232,12 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
   }
 
   saveJobPost() {
+    this.commonErrorMsg = '';
+    if (this.jobPostForm.invalid) {
+      this.commonErrorMsg = 'This field is required';
+      this.alertService.warningMessage('Please fill all required fields! (Starred with *)', 'Warning');
+      return;
+    }
     const postdate: any = this.jobPostForm.get('postdate')?.value;
     let expdate: any = this.jobPostForm.get('expdate')?.value;
 
@@ -288,11 +296,6 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
       return;
     }
 
-    if (this.jobPostForm.invalid) {
-      this.alertService.warningMessage('Please fill all required fields! (Starred with *)', 'Warning');
-      return;
-    }
-
     this.loading = true;
     this.companyService.addJobPost({
       companyId: this.companyId,
@@ -347,7 +350,16 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
   }
 
   updateJob(){
+    this.commonErrorMsg = '';
     this.loading = true;
+
+    if (this.jobPostForm.invalid) {
+      this.commonErrorMsg = 'This field is required';
+      this.loading = false;
+      this.alertService.warningMessage('Please fill all required fields! (Starred with *)', 'Warning');
+      return;
+    }
+
     this.companyService.updatePostedJob(this.companyId, this.jobId, {
       id: this.jobId,
       title: this.jobPostForm.get('title')?.value,
