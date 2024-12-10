@@ -58,7 +58,7 @@ public class UserActivityService {
     public List<Map<String, String>> getAllUserActivities() {
         List<UserActivity> activities = repository.findAll();
 
-        activities.forEach(activity -> System.out.println("Fetched Activity: " + activity));
+//        activities.forEach(activity -> System.out.println("Fetched Activity: " + activity));
 
         return activities.stream().map(activity -> {
             Map<String, String> data = new HashMap<>();
