@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from "../../../../services/common/login.service";
 import {AuthService} from "../../../../services/auth.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-year-view',
@@ -10,8 +11,9 @@ import {AuthService} from "../../../../services/auth.service";
 export class YearViewComponent implements OnInit{
   currentYear: number = new Date().getFullYear();
   loginDates: string[] = []; // Replace this with actual API data
+  queryId: any;
 
-  constructor(private loginService: LoginService, private cookieService: AuthService) {}
+  constructor(private loginService: LoginService, private cookieService: AuthService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.fetchLoginDatesForYear(this.currentYear);
@@ -23,7 +25,13 @@ export class YearViewComponent implements OnInit{
   }
 
   fetchLoginDatesForYear(year: number): void {
-    const userId = this.cookieService.userID();
+    let userId = this.cookieService.userID();
+    this.route.queryParamMap.subscribe(params => {
+      this.queryId = params.get('id');
+    })
+    if (this.queryId) {
+      userId = this.queryId
+    }
     this.loginService.getLoginDates(userId, year).subscribe((dates) => {
       this.loginDates = dates;
     });
