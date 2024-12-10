@@ -23,6 +23,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   });
 
   isp1open: boolean = true;
+  errorMsg = '';
+  termsErrorMsg = '';
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -50,6 +52,14 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   }
 
   async registerUser() {
+    this.errorMsg = '';
+    this.termsErrorMsg = '';
+    if (this.registerForm.get('termsCheck')?.invalid) {
+      this.termsErrorMsg = 'Please accept the terms and conditions';
+      this.alertService.errorMessage(this.termsErrorMsg, 'Missing Fields');
+      return;
+    }
+
     if (this.registerForm.valid) {
       const formData = this.registerForm.value;
       const password = formData.password;
@@ -93,6 +103,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         this.alertService.errorMessage('Password must be at least 6 characters long', 'Weak Password');
       }
     } else {
+      this.errorMsg = 'Please fill in all the fields';
       this.alertService.errorMessage('Please fill in all required fields', 'Missing Fields');
     }
   }

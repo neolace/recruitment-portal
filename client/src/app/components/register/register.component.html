@@ -16,11 +16,13 @@
             <div class="col-12">
               <label for="name">Name:</label>
               <input type="text" placeholder="John" id="name" formControlName="name">
+              <div class="error-msg">{{errorMsg}}</div>
             </div>
 
             <div class="col-12">
               <label for="email">Email:</label>
               <input type="email" placeholder="example@example.com" id="email" formControlName="email">
+              <div class="error-msg">{{errorMsg}}</div>
             </div>
 
             <div class="col-12">
@@ -29,6 +31,7 @@
                 <input type="password" placeholder="Password:" id="password" formControlName="password" aria-label="Password:" aria-describedby="button-addon" style="flex:1">
                 <button class="btn btn-outline-secondary" type="button" id="button-addon" (click)="togglePasswordVisibility()"><i [ngClass]="isp1open? 'fa fa-eye-slash':'fa fa-eye'" aria-hidden="true"></i></button>
               </div>
+              <div class="error-msg">{{errorMsg}}</div>
             </div>
 
             <div class="col-12">
@@ -56,12 +59,13 @@
                   <label class="form-check-label" for="termsCheck">
                     I accept <a href="">Terms and Conditions</a>
                   </label>
+                  <div class="error-msg">{{termsErrorMsg}}</div>
                 </div>
               </div>
             </div>
 
             <div class="col-12">
-              <button class="btn-1 w-100" [disabled]="!registerForm.get('termsCheck')?.value" (click)="registerUser()">Sign Up</button>
+              <button class="btn-1 w-100" (click)="registerUser()">Sign Up</button>
             </div>
 
             <div class="col-12">
