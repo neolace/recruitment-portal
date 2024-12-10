@@ -46,7 +46,7 @@
           <div class="card-content">
             <div class="d-flex flex-column align-items-start">
               <div class="company-name" routerLink="/business-profile/{{c.id}}">{{c.name}}</div>
-              <div class="company-description">{{c.shortDescription ? c.shortDescription : c.companyStory | truncate : 50}}</div>
+              <div class="company-description">{{c.shortDescription ? (c.shortDescription | truncate : 50) : c.companyStory | truncate : 50}}</div>
             </div>
           </div>
           <hr>

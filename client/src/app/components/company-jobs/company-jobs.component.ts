@@ -17,6 +17,7 @@ export class CompanyJobsComponent implements OnInit, AfterViewInit{
   companyId: any;
   company: any;
   postedJobs: any;
+  filteredJobs: any[] = [];
 
   employee: any;
   employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
@@ -56,6 +57,7 @@ export class CompanyJobsComponent implements OnInit, AfterViewInit{
       (data) => {
         this.company = data;
         this.postedJobs = data?.postedJobs[0];
+        this.filteredJobs = this.postedJobs?.postedJobs.filter((job: any) => this.isExpired(job.expiryDate, job.datePosted));
         this.loading = false;
       },
       (error: HttpErrorResponse) => {
@@ -123,7 +125,7 @@ export class CompanyJobsComponent implements OnInit, AfterViewInit{
     });
   }
 
-  isExpired(expiryDate: any) {
-    return new Date(expiryDate) > new Date();
+  isExpired(expiryDate: any, postedDate: any) {
+    return new Date(expiryDate) > new Date() && new Date(postedDate) <= new Date();
   }
 }

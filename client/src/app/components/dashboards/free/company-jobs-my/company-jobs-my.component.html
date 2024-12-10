@@ -84,6 +84,9 @@
             <div class="expired" *ngIf="isExpired(p.expiryDate)">
               <p>Expired! This Ad is no longer available!</p>
             </div>
+            <div class="scheduled" *ngIf="isScheduled(p.datePosted)">
+              <p>Scheduled! This Ad will be available on {{p.datePosted | date}}</p>
+            </div>
           </div>
         </div>
       </div>

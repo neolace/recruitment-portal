@@ -76,6 +76,10 @@ export class CompanyJobsMyComponent implements AfterViewInit, OnInit{
     return new Date(expiryDate) < new Date();
   }
 
+  isScheduled(postedDate: any) {
+    return new Date(postedDate) > new Date();
+  }
+
   edit(id:any) {
     if (id){
       if (this.companyLevel == 3){
