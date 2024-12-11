@@ -50,6 +50,7 @@ const routes: Routes = [
   { path: 'monitor', loadChildren: () => import('./components/dashboards/monitoring-dashboard/monitoring-dashboard.module').then(m => m.MonitoringDashboardModule) },
   { path: 'sitemap', loadChildren: () => import('./components/shared/main-sitemap/main-sitemap.module').then(m => m.MainSitemapModule) },
   { path: 'cart', loadChildren: () => import('./components/payments/cart/cart.module').then(m => m.CartModule) },
+  { path: 'card-checkout', loadChildren: () => import('./components/payments/card-checkout/card-checkout.module').then(m => m.CardCheckoutModule) },
   { path: '**', redirectTo: '/404' }
 ];
 
