@@ -52,6 +52,7 @@ const routes: Routes = [
   { path: 'cart', loadChildren: () => import('./components/payments/cart/cart.module').then(m => m.CartModule) },
   { path: 'card-checkout', loadChildren: () => import('./components/payments/card-checkout/card-checkout.module').then(m => m.CardCheckoutModule) },
   { path: 'bank-checkout', loadChildren: () => import('./components/payments/bank-checkout/bank-checkout.module').then(m => m.BankCheckoutModule) },
+  { path: 'pre-order', loadChildren: () => import('./components/shared/pre-order/pre-order.module').then(m => m.PreOrderModule) },
   { path: '**', redirectTo: '/404' }
 ];
 
