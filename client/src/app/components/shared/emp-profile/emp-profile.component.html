@@ -12,7 +12,7 @@
         </div>
 
         <div class="profile-info">
-          <p class="emp-name">{{employee.employee.firstname}} {{employee.employee.lastname}}</p>
+          <p class="emp-name">{{employee.employee.firstname}} {{employee.employee.lastname}} <span class="pro-tag" *ngIf="employee?.auth?.userLevel == 3">pro</span></p>
           <p class="position">{{employee.employee.occupation?employee.employee.occupation:'Not Provided'}}</p>
         </div>
 
