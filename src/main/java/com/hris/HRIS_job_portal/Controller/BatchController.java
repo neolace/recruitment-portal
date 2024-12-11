@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
@@ -30,6 +31,9 @@ public class BatchController {
     private EmpExperiencesService empExperiencesService;
 
     @Autowired
+    private CredentialsService credentialsService;
+
+    @Autowired
     private CmpPostedJobsService cmpPostedJobsService;
 
     @Autowired
@@ -46,6 +50,7 @@ public class BatchController {
         response.put("empEducation", empEducationService.getEmpEducationByEmployeeId(id));
         response.put("empSkills", empSkillsService.getEmpSkillsByEmployeeId(id));
         response.put("empExperiences", empExperiencesService.getEmpExperiencesByEmployeeId(id));
+        response.put("auth", credentialsService.getCredentialsByEmployeeId(id));
         return response;
     }
 
@@ -56,6 +61,7 @@ public class BatchController {
         CompletableFuture<List<EmpEducationModel>> educationFuture = empEducationService.getEmpEducationByEmployeeIdAsync(id);
         CompletableFuture<List<EmpSkillsModel>> skillsFuture = empSkillsService.getEmpSkillsByEmployeeIdAsync(id);
         CompletableFuture<List<EmpExperiencesModel>> experiencesFuture = empExperiencesService.getEmpExperiencesByEmployeeIdAsync(id);
+        Optional<CredentialsModel> credentialsFuture = credentialsService.getCredentialsByEmployeeId(id);
 
         // Wait for all async calls to complete
         return CompletableFuture.allOf(employeeFuture, contactFuture, educationFuture, skillsFuture, experiencesFuture)
@@ -66,6 +72,7 @@ public class BatchController {
                     response.put("empEducation", educationFuture.join());
                     response.put("empSkills", skillsFuture.join());
                     response.put("empExperiences", experiencesFuture.join());
+                    response.put("auth", credentialsFuture);
                     return response;
                 });
     }
