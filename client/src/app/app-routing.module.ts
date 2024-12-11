@@ -53,6 +53,7 @@ const routes: Routes = [
   { path: 'card-checkout', loadChildren: () => import('./components/payments/card-checkout/card-checkout.module').then(m => m.CardCheckoutModule) },
   { path: 'bank-checkout', loadChildren: () => import('./components/payments/bank-checkout/bank-checkout.module').then(m => m.BankCheckoutModule) },
   { path: 'pre-order', loadChildren: () => import('./components/shared/pre-order/pre-order.module').then(m => m.PreOrderModule) },
+  { path: 'thank-you', loadChildren: () => import('./components/shared/thank-you/thank-you.module').then(m => m.ThankYouModule) },
   { path: '**', redirectTo: '/404' }
 ];
 
