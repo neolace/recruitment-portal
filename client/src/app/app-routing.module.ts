@@ -51,6 +51,7 @@ const routes: Routes = [
   { path: 'sitemap', loadChildren: () => import('./components/shared/main-sitemap/main-sitemap.module').then(m => m.MainSitemapModule) },
   { path: 'cart', loadChildren: () => import('./components/payments/cart/cart.module').then(m => m.CartModule) },
   { path: 'card-checkout', loadChildren: () => import('./components/payments/card-checkout/card-checkout.module').then(m => m.CardCheckoutModule) },
+  { path: 'bank-checkout', loadChildren: () => import('./components/payments/bank-checkout/bank-checkout.module').then(m => m.BankCheckoutModule) },
   { path: '**', redirectTo: '/404' }
 ];
 

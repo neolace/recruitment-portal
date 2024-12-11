@@ -15,7 +15,7 @@ export class CardCheckoutComponent implements OnInit{
     lname: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
     address: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required]),
+    phone: new FormControl('', [Validators.required])
   })
 
   constructor(private alertService: AlertsService, private router: Router, private route: ActivatedRoute) {
