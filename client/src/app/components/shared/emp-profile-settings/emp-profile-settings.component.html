@@ -3,13 +3,13 @@
     <div *ngIf="loading"><app-page-loading></app-page-loading></div>
     <div class="top-content">
       <div class="cover-image">
-        <img [src]="employee?.employee.coverImage?employee.employee.coverImage:'./assets/imgs/shared/default_cover.webp'" alt="cover">
+        <img [src]="employee?.employee?.coverImage?employee.employee.coverImage:'./assets/imgs/shared/default_cover.webp'" alt="cover">
         <label for="cover-photo-edit" class="photo-edit"><i class="fas fa-camera"></i></label>
         <input type="file" accept="image/*" id="cover-photo-edit" (change)="uploadFile($event, 'portal/coverPics/' + employeeId, 'cover')"/>
       </div>
 
       <div class="profile-img">
-        <img [src]="employee?.employee.image?employee.employee.image:'./assets/imgs/shared/default_emp_dp.svg'" alt="profile">
+        <img [src]="employee?.employee?.image?employee.employee.image:'./assets/imgs/shared/default_emp_dp.svg'" alt="profile">
         <label for="profile-photo-edit" class="photo-edit"><i class="fas fa-camera"></i></label>
         <input type="file" accept="image/*" id="profile-photo-edit" (change)="uploadFile($event, 'portal/profilePics/' + employeeId, 'profile')"/>
       </div>
@@ -138,10 +138,10 @@
           </div>
         </form>
 
-        <div class="skill-set" *ngIf="employee?.empSkills.length > 0">
+        <div class="skill-set" *ngIf="employee?.empSkills?.length > 0">
           <hr>
           <div *ngFor="let ss of employee?.empSkills;">
-            <div class="row my-2" *ngFor="let s of ss.skills; index as i">
+            <div class="row my-2" *ngFor="let s of ss?.skills; index as i">
               <div class="col-6">
                 <p>{{s.skill}}</p>
               </div>
@@ -218,10 +218,10 @@
           </div>
         </form>
 
-        <div class="experience-set" *ngIf="employee?.empExperiences.length > 0">
+        <div class="experience-set" *ngIf="employee?.empExperiences?.length > 0">
           <hr>
           <div *ngFor="let se of employee?.empExperiences;">
-            <div class="row my-2" *ngFor="let e of se.experiences; index as i">
+            <div class="row my-2" *ngFor="let e of se?.experiences; index as i">
               <div class="col-6">
                 <p>{{e.company}}</p>
               </div>
@@ -233,6 +233,87 @@
                   <button class="btn-2"><i class="material-icons" translate="no" (click)="patchValuesToExperienceForm(e)">edit</i></button>
                   <button class="btn-3"><i class="material-icons" translate="no" (click)="deleteExperience(e.id)">delete</i></button>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card-1">
+      <h5>Add Education :</h5>
+
+      <form [formGroup]="educationFormGroup">
+        <div class="row form-wrapper">
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="EdDegree">Degree</label>
+              <input type="text" class="form-control" id="EdDegree" formControlName="degree">
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="EdSchool">School</label>
+              <input type="text" class="form-control" id="EdSchool" formControlName="school">
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="EdCountry">Country</label>
+              <input type="text" class="form-control" id="EdCountry" formControlName="country">
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="form-group">
+              <label for="EdStart">Start Year</label>
+              <input type="number" class="form-control" id="EdStart" formControlName="start">
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="form-group">
+              <label for="EdEnd">End Year</label>
+              <input type="number" class="form-control" id="EdEnd" formControlName="end">
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label for="EdDesc">Short Description</label>
+              <input type="text" class="form-control" id="EdDesc" formControlName="description">
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="d-flex align-items-center justify-content-between w-100">
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="form-check me-2">
+                  <input class="form-check-input" type="checkbox" value="" id="EdPresent" formControlName="currentCheck">
+                </div>
+                <p class="notification-text">I'm currently studying here.</p>
+              </div>
+              <div class="form-group">
+                <div class="d-flex align-items-center">
+                  <button type="submit" (click)="editEducations?editEducation() : saveEducation()" class="btn-1">{{editEducations ? 'Update' : 'Add'}}</button>
+                  <i class="material-icons ml-2" *ngIf="editEducations" style="color:var(--color-text-300); cursor: pointer" translate="no" (click)="clear('education')">close</i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="experience-set" *ngIf="employee?.empEducation?.length > 0">
+        <hr>
+        <div *ngFor="let se of employee?.empEducation;">
+          <div class="row my-2" *ngFor="let e of se?.education; index as i">
+            <div class="col-6">
+              <p>{{e.school}}</p>
+            </div>
+            <div class="col-3">
+              <p>{{e.degree}}</p>
+            </div>
+            <div class="col-3">
+              <div class="d-flex align-items-center">
+                <button class="btn-2"><i class="material-icons" translate="no" (click)="patchValuesToEducationForm(e)">edit</i></button>
+                <button class="btn-3"><i class="material-icons" translate="no" (click)="deleteEducation(e.id)">delete</i></button>
               </div>
             </div>
           </div>

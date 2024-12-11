@@ -10,6 +10,8 @@ import {Router} from "@angular/router";
 import {AlertsService} from "../../../../services/alerts.service";
 import {EncryptionService} from "../../../../services/encryption.service";
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-personal-profile-settings',
   templateUrl: './personal-profile-settings.component.html',
@@ -33,6 +35,8 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
   editSkillId: any;
   editExperiences: boolean = false;
   editExperienceId: any;
+  editEducations: boolean = false;
+  editEducationId: any;
   editContactId: any = null;
   editSocialLinksId: any = null;
 
@@ -47,6 +51,12 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
     intro: new FormControl('')
   });
 
+  searchAppearanceFormGroup = new FormGroup({
+    expectedSalaryRange: new FormControl(''),
+    currentExperience: new FormControl(''),
+    keywords: new FormControl('', [Validators.max(40), Validators.min(3), Validators.maxLength(40), Validators.minLength(3)]),
+  });
+
   skillsFormGroup = new FormGroup({
     skill: new FormControl('', [Validators.required]),
     percentage: new FormControl('', [Validators.required])
@@ -56,6 +66,16 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
     occupation: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
     company: new FormControl('', [Validators.required, Validators.email]),
+    start: new FormControl('', [Validators.required]),
+    end: new FormControl(''),
+    currentCheck: new FormControl(false),
+    description: new FormControl('', [Validators.required])
+  });
+
+  educationFormGroup = new FormGroup({
+    degree: new FormControl('', [Validators.required]),
+    country: new FormControl('', [Validators.required]),
+    school: new FormControl('', [Validators.required, Validators.email]),
     start: new FormControl('', [Validators.required]),
     end: new FormControl(''),
     currentCheck: new FormControl(false),
@@ -105,10 +125,10 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
 
   constructor(private fileUploadService: FileUploadService,
               private employeeService: EmployeeService,
-              private alertService: AlertsService,
               private credentialService: CredentialService,
-              private encryptionService: EncryptionService,
+              private alertService: AlertsService,
               private router: Router,
+              private encryptionService: EncryptionService,
               private cookieService: AuthService) {
   }
 
@@ -122,6 +142,11 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
     icons.forEach((icon) => {
       icon.setAttribute('translate', 'no');
     });
+
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
   }
 
   ngOnDestroy() {
@@ -134,6 +159,7 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
       (data) => {
         this.employee = data;
         this.patchValuesToPersonalForm();
+        this.patchValuesToSearchAppearanceForm();
         this.patchValuesToContactForm();
         this.patchValuesToSocialForm();
         this.patchNotifications(data?.employee?.accountNotifications, data?.employee?.marketingNotifications);
@@ -195,6 +221,14 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
     }
   }
 
+  patchValuesToSearchAppearanceForm() {
+    if (this.employee) {
+      this.searchAppearanceFormGroup.get('expectedSalaryRange')?.setValue(this.employee?.employee?.expectedSalaryRange);
+      this.searchAppearanceFormGroup.get('currentExperience')?.setValue(this.employee?.employee?.currentExperience);
+      this.searchAppearanceFormGroup.get('keywords')?.setValue(this.employee?.employee?.keywords);
+    }
+  }
+
   savePersonalDetails() {
     this.loading = true;
     this.employeeService.updateEmployee({
@@ -209,6 +243,23 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
       this.getEmployee(this.employeeId);
       this.loading = false;
       this.alertService.successMessage('Personal details updated successfully! Please refresh the page.', 'Success');
+    }, (error) => {
+      this.loading = false;
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  saveSearchAppearance() {
+    this.loading = true;
+    this.employeeService.updateSearchAppearance({
+      id: this.employee?.employee?.id,
+      expectedSalaryRange: this.searchAppearanceFormGroup.get('expectedSalaryRange')?.value,
+      currentExperience: this.searchAppearanceFormGroup.get('currentExperience')?.value,
+      keywords: this.searchAppearanceFormGroup.get('keywords')?.value
+    }).subscribe((data) => {
+      this.getEmployee(this.employeeId);
+      this.loading = false;
+      this.alertService.successMessage('Search appearance updated successfully! Please refresh the page.', 'Success');
     }, (error) => {
       this.loading = false;
       this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
@@ -262,9 +313,9 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
   patchValuesToSkillsForm(skill: any) {
     this.editSkills = true;
     if (this.employee) {
-      this.skillsFormGroup.get('skill')?.setValue(skill.skill);
-      this.skillsFormGroup.get('percentage')?.setValue(skill.percentage);
-      this.editSkillId = skill.id;
+      this.skillsFormGroup.get('skill')?.setValue(skill?.skill);
+      this.skillsFormGroup.get('percentage')?.setValue(skill?.percentage);
+      this.editSkillId = skill?.id;
     }
   }
 
@@ -324,14 +375,81 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
   patchValuesToExperienceForm(experience: any) {
     this.editExperiences = true;
     if (this.employee) {
-      this.experienceFormGroup.get('company')?.setValue(experience.company);
-      this.experienceFormGroup.get('occupation')?.setValue(experience.position);
-      this.experienceFormGroup.get('country')?.setValue(experience.country);
-      this.experienceFormGroup.get('start')?.setValue(experience.startDate);
-      this.experienceFormGroup.get('end')?.setValue(experience.endDate);
-      this.experienceFormGroup.get('description')?.setValue(experience.description);
-      this.experienceFormGroup.get('currentCheck')?.setValue(experience.endDate === 'Present');
-      this.editExperienceId = experience.id;
+      this.experienceFormGroup.get('company')?.setValue(experience?.company);
+      this.experienceFormGroup.get('occupation')?.setValue(experience?.position);
+      this.experienceFormGroup.get('country')?.setValue(experience?.country);
+      this.experienceFormGroup.get('start')?.setValue(experience?.startDate);
+      this.experienceFormGroup.get('end')?.setValue(experience?.endDate);
+      this.experienceFormGroup.get('description')?.setValue(experience?.description);
+      this.experienceFormGroup.get('currentCheck')?.setValue(experience?.endDate === 'Present');
+      this.editExperienceId = experience?.id;
+    }
+  }
+
+  saveEducation() {
+    this.loading = true;
+    const ed: any[] = [{
+      id: this.generateRandomId(),
+      school: this.educationFormGroup.get('school')?.value,
+      degree: this.educationFormGroup.get('degree')?.value,
+      country: this.educationFormGroup.get('country')?.value,
+      startDate: this.educationFormGroup.get('start')?.value,
+      endDate: this.educationFormGroup.get('currentCheck')?.value ? 'Present' : this.educationFormGroup.get('end')?.value,
+      description: this.educationFormGroup.get('description')?.value
+    }];
+    this.employeeService.addEducation({
+      employeeId: this.employeeId,
+      education: ed
+    }).subscribe((data) => {
+      this.clear('education');
+      this.getEmployee(this.employeeId);
+      this.loading = false;
+      this.alertService.successMessage('Experience updated successfully', 'Success');
+    }, (error) => {
+      this.loading = false;
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  deleteEducation(educationId: string) {
+    this.employeeService.deleteEducation(this.employeeId, educationId).subscribe((data) => {
+      this.getEmployee(this.employeeId);
+      this.alertService.successMessage('Education deleted successfully', 'Success');
+    }, (error) => {
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  editEducation() {
+    this.employeeService.editEducation(this.employeeId, {
+      id: this.editEducationId,
+      school: this.educationFormGroup.get('school')?.value,
+      degree: this.educationFormGroup.get('degree')?.value,
+      country: this.educationFormGroup.get('country')?.value,
+      startDate: this.educationFormGroup.get('start')?.value,
+      endDate: this.educationFormGroup.get('currentCheck')?.value ? 'Present' : this.educationFormGroup.get('end')?.value,
+      description: this.educationFormGroup.get('description')?.value
+    }).subscribe((data) => {
+      this.clear('education');
+      this.getEmployee(this.employeeId);
+      this.alertService.successMessage('Educatoin updated successfully', 'Success');
+    }, (error) => {
+      this.clear('education');
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  patchValuesToEducationForm(education: any) {
+    this.editEducations = true;
+    if (this.employee) {
+      this.educationFormGroup.get('school')?.setValue(education?.school);
+      this.educationFormGroup.get('degree')?.setValue(education?.degree);
+      this.educationFormGroup.get('country')?.setValue(education?.country);
+      this.educationFormGroup.get('start')?.setValue(education?.startDate);
+      this.educationFormGroup.get('end')?.setValue(education?.endDate);
+      this.educationFormGroup.get('description')?.setValue(education?.description);
+      this.educationFormGroup.get('currentCheck')?.setValue(education?.endDate === 'Present');
+      this.editEducationId = education?.id;
     }
   }
 
@@ -498,22 +616,23 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
 
   patchNotifications(account:any, marketing:any) {
     if (account){
-      this.aNotificationsForm.get('mention')?.patchValue(account.mention);
-      this.aNotificationsForm.get('follow')?.patchValue(account.follow);
-      this.aNotificationsForm.get('share')?.patchValue(account.shareActivity);
-      this.aNotificationsForm.get('message')?.patchValue(account.message);
+      this.aNotificationsForm.get('mention')?.patchValue(account?.mention);
+      this.aNotificationsForm.get('follow')?.patchValue(account?.follow);
+      this.aNotificationsForm.get('share')?.patchValue(account?.shareActivity);
+      this.aNotificationsForm.get('message')?.patchValue(account?.message);
     }
     if (marketing){
-      this.mNotificationsForm.get('promotion')?.patchValue(marketing.promotion);
-      this.mNotificationsForm.get('companyNews')?.patchValue(marketing.companyNews);
-      this.mNotificationsForm.get('jobs')?.patchValue(marketing.weeklyJobs);
-      this.mNotificationsForm.get('unsubscribe')?.patchValue(marketing.unsubscribe);
+      this.mNotificationsForm.get('promotion')?.patchValue(marketing?.promotion);
+      this.mNotificationsForm.get('companyNews')?.patchValue(marketing?.companyNews);
+      this.mNotificationsForm.get('jobs')?.patchValue(marketing?.weeklyJobs);
+      this.mNotificationsForm.get('unsubscribe')?.patchValue(marketing?.unsubscribe);
     }
   }
 
   deleteEmployee() {
     this.loading = true;
     this.employeeService.deleteEmployee(this.employeeId).subscribe((data) => {
+      console.log(data);
       this.alertService.warningMessage('Account deleted permanently', 'Success');
     })
     this.cookieService.logout()
@@ -579,7 +698,7 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
           default:
             break;
         }
-      }, (error) => {
+      }, error => {
         this.loading = false;
         this.alertService.warningMessage('We are creating specific path just for you. Please re upload', 'Request');
       });
@@ -601,6 +720,11 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
         this.experienceFormGroup.reset();
         this.editExperiences = false;
         this.editExperienceId = '';
+        break;
+      case 'education':
+        this.educationFormGroup.reset();
+        this.editEducations = false;
+        this.editEducationId = '';
         break;
       case 'contact':
         this.contactFormGroup.reset();

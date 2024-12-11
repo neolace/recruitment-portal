@@ -70,8 +70,54 @@ public class EmpEducationService {
         return null;
     }
 
-    public void deleteEmpEducation(String employeeId) {
+    public void deleteEmpEducations(String employeeId) {
         empEducationRepository.deleteByEmployeeId(employeeId);
+    }
+
+    public EmpEducationModel deleteEmpEducation(String employeeId, String educationId) {
+        List<EmpEducationModel> empEducationsList = empEducationRepository.findByEmployeeId(employeeId);
+        if (!empEducationsList.isEmpty()) {
+            EmpEducationModel empEducationsModel = empEducationsList.get(0);
+            List<EmpEducationDTO> educations = empEducationsModel.getEducation();
+            if (educations != null) {
+                educations.removeIf(experience -> experience.getId().equals(educationId));
+                empEducationsModel.setEducation(educations);
+
+                empEducationRepository.save(empEducationsModel);
+            }
+
+            return empEducationsModel;
+        }
+        throw new RuntimeException("Educations not found for employeeId: " + employeeId);
+    }
+
+    public EmpEducationModel editEmpEducation(String employeeId, EmpEducationDTO updatedEducation) {
+        List<EmpEducationModel> empEducationsList = empEducationRepository.findByEmployeeId(employeeId);
+        if (!empEducationsList.isEmpty()) {
+            EmpEducationModel empEducationsModel = empEducationsList.get(0);
+            List<EmpEducationDTO> educations = empEducationsModel.getEducation();
+
+            if (educations != null) {
+                for (EmpEducationDTO education : educations) {
+                    if (education.getId().equals(updatedEducation.getId())) {
+                        education.setSchool(updatedEducation.getSchool());
+                        education.setSchoolLogo(updatedEducation.getSchoolLogo());
+                        education.setDegree(updatedEducation.getDegree());
+                        education.setCountry(updatedEducation.getCountry());
+                        education.setStartDate(updatedEducation.getStartDate());
+                        education.setEndDate(updatedEducation.getEndDate());
+                        education.setDescription(updatedEducation.getDescription());
+                        break;
+                    }
+                }
+                empEducationsModel.setEducation(educations);
+
+                empEducationRepository.save(empEducationsModel);
+            }
+
+            return empEducationsModel;
+        }
+        throw new RuntimeException("Educations not found for employeeId: " + employeeId);
     }
 
     @Async

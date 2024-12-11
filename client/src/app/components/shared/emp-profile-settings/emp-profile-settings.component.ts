@@ -34,6 +34,8 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
   editSkillId: any;
   editExperiences: boolean = false;
   editExperienceId: any;
+  editEducations: boolean = false;
+  editEducationId: any;
   editContactId: any = null;
   editSocialLinksId: any = null;
 
@@ -63,6 +65,16 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
     occupation: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
     company: new FormControl('', [Validators.required, Validators.email]),
+    start: new FormControl('', [Validators.required]),
+    end: new FormControl(''),
+    currentCheck: new FormControl(false),
+    description: new FormControl('', [Validators.required])
+  });
+
+  educationFormGroup = new FormGroup({
+    degree: new FormControl('', [Validators.required]),
+    country: new FormControl('', [Validators.required]),
+    school: new FormControl('', [Validators.required, Validators.email]),
     start: new FormControl('', [Validators.required]),
     end: new FormControl(''),
     currentCheck: new FormControl(false),
@@ -300,9 +312,9 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
   patchValuesToSkillsForm(skill: any) {
     this.editSkills = true;
     if (this.employee) {
-      this.skillsFormGroup.get('skill')?.setValue(skill.skill);
-      this.skillsFormGroup.get('percentage')?.setValue(skill.percentage);
-      this.editSkillId = skill.id;
+      this.skillsFormGroup.get('skill')?.setValue(skill?.skill);
+      this.skillsFormGroup.get('percentage')?.setValue(skill?.percentage);
+      this.editSkillId = skill?.id;
     }
   }
 
@@ -362,14 +374,81 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
   patchValuesToExperienceForm(experience: any) {
     this.editExperiences = true;
     if (this.employee) {
-      this.experienceFormGroup.get('company')?.setValue(experience.company);
-      this.experienceFormGroup.get('occupation')?.setValue(experience.position);
-      this.experienceFormGroup.get('country')?.setValue(experience.country);
-      this.experienceFormGroup.get('start')?.setValue(experience.startDate);
-      this.experienceFormGroup.get('end')?.setValue(experience.endDate);
-      this.experienceFormGroup.get('description')?.setValue(experience.description);
-      this.experienceFormGroup.get('currentCheck')?.setValue(experience.endDate === 'Present');
-      this.editExperienceId = experience.id;
+      this.experienceFormGroup.get('company')?.setValue(experience?.company);
+      this.experienceFormGroup.get('occupation')?.setValue(experience?.position);
+      this.experienceFormGroup.get('country')?.setValue(experience?.country);
+      this.experienceFormGroup.get('start')?.setValue(experience?.startDate);
+      this.experienceFormGroup.get('end')?.setValue(experience?.endDate);
+      this.experienceFormGroup.get('description')?.setValue(experience?.description);
+      this.experienceFormGroup.get('currentCheck')?.setValue(experience?.endDate === 'Present');
+      this.editExperienceId = experience?.id;
+    }
+  }
+
+  saveEducation() {
+    this.loading = true;
+    const ed: any[] = [{
+      id: this.generateRandomId(),
+      school: this.educationFormGroup.get('school')?.value,
+      degree: this.educationFormGroup.get('degree')?.value,
+      country: this.educationFormGroup.get('country')?.value,
+      startDate: this.educationFormGroup.get('start')?.value,
+      endDate: this.educationFormGroup.get('currentCheck')?.value ? 'Present' : this.educationFormGroup.get('end')?.value,
+      description: this.educationFormGroup.get('description')?.value
+    }];
+    this.employeeService.addEducation({
+      employeeId: this.employeeId,
+      education: ed
+    }).subscribe((data) => {
+      this.clear('education');
+      this.getEmployee(this.employeeId);
+      this.loading = false;
+      this.alertService.successMessage('Experience updated successfully', 'Success');
+    }, (error) => {
+      this.loading = false;
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  deleteEducation(educationId: string) {
+    this.employeeService.deleteEducation(this.employeeId, educationId).subscribe((data) => {
+      this.getEmployee(this.employeeId);
+      this.alertService.successMessage('Education deleted successfully', 'Success');
+    }, (error) => {
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  editEducation() {
+    this.employeeService.editEducation(this.employeeId, {
+      id: this.editEducationId,
+      school: this.educationFormGroup.get('school')?.value,
+      degree: this.educationFormGroup.get('degree')?.value,
+      country: this.educationFormGroup.get('country')?.value,
+      startDate: this.educationFormGroup.get('start')?.value,
+      endDate: this.educationFormGroup.get('currentCheck')?.value ? 'Present' : this.educationFormGroup.get('end')?.value,
+      description: this.educationFormGroup.get('description')?.value
+    }).subscribe((data) => {
+      this.clear('education');
+      this.getEmployee(this.employeeId);
+      this.alertService.successMessage('Educatoin updated successfully', 'Success');
+    }, (error) => {
+      this.clear('education');
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  patchValuesToEducationForm(education: any) {
+    this.editEducations = true;
+    if (this.employee) {
+      this.educationFormGroup.get('school')?.setValue(education?.school);
+      this.educationFormGroup.get('degree')?.setValue(education?.degree);
+      this.educationFormGroup.get('country')?.setValue(education?.country);
+      this.educationFormGroup.get('start')?.setValue(education?.startDate);
+      this.educationFormGroup.get('end')?.setValue(education?.endDate);
+      this.educationFormGroup.get('description')?.setValue(education?.description);
+      this.educationFormGroup.get('currentCheck')?.setValue(education?.endDate === 'Present');
+      this.editEducationId = education?.id;
     }
   }
 
@@ -536,16 +615,16 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
 
   patchNotifications(account:any, marketing:any) {
     if (account){
-      this.aNotificationsForm.get('mention')?.patchValue(account.mention);
-      this.aNotificationsForm.get('follow')?.patchValue(account.follow);
-      this.aNotificationsForm.get('share')?.patchValue(account.shareActivity);
-      this.aNotificationsForm.get('message')?.patchValue(account.message);
+      this.aNotificationsForm.get('mention')?.patchValue(account?.mention);
+      this.aNotificationsForm.get('follow')?.patchValue(account?.follow);
+      this.aNotificationsForm.get('share')?.patchValue(account?.shareActivity);
+      this.aNotificationsForm.get('message')?.patchValue(account?.message);
     }
     if (marketing){
-      this.mNotificationsForm.get('promotion')?.patchValue(marketing.promotion);
-      this.mNotificationsForm.get('companyNews')?.patchValue(marketing.companyNews);
-      this.mNotificationsForm.get('jobs')?.patchValue(marketing.weeklyJobs);
-      this.mNotificationsForm.get('unsubscribe')?.patchValue(marketing.unsubscribe);
+      this.mNotificationsForm.get('promotion')?.patchValue(marketing?.promotion);
+      this.mNotificationsForm.get('companyNews')?.patchValue(marketing?.companyNews);
+      this.mNotificationsForm.get('jobs')?.patchValue(marketing?.weeklyJobs);
+      this.mNotificationsForm.get('unsubscribe')?.patchValue(marketing?.unsubscribe);
     }
   }
 
@@ -640,6 +719,11 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
         this.experienceFormGroup.reset();
         this.editExperiences = false;
         this.editExperienceId = '';
+        break;
+      case 'education':
+        this.educationFormGroup.reset();
+        this.editEducations = false;
+        this.editEducationId = '';
         break;
       case 'contact':
         this.contactFormGroup.reset();
