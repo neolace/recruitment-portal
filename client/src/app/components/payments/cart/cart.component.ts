@@ -1,17 +1,32 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
-export class CartComponent {
+export class CartComponent implements OnInit{
 
-  card:boolean = false;
+  card:boolean = true;
   bank:boolean = false;
   paypal:boolean = false;
 
   errorMsg = '';
+
+  userId:any;
+  isVerified:boolean = false;
+
+  constructor(private router: Router, private cookieService: AuthService) {
+  }
+
+  ngOnInit() {
+    this.userId = this.cookieService.userID();
+    if (this.userId){
+      this.isVerified = true;
+    }
+  }
 
   selectOption(option: string) {
     switch (option){
@@ -32,7 +47,7 @@ export class CartComponent {
       console.log('redirect to bank payout')
     }
     if (this.card && !this.bank && !this.paypal){
-      console.log('redirect to card payout')
+      this.router.navigate(['/card-checkout'],{queryParams:{verified:this.isVerified}})
     }
     if (this.paypal && !this.card && !this.bank){
       console.log('redirect to paypal payout')
