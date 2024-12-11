@@ -43,7 +43,18 @@ export class BankCheckoutComponent {
   }
 
   pay(){
-    this.alertService.warningMessage('This feature will available soon', 'warning')
+    if(this.downloadURL){
+      if (this.billingForm.valid){
+        this.router.navigate(['/thank-you']);
+        this.alertService.warningMessage('This feature will available soon', 'warning');
+      }
+      else {
+        this.alertService.errorMessage('All Fields are required', 'error');
+      }
+    }
+    else {
+      this.alertService.errorMessage('Payment Slip is not Attached!', 'error');
+    }
   }
 
   generateRandomId(): string {

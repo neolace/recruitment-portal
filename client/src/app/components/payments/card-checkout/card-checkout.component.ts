@@ -37,7 +37,13 @@ export class CardCheckoutComponent implements OnInit{
   }
 
   pay(){
-    this.alertService.warningMessage('This feature will available soon', 'warning')
+    if (this.billingForm.valid){
+      this.router.navigate(['/thank-you']);
+      this.alertService.warningMessage('This feature will available soon', 'warning');
+    }
+    else {
+      this.alertService.errorMessage('All Fields are required', 'error');
+    }
   }
 
 }
