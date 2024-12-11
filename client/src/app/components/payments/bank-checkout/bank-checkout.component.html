@@ -13,6 +13,17 @@
   <div class="d-flex align-items-center justify-content-center w-100">
     <div class="card-checkout form-card-1">
       <div class="card-title sm">Billing Details</div>
+      <div class="error-msg">This feature is <b>under development!</b> Don't make any payments and we are <b>not
+        responsible</b> for your money!
+      </div>
+      <div class="hr"></div>
+      <div class="card-body w-100">
+        <div class="d-flex flex-column gap-2 align-items-start w-100">
+          <p><Strong>Account: </Strong>012345678</p>
+          <p><Strong>Bank: </Strong>Central Bank</p>
+          <p><Strong>Branch: </Strong>Downtown</p>
+        </div>
+      </div>
       <div class="hr"></div>
       <div class="card-body">
         <form [formGroup]="billingForm">
@@ -38,13 +49,25 @@
             <div class="col-12">
               <div class="form-group">
                 <label for="address">Address *</label>
-                <textarea type="text" class="form-control" id="address" placeholder="13th Street. 47 W 13th St, New York" formControlName="address"></textarea>
+                <textarea type="text" class="form-control" id="address"
+                          placeholder="13th Street. 47 W 13th St, New York" formControlName="address"></textarea>
               </div>
             </div>
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="phone">Mobile Number *</label>
-                <input type="text" class="form-control" id="phone" placeholder="+1 123 456 7890" formControlName="phone">
+                <input type="text" class="form-control" id="phone" placeholder="+1 123 456 7890"
+                       formControlName="phone">
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label for="slip">Upload the Bank Slip *</label>
+                <input type="file" class="form-control" id="slip"
+                       (change)="uploadFile($event, 'portal/payments/bank_slips/' + generateRandomId())">
+                <div class="error-msg">Only .pdf, .jpg, .jpeg, .png file types allowed. Maximum file upload size is
+                  2MB.
+                </div>
               </div>
             </div>
             <div class="col-12">
@@ -55,6 +78,10 @@
             </div>
           </div>
         </form>
+      </div>
+      <div class="card-bottom">
+        <p class="error-msg"><i class="material-icons">info</i>&nbsp;Direct Bank Transactions are only available to the
+          <b>Finland</b> users! We are <b>not responsible</b> for other countries!</p>
       </div>
     </div>
   </div>

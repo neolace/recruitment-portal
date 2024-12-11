@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../../services/auth.service";
+import {AlertsService} from "../../../services/alerts.service";
 
 @Component({
   selector: 'app-cart',
@@ -18,7 +19,7 @@ export class CartComponent implements OnInit{
   userId:any;
   isVerified:boolean = false;
 
-  constructor(private router: Router, private cookieService: AuthService) {
+  constructor(private router: Router, private cookieService: AuthService, private alertService: AlertsService) {
   }
 
   ngOnInit() {
@@ -44,13 +45,13 @@ export class CartComponent implements OnInit{
       return
     }
     if (this.bank && !this.card && !this.paypal){
-      console.log('redirect to bank payout')
+      this.router.navigate(['/bank-checkout'],{queryParams:{verified:this.isVerified}})
     }
     if (this.card && !this.bank && !this.paypal){
       this.router.navigate(['/card-checkout'],{queryParams:{verified:this.isVerified}})
     }
     if (this.paypal && !this.card && !this.bank){
-      console.log('redirect to paypal payout')
+      this.alertService.warningMessage('This feature will available soon', 'warning')
     }
   }
 }
