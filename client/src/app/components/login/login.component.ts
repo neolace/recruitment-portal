@@ -10,6 +10,7 @@ import {GitHubAuthService} from "../../services/git-hub-auth.service";
 import {ThemeService} from "../../services/theme.service";
 import {EncryptionService} from "../../services/encryption.service";
 import {FacebookAuthService} from "../../services/facebook-auth.service";
+import {LinkedInAuthService} from "../../services/linked-in-auth.service";
 
 @Component({
   selector: 'app-login',
@@ -35,6 +36,7 @@ export class LoginComponent implements AfterViewInit, OnInit {
     private googleAuthService: GoogleAuthService,
     private gitHubAuthService: GitHubAuthService,
     private facebookAuthService: FacebookAuthService,
+    private linkedInAuthService: LinkedInAuthService,
     private socialAuthService: SocialAuthApiService,
     private encryptionService: EncryptionService,
     private cookieService: AuthService,
@@ -45,6 +47,7 @@ export class LoginComponent implements AfterViewInit, OnInit {
     this.googleAuthService.configureOAuth();
     this.gitHubAuthService.handleRedirectCallback();
     this.facebookAuthService.initializeFacebookSdk().then(r => {});
+    this.linkedInAuthService.initializeLinkedInSdk().then(r => {});
   }
 
   ngAfterViewInit() {
@@ -145,7 +148,7 @@ export class LoginComponent implements AfterViewInit, OnInit {
   }
 
   loginWithLinkedin() {
-
+    this.linkedInAuthService.loginWithLinkedIn().then(r => {});
   }
 
   loginWithFacebook() {

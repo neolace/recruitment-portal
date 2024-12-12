@@ -8,6 +8,7 @@ import {AlertsService} from "../../../services/alerts.service";
 import {AuthService} from "../../../services/auth.service";
 import {commonSearchResults} from "../../../shared/data-store/common-search-results";
 import {HttpErrorResponse} from "@angular/common/http";
+import {LinkedInAuthService} from "../../../services/linked-in-auth.service";
 
 @Component({
   selector: 'app-header',
@@ -34,6 +35,7 @@ export class HeaderComponent {
               private renderer: Renderer2,
               private employeeService: EmployeeService,
               private credentialsService: CredentialService,
+              private linkedInAuthService: LinkedInAuthService,
               private alertService: AlertsService,
               private cookieService: AuthService) {
   }
@@ -135,6 +137,7 @@ export class HeaderComponent {
   logout() {
     this.cookieService.logout()
     this.removeUnwantedSession()
+    this.linkedInAuthService.logoutFromLinkedIn().then(r => {});
     this.router.navigate(['/login']);
   }
 }
