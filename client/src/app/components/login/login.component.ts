@@ -22,7 +22,8 @@ export class LoginComponent implements AfterViewInit, OnInit {
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required])
+    password: new FormControl('', [Validators.required]),
+    remember: new FormControl(false)
   });
 
   isp1open: boolean = true;
@@ -48,6 +49,12 @@ export class LoginComponent implements AfterViewInit, OnInit {
     icons.forEach((icon) => {
       icon.setAttribute('translate', 'no');
     });
+
+    if (localStorage.getItem('email') && localStorage.getItem('password')) {
+      this.loginForm.get('email')?.setValue(localStorage.getItem('email'));
+      this.loginForm.get('password')?.setValue(localStorage.getItem('password'));
+      this.loginForm.get('remember')?.setValue(true);
+    }
   }
 
   loginUser() {
@@ -78,6 +85,12 @@ export class LoginComponent implements AfterViewInit, OnInit {
         if (sessionStorage.getItem('LgnAtT') != '0'){
           if (formData.password === encryptedPassword) {
             this.cookieService.createSession(response);
+
+            if (this.loginForm.get('remember')?.value) {
+              localStorage.setItem('email', <string>this.loginForm.get('email')?.value);
+              localStorage.setItem('password', <string>this.loginForm.get('password')?.value);
+            }
+
             if (response.role === 'candidate') {
               this.cookieService.createUserID(response.employeeId);
               this.cookieService.createLevel(response.userLevel);
