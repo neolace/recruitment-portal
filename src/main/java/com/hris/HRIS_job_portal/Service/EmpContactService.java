@@ -170,6 +170,16 @@ public class EmpContactService {
         empContactRepository.deleteByEmployeeId(employeeId);
     }
 
+    public EmpContactModel updatePublicity(String id) {
+        Optional<EmpContactModel> empContactModel = empContactRepository.findById(id);
+        if (empContactModel.isPresent()) {
+            EmpContactModel existingEmpContact = empContactModel.get();
+            existingEmpContact.setPublicity(!existingEmpContact.isPublicity());
+            return empContactRepository.save(existingEmpContact);
+        }
+        return null;
+    }
+
     @Async
     public CompletableFuture<List<EmpContactModel>> getEmpContactByEmployeeIdAsync(String employeeId) {
         // Fetch employees asynchronously

@@ -50,4 +50,9 @@ public class EmpContactController {
     public void deleteEmpContact(@PathVariable String employeeId) {
         empContactService.deleteEmpContact(employeeId);
     }
+
+    @PutMapping("/publicity/{id}")
+    public EmpContactModel updatePublicity(@PathVariable String id) {
+        return empContactService.updatePublicity(id);
+    }
 }

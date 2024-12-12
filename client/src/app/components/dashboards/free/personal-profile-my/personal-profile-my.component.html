@@ -154,85 +154,93 @@
           </div>
 
           <div class="details-card-1">
-            <h5>Contact Detail:</h5>
-            <div *ngIf="employee?.empContact?.length <= 0" class="w-100">
-              <p>Not Provided</p>
+            <div class="d-flex align-items-center justify-content-between w-100">
+              <h5>Contact Detail:</h5>
+              <div class="form-check form-switch form-check-reverse" *ngIf="employee.employee.id === cookieService.userID()">
+                <label class="form-check-label" for="private">Public</label>
+                <input class="form-check-input" type="checkbox" role="switch" id="private" [checked]="contactPrivate" (click)="toggleContactPrivate()">
+              </div>
             </div>
-            <div *ngFor="let pd of employee?.empContact" class="w-100">
-              <div class="w-100" *ngIf="pd.contact.length > 0">
-                <div *ngFor="let c of pd.contact" class="d-flex flex-column w-100" style="gap: 12px;">
-                  <div class="d-flex align-items-center justify-content-between w-100">
-                    <div class="caption"><i class="material-icons">mail_outline</i><span>Email:</span></div>
-                    <div class="value">{{c.email?c.email:'N/A'}}</div>
-                  </div>
-                  <div class="d-flex align-items-center justify-content-between w-100">
-                    <div class="caption"><i class="material-icons">child_friendly</i><span>DOB:</span></div>
-                    <div class="value">{{employee?.employee.dob?employee?.employee.dob:'N/A'}}</div>
-                  </div>
-                  <div class="d-flex align-items-center justify-content-between w-100">
-                    <div class="caption"><i class="material-icons">home</i><span>Address:</span></div>
-                    <div class="value">{{c.address?c.address:'N/A'}}</div>
-                  </div>
-                  <div class="d-flex align-items-center justify-content-between w-100">
-                    <div class="caption"><i class="material-icons">location_on</i><span>City:</span></div>
-                    <div class="value">{{c.city?c.city:'N/A'}}</div>
-                  </div>
-                  <div class="d-flex align-items-center justify-content-between w-100">
-                    <div class="caption"><i class="material-icons">south_america</i><span>Country:</span></div>
-                    <div class="value">{{c.country?c.country:'N/A'}}</div>
-                  </div>
-                  <div class="d-flex align-items-center justify-content-between w-100">
-                    <div class="caption"><i class="material-icons">dns</i><span>Postal Code:</span></div>
-                    <div class="value">{{c.zipCode?c.zipCode:'N/A'}}</div>
-                  </div>
-                  <div class="d-flex align-items-center justify-content-between w-100">
-                    <div class="caption"><i class="material-icons">local_phone</i><span>Mobile:</span></div>
-                    <div class="value">{{c.phone?c.phone:'N/A'}}</div>
+            <div *ngIf="employee?.empContact?.length <= 0 || employee?.empContact[0]?.publicity == false" class="w-100">
+              <p>Details Not Provided or User Made Private</p>
+            </div>
+            <div *ngIf="employee?.empContact?.length > 0 && employee?.empContact[0]?.publicity == true" class="w-100">
+              <div *ngFor="let pd of employee?.empContact" class="w-100">
+                <div class="w-100" *ngIf="pd.contact.length > 0">
+                  <div *ngFor="let c of pd.contact" class="d-flex flex-column w-100" style="gap: 12px;">
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                      <div class="caption"><i class="material-icons">mail_outline</i><span>Email:</span></div>
+                      <div class="value">{{c.email?c.email:'N/A'}}</div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                      <div class="caption"><i class="material-icons">child_friendly</i><span>DOB:</span></div>
+                      <div class="value">{{employee?.employee.dob?employee?.employee.dob:'N/A'}}</div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                      <div class="caption"><i class="material-icons">home</i><span>Address:</span></div>
+                      <div class="value">{{c.address?c.address:'N/A'}}</div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                      <div class="caption"><i class="material-icons">location_on</i><span>City:</span></div>
+                      <div class="value">{{c.city?c.city:'N/A'}}</div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                      <div class="caption"><i class="material-icons">south_america</i><span>Country:</span></div>
+                      <div class="value">{{c.country?c.country:'N/A'}}</div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                      <div class="caption"><i class="material-icons">dns</i><span>Postal Code:</span></div>
+                      <div class="value">{{c.zipCode?c.zipCode:'N/A'}}</div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                      <div class="caption"><i class="material-icons">local_phone</i><span>Mobile:</span></div>
+                      <div class="value">{{c.phone?c.phone:'N/A'}}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div class="w-100" *ngIf="pd?.socialLinks?.length > 0">
-                <div *ngIf="pd.socialLinks.length > 0" class="my-4">
-                  <div *ngFor="let s of pd.socialLinks">
-                    <div class="d-flex align-items-center justify-content-between w-100">
-                      <div class="caption">Social:</div>
-                      <div class="item-set">
-                        <div class="social-item" *ngIf="s.linkedin">
-                          <a href="{{s.linkedin}}"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                        </div>
-                        <div class="social-item" *ngIf="s.facebook">
-                          <a href="{{s.facebook}}"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                        </div>
-                        <div class="social-item" *ngIf="s.instagram">
-                          <a href="{{s.instagram}}"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                        </div>
-                        <div class="social-item" *ngIf="s.twitter">
-                          <a href="{{s.twitter}}"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                        </div>
-                        <div class="social-item" *ngIf="s.github">
-                          <a href="{{s.github}}"><i class="fa fa-github" aria-hidden="true"></i></a>
-                        </div>
-                        <div class="social-item" *ngIf="pd.contact[0].email">
-                          <a href="mailto:{{pd.contact[0].email}}"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+                <div class="w-100" *ngIf="pd?.socialLinks?.length > 0">
+                  <div *ngIf="pd.socialLinks.length > 0" class="my-4">
+                    <div *ngFor="let s of pd.socialLinks">
+                      <div class="d-flex align-items-center justify-content-between w-100">
+                        <div class="caption">Social:</div>
+                        <div class="item-set">
+                          <div class="social-item" *ngIf="s.linkedin">
+                            <a href="{{s.linkedin}}"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                          </div>
+                          <div class="social-item" *ngIf="s.facebook">
+                            <a href="{{s.facebook}}"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                          </div>
+                          <div class="social-item" *ngIf="s.instagram">
+                            <a href="{{s.instagram}}"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                          </div>
+                          <div class="social-item" *ngIf="s.twitter">
+                            <a href="{{s.twitter}}"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                          </div>
+                          <div class="social-item" *ngIf="s.github">
+                            <a href="{{s.github}}"><i class="fa fa-github" aria-hidden="true"></i></a>
+                          </div>
+                          <div class="social-item" *ngIf="pd.contact[0].email">
+                            <a href="mailto:{{pd.contact[0].email}}"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div class="sub-card" *ngIf="employee?.employee?.resume">
-                <div class="d-flex align-items-center justify-content-start w-100">
-                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                  <p>{{employee?.employee.firstname}}-resume.pdf</p>
+                <div class="sub-card" *ngIf="employee?.employee?.resume">
+                  <div class="d-flex align-items-center justify-content-start w-100">
+                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                    <p>{{employee?.employee.firstname}}-resume.pdf</p>
+                  </div>
+                  <a href="{{employee?.employee.resume}}" download="{{employee?.employee.resume}}" class="w-100">
+                    <button class="btn-1">
+                      <i class="fa fa-download" aria-hidden="true"></i>
+                      Download CV
+                    </button>
+                  </a>
                 </div>
-                <a href="{{employee?.employee.resume}}" download="{{employee?.employee.resume}}" class="w-100">
-                  <button class="btn-1">
-                    <i class="fa fa-download" aria-hidden="true"></i>
-                    Download CV
-                  </button>
-                </a>
               </div>
             </div>
           </div>
