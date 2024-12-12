@@ -40,6 +40,8 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
     message: new FormControl('', [Validators.required])
   })
   mailLoading: boolean = false;
+  contactPrivate: boolean = false;
+  contactId: any;
 
   constructor(private employeeService: EmployeeService,
               public cookieService: AuthService,
@@ -73,6 +75,8 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
       (data) => {
         this.employee = data;
         this.calculateProfileProgress(this.employee?.employee);
+        this.contactPrivate = this.employee?.empContact[0]?.publicity
+        this.contactId = this.employee?.empContact[0]?.id
       },
       (error: HttpErrorResponse) => {
         // Check for different error types
@@ -156,6 +160,22 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
       }
     } else {
       this.alertService.errorMessage('Please fill in all the required fields.', 'Contact Candidate');
+    }
+  }
+
+  toggleContactPrivate() {
+    this.contactPrivate = !this.contactPrivate
+    if (this.contactId) {
+      this.employeeService.changeContactPublicity(this.contactId).subscribe(data => {
+        if (data != null) {
+          this.getEmployee(this.employeeId)
+          this.alertService.successMessage('Your contact publicity has been updated.', 'Privacy')
+        }
+      }, (error: any) => {
+        this.alertService.errorMessage('Something went wrong. Please try again.', 'Privacy')
+      })
+    } else {
+      this.alertService.errorMessage('Please Add Contact First.', 'Privacy')
     }
   }
 }

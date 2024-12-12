@@ -36,18 +36,17 @@ export class PersonalProfileMyComponent implements OnInit, AfterViewInit {
     message: new FormControl('', [Validators.required])
   })
   mailLoading: boolean = false;
-
-  loginDates: any[] = [];
+  contactPrivate: boolean = false;
+  contactId: any;
 
   constructor(private employeeService: EmployeeService,
-              private cookieService: AuthService,
+              public cookieService: AuthService,
               private commonService: CommonService,
               private alertService: AlertsService,
               private route: ActivatedRoute,
               private router: Router ) {}
 
   async ngOnInit(): Promise<any> {
-    this.loginDates = checkinDataStore
     this.employeeId = this.cookieService.userID();
     this.getEmployee(this.employeeId)
   }
@@ -65,6 +64,8 @@ export class PersonalProfileMyComponent implements OnInit, AfterViewInit {
       (data) => {
         this.employee = data;
         this.calculateProfileProgress(this.employee?.employee);
+        this.contactPrivate = this.employee?.empContact[0]?.publicity
+        this.contactId = this.employee?.empContact[0]?.id
       },
       (error: HttpErrorResponse) => {
         // Check for different error types
@@ -136,6 +137,22 @@ export class PersonalProfileMyComponent implements OnInit, AfterViewInit {
       }
     } else {
       this.alertService.errorMessage('Please fill in all the required fields.', 'Contact Candidate');
+    }
+  }
+
+  toggleContactPrivate() {
+    this.contactPrivate = !this.contactPrivate
+    if (this.contactId) {
+      this.employeeService.changeContactPublicity(this.contactId).subscribe(data => {
+        if (data != null) {
+          this.getEmployee(this.employeeId)
+          this.alertService.successMessage('Your contact publicity has been updated.', 'Privacy')
+        }
+      }, (error: any) => {
+        this.alertService.errorMessage('Something went wrong. Please try again.', 'Privacy')
+      })
+    } else {
+      this.alertService.errorMessage('Please Add Contact First.', 'Privacy')
     }
   }
 }

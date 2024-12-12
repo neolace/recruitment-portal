@@ -24,6 +24,7 @@ public class EmpContactModel {
     private List<EmpContactDTO> contact;
     @Field("social_links")
     private List<SocialLinksDTO> socialLinks;
+    private boolean publicity;
 }
 
 // {
