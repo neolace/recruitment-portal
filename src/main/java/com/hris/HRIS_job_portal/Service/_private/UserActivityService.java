@@ -4,6 +4,7 @@ import com.hris.HRIS_job_portal.Model._private.UserActivity;
 import com.hris.HRIS_job_portal.Repository._private.UserActivityRepository;
 import com.hris.HRIS_job_portal.Utils.EncryptionUtility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -79,6 +80,10 @@ public class UserActivityService {
         }).collect(Collectors.toList());
     }
 
+    public ResponseEntity<String> clearUserActivities() {
+        repository.deleteAll();
+        return ResponseEntity.ok("All user activities deleted");
+    }
 
     public long getActiveUserCount() {
         LocalDateTime activeSince = LocalDateTime.now().minus(15, ChronoUnit.MINUTES);

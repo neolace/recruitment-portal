@@ -55,6 +55,13 @@ export class MonitoringService {
     return this.http.get<any[]>(`${this.cBaseUrl}/metrics/user-activities`, {headers});
   }
 
+  clearUserActivities(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.delete(`${this.cBaseUrl}/metrics/delete/user-activities`, {headers});
+  }
+
   getActiveUsers(): Observable<number> {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:password')

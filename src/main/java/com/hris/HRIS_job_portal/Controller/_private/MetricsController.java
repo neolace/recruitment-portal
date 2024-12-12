@@ -4,11 +4,8 @@ import com.hris.HRIS_job_portal.Service._private.GeoLocationService;
 import com.hris.HRIS_job_portal.Service._private.UserActivityService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
 import io.micrometer.core.instrument.MeterRegistry;
 
 import java.util.ArrayList;
@@ -76,6 +73,11 @@ public class MetricsController {
 //            error.add(Map.of("error", e.getMessage()));
 //            return ResponseEntity.status(500).body(error);
 //        }
+    }
+
+    @DeleteMapping("/delete/user-activities")
+    public ResponseEntity<String> clearUserActivities() {
+        return userActivityService.clearUserActivities();
     }
 
     @GetMapping("/active-users")

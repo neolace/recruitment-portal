@@ -1,5 +1,14 @@
 <div class="dashboard">
-  <h2>User Activity Metrics</h2>
+  <div class="d-flex align-items-center justify-content-between w-100">
+    <h2>User Activity Metrics</h2>
+    <div class="d-flex align-items-center gap-2">
+      <button class="btn-1" (click)="exportToCsv(userActivities, 'user-activities')">Backup & Export</button>
+      <button class="btn-2" (click)="clearUserActivities()">Delete All</button>
+    </div>
+  </div>
+
+  <p>Found Activities({{userActivities?.length ? userActivities.length:0}})</p>
+
   <div class="table-wrapper">
     <table>
       <thead>
@@ -21,5 +30,20 @@
       </tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-between w-100">
+    <h2>Unique Users</h2>
+    <div class="d-flex align-items-center gap-2">
+      <button class="btn-1" (click)="exportToCsv(userIPs, 'user-ips')">Backup & Export</button>
+      <button class="btn-2" (click)="clearUserActivities()">Delete All</button>
+    </div>
+  </div>
+
+  <p>Found Users({{userIPs?.length ? userIPs.length:0}})</p>
+  <div style="max-height: 200px; overflow-y: auto;">
+    <ol>
+      <li *ngFor="let u of userIPs">{{u}}</li>
+    </ol>
   </div>
 </div>
