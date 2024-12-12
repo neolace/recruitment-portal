@@ -122,4 +122,10 @@ public class EmailService {
 
         sendSimpleEmail(to, subject, body);
     }
+
+    public void sendPreOrderSuccess(String to) {
+        String subject = "Pre-Order Success";
+        String body = "Dear valuable user,\n\nYou have successfully placed your pre-order. If you have any further questions, please don't hesitate to contact us.\n\nPlease ignore this mail if it does not apply to you. \n\nThank You.\nBest regards,\nTeam Talent Boozt.";
+        sendSimpleEmail(to, subject, body);
+    }
 }

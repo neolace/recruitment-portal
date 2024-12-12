@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PreOrderRoutingModule } from './pre-order-routing.module';
 import { PreOrderComponent } from './pre-order.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {SharedComponentModule} from "../../../shared/modules/shared-component.module";
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         CommonModule,
         PreOrderRoutingModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        SharedComponentModule
     ]
 })
 export class PreOrderModule { }
