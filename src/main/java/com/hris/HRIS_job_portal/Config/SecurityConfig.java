@@ -57,6 +57,7 @@ public class SecurityConfig {
                             userInfo.oidcUserService(this.oidcUserService());
                             userInfo.userService(this.githubUserService());
                             userInfo.userService(this.facebookUserService());
+                            userInfo.userService(this.linkedinUserService());
                         })
                         .defaultSuccessUrl(configUtil.getProperty("GOOGLE_CLIENT_REDIRECT"), true)
                         .permitAll()
@@ -183,6 +184,36 @@ public class SecurityConfig {
     }
 
     private OidcUser registerFacebookUser(String email, String firstName, String lastName) {
+        CredentialsModel newUser = new CredentialsModel();
+        newUser.setEmail(email);
+        newUser.setFirstname(firstName);
+        newUser.setLastname(lastName);
+        newUser.setRole("candidate");
+        newUser.setUserLevel("1");
+        return (OidcUser) credentialsService.addCredentials(newUser);
+    }
+
+    private OAuth2UserService<OAuth2UserRequest, OAuth2User> linkedinUserService() {
+        return userRequest -> {
+            OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
+            OAuth2User oauth2User = delegate.loadUser(userRequest);
+
+            // Extract user details
+            String email = oauth2User.getAttribute("email");
+            String name = oauth2User.getAttribute("name");
+            String[] nameParts = name.split(" ", 2);
+
+            // Custom logic for registration or login
+            CredentialsModel existingCredentials = credentialsService.getCredentialsByEmail(email);
+            if (existingCredentials != null) {
+                return loginUser(existingCredentials);
+            } else {
+                return registerLinkedinUser(email, nameParts[0], nameParts.length > 1 ? nameParts[1] : "");
+            }
+        };
+    }
+
+    private OidcUser registerLinkedinUser(String email, String firstName, String lastName) {
         CredentialsModel newUser = new CredentialsModel();
         newUser.setEmail(email);
         newUser.setFirstname(firstName);
