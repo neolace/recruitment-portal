@@ -89,6 +89,9 @@ export class LoginComponent implements AfterViewInit, OnInit {
             if (this.loginForm.get('remember')?.value) {
               localStorage.setItem('email', <string>this.loginForm.get('email')?.value);
               localStorage.setItem('password', <string>this.loginForm.get('password')?.value);
+            } else {
+              localStorage.removeItem('email');
+              localStorage.removeItem('password');
             }
 
             if (response.role === 'candidate') {
