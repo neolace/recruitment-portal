@@ -1,7 +1,7 @@
 <div *ngIf="loading"><app-page-loading></app-page-loading></div>
 <div>
   <div class="top-banner" style="overflow-x: hidden">
-    <div class="curved-div" [ngStyle]="{'background-image': company?.company?.profileBanner ? 'url(' + company?.company?.profileBanner + ')' : ''}">
+    <div class="curved-div" [ngStyle]="{'background-image': company?.company?.profileBanner ? 'url(' + company?.company?.profileBanner + ')' : '', 'background-size': company?.company?.profileBanner ? '100vw auto':''}">
       <div class="overlay"></div>
     </div>
 

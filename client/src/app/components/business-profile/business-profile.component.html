@@ -2,7 +2,7 @@
 
 <div class="top-banner" style="overflow-x: hidden" *ngFor="let c of filterCompanyData()">
   <div class="curved-div">
-    <div class="overlay" [ngStyle]="{'background-image': c.coverImage ? 'url(' + c.coverImage + ')' : ''}"></div>
+    <div class="overlay" [ngStyle]="{'background-image': c.coverImage ? 'url(' + c.coverImage + ')' : '', 'background-size': c.coverImage ? '100vw auto':''}"></div>
   </div>
 
   <div class="container">

@@ -490,7 +490,7 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
   }
 
   downloadSampleBanner() {
-    const imageUrl = 'https://firebasestorage.googleapis.com/v0/b/sparkc-ad442.appspot.com/o/portal%2FcoverPics%2F66e31aa7217eb911ad764373?alt=media&token=86b82526-b74d-48fe-8bc3-2c14015ad211';
+    const imageUrl = 'https://firebasestorage.googleapis.com/v0/b/sparkc-ad442.appspot.com/o/talentboozt%2Fpublic%2Fbanner_size.jpg?alt=media&token=6db5aeaf-75dd-409b-98f0-91a32e31c172';
     const link = document.createElement('a');
     link.href = imageUrl;
     link.target = '_blank';
