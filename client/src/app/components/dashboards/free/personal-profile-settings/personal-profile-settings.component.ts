@@ -184,48 +184,48 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
 
   patchValuesToPersonalForm() {
     if (this.employee) {
-      this.personalFormGroup.get('firstname')?.setValue(this.employee?.employee?.firstname);
-      this.personalFormGroup.get('lastname')?.setValue(this.employee?.employee?.lastname);
-      this.personalFormGroup.get('email')?.setValue(this.employee?.employee?.email);
-      this.personalFormGroup.get('occupation')?.setValue(this.employee?.employee?.occupation);
-      this.personalFormGroup.get('dob')?.setValue(this.employee?.employee?.dob);
-      this.personalFormGroup.get('intro')?.setValue(this.employee?.employee?.intro);
+      this.personalFormGroup.get('firstname')?.setValue(this.employee?.employee?.firstname ? this.employee?.employee?.firstname : '');
+      this.personalFormGroup.get('lastname')?.setValue(this.employee?.employee?.lastname ? this.employee?.employee?.lastname : '');
+      this.personalFormGroup.get('email')?.setValue(this.employee?.employee?.email ? this.employee?.employee?.email : '');
+      this.personalFormGroup.get('occupation')?.setValue(this.employee?.employee?.occupation ? this.employee?.employee?.occupation : '');
+      this.personalFormGroup.get('dob')?.setValue(this.employee?.employee?.dob ? this.employee?.employee?.dob : '');
+      this.personalFormGroup.get('intro')?.setValue(this.employee?.employee?.intro ? this.employee?.employee?.intro : '');
     }
   }
 
   patchValuesToContactForm() {
     if (this.employee?.empContact) {
-      this.employee?.empContact.forEach((contact: any) => {
-        this.contactFormGroup.get('phone')?.setValue(contact?.contact[0]?.phone);
-        this.contactFormGroup.get('email')?.setValue(contact?.contact[0]?.email);
-        this.contactFormGroup.get('address')?.setValue(contact?.contact[0]?.address);
-        this.contactFormGroup.get('city')?.setValue(contact?.contact[0]?.city);
-        this.contactFormGroup.get('country')?.setValue(contact?.contact[0]?.country);
-        this.contactFormGroup.get('zip')?.setValue(contact?.contact[0]?.zipCode);
-        this.contactFormGroup.get('website')?.setValue(contact?.contact[0]?.website);
-        this.editContactId = contact.contact[0].id;
+      this.employee?.empContact?.forEach((contact: any) => {
+        this.contactFormGroup.get('phone')?.setValue(contact?.contact ? contact?.contact[0]?.phone || '' : '');
+        this.contactFormGroup.get('email')?.setValue(contact?.contact ? contact?.contact[0]?.email || '' : '');
+        this.contactFormGroup.get('address')?.setValue(contact?.contact ? contact?.contact[0]?.address || '' : '');
+        this.contactFormGroup.get('city')?.setValue(contact?.contact ? contact?.contact[0]?.city || '' : '');
+        this.contactFormGroup.get('country')?.setValue(contact?.contact ? contact?.contact[0]?.country || '' : '');
+        this.contactFormGroup.get('zip')?.setValue(contact?.contact ? contact?.contact[0]?.zipCode || '' : '');
+        this.contactFormGroup.get('website')?.setValue(contact?.contact ? contact?.contact[0]?.website || '' : '');
+        this.editContactId = contact?.contact ? contact?.contact[0]?.id || '' : '';
       })
     }
   }
 
   patchValuesToSocialForm() {
     if (this.employee?.empContact) {
-      this.employee?.empContact.forEach((social: any) => {
-        this.socialFormGroup.get('facebook')?.setValue(social?.socialLinks[0]?.facebook);
-        this.socialFormGroup.get('twitter')?.setValue(social?.socialLinks[0]?.twitter);
-        this.socialFormGroup.get('instagram')?.setValue(social?.socialLinks[0]?.instagram);
-        this.socialFormGroup.get('linkedin')?.setValue(social?.socialLinks[0]?.linkedin);
-        this.socialFormGroup.get('github')?.setValue(social?.socialLinks[0]?.github);
-        this.editSocialLinksId = social.socialLinks[0].id;
+      this.employee?.empContact?.forEach((social: any) => {
+        this.socialFormGroup.get('facebook')?.setValue(social?.socialLinks ? social?.socialLinks[0]?.facebook || '' : '');
+        this.socialFormGroup.get('twitter')?.setValue(social?.socialLinks ? social?.socialLinks[0]?.twitter || '' : '');
+        this.socialFormGroup.get('instagram')?.setValue(social?.socialLinks ? social?.socialLinks[0]?.instagram || '' : '');
+        this.socialFormGroup.get('linkedin')?.setValue(social?.socialLinks ? social?.socialLinks[0]?.linkedin || '' : '');
+        this.socialFormGroup.get('github')?.setValue(social?.socialLinks ? social?.socialLinks[0]?.github || '' : '');
+        this.editSocialLinksId = social?.socialLinks ? social.socialLinks[0]?.id || '' : '';
       })
     }
   }
 
   patchValuesToSearchAppearanceForm() {
     if (this.employee) {
-      this.searchAppearanceFormGroup.get('expectedSalaryRange')?.setValue(this.employee?.employee?.expectedSalaryRange);
-      this.searchAppearanceFormGroup.get('currentExperience')?.setValue(this.employee?.employee?.currentExperience);
-      this.searchAppearanceFormGroup.get('keywords')?.setValue(this.employee?.employee?.keywords);
+      this.searchAppearanceFormGroup.get('expectedSalaryRange')?.setValue(this.employee?.employee?.expectedSalaryRange ? this.employee?.employee?.expectedSalaryRange : '');
+      this.searchAppearanceFormGroup.get('currentExperience')?.setValue(this.employee?.employee?.currentExperience ? this.employee?.employee?.currentExperience : '');
+      this.searchAppearanceFormGroup.get('keywords')?.setValue(this.employee?.employee?.keywords ? this.employee?.employee?.keywords : '');
     }
   }
 
@@ -313,8 +313,8 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
   patchValuesToSkillsForm(skill: any) {
     this.editSkills = true;
     if (this.employee) {
-      this.skillsFormGroup.get('skill')?.setValue(skill?.skill);
-      this.skillsFormGroup.get('percentage')?.setValue(skill?.percentage);
+      this.skillsFormGroup.get('skill')?.setValue(skill?.skill ? skill?.skill : '');
+      this.skillsFormGroup.get('percentage')?.setValue(skill?.percentage ? skill?.percentage : '');
       this.editSkillId = skill?.id;
     }
   }
@@ -375,14 +375,14 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
   patchValuesToExperienceForm(experience: any) {
     this.editExperiences = true;
     if (this.employee) {
-      this.experienceFormGroup.get('company')?.setValue(experience?.company);
-      this.experienceFormGroup.get('occupation')?.setValue(experience?.position);
-      this.experienceFormGroup.get('country')?.setValue(experience?.country);
-      this.experienceFormGroup.get('start')?.setValue(experience?.startDate);
-      this.experienceFormGroup.get('end')?.setValue(experience?.endDate);
-      this.experienceFormGroup.get('description')?.setValue(experience?.description);
+      this.experienceFormGroup.get('company')?.setValue(experience?.company ? experience?.company : '');
+      this.experienceFormGroup.get('occupation')?.setValue(experience?.position ? experience?.position : '');
+      this.experienceFormGroup.get('country')?.setValue(experience?.country ? experience?.country : '');
+      this.experienceFormGroup.get('start')?.setValue(experience?.startDate ? experience?.startDate : '');
+      this.experienceFormGroup.get('end')?.setValue(experience?.endDate ? experience?.endDate : '');
+      this.experienceFormGroup.get('description')?.setValue(experience?.description ? experience?.description : '');
       this.experienceFormGroup.get('currentCheck')?.setValue(experience?.endDate === 'Present');
-      this.editExperienceId = experience?.id;
+      this.editExperienceId = experience?.id ? experience?.id : '';
     }
   }
 
@@ -442,14 +442,14 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
   patchValuesToEducationForm(education: any) {
     this.editEducations = true;
     if (this.employee) {
-      this.educationFormGroup.get('school')?.setValue(education?.school);
-      this.educationFormGroup.get('degree')?.setValue(education?.degree);
-      this.educationFormGroup.get('country')?.setValue(education?.country);
-      this.educationFormGroup.get('start')?.setValue(education?.startDate);
-      this.educationFormGroup.get('end')?.setValue(education?.endDate);
-      this.educationFormGroup.get('description')?.setValue(education?.description);
+      this.educationFormGroup.get('school')?.setValue(education?.school ? education?.school : '');
+      this.educationFormGroup.get('degree')?.setValue(education?.degree ? education?.degree : '');
+      this.educationFormGroup.get('country')?.setValue(education?.country ? education?.country : '');
+      this.educationFormGroup.get('start')?.setValue(education?.startDate ? education?.startDate : '');
+      this.educationFormGroup.get('end')?.setValue(education?.endDate ? education?.endDate : '');
+      this.educationFormGroup.get('description')?.setValue(education?.description ? education?.description : '');
       this.educationFormGroup.get('currentCheck')?.setValue(education?.endDate === 'Present');
-      this.editEducationId = education?.id;
+      this.editEducationId = education?.id ? education?.id : '';
     }
   }
 
@@ -616,16 +616,16 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
 
   patchNotifications(account:any, marketing:any) {
     if (account){
-      this.aNotificationsForm.get('mention')?.patchValue(account?.mention);
-      this.aNotificationsForm.get('follow')?.patchValue(account?.follow);
-      this.aNotificationsForm.get('share')?.patchValue(account?.shareActivity);
-      this.aNotificationsForm.get('message')?.patchValue(account?.message);
+      this.aNotificationsForm.get('mention')?.patchValue(account?.mention || false);
+      this.aNotificationsForm.get('follow')?.patchValue(account?.follow || false);
+      this.aNotificationsForm.get('share')?.patchValue(account?.shareActivity || false);
+      this.aNotificationsForm.get('message')?.patchValue(account?.message || false);
     }
     if (marketing){
-      this.mNotificationsForm.get('promotion')?.patchValue(marketing?.promotion);
-      this.mNotificationsForm.get('companyNews')?.patchValue(marketing?.companyNews);
-      this.mNotificationsForm.get('jobs')?.patchValue(marketing?.weeklyJobs);
-      this.mNotificationsForm.get('unsubscribe')?.patchValue(marketing?.unsubscribe);
+      this.mNotificationsForm.get('promotion')?.patchValue(marketing?.promotion || false);
+      this.mNotificationsForm.get('companyNews')?.patchValue(marketing?.companyNews || false);
+      this.mNotificationsForm.get('jobs')?.patchValue(marketing?.weeklyJobs || false);
+      this.mNotificationsForm.get('unsubscribe')?.patchValue(marketing?.unsubscribe || false);
     }
   }
 
