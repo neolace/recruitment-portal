@@ -351,10 +351,19 @@
           <h5>Other:</h5>
 
           <div class="row" *ngIf="companyLevel >= 3">
-            <div class="col-12">
+            <div class="col-12 col-md-9">
               <div class="form-group">
                 <label for="banner">Upload a Custom Banner</label>
                 <input type="file" class="form-control" id="banner" (change)="uploadFile($event, 'portal/jobs/banners/' + generateRandomId())">
+                <span class="error-msg">We recommend to check sample banner before uploading</span>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="form-group">
+                <label for="banner">
+                <span class="d-md-none">Check sample Image</span>
+                </label>
+                <button type="submit" class="btn-1" (click)="downloadSampleBanner()">Sample</button>
               </div>
             </div>
           </div>

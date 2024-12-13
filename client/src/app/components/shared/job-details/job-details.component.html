@@ -1,5 +1,5 @@
 <div class="top-banner" *ngFor="let p of filterJobData()">
-  <div class="curved-div" [ngStyle]="{'background-image': p.jobBanner ? 'url(' + p.jobBanner + ')' : ''}">
+  <div class="curved-div" [ngStyle]="{'background-image': p.jobBanner ? 'url(' + p.jobBanner + ')' : '', 'background-size': p.jobBanner ? '100vw 100%':''}">
     <div class="overlay" *ngIf="!p.jobBanner"></div>
   </div>
 
