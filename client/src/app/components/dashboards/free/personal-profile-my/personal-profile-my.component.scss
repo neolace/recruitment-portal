@@ -251,3 +251,146 @@
     white-space: nowrap;
   }
 }
+
+.modal-body{
+  p{
+    font-size: 18px;
+
+    span{
+      font-size: 14px;
+    }
+  }
+
+  button{
+    white-space: nowrap;
+  }
+
+  .tooltip1 {
+    position: relative;
+    //display: inline-block;
+  }
+
+  .tooltip1 .tooltiptext {
+    visibility: hidden;
+    min-width: 140px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -75px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 14px;
+    font-weight: lighter;
+  }
+
+  .tooltip1 .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+
+  .tooltip1:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .invite-options {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+
+    @media screen and (max-width: 767px) {
+      display: inline-block;
+    }
+
+    .twitter, .whatsapp, .facebook, .reddit, .linkedin, .telegram, .email {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      width: 50px;
+      cursor: pointer;
+
+      a{
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: .8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 1px 0 2px 0 var(--color-box-shadow-100);
+      }
+
+      svg{
+        width: 80%;
+        border-radius: .8rem;
+        aspect-ratio: 1;
+
+        path{
+          fill: #fff;
+        }
+      }
+
+      span{
+        font-size: 12px;
+        color: var(--color-text-200);
+      }
+    }
+
+    .twitter{
+      a{
+        background-color: black;
+      }
+    }
+    .whatsapp{
+      a{
+        background-color: #25D366;
+      }
+    }
+    .facebook{
+      a{
+        background-color: #3b5998;
+      }
+    }
+    .reddit{
+      a{
+        background-color: #FF4500;
+      }
+    }
+    .linkedin{
+      a{
+        background-color: #0077B5;
+      }
+    }
+    .telegram{
+      a{
+        background-color: #0088cc;
+      }
+    }
+    .email{
+      a{
+        background-color: #fff;
+      }
+
+      svg{
+        path{
+          fill: #000;
+        }
+      }
+    }
+  }
+
+}
