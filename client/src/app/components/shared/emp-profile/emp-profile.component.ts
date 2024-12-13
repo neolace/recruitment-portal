@@ -43,6 +43,8 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
   contactPrivate: boolean = false;
   contactId: any;
 
+  inviteLink: any;
+
   constructor(private employeeService: EmployeeService,
               public cookieService: AuthService,
               private commonService: CommonService,
@@ -60,6 +62,8 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
     }
     this.getEmployee(this.employeeId)
     this.getAllEmployees()
+
+    this.inviteLink = `https://talentboozt.com?ref=${this.employeeId}`
   }
 
   ngAfterViewInit() {
@@ -177,5 +181,22 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
     } else {
       this.alertService.errorMessage('Please Add Contact First.', 'Privacy')
     }
+  }
+
+  inviteFriend() {
+    const copyText: HTMLInputElement = document.getElementById("invite") as HTMLInputElement;
+
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+
+    navigator.clipboard.writeText(copyText.value);
+
+    const tooltip: HTMLSpanElement = document.getElementById("myTooltip") as HTMLSpanElement;
+    tooltip.innerHTML = "Copied: " + copyText.value;
+  }
+
+  outFunc() {
+    const tooltip: HTMLSpanElement = document.getElementById("myTooltip") as HTMLSpanElement;
+    tooltip.innerHTML = "Copy to clipboard";
   }
 }
