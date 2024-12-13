@@ -1,56 +1,87 @@
 package com.hris.HRIS_job_portal.Controller;
 
+import com.hris.HRIS_job_portal.DTO.LinkedInAuthRequest;
+import com.hris.HRIS_job_portal.DTO.LinkedInTokenResponse;
 import com.hris.HRIS_job_portal.Utils.ConfigUtility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v2/linkedin")
 public class LinkedinAuthController {
-    private static final String LINKEDIN_TOKEN_URL = "https://www.linkedin.com/oauth/v2/accessToken";
+    @Value("${linkedin.client-id}")
+    private String clientId;
 
-    @Autowired
-    private ConfigUtility configUtil;
+    @Value("${linkedin.client-secret}")
+    private String clientSecret;
 
-    @PostMapping("/token")
-    public ResponseEntity<?> exchangeCodeForToken(@RequestBody Map<String, String> request) {
-        String code = request.get("code");
+    @Value("${linkedin.redirect-uri}")
+    private String redirectUri;
 
-        // Prepare the request to exchange the code for a token
-        RestTemplate restTemplate = new RestTemplate();
+    @Value("${linkedin.token-url}")
+    private String tokenUrl;
+
+    @Value("${linkedin.profile-url}")
+    private String profileUrl;
+
+    @Value("${linkedin.email-url}")
+    private String emailUrl;
+
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    @PostMapping("/exchange-code")
+    public ResponseEntity<?> exchangeCode(@RequestBody LinkedInAuthRequest request) {
+        // Build the access token request
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        // Construct the request body for GitHub
-        String requestBody = String.format("client_id=%s&client_secret=%s&code=%s",
-                configUtil.getProperty("LINKEDIN_CLIENT_ID"),
-                configUtil.getProperty("LINKEDIN_CLIENT_SECRET"),
-                code);
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("grant_type", "authorization_code");
+        body.add("code", request.getCode());
+        body.add("redirect_uri", redirectUri);
+        body.add("client_id", clientId);
+        body.add("client_secret", clientSecret);
 
-        // Create the entity for the request
-        HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
+        HttpEntity<MultiValueMap<String, String>> httpRequest = new HttpEntity<>(body, headers);
 
         try {
-            ResponseEntity<String> response = restTemplate.postForEntity(LINKEDIN_TOKEN_URL, entity, String.class);
-
-            // Handle the response from GitHub
-            if (response.getStatusCode() == HttpStatus.OK) {
-                // Extract access token from response body (GitHub returns it as a plain text)
-                String accessToken = response.getBody().split("&")[0].split("=")[1];
-                return ResponseEntity.ok(Map.of("accessToken", accessToken));
-            } else {
-                return ResponseEntity.status(response.getStatusCode()).body("Error fetching access token");
-            }
-        } catch (HttpClientErrorException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getResponseBodyAsString());
+            ResponseEntity<LinkedInTokenResponse> response = restTemplate.postForEntity(tokenUrl, httpRequest, LinkedInTokenResponse.class);
+            return ResponseEntity.ok(response.getBody());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to exchange authorization code: " + e.getMessage());
         }
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<?> getLinkedInProfile(@RequestParam("accessToken") String accessToken) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(accessToken);
+
+//        try {
+//
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to fetch profile: " + e.getMessage());
+//        }
+
+        // Fetch basic profile
+        HttpEntity<Void> httpRequest = new HttpEntity<>(headers);
+        ResponseEntity<Map> profileResponse = restTemplate.exchange(profileUrl, HttpMethod.GET, httpRequest, Map.class);
+
+        // Fetch email address
+//        ResponseEntity<Map> emailResponse = restTemplate.exchange(emailUrl, HttpMethod.GET, httpRequest, Map.class);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("profile", profileResponse.getBody());
+//        result.put("email", emailResponse.getBody());
+        return ResponseEntity.ok(result);
     }
 }

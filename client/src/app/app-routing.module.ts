@@ -33,6 +33,7 @@ const routes: Routes = [
   { path: 'for-companies', loadChildren: () => import('./components/for-companies/for-companies.module').then(m => m.ForCompaniesModule) },
   { path: 'oauth-callback', loadChildren: () => import('./components/shared/o-auth-callback/o-auth-callback.module').then(m => m.OAuthCallbackModule) },
   { path: 'oauth-callback/github', loadChildren: () => import('./components/shared/o-auth-callback-github/o-auth-callback-github.module').then(m => m.OAuthCallbackGithubModule) },
+  { path: 'oauth-callback/linkedin', loadChildren: () => import('./components/shared/o-auth-callback-linkedin/o-auth-callback-linkedin.module').then(m => m.OAuthCallbackLinkedinModule) },
   { path: '404', loadChildren: () => import('./components/shared/not-found/not-found.module').then(m => m.NotFoundModule) },
   { path: 'job-analysis/:id', loadChildren: () => import('./components/dashboards/single-job-post-analysis/single-job-post-analysis.module').then(m => m.SingleJobPostAnalysisModule) },
   { path: 'interview-prep', loadChildren: () => import('./components/interview-prep/interview-prep/interview-prep.module').then(m => m.InterviewPrepModule) },
