@@ -21,6 +21,16 @@
         </div>
       </div>
 
+      <div class="following-area w-100 pt-3">
+        <p class="text-left m-0">
+          <span>Following 0</span>&nbsp;
+          <span>Followers 0</span>&nbsp;
+        </p>
+        <p class="text-left m-0" *ngIf="employee.employee.id === cookieService.userID()">
+          <span data-bs-toggle="modal" data-bs-target="#inviteModel">Invite <i class="fa fa-share" aria-hidden="true"></i></span>
+        </p>
+      </div>
+
       <div class="row my-3 second-content">
         <div class="col-12 col-md-6 col-lg-8 left-side">
           <div *ngIf="employee.employee.intro">
@@ -301,6 +311,30 @@
     </div>
     <div *ngIf="forbidden && !employee?.employee || unexpectedError">
       <app-forbidden></app-forbidden>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="inviteModel" tabindex="-1" aria-labelledby="inviteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="inviteModalLabel">Invite Friends</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Refer friends to seek a job today. They will success their job journey in here ❤</p>
+        <div class="d-flex align-items-center justify-content-between w-100 gap-2">
+          <input type="text" id="invite" placeholder="https://talentboozt.com" class="form-control" [(ngModel)]="inviteLink" readonly>
+          <div class="tooltip1">
+            <button class="btn-1" (click)="inviteFriend()" (mouseout)="outFunc()">
+              <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+              Copy Link
+            </button>
+          </div>
+        </div>
+        <p><span>We are much appreciated your support :)</span></p>
+      </div>
     </div>
   </div>
 </div>
