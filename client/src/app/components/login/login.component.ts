@@ -148,7 +148,7 @@ export class LoginComponent implements AfterViewInit, OnInit {
   }
 
   loginWithLinkedin() {
-    this.linkedInAuthService.loginWithLinkedIn().then(r => {});
+    this.linkedInAuthService.loginWithLinkedIn();
   }
 
   loginWithFacebook() {

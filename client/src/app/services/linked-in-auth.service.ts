@@ -4,19 +4,23 @@ import { AuthService } from './auth.service';
 import { CredentialService } from './credential.service';
 import { AlertsService } from "./alerts.service";
 import {environment} from "../../environments/environment";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root',
 })
 export class LinkedInAuthService {
   private linkedInSdkLoaded = false;
+  baseUrl = environment.apiUrl;
   private clientId = environment.linkedinAuthConfig.clientId
+  private redirectUri = environment.linkedinAuthConfig.redirectUri
 
   constructor(
     private router: Router,
     private alertService: AlertsService,
     private authService: AuthService,
-    private credentialService: CredentialService
+    private credentialService: CredentialService,
+    private http: HttpClient
   ) {}
 
   /**
@@ -61,47 +65,53 @@ export class LinkedInAuthService {
    * Initiates the LinkedIn login flow
    * @returns Promise<any>
    */
-  loginWithLinkedIn(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (!(window as any)['IN'] || !(window as any)['IN'].User) {
-        reject('LinkedIn SDK is not initialized.');
-        return;
-      }
+  loginWithLinkedIn(): void {
+    const clientId = this.clientId;
+    const redirectUri = encodeURIComponent(this.redirectUri);
+    const state = Math.random().toString(36).substring(7);
 
-      (window as any)['IN'].User.authorize(() => {
-        this.fetchUserProfile()
-          .then((profile) => {
-            this.handleAuthResponse(profile);
-            resolve(profile);
-          })
-          .catch((error) => reject(error));
-      }, (error: string) => {
-        reject('LinkedIn Authorization Failed: ' + error);
-      });
-    });
+    const linkedInAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}&scope=openid%20profile%20email`;
+
+    // Save the state to localStorage for verification later
+    localStorage.setItem('linkedin_auth_state', state);
+
+    // Redirect to LinkedIn OAuth page
+    window.location.href = linkedInAuthUrl;
   }
 
-  /**
-   * Fetches the LinkedIn user profile data
-   * @returns Promise<any>
-   */
-  fetchUserProfile(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (!(window as any)['IN'] || !(window as any)['IN'].API) {
-        reject('LinkedIn API is not available.');
-        return;
-      }
+  handleLinkedInCallback(urlParams:any, code:any, state:any, storedState:any): void {
+    if (state !== storedState) {
+      this.alertService.errorMessage('Invalid state parameter. Login failed.', 'Error');
+      return;
+    }
 
-      (window as any)['IN'].API.Profile('me')
-        .fields(['id', 'firstName', 'lastName', 'emailAddress'])
-        .result((data: any) => {
-          resolve(data.values[0]);
-        })
-        .error((error: any) => {
-          console.error('Error fetching LinkedIn profile', error);
-          reject(error);
-        });
-    });
+    // Exchange the authorization code for an access token
+    this.exchangeAuthorizationCode(code)
+  }
+
+  exchangeAuthorizationCode(code: any) {
+    const body: any = { code };
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    })
+    this.http.post<any>(`${this.baseUrl}/linkedin/exchange-code`, body, {headers}).subscribe(
+      (response) => {
+        const accessToken = response.access_token;
+        setTimeout(() => {
+          this.http.get<any>(`${this.baseUrl}/linkedin/profile?accessToken=${accessToken}`, {headers}).subscribe(
+            (response) => {
+              this.handleAuthResponse(response);
+            },
+            (error) => {
+              console.error('Error fetching user profile:', error);
+            }
+          );
+        }, 3000);
+      },
+      (error) => {
+        console.error('Error exchanging code for token:', error);
+      }
+    );
   }
 
   /**
@@ -109,11 +119,11 @@ export class LinkedInAuthService {
    */
   private handleAuthResponse(authResponse: any) {
     const user = {
-      email: authResponse.emailAddress,
-      firstName: authResponse.firstName,
-      lastName: authResponse.lastName,
+      email: authResponse.profile.email,
+      firstName: authResponse.profile.family_name,
+      lastName: authResponse.profile.given_name,
       username: authResponse.id,
-      avatarUrl: '',
+      avatarUrl: authResponse.profile.picture,
     };
 
     this.processUserProfile(user);
