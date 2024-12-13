@@ -325,19 +325,19 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit, 
   }
 
   patchVisualDetails() {
-    this.visualDetailsForm.get('name')?.setValue(this.company?.company?.name);
-    this.visualDetailsForm.get('founded')?.setValue(this.company?.company?.foundedDate);
-    this.visualDetailsForm.get('founder')?.setValue(this.company?.company?.founderName);
-    this.visualDetailsForm.get('noe')?.setValue(this.company?.company?.numberOfEmployees);
-    this.visualDetailsForm.get('hq')?.setValue(this.company?.company?.location);
-    this.visualDetailsForm.get('bio')?.setValue(this.company?.company?.shortDescription);
-    this.visualDetailsForm.get('story')?.setValue(this.company?.company?.companyStory);
+    this.visualDetailsForm.get('name')?.setValue(this.company?.company?.name || '');
+    this.visualDetailsForm.get('founded')?.setValue(this.company?.company?.foundedDate || '');
+    this.visualDetailsForm.get('founder')?.setValue(this.company?.company?.founderName || '');
+    this.visualDetailsForm.get('noe')?.setValue(this.company?.company?.numberOfEmployees || '');
+    this.visualDetailsForm.get('hq')?.setValue(this.company?.company?.location || '');
+    this.visualDetailsForm.get('bio')?.setValue(this.company?.company?.shortDescription || '');
+    this.visualDetailsForm.get('story')?.setValue(this.company?.company?.companyStory || '');
   }
 
   patchContactDetails() {
-    this.contactForm.get('email')?.setValue(this.company?.company?.contactEmail);
-    this.contactForm.get('phone')?.setValue(this.company?.company?.contactNumber);
-    this.contactForm.get('website')?.setValue(this.company?.company?.website);
+    this.contactForm.get('email')?.setValue(this.company?.company?.contactEmail || '');
+    this.contactForm.get('phone')?.setValue(this.company?.company?.contactNumber || '');
+    this.contactForm.get('website')?.setValue(this.company?.company?.website || '');
   }
 
   addSocial() {
@@ -388,12 +388,12 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit, 
   patchValuesToSocialForm() {
     if (this.company?.socials) {
       this.company?.socials.forEach((social: any) => {
-        this.socialForm.get('facebook')?.setValue(social?.socialLinks[0]?.facebook);
-        this.socialForm.get('twitter')?.setValue(social?.socialLinks[0]?.twitter);
-        this.socialForm.get('instagram')?.setValue(social?.socialLinks[0]?.instagram);
-        this.socialForm.get('linkedin')?.setValue(social?.socialLinks[0]?.linkedin);
-        this.socialForm.get('github')?.setValue(social?.socialLinks[0]?.github);
-        this.editSocialLinksId = social.socialLinks[0].id;
+        this.socialForm.get('facebook')?.setValue(social?.socialLinks ? social?.socialLinks[0]?.facebook || '' : '');
+        this.socialForm.get('twitter')?.setValue(social?.socialLinks ? social?.socialLinks[0]?.twitter || '' : '');
+        this.socialForm.get('instagram')?.setValue(social?.socialLinks ? social?.socialLinks[0]?.instagram || '' : '');
+        this.socialForm.get('linkedin')?.setValue(social?.socialLinks ? social?.socialLinks[0]?.linkedin || '' : '');
+        this.socialForm.get('github')?.setValue(social?.socialLinks ? social?.socialLinks[0]?.github || '' : '');
+        this.editSocialLinksId = social?.socialLinks ? social.socialLinks[0].id || '' : '';
       })
     }
   }
@@ -421,16 +421,16 @@ export class BusinessProfileSettingsComponent implements AfterViewInit, OnInit, 
 
   patchNotifications(account:any, marketing:any) {
     if (account){
-      this.aNotificationsForm.get('mention')?.patchValue(account.mention);
-      this.aNotificationsForm.get('follow')?.patchValue(account.follow);
-      this.aNotificationsForm.get('share')?.patchValue(account.shareActivity);
-      this.aNotificationsForm.get('message')?.patchValue(account.message);
+      this.aNotificationsForm.get('mention')?.patchValue(account?.mention || false);
+      this.aNotificationsForm.get('follow')?.patchValue(account?.follow || false);
+      this.aNotificationsForm.get('share')?.patchValue(account?.shareActivity || false);
+      this.aNotificationsForm.get('message')?.patchValue(account?.message || false);
     }
     if (marketing){
-      this.mNotificationsForm.get('promotion')?.patchValue(marketing.promotion);
-      this.mNotificationsForm.get('companyNews')?.patchValue(marketing.companyNews);
-      this.mNotificationsForm.get('jobs')?.patchValue(marketing.weeklyJobs);
-      this.mNotificationsForm.get('unsubscribe')?.patchValue(marketing.unsubscribe);
+      this.mNotificationsForm.get('promotion')?.patchValue(marketing?.promotion || false);
+      this.mNotificationsForm.get('companyNews')?.patchValue(marketing?.companyNews || false);
+      this.mNotificationsForm.get('jobs')?.patchValue(marketing?.weeklyJobs || false);
+      this.mNotificationsForm.get('unsubscribe')?.patchValue(marketing?.unsubscribe || false);
     }
   }
 
