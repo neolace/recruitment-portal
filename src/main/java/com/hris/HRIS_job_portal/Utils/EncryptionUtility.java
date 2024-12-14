@@ -5,39 +5,51 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Base64;
 
 @Component
 public class EncryptionUtility {
-
-    private static String ALGORITHM;
+    private static final String ALGORITHM = "AES/CBC/PKCS5Padding";
     private static byte[] KEY;
+    private static byte[] IV;
 
     @Autowired
-    public EncryptionUtility(ConfigUtility configUtil) {
-        ALGORITHM = configUtil.getProperty("ENCRYPT_ALGORITHM");
-        KEY = configUtil.getProperty("ENCRYPT_PASSWORD").getBytes();
+    public EncryptionUtility(ConfigUtility configUtil) throws NoSuchAlgorithmException {
+        String secretKey = configUtil.getProperty("ENCRYPT_PASSWORD");
+
+        // CRUCIAL: MATCH FRONTEND KEY GENERATION
+        MessageDigest sha = MessageDigest.getInstance("SHA-256");
+        byte[] hashedKey = sha.digest(secretKey.getBytes());
+        KEY = Arrays.copyOfRange(hashedKey, 0, 16); // First 16 bytes
+
+        // MATCH MD5 IV GENERATION
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        IV = md.digest(secretKey.getBytes());
     }
 
     public static String encrypt(String data) throws Exception {
-        if (data == null || data.isEmpty()) {
-            throw new IllegalArgumentException("Value to encrypt cannot be null or empty");
-        }
-        SecretKey secretKey = new SecretKeySpec(KEY, ALGORITHM);
+        SecretKeySpec secretKeySpec = new SecretKeySpec(KEY, "AES");
+        IvParameterSpec ivParameterSpec = new IvParameterSpec(IV);
+
         Cipher cipher = Cipher.getInstance(ALGORITHM);
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
+
         byte[] encrypted = cipher.doFinal(data.getBytes());
         return Base64.getEncoder().encodeToString(encrypted);
     }
 
     public static String decrypt(String encryptedData) throws Exception {
-        if (encryptedData == null || encryptedData.isEmpty()) {
-            throw new IllegalArgumentException("Value to decrypt cannot be null or empty");
-        }
-        SecretKey secretKey = new SecretKeySpec(KEY, ALGORITHM);
+        SecretKeySpec secretKeySpec = new SecretKeySpec(KEY, "AES");
+        IvParameterSpec ivParameterSpec = new IvParameterSpec(IV);
+
         Cipher cipher = Cipher.getInstance(ALGORITHM);
-        cipher.init(Cipher.DECRYPT_MODE, secretKey);
+        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
+
         byte[] original = cipher.doFinal(Base64.getDecoder().decode(encryptedData));
         return new String(original);
     }

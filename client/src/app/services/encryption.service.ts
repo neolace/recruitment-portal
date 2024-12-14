@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
 import {environment} from "../../environments/environment";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class EncryptionService {
 
   private getKeySpec(key: string): any {
     const hashedKey = CryptoJS.SHA256(CryptoJS.enc.Utf8.parse(key)).toString(CryptoJS.enc.Hex);
-    return CryptoJS.enc.Hex.parse(hashedKey.substring(0, 32)); // use first 16 bytes (32 hex chars) for AES-128
+    return CryptoJS.enc.Hex.parse(hashedKey.substring(0, 32));
   }
 
   private getIvSpec(key: string): any {
