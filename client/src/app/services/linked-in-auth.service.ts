@@ -106,7 +106,7 @@ export class LinkedInAuthService {
               console.error('Error fetching user profile:', error);
             }
           );
-        }, 3000);
+        }, 1500);
       },
       (error) => {
         console.error('Error exchanging code for token:', error);
