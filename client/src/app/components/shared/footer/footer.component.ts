@@ -7,6 +7,7 @@ import {FileUploadService} from "../../../services/file-upload.service";
 import {ReportIssueService} from "../../../services/report-issue.service";
 import {CommonService} from "../../../services/common/common.service";
 import {AlertsService} from "../../../services/alerts.service";
+import {ReportFeatureService} from "../../../services/report-feature.service";
 
 @Component({
   selector: 'app-footer',
@@ -15,8 +16,10 @@ import {AlertsService} from "../../../services/alerts.service";
 })
 export class FooterComponent implements OnInit{
   @ViewChild('openForm') openForm!: ElementRef;
+  @ViewChild('openForm2') openForm2!: ElementRef;
   @ViewChild('modelClose') modelClose!: ElementRef;
   @ViewChild('model1Close') model1Close!: ElementRef;
+  @ViewChild('model2Close') model2Close!: ElementRef;
 
   utilities = Utilities;
 
@@ -24,6 +27,11 @@ export class FooterComponent implements OnInit{
 
   reportIssueForm = new FormGroup({
     issueType: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required]),
+  })
+
+  reportFeatureForm = new FormGroup({
+    featureType: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
   })
 
@@ -35,6 +43,7 @@ export class FooterComponent implements OnInit{
               private router: Router,
               private fileUploadService: FileUploadService,
               private reportIssueService: ReportIssueService,
+              private reportFeatureService: ReportFeatureService,
               private commonService: CommonService,
               private alertService: AlertsService) {
   }
@@ -42,6 +51,9 @@ export class FooterComponent implements OnInit{
   ngOnInit(){
     if (sessionStorage.getItem('in_issue_progress') == 'true') {
       this.continueReportProgress();
+    }
+    if (sessionStorage.getItem('in_feature_progress') == 'true') {
+      this.continueFeatureProgress();
     }
   }
 
@@ -65,14 +77,14 @@ export class FooterComponent implements OnInit{
     }
   }
 
-  generateRandomId(): any {
+  generateRandomId(type:string): any {
     let id: string;
-    if (!sessionStorage.getItem('issue_id')) {
+    if (!sessionStorage.getItem(type)) {
       id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-      sessionStorage.setItem('issue_id', id);
+      sessionStorage.setItem(type, id);
       return id;
     } else {
-      return sessionStorage.getItem('issue_id');
+      return sessionStorage.getItem(type);
     }
   }
 
@@ -125,6 +137,55 @@ export class FooterComponent implements OnInit{
     }
   }
 
+  reportFeature() {
+    if (this.reportFeatureForm.valid) {
+      sessionStorage.setItem('report_feature_form', JSON.stringify(this.reportFeatureForm.value));
+      if (this.downloadURL) {
+        this.reportFeatureService.addFeature({
+          featureType: this.reportFeatureForm.get('featureType')?.value,
+          description: this.reportFeatureForm.get('description')?.value,
+          attachment: sessionStorage.getItem('downloadURL')
+        }).subscribe((data) => {
+          sessionStorage.clear();
+          this.alertService.successMessage('Feature reported successfully.', 'Success');
+          this.reportFeatureForm.reset();
+          this.downloadURL = null;
+          const model_close = this.model2Close.nativeElement;
+          model_close.click();
+          return;
+        }, (error) => {
+          this.alertService.errorMessage('Something went wrong. Please try again.', 'Error');
+        })
+      } else {
+        const model_close = this.model2Close.nativeElement;
+        model_close.click();
+        sessionStorage.setItem('in_feature_progress', 'true');
+        window.location.reload();
+      }
+    } else {
+      this.alertService.errorMessage('Please fill in all required fields.', 'Error');
+    }
+  }
+
+  continueFeatureProgress() {
+    setTimeout(() => {
+      const button: HTMLButtonElement = document.getElementById('openForm') as HTMLButtonElement;
+      button.click();
+    }, 1000)
+
+    const reportFeatureFormValue = sessionStorage.getItem('report_feature_form');
+    if (reportFeatureFormValue) {
+      this.reportFeatureForm.patchValue(JSON.parse(reportFeatureFormValue));
+      this.downloadURL = sessionStorage.getItem('downloadURL');
+
+      if (this.downloadURL) {
+        this.reportFeature()
+      } else {
+        this.alertService.errorMessage('Please add or upload again the attachment.', 'Error');
+      }
+    }
+  }
+
   contactMe() {
     if (this.requestInfoForm.valid) {
       const mail = this.requestInfoForm.get('email')?.value;
@@ -143,10 +204,10 @@ export class FooterComponent implements OnInit{
     }
   }
 
-  closeAndOPenReportForm() {
+  closeAndOPenReportForm(id: string) {
     const model_close = this.model1Close.nativeElement;
     model_close.click();
-    const button: HTMLButtonElement = document.getElementById('openForm') as HTMLButtonElement;
+    const button: HTMLButtonElement = document.getElementById(id) as HTMLButtonElement;
     button.click();
   }
 }
