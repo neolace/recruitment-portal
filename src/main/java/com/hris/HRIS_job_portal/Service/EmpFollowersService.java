@@ -1,0 +1,125 @@
+package com.hris.HRIS_job_portal.Service;
+
+import com.hris.HRIS_job_portal.DTO.EmpFollowersDTO;
+import com.hris.HRIS_job_portal.Model.EmpFollowersModel;
+import com.hris.HRIS_job_portal.Model.EmployeeModel;
+import com.hris.HRIS_job_portal.Repository.EmpFollowersRepository;
+import com.hris.HRIS_job_portal.Repository.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+
+@Service
+public class EmpFollowersService {
+    @Autowired
+    EmpFollowersRepository empFollowersRepository;
+
+    @Autowired
+    EmployeeRepository employeeRepository;
+
+    public List<EmpFollowersModel> getEmpFollowersByEmployeeId(String employeeId) { return empFollowersRepository.findByEmployeeId(employeeId); }
+
+    public EmpFollowersModel addEmpFollowers(EmpFollowersModel empFollowers) {
+        List<EmpFollowersModel> empFollowersList = getEmpFollowersByEmployeeId(empFollowers.getEmployeeId());
+        EmpFollowersModel empFollowersModel;
+
+        if (empFollowersList.isEmpty()) {
+            empFollowersModel = empFollowersList.get(0);
+            List<EmpFollowersDTO> followers = empFollowersModel.getFollowers();
+
+            if (followers == null){
+                followers = new ArrayList<>();
+            }
+            followers.addAll(empFollowers.getFollowers());
+            empFollowersModel.setFollowers(followers);
+        } else {
+            empFollowersModel = empFollowersRepository.save(empFollowers);
+        }
+
+        empFollowersRepository.save(empFollowersModel);
+
+        Optional<EmployeeModel> employeeModel = employeeRepository.findById(empFollowers.getEmployeeId());
+        if (employeeModel.isPresent()) {
+            EmployeeModel existingEmployee = employeeModel.get();
+            existingEmployee.setFollowers(empFollowersModel.getId());
+
+            Map<String, Boolean> profileCompleted = (Map<String, Boolean>) existingEmployee.getProfileCompleted();
+            if (profileCompleted == null) {
+                profileCompleted = new HashMap<>();
+            }
+            profileCompleted.put("followers", true);
+            existingEmployee.setProfileCompleted(profileCompleted);
+
+            employeeRepository.save(existingEmployee);
+        }
+        return empFollowersModel;
+    }
+
+    public EmpFollowersModel updateEmpFollowers(String id, EmpFollowersModel empFollowers) {
+        EmpFollowersModel empFollowersModel = empFollowersRepository.findById(id).orElse(null);
+
+        if (empFollowersModel != null) {
+            List<EmpFollowersDTO> followers = empFollowersModel.getFollowers();
+
+            empFollowersModel.setEmployeeId(empFollowers.getEmployeeId());
+            empFollowersModel.setFollowers(followers);
+
+            return empFollowersRepository.save(empFollowersModel);
+
+        }
+        return null;
+    }
+
+    public void deleteEmpFollowers(String employeeId) {
+        empFollowersRepository.deleteByEmployeeId(employeeId);
+    }
+
+    public EmpFollowersModel deleteEmpFollower(String employeeId, String followerId) {
+        List<EmpFollowersModel> followers = getEmpFollowersByEmployeeId(employeeId);
+        if (!followers.isEmpty()) {
+            EmpFollowersModel empFollowersModel = followers.get(0);
+            List<EmpFollowersDTO> followings = empFollowersModel.getFollowers();
+            if (followings != null) {
+                followings.removeIf(follower -> follower.getId().equals(followerId));
+                empFollowersModel.setFollowers(followings);
+                empFollowersRepository.save(empFollowersModel);
+            }
+            return empFollowersModel;
+        } else {
+            throw new RuntimeException("Followers not found for employeeId: " + employeeId);
+        }
+    }
+
+    public EmpFollowersModel editFollower(String employeeId, EmpFollowersDTO followersDto) {
+        List<EmpFollowersModel> followersList = getEmpFollowersByEmployeeId(employeeId);
+        if (!followersList.isEmpty()) {
+            EmpFollowersModel empFollowersModel = followersList.get(0);
+            List<EmpFollowersDTO> followers = empFollowersModel.getFollowers();
+            if (followers != null) {
+                for (EmpFollowersDTO follower : followers) {
+                    if (follower.getId().equals(followersDto.getId())) {
+                        follower.setFollowerId(followersDto.getFollowerId());
+                        follower.setFollowerName(followersDto.getFollowerName());
+                        follower.setFollowerOccupation(followersDto.getFollowerOccupation());
+                        follower.setFollowerImage(followersDto.getFollowerImage());
+                        break;
+                    }
+                }
+                empFollowersModel.setFollowers(followers);
+                empFollowersRepository.save(empFollowersModel);
+            }
+            return empFollowersModel;
+        }
+        throw new RuntimeException("Followers not found for employeeId: " + employeeId);
+    }
+
+    @Async
+    public CompletableFuture<List<EmpFollowersModel>> getEmpFollowersByEmployeeIdAsync(String employeeId) {
+        // Fetch employees asynchronously
+        List<EmpFollowersModel> empFollowers = getEmpFollowersByEmployeeId(employeeId);
+        return CompletableFuture.completedFuture(empFollowers);
+    }
+}
