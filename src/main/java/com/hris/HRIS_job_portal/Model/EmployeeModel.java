@@ -34,6 +34,8 @@ public class EmployeeModel {
     private String experiences; //id
     private String education; //id
     private String contactInfo; //id
+    private String followings;
+    private String followers;
     @Field("savedJobs")
     private List<FavJobDTO> savedJobs;
     private Object accountNotifications;
