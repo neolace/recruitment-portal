@@ -27,7 +27,8 @@
       </div>
       <div class="col-12 col-lg-5">
         <h2>Still need help?</h2>
-        <p class="not-animate">If you still have a question for us , provide your email address. We will reach you to you</p>
+        <p class="not-animate">If you still have a question for us , provide your email address. We will reach you to
+          you</p>
         <form [formGroup]="requestInfoForm">
           <div class="input-group" style="z-index: 1">
             <input type="email" class="form-control" placeholder="Enter your valid email" formControlName="email">
@@ -43,6 +44,9 @@
             An Issue
           </button>
           <button id="openForm" class="d-none" data-bs-toggle="modal" data-bs-target="#issueReportModel" #openForm>
+            btn
+          </button>
+          <button id="openForm2" class="d-none" data-bs-toggle="modal" data-bs-target="#featureReportModel" #openForm2>
             btn
           </button>
         </div>
@@ -110,8 +114,9 @@
             <li>If the problem is still persists, contact us.</li>
           </ul>
         </ol>
-        <p><strong style="cursor: pointer" (click)="closeAndOPenReportForm()">Click
-          here</strong> if you still have something to report/suggest.</p>
+        <p><strong style="cursor: pointer" (click)="closeAndOPenReportForm('openForm')">Click
+          here</strong> if you still have something to report/suggest. Or you can request us to add new features <strong
+          style="cursor: pointer" (click)="closeAndOPenReportForm('openForm2')">From here</strong></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #model1Close>Close</button>
@@ -155,7 +160,7 @@
               <div class="form-group">
                 <label for="attachment">Attach Screenshot *</label>
                 <input type="file" class="form-control" id="attachment"
-                       (change)="uploadFile($event, 'portal/report_issues/' + generateRandomId(), 'issues')"/>
+                       (change)="uploadFile($event, 'portal/report_issues/' + generateRandomId('issue_id'), 'issues')"/>
               </div>
             </div>
           </div>
@@ -164,6 +169,55 @@
       <div class="modal-footer">
         <button type="button" class="btn-1 me-2" (click)="reportIssue()">Send</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #modelClose>Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="featureReportModel" tabindex="-1" aria-labelledby="featureReportModelLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="featureReportModelLabel">Want to report a feature?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Examples of Feature Requests : </strong>Advanced Search Filters, Profile Customization Options, Job
+          Posting Insights, Applicant Tracking Tools etc...</p>
+        <p><strong>Examples of Feature Improvements : </strong>Streamline Dashboard Design, Enhanced Profile Visibility,
+          Refined Search Algorithms, Simplified Subscription Process etc...</p>
+        <form [formGroup]="reportFeatureForm" class="w-100">
+          <div class="row form-wrapper">
+            <div class="col-12 col-md-8">
+              <div class="form-group">
+                <label for="feature_type">Feature Type *</label>
+                <select class="form-control" id="feature_type" formControlName="featureType">
+                  <option selected>Feature Request</option>
+                  <option>Feature Improvement</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label for="fdescription">Describe the feature *</label>
+                <textarea class="form-control" id="fdescription" rows="5" placeholder="Describe your feature here"
+                          formControlName="description"></textarea>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label for="fattachment">Attach Reference *</label>
+                <input type="file" class="form-control" id="fattachment"
+                       (change)="uploadFile($event, 'portal/report_feature/' + generateRandomId('feature_id'), 'features')"/>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-1 me-2" (click)="reportFeature()">Send</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #model2Close>Close</button>
       </div>
     </div>
   </div>
