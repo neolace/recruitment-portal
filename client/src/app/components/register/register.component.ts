@@ -71,7 +71,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
           return;
         }
 
-        const encryptedPassword = this.encryptionService.encryptPassword(password);
+        const encryptedPassword = await this.encryptionService.encryptPassword(password);
 
         this.credentialService.addCredential({
           firstname: formData.name?.split(' ')[0],

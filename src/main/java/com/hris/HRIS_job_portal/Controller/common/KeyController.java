@@ -2,6 +2,7 @@ package com.hris.HRIS_job_portal.Controller.common;
 
 import com.hris.HRIS_job_portal.Utils.EncryptionUtility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,84 +10,43 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @RestController
-@RequestMapping("/api/v2/key")
+@RequestMapping("/api/v2/encryption")
 public class KeyController {
 
-    @Autowired
-    private EncryptionUtility encryptionUtility;
+    private final EncryptionUtility encryptionUtility;
 
-    // Request DTO for password-related operations
-    public static class PasswordRequest {
-        private String password;
-        private String encryptedPassword;
-
-        // Getters and setters
-        public String getPassword() { return password; }
-        public void setPassword(String password) { this.password = password; }
-        public String getEncryptedPassword() { return encryptedPassword; }
-        public void setEncryptedPassword(String encryptedPassword) { this.encryptedPassword = encryptedPassword; }
+    public KeyController(EncryptionUtility encryptionUtility) {
+        this.encryptionUtility = encryptionUtility;
     }
 
     @PostMapping("/encrypt")
-    public ResponseEntity<String> encryptPassword(@RequestBody PasswordRequest request) {
+    public ResponseEntity<Map> encrypt(@RequestBody Map<String, String> request) {
+        String data = request.get("data");
         try {
-            String encryptedPassword = EncryptionUtility.encrypt(request.getPassword());
-            return ResponseEntity.ok(encryptedPassword);
+            String encryptedData = encryptionUtility.encrypt(data);
+            Map<String, String> response = Map.of("data", encryptedData);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Encryption failed: " + e.getMessage());
+            Map<String, String> response = Map.of("Encryption failed", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 
     @PostMapping("/decrypt")
-    public ResponseEntity<String> decryptPassword(@RequestBody PasswordRequest request) {
-        System.out.println(request.getEncryptedPassword());
+    public ResponseEntity<Map> decrypt(@RequestBody Map<String, String> request) {
+        String data = request.get("data");
         try {
-            String decryptedPassword = EncryptionUtility.decrypt(request.getEncryptedPassword());
-            return ResponseEntity.ok(decryptedPassword);
+            String decryptedData = encryptionUtility.decrypt(data);
+            Map<String, String> response = Map.of("data", decryptedData);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Decryption failed: " + e.getMessage());
+            Map<String, String> response = Map.of("Decryption failed", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
-    }
-
-    @PostMapping("/check-leak")
-    public ResponseEntity<Boolean> checkPasswordLeak(@RequestBody PasswordRequest request) {
-        try {
-            return ResponseEntity.ok(checkPasswordLeaked(request.getPassword()));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(false);
-        }
-    }
-
-    private boolean checkPasswordLeaked(String password) throws Exception {
-        // SHA-1 hash of the password
-        byte[] sha1HashBytes = java.security.MessageDigest
-                .getInstance("SHA-1")
-                .digest(password.getBytes());
-
-        String sha1Hash = IntStream.range(0, sha1HashBytes.length)
-                .mapToObj(i -> String.format("%02x", sha1HashBytes[i]))
-                .collect(Collectors.joining());
-
-        String hashPrefix = sha1Hash.substring(0, 5);
-        String hashSuffix = sha1Hash.substring(5);
-
-        URL url = new URL("https://api.pwnedpasswords.com/range/" + hashPrefix);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        while ((inputLine = in.readLine()) != null) {
-            if (inputLine.startsWith(hashSuffix)) {
-                in.close();
-                return true;
-            }
-        }
-        in.close();
-        return false;
     }
 }
