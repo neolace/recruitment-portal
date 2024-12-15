@@ -547,15 +547,15 @@ export class PersonalProfileSettingsComponent implements AfterViewInit, OnInit, 
     });
   }
 
-  changePass() {
+  async changePass() {
     this.loading = true;
     if (this.changePassForm.valid) {
       const password: string = this.changePassForm.get('newPass')?.value || '';
-      const encryptedPassword = this.encryptionService.encryptPassword(password);
-      this.credentialService.fetchCredentialByEmployeeId(this.employeeId).subscribe((data) => {
+      const encryptedPassword = await this.encryptionService.encryptPassword(password);
+      this.credentialService.fetchCredentialByEmployeeId(this.employeeId).subscribe(async (data) => {
         if (data) {
-          const oldPassword: string = this.encryptionService.decryptPassword(data.password);
-          if (oldPassword === this.changePassForm.get('oldPass')?.value) {
+          const oldPassword: string = await this.encryptionService.decryptPassword(data.password);
+          if (oldPassword == this.changePassForm.get('oldPass')?.value) {
             if (this.changePassForm.get('newPass')?.value === this.changePassForm.get('confirmPass')?.value) {
               this.credentialService.updateCredential(this.employeeId, {
                 id:data.id,

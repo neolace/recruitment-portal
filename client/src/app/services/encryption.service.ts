@@ -1,52 +1,43 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import * as CryptoJS from 'crypto-js';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EncryptionService {
 
-  private secretKey: string = environment.encryptionKey;
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
-  private getKeySpec(key: string): any {
-    const hashedKey = CryptoJS.SHA256(CryptoJS.enc.Utf8.parse(key)).toString(CryptoJS.enc.Hex);
-    return CryptoJS.enc.Hex.parse(hashedKey.substring(0, 32));
-  }
-
-  private getIvSpec(key: string): any {
-    const ivMd5Hash = CryptoJS.MD5(CryptoJS.enc.Utf8.parse(key)).toString(CryptoJS.enc.Hex);
-    return CryptoJS.enc.Hex.parse(ivMd5Hash);
-  }
-
-  encryptPassword(password: string): string {
-    const keySpec = this.getKeySpec(this.secretKey);
-    const ivSpec = this.getIvSpec(this.secretKey);
-
-    const encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(password), keySpec, {
-      iv: ivSpec,
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7
+  async encryptPassword(password: string): Promise<string | any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
     });
-
-    return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
+    try {
+      let response;
+      response =  await this.http.post<any>(`${this.baseUrl}/encryption/encrypt`, {data: password}, {headers}).toPromise();
+      return response?.data as string;
+    } catch (error:any) {
+      console.error('Error during encryption:', error?.data);
+      throw new Error('Encryption failed');
+    }
   }
 
-  decryptPassword(encryptedPassword: string): string {
-    const keySpec = this.getKeySpec(this.secretKey);
-    const ivSpec = this.getIvSpec(this.secretKey);
-
-    const decrypted = CryptoJS.AES.decrypt(encryptedPassword, keySpec, {
-      iv: ivSpec,
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7
+  async decryptPassword(encryptedPassword: string): Promise<string | any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
     });
-
-    return decrypted.toString(CryptoJS.enc.Utf8);
+    try {
+      let response;
+      response =  await this.http.post<any>(`${this.baseUrl}/encryption/decrypt`, {data: encryptedPassword}, {headers}).toPromise();
+      return response?.data as string;
+    } catch (error:any) {
+      console.error('Error during decryption:', error?.data);
+      throw new Error('Decryption failed');
+    }
   }
 
   checkLeakedPassword(password: string) {

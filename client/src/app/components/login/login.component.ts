@@ -80,16 +80,16 @@ export class LoginComponent implements AfterViewInit, OnInit {
       }
 
       const formData = this.loginForm.value;
-      this.credentialService.fetchCredentialByEmail(formData.email).subscribe((response: any) => {
+      this.credentialService.fetchCredentialByEmail(formData.email).subscribe(async (response: any) => {
         if (!response) {
           this.alertService.errorMessage('User doesn\'t exist or something went wrong', 'Error');
           return;
         }
 
-        const encryptedPassword = this.encryptionService.decryptPassword(response.password?.toString());
+        const encryptedPassword = await this.encryptionService.decryptPassword(response.password?.toString());
 
         if (sessionStorage.getItem('LgnAtT') != '0'){
-          if (formData.password === encryptedPassword) {
+          if (formData.password == encryptedPassword) {
             this.cookieService.createSession(response);
 
             if (this.loginForm.get('remember')?.value) {

@@ -26,7 +26,7 @@ export class ResetPasswordFormComponent {
     this.token = this.route.snapshot.queryParams['token'];
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.password !== this.confirmPassword) {
       this.errorMessage = 'Passwords do not match.';
       return;
@@ -35,7 +35,7 @@ export class ResetPasswordFormComponent {
     this.loading = true;
     this.errorMessage = '';
     this.successMessage = '';
-    const encryptedPassword = this.encryptionService.encryptPassword(this.password);
+    const encryptedPassword = await this.encryptionService.encryptPassword(this.password);
 
     this.credentialService.resetPassword(this.token, encryptedPassword).subscribe(
       (response) => {
