@@ -3,9 +3,11 @@ package com.hris.HRIS_job_portal.Service;
 import com.hris.HRIS_job_portal.DTO.EmpFollowersDTO;
 import com.hris.HRIS_job_portal.DTO.EmpFollowingDTO;
 import com.hris.HRIS_job_portal.DTO.FavJobDTO;
+import com.hris.HRIS_job_portal.Events.UserProfileUpdatedEvent;
 import com.hris.HRIS_job_portal.Model.*;
 import com.hris.HRIS_job_portal.Repository.*;
 import com.hris.HRIS_job_portal.Service.mail.EmailService;
+import com.hris.HRIS_job_portal.Shared.EventPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -51,6 +53,9 @@ public class EmployeeService {
     @Autowired
     private EmpFollowingService empFollowingService;
 
+    @Autowired
+    private EventPublisher eventPublisher;
+
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
@@ -74,8 +79,6 @@ public class EmployeeService {
 
     public EmployeeModel updateEmployee(EmployeeModel employee) {
         Optional<EmployeeModel> employeeModel = employeeRepository.findById(employee.getId());
-        List<EmpFollowersModel> empFollowersModelList = empFollowersRepository.findByEmployeeId(employee.getId());
-        List<EmpFollowingModel> empFollowingModelList = empFollowingRepository.findByEmployeeId(employee.getId());
         if (employeeModel.isPresent()) {
             EmployeeModel existingEmployee = employeeModel.get();
             existingEmployee.setFirstname(employee.getFirstname());
@@ -97,6 +100,14 @@ public class EmployeeService {
             existingEmployee.setProfileCompleted(profileCompleted);
 
             employeeRepository.save(existingEmployee);
+
+            UserProfileUpdatedEvent event = new UserProfileUpdatedEvent(
+                    existingEmployee.getId(),
+                    existingEmployee.getFirstname() + " " + existingEmployee.getLastname(),
+                    existingEmployee.getOccupation(),
+                    existingEmployee.getImage()
+            );
+            eventPublisher.publish(event);
         }
         return employee;
     }
