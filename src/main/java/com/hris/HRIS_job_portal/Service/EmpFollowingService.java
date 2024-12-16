@@ -102,6 +102,7 @@ public class EmpFollowingService {
                         following.setFollowingName(followingDto.getFollowingName());
                         following.setFollowingOccupation(followingDto.getFollowingOccupation());
                         following.setFollowingImage(followingDto.getFollowingImage());
+                        following.setFollowingLocation(followingDto.getFollowingLocation());
                         break;
                     }
                 }

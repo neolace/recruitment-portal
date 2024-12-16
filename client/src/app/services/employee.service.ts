@@ -377,6 +377,66 @@ export class EmployeeService {
     );
   }
 
+  addFollower(follower: any): Observable<any> { //this method always call in add following method's block.
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.post(`${this.baseUrl}/emp_followers/add` , follower, {headers}).pipe(
+      tap((data) => {
+        this.clearCache();
+        this.fetchFullEmployee(follower.employeeId);
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    )
+  }
+
+  deleteFollower(employeeId: string, followerId: string): Observable<any> { //this method always call in delete following method's block.
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.delete(`${this.baseUrl}/emp_followers/delete-single/${employeeId}/${followerId}`, { headers }).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullEmployee(employeeId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    );
+  }
+
+  addFollowing(following: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.post(`${this.baseUrl}/emp_following/add` , following, {headers}).pipe(
+      tap((data) => {
+        this.clearCache();
+        this.fetchFullEmployee(following.employeeId);
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    )
+  }
+
+  deleteFollowing(employeeId: string, followingId: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.delete(`${this.baseUrl}/emp_following/delete-single/${employeeId}/${followingId}`, { headers }).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullEmployee(employeeId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    );
+  }
+
   saveFavJobs(employeeId: string, favJobs: any): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:password')
