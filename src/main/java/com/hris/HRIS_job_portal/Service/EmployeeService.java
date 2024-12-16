@@ -1,10 +1,8 @@
 package com.hris.HRIS_job_portal.Service;
 
 import com.hris.HRIS_job_portal.DTO.FavJobDTO;
-import com.hris.HRIS_job_portal.Model.CredentialsModel;
-import com.hris.HRIS_job_portal.Model.EmployeeModel;
-import com.hris.HRIS_job_portal.Repository.CredentialsRepository;
-import com.hris.HRIS_job_portal.Repository.EmployeeRepository;
+import com.hris.HRIS_job_portal.Model.*;
+import com.hris.HRIS_job_portal.Repository.*;
 import com.hris.HRIS_job_portal.Service.mail.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +24,24 @@ public class EmployeeService {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private EmpEducationRepository empEducationRepository;
+
+    @Autowired
+    private EmpContactRepository empContactRepository;
+
+    @Autowired
+    private EmpExperiencesRepository empExperiencesRepository;
+
+    @Autowired
+    private EmpSkillsRepository empSkillsRepository;
+
+    @Autowired
+    private EmpFollowersRepository empFollowersRepository;
+
+    @Autowired
+    private EmpFollowingRepository empFollowingRepository;
 
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
@@ -231,9 +247,36 @@ public class EmployeeService {
     public void deleteEmployee(String id) {
         Optional<EmployeeModel> employeeModel = employeeRepository.findById(id);
         Optional<CredentialsModel> credentialsModel = credentialsRepository.findByEmployeeId(id);
+        List<EmpEducationModel> empEducationModel = empEducationRepository.findByEmployeeId(id);
+        List<EmpContactModel> empContactModel = empContactRepository.findByEmployeeId(id);
+        List<EmpExperiencesModel> empExperienceModel = empExperiencesRepository.findByEmployeeId(id);
+        List<EmpSkillsModel> empSkillsModel = empSkillsRepository.findByEmployeeId(id);
+        List<EmpFollowersModel> empFollowersModel = empFollowersRepository.findByEmployeeId(id);
+        List<EmpFollowingModel> empFollowingModel = empFollowingRepository.findByEmployeeId(id);
+
         if (employeeModel.isPresent() && credentialsModel.isPresent()) {
             EmployeeModel employee = employeeModel.get();
             CredentialsModel credentials = credentialsModel.get();
+
+            if (empEducationModel != null) {
+                empEducationRepository.deleteByEmployeeId(id);
+            }
+            if (empContactModel != null){
+                empContactRepository.deleteByEmployeeId(id);
+            }
+            if (empExperienceModel != null){
+                empExperiencesRepository.deleteByEmployeeId(id);
+            }
+            if (empSkillsModel != null){
+                empSkillsRepository.deleteByEmployeeId(id);
+            }
+            if (empFollowersModel != null){
+                empFollowersRepository.deleteByEmployeeId(id);
+            }
+            if (empFollowingModel != null){
+                empFollowingRepository.deleteByEmployeeId(id);
+            }
+
             employeeRepository.delete(employee);
             credentialsRepository.delete(credentials);
         } else {
