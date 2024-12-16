@@ -31,6 +31,12 @@ public class BatchController {
     private EmpExperiencesService empExperiencesService;
 
     @Autowired
+    private EmpFollowersService empFollowersService;
+
+    @Autowired
+    private EmpFollowingService empFollowingService;
+
+    @Autowired
     private CredentialsService credentialsService;
 
     @Autowired
@@ -51,6 +57,8 @@ public class BatchController {
         response.put("empSkills", empSkillsService.getEmpSkillsByEmployeeId(id));
         response.put("empExperiences", empExperiencesService.getEmpExperiencesByEmployeeId(id));
         response.put("auth", credentialsService.getCredentialsByEmployeeId(id));
+        response.put("empFollowers", empFollowersService.getEmpFollowersByEmployeeId(id));
+        response.put("empFollowing", empFollowingService.getEmpFollowingByEmployeeId(id));
         return response;
     }
 
@@ -62,6 +70,8 @@ public class BatchController {
         CompletableFuture<List<EmpSkillsModel>> skillsFuture = empSkillsService.getEmpSkillsByEmployeeIdAsync(id);
         CompletableFuture<List<EmpExperiencesModel>> experiencesFuture = empExperiencesService.getEmpExperiencesByEmployeeIdAsync(id);
         Optional<CredentialsModel> credentialsFuture = credentialsService.getCredentialsByEmployeeId(id);
+        CompletableFuture<List<EmpFollowersModel>> followersFuture = empFollowersService.getEmpFollowersByEmployeeIdAsync(id);
+        CompletableFuture<List<EmpFollowingModel>> followingFuture = empFollowingService.getEmpFollowingByEmployeeIdAsync(id);
 
         // Wait for all async calls to complete
         return CompletableFuture.allOf(employeeFuture, contactFuture, educationFuture, skillsFuture, experiencesFuture)
@@ -73,6 +83,8 @@ public class BatchController {
                     response.put("empSkills", skillsFuture.join());
                     response.put("empExperiences", experiencesFuture.join());
                     response.put("auth", credentialsFuture);
+                    response.put("empFollowers", followersFuture.join());
+                    response.put("empFollowing", followingFuture.join());
                     return response;
                 });
     }
