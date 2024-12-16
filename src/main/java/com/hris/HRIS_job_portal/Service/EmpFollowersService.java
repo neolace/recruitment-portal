@@ -123,4 +123,22 @@ public class EmpFollowersService {
         List<EmpFollowersModel> empFollowers = getEmpFollowersByEmployeeId(employeeId);
         return CompletableFuture.completedFuture(empFollowers);
     }
+
+    // Events
+    public void updateFollowersForUser(String userId, String fullName, String occupation, String profileImage) {
+        List<EmpFollowersModel> followersList = empFollowersRepository.findByEmployeeId(userId);
+        for (EmpFollowersModel followersModel : followersList) {
+            List<EmpFollowersDTO> followers = followersModel.getFollowers();
+            if (followers != null) {
+                for (EmpFollowersDTO follower : followers) {
+                    if (follower.getFollowerId().equals(userId)) {
+                        follower.setFollowerName(fullName);
+                        follower.setFollowerOccupation(occupation);
+                        follower.setFollowerImage(profileImage);
+                    }
+                }
+                empFollowersRepository.save(followersModel);
+            }
+        }
+    }
 }

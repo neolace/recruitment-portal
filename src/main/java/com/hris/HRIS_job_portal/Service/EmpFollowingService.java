@@ -119,4 +119,22 @@ public class EmpFollowingService {
         List<EmpFollowingModel> followingList = getEmpFollowingByEmployeeId(employeeId);
         return CompletableFuture.completedFuture(followingList);
     }
+
+    // Events
+    public void updateFollowingsForUser(String userId, String fullName, String occupation, String profileImage) {
+        List<EmpFollowingModel> followingList = empFollowingRepository.findByEmployeeId(userId);
+        for (EmpFollowingModel followingModel : followingList) {
+            List<EmpFollowingDTO> followings = followingModel.getFollowings();
+            if (followings != null) {
+                for (EmpFollowingDTO following : followings) {
+                    if (following.getFollowingId().equals(userId)) {
+                        following.setFollowingName(fullName);
+                        following.setFollowingOccupation(occupation);
+                        following.setFollowingImage(profileImage);
+                    }
+                }
+                empFollowingRepository.save(followingModel);
+            }
+        }
+    }
 }
