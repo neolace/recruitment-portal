@@ -1,5 +1,7 @@
 package com.hris.HRIS_job_portal.Service;
 
+import com.hris.HRIS_job_portal.DTO.EmpFollowersDTO;
+import com.hris.HRIS_job_portal.DTO.EmpFollowingDTO;
 import com.hris.HRIS_job_portal.DTO.FavJobDTO;
 import com.hris.HRIS_job_portal.Model.*;
 import com.hris.HRIS_job_portal.Repository.*;
@@ -43,6 +45,12 @@ public class EmployeeService {
     @Autowired
     private EmpFollowingRepository empFollowingRepository;
 
+    @Autowired
+    private EmpFollowersService empFollowersService;
+
+    @Autowired
+    private EmpFollowingService empFollowingService;
+
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
@@ -66,6 +74,8 @@ public class EmployeeService {
 
     public EmployeeModel updateEmployee(EmployeeModel employee) {
         Optional<EmployeeModel> employeeModel = employeeRepository.findById(employee.getId());
+        List<EmpFollowersModel> empFollowersModelList = empFollowersRepository.findByEmployeeId(employee.getId());
+        List<EmpFollowingModel> empFollowingModelList = empFollowingRepository.findByEmployeeId(employee.getId());
         if (employeeModel.isPresent()) {
             EmployeeModel existingEmployee = employeeModel.get();
             existingEmployee.setFirstname(employee.getFirstname());
@@ -89,6 +99,41 @@ public class EmployeeService {
             employeeRepository.save(existingEmployee);
         }
         return employee;
+    }
+
+    private void updateFollowersAndFollowings(EmployeeModel employee, List<EmpFollowersModel> followersList, List<EmpFollowingModel> followingsList){
+        if (!followersList.isEmpty()){
+            EmpFollowersModel empFollowersModel = followersList.get(0);
+            List<EmpFollowersDTO> followers = empFollowersModel.getFollowers();
+
+            EmpFollowersDTO updatedData = new EmpFollowersDTO();
+            updatedData.setFollowerId(employee.getId());
+            updatedData.setFollowerName(employee.getFirstname() +" "+ employee.getLastname());
+            updatedData.setFollowerOccupation(employee.getOccupation());
+            updatedData.setFollowerImage(employee.getImage());
+
+            if (followers != null){
+                for (EmpFollowersDTO follower : followers){
+                    empFollowersService.editFollower(follower.getId(), updatedData);
+                }
+            }
+        }
+        if (!followingsList.isEmpty()){
+            EmpFollowingModel empFollowingModel = followingsList.get(0);
+            List<EmpFollowingDTO> followings = empFollowingModel.getFollowings();
+
+            EmpFollowingDTO updatedData = new EmpFollowingDTO();
+            updatedData.setFollowingId(employee.getId());
+            updatedData.setFollowingName(employee.getFirstname() +" "+ employee.getLastname());
+            updatedData.setFollowingOccupation(employee.getOccupation());
+            updatedData.setFollowingImage(employee.getImage());
+
+            if (followings != null){
+                for (EmpFollowingDTO following : followings){
+                    empFollowingService.editFollowing(following.getId(), updatedData);
+                }
+            }
+        }
     }
 
     public EmployeeModel updateSearchAppearance(EmployeeModel employee) {

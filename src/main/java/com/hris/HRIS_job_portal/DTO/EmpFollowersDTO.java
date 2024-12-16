@@ -13,4 +13,5 @@ public class EmpFollowersDTO {
     private String followerName;
     private String followerOccupation;
     private String followerImage;
+    private String followerLocation;
 }

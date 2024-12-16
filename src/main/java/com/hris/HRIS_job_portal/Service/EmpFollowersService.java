@@ -105,6 +105,7 @@ public class EmpFollowersService {
                         follower.setFollowerName(followersDto.getFollowerName());
                         follower.setFollowerOccupation(followersDto.getFollowerOccupation());
                         follower.setFollowerImage(followersDto.getFollowerImage());
+                        follower.setFollowerLocation(followersDto.getFollowerLocation());
                         break;
                     }
                 }
