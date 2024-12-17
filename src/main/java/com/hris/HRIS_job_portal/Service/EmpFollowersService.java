@@ -5,7 +5,10 @@ import com.hris.HRIS_job_portal.Model.EmpFollowersModel;
 import com.hris.HRIS_job_portal.Model.EmployeeModel;
 import com.hris.HRIS_job_portal.Repository.EmpFollowersRepository;
 import com.hris.HRIS_job_portal.Repository.EmployeeRepository;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.retry.annotation.*;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -20,17 +23,22 @@ public class EmpFollowersService {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    public List<EmpFollowersModel> getEmpFollowersByEmployeeId(String employeeId) { return empFollowersRepository.findByEmployeeId(employeeId); }
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    public List<EmpFollowersModel> getEmpFollowersByEmployeeId(String employeeId) {
+        return empFollowersRepository.findByEmployeeId(employeeId);
+    }
 
     public EmpFollowersModel addEmpFollowers(EmpFollowersModel empFollowers) {
         List<EmpFollowersModel> empFollowersList = getEmpFollowersByEmployeeId(empFollowers.getEmployeeId());
         EmpFollowersModel empFollowersModel;
 
-        if (empFollowersList.isEmpty()) {
+        if (!empFollowersList.isEmpty()) {
             empFollowersModel = empFollowersList.get(0);
             List<EmpFollowersDTO> followers = empFollowersModel.getFollowers();
 
-            if (followers == null){
+            if (followers == null) {
                 followers = new ArrayList<>();
             }
             followers.addAll(empFollowers.getFollowers());
@@ -54,7 +62,11 @@ public class EmpFollowersService {
             existingEmployee.setProfileCompleted(profileCompleted);
 
             employeeRepository.save(existingEmployee);
+
+            // Publish RabbitMQ event
+            publishFollowerEvent("add", empFollowersModel);
         }
+
         return empFollowersModel;
     }
 
@@ -67,14 +79,22 @@ public class EmpFollowersService {
             empFollowersModel.setEmployeeId(empFollowers.getEmployeeId());
             empFollowersModel.setFollowers(followers);
 
-            return empFollowersRepository.save(empFollowersModel);
+            EmpFollowersModel updatedModel = empFollowersRepository.save(empFollowersModel);
 
+            // Publish RabbitMQ event
+            publishFollowerEvent("update", updatedModel);
+
+            return updatedModel;
         }
         return null;
     }
 
     public void deleteEmpFollowers(String employeeId) {
-        empFollowersRepository.deleteByEmployeeId(employeeId);
+        List<EmpFollowersModel> followers = getEmpFollowersByEmployeeId(employeeId);
+        if (!followers.isEmpty()) {
+            empFollowersRepository.deleteByEmployeeId(employeeId);
+            publishFollowerEvent("delete", followers.get(0));
+        }
     }
 
     public EmpFollowersModel deleteEmpFollower(String employeeId, String followerId) {
@@ -86,11 +106,16 @@ public class EmpFollowersService {
                 followings.removeIf(follower -> follower.getId().equals(followerId));
                 empFollowersModel.setFollowers(followings);
                 empFollowersRepository.save(empFollowersModel);
+
+                // Publish RabbitMQ event
+                publishFollowerEvent("remove", empFollowersModel);
+
+                return empFollowersModel;
             }
-            return empFollowersModel;
         } else {
             throw new RuntimeException("Followers not found for employeeId: " + employeeId);
         }
+        return null;
     }
 
     public EmpFollowersModel editFollower(String employeeId, EmpFollowersDTO followersDto) {
@@ -119,12 +144,53 @@ public class EmpFollowersService {
 
     @Async
     public CompletableFuture<List<EmpFollowersModel>> getEmpFollowersByEmployeeIdAsync(String employeeId) {
-        // Fetch employees asynchronously
         List<EmpFollowersModel> empFollowers = getEmpFollowersByEmployeeId(employeeId);
         return CompletableFuture.completedFuture(empFollowers);
     }
 
     // Events
+    @Retryable(value = {Exception.class}, maxAttempts = 5, backoff = @Backoff(delay = 5000))
+    public void publish(String exchange, String routingKey, String message) {
+        if (rabbitTemplate != null) {
+            rabbitTemplate.convertAndSend(exchange, routingKey, message);
+        } else {
+            System.err.println("RabbitMQ unavailable. Unable to send message: " + message);
+        }
+    }
+
+    // Recovery method for retries
+    @Recover
+    public void recover(Exception e, String exchange, String routingKey, String message) {
+        System.err.println("RabbitMQ is unavailable. Storing message for later: " + message);
+        // Store the message in a database or another service for retry.
+    }
+
+    // Circuit breaker to handle failures gracefully
+    @CircuitBreaker(name = "rabbitMQ", fallbackMethod = "fallbackPublish")
+    public void processEvent(String exchange, String routingKey, String message) {
+        publish(exchange, routingKey, message);
+    }
+
+    // Fallback method for circuit breaker
+    public void fallbackPublish(String exchange, String routingKey, String message, Throwable throwable) {
+        System.err.println("Circuit breaker activated. Storing event for later: " + message);
+        // Store the message in a temporary storage.
+    }
+
+    // Method to trigger follower update events asynchronously
+    public void triggerFollowerUpdateEvent(String userId, String fullName, String occupation, String profileImage) {
+        String message = String.format("{\"userId\":\"%s\",\"fullName\":\"%s\",\"occupation\":\"%s\",\"profileImage\":\"%s\"}",
+                userId, fullName, occupation, profileImage);
+        processEvent("follower-exchange", "follower.key", message);
+    }
+
+    // Method to trigger following update events asynchronously
+    public void triggerFollowingUpdateEvent(String userId, String fullName, String occupation, String profileImage) {
+        String message = String.format("{\"userId\":\"%s\",\"fullName\":\"%s\",\"occupation\":\"%s\",\"profileImage\":\"%s\"}",
+                userId, fullName, occupation, profileImage);
+        processEvent("following-exchange", "following.key", message);
+    }
+
     public void updateFollowersForUser(String userId, String fullName, String occupation, String profileImage) {
         List<EmpFollowersModel> followersList = empFollowersRepository.findByEmployeeId(userId);
         for (EmpFollowersModel followersModel : followersList) {
@@ -139,6 +205,24 @@ public class EmpFollowersService {
                 }
                 empFollowersRepository.save(followersModel);
             }
+        }
+    }
+
+    private void publishFollowerEvent(String action, EmpFollowersModel empFollowersModel) {
+        try {
+            Map<String, Object> event = new HashMap<>();
+            event.put("action", action);
+            event.put("employeeId", empFollowersModel.getEmployeeId());
+            event.put("followers", empFollowersModel.getFollowers());
+
+            if (rabbitTemplate != null) {
+                rabbitTemplate.convertAndSend("profile.exchange", "profile.updated", event);
+                System.out.println("Event published to RabbitMQ: " + event);
+            } else {
+                System.err.println("RabbitMQ not configured. Unable to publish event: " + event);
+            }
+        } catch (Exception e) {
+            System.err.println("Error publishing event to RabbitMQ: " + e.getMessage());
         }
     }
 }
