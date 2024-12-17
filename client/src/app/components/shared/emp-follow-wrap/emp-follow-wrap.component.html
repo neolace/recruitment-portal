@@ -3,10 +3,10 @@
     <div class="col-12 col-md-6 col-lg-5">
       <div class="employee-data-wrapper">
         <div class="image-wrapper">
-          <img src="./assets/imgs/login/login.webp" alt="banner" loading="lazy">
+          <img [src]="employee?.employee?.image || './assets/imgs/shared/default_emp_dp.svg'" alt="banner" loading="lazy">
         </div>
-        <div class="name-tag">John Doe</div>
-        <div class="career-tag">Web Developer</div>
+        <div class="name-tag">{{employee?.employee?.firstname || 'N/A'}} {{employee?.employee?.lastname || ' '}}</div>
+        <div class="career-tag">{{employee?.employee?.occupation || ' '}}</div>
         <table>
           <tr class="py-2">
             <td><div class="icon">
@@ -15,24 +15,24 @@
             <td>
               <div class="d-flex align-items-center justify-content-start w-100">
                 <div class="d-flex align-items-center justify-content-between gap-2">
-                  <div><b>12</b> followers</div>
+                  <div><b>{{employee?.empFollowers[0]?.followers?.length || '0'}}</b> followers</div>
                   <div>.</div>
-                  <div><b>31</b> following</div>
+                  <div><b>{{employee?.empFollowing[0]?.followings?.length || '0'}}</b> following</div>
                 </div>
               </div>
             </td>
           </tr>
-          <tr class="py-2">
+          <tr class="py-2" *ngIf="employee?.empContact[0]?.contact[0]?.country">
             <td><div class="icon">
               <i class="material-icons">location_pin</i>
             </div></td>
-            <td>London UK</td>
+            <td>{{employee?.empContact[0]?.contact[0]?.country || ' '}}</td>
           </tr>
-          <tr class="py-2">
+          <tr class="py-2" *ngIf="employee?.empContact[0]?.contact[0]?.website">
             <td><div class="icon">
               <i class="material-icons">link</i>
             </div></td>
-            <td><a href="#">website</a></td>
+            <td><a href="{{employee?.empContact[0]?.contact[0]?.website || ' '}}">website</a></td>
           </tr>
         </table>
       </div>
@@ -46,7 +46,8 @@
           <a class="nav-link" [ngClass]="activeFollowingTab ? 'active' : ''" routerLink="/follow/followings">Followings</a>
         </li>
       </ul>
-      <router-outlet></router-outlet>
+      <app-emp-followers *ngIf="activeFollowerTab" [followers]="employee?.empFollowers[0]?.followers"></app-emp-followers>
+      <app-emp-followings *ngIf="activeFollowingTab" [followings]="employee?.empFollowing[0]?.followings"></app-emp-followings>
     </div>
   </div>
 </div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {singleEmployeeDataStore} from "../../../shared/data-store/single-employee-data-store";
 
 @Component({
   selector: 'app-emp-follow-wrap',
@@ -8,6 +9,11 @@ import { Component } from '@angular/core';
 export class EmpFollowWrapComponent {
   activeFollowerTab: boolean = true;
   activeFollowingTab: boolean = false;
+  employee: any;
+
+  ngOnInit() {
+    this.employee = singleEmployeeDataStore[0]
+  }
 
   isActive(name: string) {
     switch (name) {
