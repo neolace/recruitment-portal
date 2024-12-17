@@ -411,7 +411,7 @@ export class EmployeeService {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:password')
     });
-    return this.http.post(`${this.baseUrl}/emp_following/add` , following, {headers}).pipe(
+    return this.http.post(`${this.baseUrl}/emp_followings/add` , following, {headers}).pipe(
       tap((data) => {
         this.clearCache();
         this.fetchFullEmployee(following.employeeId);
@@ -426,7 +426,7 @@ export class EmployeeService {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:password')
     });
-    return this.http.delete(`${this.baseUrl}/emp_following/delete-single/${employeeId}/${followingId}`, { headers }).pipe(
+    return this.http.delete(`${this.baseUrl}/emp_followings/delete-single/${employeeId}/${followingId}`, { headers }).pipe(
       tap((data) => {
         this.clearCache(); // Invalidate the cache
         this.fetchFullEmployee(employeeId); // Refresh the cache after updating
