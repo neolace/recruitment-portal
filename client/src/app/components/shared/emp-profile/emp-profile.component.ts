@@ -13,13 +13,14 @@ import {AlertsService} from "../../../services/alerts.service";
   templateUrl: './emp-profile.component.html',
   styleUrls: ['./emp-profile.component.scss']
 })
-export class EmpProfileComponent implements OnInit, AfterViewInit{
+export class EmpProfileComponent implements OnInit, AfterViewInit {
 
   progressValue = 8;
   progressMode: ProgressSpinnerMode = 'determinate';
 
   employee: any;
   employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
+  myId: any;
   loading: boolean = false;
 
   serverError: boolean = false;
@@ -45,15 +46,20 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
 
   inviteLink: any;
 
+  followingIds: any[] = [];
+  followersIds: any[] = [];
+
   constructor(private employeeService: EmployeeService,
               public cookieService: AuthService,
               private commonService: CommonService,
               private alertService: AlertsService,
               private router: Router,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute) {
+  }
 
   async ngOnInit(): Promise<any> {
     this.employeeId = this.cookieService.userID();
+    this.myId = this.cookieService.userID();
     this.route.queryParamMap.subscribe(params => {
       this.queryId = params.get('id');
     })
@@ -79,8 +85,18 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
       (data) => {
         this.employee = data;
         this.calculateProfileProgress(this.employee?.employee);
-        this.contactPrivate = this.employee?.empContact[0]?.publicity
-        this.contactId = this.employee?.empContact[0]?.id
+        if (this.employee?.empContact && this.employee?.empContact.length > 0) {
+          this.contactPrivate = this.employee.empContact[0]?.publicity;
+          this.contactId = this.employee.empContact[0]?.id;
+        }
+        if (this.employee?.empFollowing && this.employee?.empFollowing.length > 0) {
+          this.followingIds = this.employee.empFollowing[0]?.followings?.map((following: any) => following?.followingId) || [];
+        }
+        if (this.employee?.empFollowers && this.employee?.empFollowers.length > 0) {
+          this.followersIds = this.employee.empFollowers[0]?.followers?.map((follower: any) => follower?.followerId) || [];
+        }
+
+        this.loading = false
       },
       (error: HttpErrorResponse) => {
         // Check for different error types
@@ -198,5 +214,57 @@ export class EmpProfileComponent implements OnInit, AfterViewInit{
   outFunc() {
     const tooltip: HTMLSpanElement = document.getElementById("myTooltip") as HTMLSpanElement;
     tooltip.innerHTML = "Copy to clipboard";
+  }
+
+  follow(employee: any) {
+    this.followersIds.push(this.myId);
+    if (employee) {
+      this.employeeService.addFollowing(
+        {
+          employeeId: this.cookieService.userID(),
+          followings: [{
+            id: this.generateRandomId(),
+            followingId: employee?.employee?.id || null,
+            followingName: employee?.employee?.firstname + ' ' + employee?.employee?.lastname || null,
+            followingOccupation: employee?.employee?.occupation || null,
+            followingImage: employee?.employee?.image || null,
+            followingLocation: employee?.empContact ? employee?.empContact[0]?.contact ? employee?.empContact[0]?.contact[0]?.country || null : null : null
+          }]
+        }
+      ).subscribe(data => {
+        if (data != null) {
+          this.employeeService.fetchFullEmployee(this.myId).subscribe(
+            (data) => {
+              const emp = data;
+              this.employeeService.addFollower({
+                employeeId: employee?.employee?.id,
+                followers: [{
+                  id: this.generateRandomId(),
+                  followerId: emp?.employee?.id || null,
+                  followerName: emp?.employee?.firstname + ' ' + emp?.employee?.lastname || null,
+                  followerOccupation: emp?.employee?.occupation || null,
+                  followerImage: emp?.employee?.image || null,
+                  followerLocation: emp?.empContact ? emp?.empContact[0]?.contact ? emp?.empContact[0]?.contact[0]?.country || null : null : null
+                }]
+              }).subscribe((data) => {
+                if (data != null) {
+                  this.getEmployee(this.employeeId)
+                  this.alertService.successMessage('You have followed ' + employee?.employee?.firstname + ' ' + employee?.employee?.lastname, 'Follow')
+                }
+              })
+            })
+        }
+      }, (error: any) => {
+        this.alertService.errorMessage('Something went wrong. Please try again.', 'Follow')
+      })
+    }
+  }
+
+  generateRandomId(): string {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  }
+
+  unfollow(employee: any) {
+
   }
 }
