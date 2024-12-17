@@ -1,1 +1,52 @@
-<p>emp-follow-wrap works!</p>
+<div class="container" style="min-height: calc(100vh - 200px);">
+  <div class="row flex-row-reverse">
+    <div class="col-12 col-md-6 col-lg-5">
+      <div class="employee-data-wrapper">
+        <div class="image-wrapper">
+          <img src="./assets/imgs/login/login.webp" alt="banner" loading="lazy">
+        </div>
+        <div class="name-tag">John Doe</div>
+        <div class="career-tag">Web Developer</div>
+        <table>
+          <tr class="py-2">
+            <td><div class="icon">
+              <i class="material-icons">people</i>
+            </div></td>
+            <td>
+              <div class="d-flex align-items-center justify-content-start w-100">
+                <div class="d-flex align-items-center justify-content-between gap-2">
+                  <div><b>12</b> followers</div>
+                  <div>.</div>
+                  <div><b>31</b> following</div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="py-2">
+            <td><div class="icon">
+              <i class="material-icons">location_pin</i>
+            </div></td>
+            <td>London UK</td>
+          </tr>
+          <tr class="py-2">
+            <td><div class="icon">
+              <i class="material-icons">link</i>
+            </div></td>
+            <td><a href="#">website</a></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-7">
+      <ul class="nav justify-content-center py-3">
+        <li class="nav-item" (click)="isActive('follower')">
+          <a class="nav-link" [ngClass]="activeFollowerTab ? 'active' : ''" aria-current="page" routerLink="/follow/followers">Followers</a>
+        </li>
+        <li class="nav-item" (click)="isActive('following')">
+          <a class="nav-link" [ngClass]="activeFollowingTab ? 'active' : ''" routerLink="/follow/followings">Followings</a>
+        </li>
+      </ul>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
