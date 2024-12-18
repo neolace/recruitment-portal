@@ -392,7 +392,7 @@ export class EmployeeService {
     )
   }
 
-  deleteFollower(employeeId: string, followerId: string): Observable<any> { //this method always call in delete following method's block.
+  deleteFollower(employeeId: string, followerId: string): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:password')
     });
@@ -422,7 +422,7 @@ export class EmployeeService {
     )
   }
 
-  deleteFollowing(employeeId: string, followingId: string): Observable<any> {
+  deleteFollowing(employeeId: string, followingId: string): Observable<any> { //this method always call in delete follower method's block.
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:password')
     });

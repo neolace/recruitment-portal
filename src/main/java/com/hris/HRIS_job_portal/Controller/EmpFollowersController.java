@@ -40,7 +40,7 @@ public class EmpFollowersController {
         empFollowersService.deleteEmpFollowers(employeeId);
     }
 
-    @DeleteMapping("/delete/{employeeId}/{followerId}")
+    @DeleteMapping("/delete-single/{employeeId}/{followerId}")
     public EmpFollowersModel deleteEmpFollower(@PathVariable String employeeId, @PathVariable String followerId) {
         return empFollowersService.deleteEmpFollower(employeeId, followerId);
     }

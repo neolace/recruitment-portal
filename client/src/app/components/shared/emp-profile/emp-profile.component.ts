@@ -48,6 +48,7 @@ export class EmpProfileComponent implements OnInit, AfterViewInit {
 
   followingIds: any[] = [];
   followersIds: any[] = [];
+  followBtn:boolean = true;
 
   constructor(private employeeService: EmployeeService,
               public cookieService: AuthService,
@@ -218,10 +219,11 @@ export class EmpProfileComponent implements OnInit, AfterViewInit {
 
   follow(employee: any) {
     this.followersIds.push(this.myId);
+    this.followBtn = false;
     if (employee) {
       this.employeeService.addFollowing(
         {
-          employeeId: this.cookieService.userID(),
+          employeeId: this.myId,
           followings: [{
             id: this.generateRandomId(),
             followingId: employee?.employee?.id || null,
@@ -254,8 +256,10 @@ export class EmpProfileComponent implements OnInit, AfterViewInit {
               })
             })
         }
+        this.followBtn = true;
       }, (error: any) => {
         this.alertService.errorMessage('Something went wrong. Please try again.', 'Follow')
+        this.followBtn = true;
       })
     }
   }
@@ -265,6 +269,22 @@ export class EmpProfileComponent implements OnInit, AfterViewInit {
   }
 
   unfollow(employee: any) {
-
+    const index = this.followersIds.indexOf(this.myId);
+    this.followBtn = false;
+    if (index > -1) {
+      this.followersIds.splice(index, 1);
+    }
+    if (employee) {
+      this.employeeService.deleteFollower(employee?.employee?.id, this.myId).subscribe(data => {
+        this.employeeService.deleteFollowing(this.myId, employee?.employee?.id).subscribe(data => {
+          this.getEmployee(this.employeeId)
+          this.alertService.successMessage('You have unfollowed ' + employee?.employee?.firstname + ' ' + employee?.employee?.lastname, 'Unfollow')
+        })
+        this.followBtn = true;
+      }, (error: any) => {
+        this.alertService.errorMessage('Something went wrong. Please try again.', 'Unfollow')
+        this.followBtn = true;
+      })
+    }
   }
 }

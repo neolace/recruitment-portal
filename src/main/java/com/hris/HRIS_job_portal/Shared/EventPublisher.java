@@ -14,7 +14,12 @@ public class EventPublisher {
     private static final String EXCHANGE_NAME = "profile.exchange";
 
     public void publish(UserProfileUpdatedEvent event) {
-        rabbitTemplate.convertAndSend(EXCHANGE_NAME, "profile.updated", event);
+        try {
+            rabbitTemplate.convertAndSend(EXCHANGE_NAME, "profile.updated", event);
+        } catch (Exception e) {
+            System.err.println("Failed to publish event: " + e.getMessage());
+            // Optionally, save the event to the database for retry.
+        }
     }
 }
 
