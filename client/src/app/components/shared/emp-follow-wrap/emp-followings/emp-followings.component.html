@@ -11,12 +11,14 @@
       <div class="location-tag">{{f.followingLocation || ' '}}</div>
     </div>
     <div class="button-wrapper">
-      <button class="follow-btn">Follow</button>
+      <button *ngIf="f.followingId != myId" class="follow-btn" [disabled]="!followBtn"
+              (click)="followingsIds.includes(f.followingId) ? unfollow(f) : follow(f)">
+        {{followingsIds.includes(f.followingId) ? 'Unfollow' : 'Follow'}}</button>
     </div>
   </div>
   <hr>
 </div>
 
-<div class="py-4 px-2" *ngIf="followings.length === 0">
+<div class="py-4 px-2" *ngIf="followings?.length == 0 || !followings">
   <p>No one is following this user yet</p>
 </div>
