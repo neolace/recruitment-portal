@@ -49,6 +49,8 @@ export class EmpProfileComponent implements OnInit, AfterViewInit {
   followingIds: any[] = [];
   followersIds: any[] = [];
   followBtn:boolean = true;
+  showFollowWrapper: boolean = false;
+  activeTab: string = 'followers';
 
   constructor(private employeeService: EmployeeService,
               public cookieService: AuthService,
@@ -286,5 +288,14 @@ export class EmpProfileComponent implements OnInit, AfterViewInit {
         this.followBtn = true;
       })
     }
+  }
+
+  openFollowWrapper(tab: string) {
+    this.activeTab = tab;
+    this.showFollowWrapper = true;
+  }
+
+  closeFollowWrapper() {
+    this.showFollowWrapper = false;
   }
 }

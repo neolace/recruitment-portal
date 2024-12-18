@@ -14,6 +14,7 @@ import {SharedComponentModule} from "../../../shared/modules/shared-component.mo
 import {SharedPipesModule} from "../../../shared/modules/shared-pipes.module";
 import {SharedCardsComponentModule} from "../../../shared/modules/shared-cards-component.module";
 import {YearGridComponentModule} from "../../../shared/modules/year-grid-component.module";
+import {EmpFollowWrapModule} from "../emp-follow-wrap/emp-follow-wrap.module";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {YearGridComponentModule} from "../../../shared/modules/year-grid-compone
         SharedComponentModule,
         SharedPipesModule,
         SharedCardsComponentModule,
-        YearGridComponentModule
+        YearGridComponentModule,
+        EmpFollowWrapModule
     ],
   providers: [],
 })
