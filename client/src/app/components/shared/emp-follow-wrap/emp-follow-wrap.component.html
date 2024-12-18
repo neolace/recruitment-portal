@@ -1,6 +1,11 @@
 <div class="container" style="min-height: calc(100vh - 200px);">
   <div class="row flex-row-reverse">
     <div class="col-12 col-md-6 col-lg-5">
+
+      <div class="d-flex align-items-center justify-content-end w-100">
+        <button class="close-button" (click)="closeWrapper()">X</button>
+      </div>
+
       <div class="employee-data-wrapper">
         <div class="image-wrapper">
           <img [src]="employee?.employee?.image || './assets/imgs/shared/default_emp_dp.svg'" alt="banner" loading="lazy">
@@ -39,15 +44,15 @@
     </div>
     <div class="col-12 col-md-6 col-lg-7">
       <ul class="nav justify-content-center py-3">
-        <li class="nav-item" (click)="isActive('follower')">
-          <a class="nav-link" [ngClass]="activeFollowerTab ? 'active' : ''" aria-current="page" routerLink="/follow/followers">Followers</a>
+        <li class="nav-item" (click)="isActive('followers')">
+          <span class="nav-link" [ngClass]="activeFollowerTab ? 'active' : ''" >Followers</span>
         </li>
         <li class="nav-item" (click)="isActive('following')">
-          <a class="nav-link" [ngClass]="activeFollowingTab ? 'active' : ''" routerLink="/follow/followings">Followings</a>
+          <span class="nav-link" [ngClass]="activeFollowingTab ? 'active' : ''" >Followings</span>
         </li>
       </ul>
-      <app-emp-followers *ngIf="activeFollowerTab" [followers]="employee?.empFollowers[0]?.followers"></app-emp-followers>
-      <app-emp-followings *ngIf="activeFollowingTab" [followings]="employee?.empFollowing[0]?.followings"></app-emp-followings>
+      <app-emp-followers *ngIf="tab === 'followers'" [followers]="employee?.empFollowers[0]?.followers"></app-emp-followers>
+      <app-emp-followings *ngIf="tab === 'following'" [followings]="employee?.empFollowing[0]?.followings"></app-emp-followings>
     </div>
   </div>
 </div>

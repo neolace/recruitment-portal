@@ -70,10 +70,24 @@
   .nav-item{
     .nav-link{
       color: var(--color-text-100) !important;
+      cursor: pointer;
 
       &.active{
         font-weight: 600!important;
       }
     }
+  }
+}
+
+.close-button{
+  background-color: var(--color-surface-mixed-200);
+  color: var(--color-text-100);
+  border: 1px solid var(--color-primary-600);
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover{
+    background-color: var(--color-surface-mixed-300);
   }
 }

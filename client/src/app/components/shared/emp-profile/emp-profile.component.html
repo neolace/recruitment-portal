@@ -3,7 +3,15 @@
     <div *ngIf="loading">
       <app-page-loading></app-page-loading>
     </div>
-    <div *ngIf="!loading && employee?.employee">
+
+    <app-emp-follow-wrap
+      *ngIf="showFollowWrapper"
+      [employee]="employee"
+      [tab]="activeTab"
+      (close)="closeFollowWrapper()">
+    </app-emp-follow-wrap>
+
+    <div *ngIf="!loading && employee?.employee && !showFollowWrapper">
       <div class="top-content">
         <div class="cover-image">
           <img
@@ -31,8 +39,8 @@
 
       <div class="following-area w-100 pt-3">
         <p class="text-left m-0">
-          <span>Following {{followingIds.length || 0}}</span>&nbsp;
-          <span>Followers {{followersIds.length || 0}}</span>&nbsp;
+          <span (click)="openFollowWrapper('following')">Following {{followingIds.length || 0}}</span>&nbsp;
+          <span (click)="openFollowWrapper('followers')">Followers {{followersIds.length || 0}}</span>&nbsp;
         </p>
         <p class="text-left m-0" *ngIf="employee.employee.id === cookieService.userID()">
           <span data-bs-toggle="modal" data-bs-target="#inviteModel">Invite friends <i class="fa fa-share"

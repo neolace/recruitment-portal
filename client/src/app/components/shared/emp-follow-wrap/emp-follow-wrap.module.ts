@@ -8,14 +8,17 @@ import { EmpFollowingsComponent } from './emp-followings/emp-followings.componen
 
 
 @NgModule({
-  declarations: [
-    EmpFollowWrapComponent,
-    EmpFollowersComponent,
-    EmpFollowingsComponent
-  ],
-  imports: [
-    CommonModule,
-    EmpFollowWrapRoutingModule
-  ]
+    declarations: [
+        EmpFollowWrapComponent,
+        EmpFollowersComponent,
+        EmpFollowingsComponent
+    ],
+    exports: [
+        EmpFollowWrapComponent
+    ],
+    imports: [
+        CommonModule,
+        EmpFollowWrapRoutingModule
+    ]
 })
 export class EmpFollowWrapModule { }
