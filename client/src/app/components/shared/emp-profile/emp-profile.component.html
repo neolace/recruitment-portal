@@ -39,7 +39,7 @@
                                                                                        aria-hidden="true"></i></span>
         </p>
         <p class="text-left m-0" *ngIf="employee.employee.id !== cookieService.userID()">
-          <button class="btn-1"
+          <button class="btn-1" [disabled]="!followBtn"
                   (click)="followingIds.includes(employee.employee.id) || followersIds.includes(myId)?unfollow(employee):follow(employee)">
             {{followingIds.includes(employee.employee.id) || followersIds.includes(myId) ? 'Unfollow' : 'Follow'}}
           </button>
