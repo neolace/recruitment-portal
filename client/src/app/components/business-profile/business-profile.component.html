@@ -23,7 +23,10 @@
               </div>
             </div>
             <div class="left-cont">
-              <button class="btn-1">Follow</button>
+              <button class="btn-1" [disabled]="!followBtn"
+                      (click)="followingsIds.includes(c.id) ? unfollow(c) : follow(c)">
+                {{followingsIds.includes(c.id) ? 'Unfollow' : 'Follow'}}
+              </button>
               <button class="btn-2" routerLink="/company-jobs/{{c.id}}">See Jobs</button>
             </div>
           </div>

@@ -5,6 +5,8 @@ import {CompanyService} from "../../services/company.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CommonService} from "../../services/common/common.service";
 import {AlertsService} from "../../services/alerts.service";
+import {EmployeeService} from "../../services/employee.service";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-business-profile',
@@ -39,14 +41,26 @@ export class BusinessProfileComponent implements OnInit, AfterViewInit{
   })
   mailLoading: boolean = false;
 
-  constructor(private router: Router, private companyService: CompanyService, private commonService: CommonService, private alertService: AlertsService) { }
+  followingsIds: any[] = [];
+  followBtn:boolean = true;
+  myId: any;
+  me: any;
+
+  constructor(private router: Router,
+              private companyService: CompanyService,
+              private employeeService: EmployeeService,
+              private cookieService: AuthService,
+              private commonService: CommonService,
+              private alertService: AlertsService) { }
 
   ngOnInit(): void {
     this.companyId = this.router.url.split('/')[2];
+    this.myId = this.cookieService.userID();
     this.getCompany(this.companyId)
     this.filterCompanyData();
     this.filterSocialsData();
     this.filterPostedJobsData();
+    this.getEmployee(this.myId);
   }
 
   getCompany(id: any) {
@@ -77,6 +91,21 @@ export class BusinessProfileComponent implements OnInit, AfterViewInit{
         this.loading = false;
       }
     )
+  }
+
+  getEmployee(id: any) {
+    this.employeeService.clearCache();
+    this.employeeService.fetchFullEmployee(id).subscribe(
+      (data) => {
+        this.me = data;
+        if (data?.empFollowing && data?.empFollowing.length > 0) {
+          this.followingsIds = data.empFollowing[0]?.followings?.map((following: any) => following?.followingId) || [];
+        }
+      },
+      (error: HttpErrorResponse) => {
+        return;
+      }
+    );
   }
 
   getCompaniesByType(companyType: any) {
@@ -157,5 +186,53 @@ export class BusinessProfileComponent implements OnInit, AfterViewInit{
         window.location.reload();
       }, 500)
     }
+  }
+
+  follow(company: any) {
+    this.followingsIds.push(company?.id);
+    this.followBtn = false;
+    if (company) {
+      this.employeeService.addFollowing(
+        {
+          employeeId: this.myId,
+          followings: [{
+            id: this.generateRandomId(),
+            followingId: company?.id || null,
+            followingName: company?.name || null,
+            followingOccupation: company?.shortDescription || null,
+            followingImage: company?.logo || null,
+            followingLocation: company?.location || null
+          }]
+        }
+      ).subscribe(data => {
+        this.alertService.successMessage('You have followed ' + company?.name, 'Follow')
+        this.followBtn = true;
+      }, (error: any) => {
+        this.alertService.errorMessage('Something went wrong. Please try again.', 'Follow')
+        this.followBtn = true;
+      })
+    }
+  }
+
+  unfollow(company: any) {
+    const index = this.followingsIds.indexOf(company?.id);
+    this.followBtn = false;
+    if (index > -1) {
+      this.followingsIds.splice(index, 1);
+    }
+    if (company) {
+      this.employeeService.deleteFollowing(this.myId, company?.id).subscribe(data => {
+        this.getEmployee(this.myId)
+        this.alertService.successMessage('You have unfollowed ' + company?.name, 'Unfollow')
+        this.followBtn = true;
+      }, (error: any) => {
+        this.alertService.errorMessage('Something went wrong. Please try again.', 'Unfollow')
+        this.followBtn = true;
+      })
+    }
+  }
+
+  generateRandomId(): string {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   }
 }

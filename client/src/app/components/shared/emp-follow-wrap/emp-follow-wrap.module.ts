@@ -5,6 +5,7 @@ import { EmpFollowWrapRoutingModule } from './emp-follow-wrap-routing.module';
 import { EmpFollowWrapComponent } from './emp-follow-wrap.component';
 import { EmpFollowersComponent } from './emp-followers/emp-followers.component';
 import { EmpFollowingsComponent } from './emp-followings/emp-followings.component';
+import {SharedPipesModule} from "../../../shared/modules/shared-pipes.module";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { EmpFollowingsComponent } from './emp-followings/emp-followings.componen
     ],
     imports: [
         CommonModule,
-        EmpFollowWrapRoutingModule
+        EmpFollowWrapRoutingModule,
+        SharedPipesModule
     ]
 })
 export class EmpFollowWrapModule { }

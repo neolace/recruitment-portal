@@ -36,10 +36,10 @@
         <div class="col-12 col-md-6 col-lg-3 mb-3" *ngFor="let re of paginatedEmployees; let i = index">
           <div class="employee-card">
             <div class="d-flex align-items-center justify-content-between w-100">
-            <span class="top-rated">
+            <span class="top-rated" *ngIf="re.companyId != null">
               <i class="material-icons">star_border</i>
             </span>
-              <span class="favorite">
+              <span class="favorite" [ngClass]="followingIds.includes(re.id) ? 'active' : ''">
               <i class="material-icons">favorite</i>
             </span>
             </div>
