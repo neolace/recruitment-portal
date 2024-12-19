@@ -1708,6 +1708,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         color: var(--color-danger-200);
       }
     }
+
+    &.active{
+      i{
+        color: var(--color-danger-200);
+      }
+    }
   }
 
   .profile-wrapper{

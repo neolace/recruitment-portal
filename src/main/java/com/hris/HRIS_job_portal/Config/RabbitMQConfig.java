@@ -1,6 +1,7 @@
 package com.hris.HRIS_job_portal.Config;
 
 import com.hris.HRIS_job_portal.Utils.ConfigUtility;
+import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -9,6 +10,10 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.retry.policy.SimpleRetryPolicy;
+import org.springframework.retry.support.RetryTemplate;
+
+import java.util.Collections;
 
 @Configuration
 public class RabbitMQConfig {
@@ -28,22 +33,35 @@ public class RabbitMQConfig {
                 CachingConnectionFactory connectionFactory = new CachingConnectionFactory(host, port);
                 connectionFactory.setUsername(configUtility.getProperty("RABBITMQ_USERNAME"));
                 connectionFactory.setPassword(configUtility.getProperty("RABBITMQ_PASSWORD"));
+
+                connectionFactory.setRequestedHeartBeat(30); // Set heartbeat for connection
+                connectionFactory.setConnectionTimeout(5000); // 5 seconds timeout for connection attempt
+
                 return connectionFactory;
             } else {
                 CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost", 5672);
                 connectionFactory.setUsername(configUtility.getProperty("RABBITMQ_USERNAME"));
                 connectionFactory.setPassword(configUtility.getProperty("RABBITMQ_PASSWORD"));
+
+                connectionFactory.setRequestedHeartBeat(30); // Set heartbeat for connection
+                connectionFactory.setConnectionTimeout(5000); // 5 seconds timeout for connection attempt
+
                 return connectionFactory;
             }
         } catch (Exception e) {
-            System.err.println("RabbitMQ is unavailable. Continuing without it.");
-            return null; // Return null or a mock connection factory.
+//            System.err.println("RabbitMQ is unavailable. Continuing without it.");
+            return new CachingConnectionFactory(); // Return null or a mock connection factory.
         }
     }
 
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+
+        RetryTemplate retryTemplate = new RetryTemplate();
+        retryTemplate.setRetryPolicy(new SimpleRetryPolicy(3, Collections.singletonMap(AmqpException.class, true)));
+        rabbitTemplate.setRetryTemplate(retryTemplate);
+
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
         return rabbitTemplate;
     }

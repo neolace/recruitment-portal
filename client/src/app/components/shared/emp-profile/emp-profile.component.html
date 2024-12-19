@@ -298,7 +298,7 @@
             <span class="top-rated">
               <i class="material-icons">star_border</i>
             </span>
-              <span class="favorite">
+              <span class="favorite" [ngClass]="followingIds.includes(re.id) || followersIds.includes(myId) ? 'active' : ''">
               <i class="material-icons">favorite</i>
             </span>
             </div>
