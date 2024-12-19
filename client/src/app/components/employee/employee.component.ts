@@ -16,6 +16,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
 
   employee: any;
   employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
+  followingIds: any[] = [];
   loading: boolean = false;
 
   serverError: boolean = false;
@@ -86,6 +87,9 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
     this.employeeService.fetchFullEmployee(id).subscribe(
       (data) => {
         this.employee = data;
+        if (this.employee?.empFollowing && this.employee?.empFollowing.length > 0) {
+          this.followingIds = this.employee.empFollowing[0]?.followings?.map((following: any) => following?.followingId) || [];
+        }
       },
       (error: HttpErrorResponse) => {
         // Check for different error types

@@ -295,7 +295,7 @@
         <div class="col-12 col-sm-6 col-lg-3" *ngFor="let re of filteredEmployeesList() | truncateComments:4">
           <div class="employee-card">
             <div class="d-flex align-items-center justify-content-between w-100">
-            <span class="top-rated">
+            <span class="top-rated" *ngIf="re.companyId != null">
               <i class="material-icons">star_border</i>
             </span>
               <span class="favorite" [ngClass]="followingIds.includes(re.id) || followersIds.includes(myId) ? 'active' : ''">
