@@ -6,6 +6,7 @@ import com.hris.HRIS_job_portal.DTO.FavJobDTO;
 import com.hris.HRIS_job_portal.Events.UserProfileUpdatedEvent;
 import com.hris.HRIS_job_portal.Model.*;
 import com.hris.HRIS_job_portal.Repository.*;
+import com.hris.HRIS_job_portal.Service.common.ProfileUpdateService;
 import com.hris.HRIS_job_portal.Service.mail.EmailService;
 import com.hris.HRIS_job_portal.Shared.EventPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +49,7 @@ public class EmployeeService {
     private EmpFollowingRepository empFollowingRepository;
 
     @Autowired
-    private EmpFollowersService empFollowersService;
-
-    @Autowired
-    private EmpFollowingService empFollowingService;
+    private ProfileUpdateService profileUpdateService;
 
     @Autowired
     private EventPublisher eventPublisher;
@@ -99,52 +97,21 @@ public class EmployeeService {
             profileCompleted.put("intro", employee.getIntro() != null && !employee.getIntro().isEmpty());
             existingEmployee.setProfileCompleted(profileCompleted);
 
-            employeeRepository.save(existingEmployee);
+            EmployeeModel updatedEmployee = employeeRepository.save(existingEmployee);
 
-            UserProfileUpdatedEvent event = new UserProfileUpdatedEvent(
-                    existingEmployee.getId(),
-                    existingEmployee.getFirstname() + " " + existingEmployee.getLastname(),
-                    existingEmployee.getOccupation(),
-                    existingEmployee.getImage()
-            );
-            eventPublisher.publish(event);
+            // comment this and uncomment event publisher to enable microserver
+            profileUpdateService.bulkUpdateFollowingsAndFollowers(updatedEmployee.getId(), updatedEmployee.getFirstname(), updatedEmployee.getOccupation(), updatedEmployee.getImage());
+
+//            UserProfileUpdatedEvent event = new UserProfileUpdatedEvent(
+//                    existingEmployee.getId(),
+//                    existingEmployee.getFirstname() + " " + existingEmployee.getLastname(),
+//                    existingEmployee.getOccupation(),
+//                    existingEmployee.getImage()
+//            );
+//            eventPublisher.publish(event);
+            return updatedEmployee;
         }
         return employee;
-    }
-
-    private void updateFollowersAndFollowings(EmployeeModel employee, List<EmpFollowersModel> followersList, List<EmpFollowingModel> followingsList){
-        if (!followersList.isEmpty()){
-            EmpFollowersModel empFollowersModel = followersList.get(0);
-            List<EmpFollowersDTO> followers = empFollowersModel.getFollowers();
-
-            EmpFollowersDTO updatedData = new EmpFollowersDTO();
-            updatedData.setFollowerId(employee.getId());
-            updatedData.setFollowerName(employee.getFirstname() +" "+ employee.getLastname());
-            updatedData.setFollowerOccupation(employee.getOccupation());
-            updatedData.setFollowerImage(employee.getImage());
-
-            if (followers != null){
-                for (EmpFollowersDTO follower : followers){
-                    empFollowersService.editFollower(follower.getId(), updatedData);
-                }
-            }
-        }
-        if (!followingsList.isEmpty()){
-            EmpFollowingModel empFollowingModel = followingsList.get(0);
-            List<EmpFollowingDTO> followings = empFollowingModel.getFollowings();
-
-            EmpFollowingDTO updatedData = new EmpFollowingDTO();
-            updatedData.setFollowingId(employee.getId());
-            updatedData.setFollowingName(employee.getFirstname() +" "+ employee.getLastname());
-            updatedData.setFollowingOccupation(employee.getOccupation());
-            updatedData.setFollowingImage(employee.getImage());
-
-            if (followings != null){
-                for (EmpFollowingDTO following : followings){
-                    empFollowingService.editFollowing(following.getId(), updatedData);
-                }
-            }
-        }
     }
 
     public EmployeeModel updateSearchAppearance(EmployeeModel employee) {

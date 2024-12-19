@@ -5,10 +5,7 @@ import com.hris.HRIS_job_portal.Model.EmpFollowingModel;
 import com.hris.HRIS_job_portal.Model.EmployeeModel;
 import com.hris.HRIS_job_portal.Repository.EmpFollowingRepository;
 import com.hris.HRIS_job_portal.Repository.EmployeeRepository;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.retry.annotation.*;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
