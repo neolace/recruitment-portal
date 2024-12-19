@@ -100,7 +100,7 @@ public class EmployeeService {
             EmployeeModel updatedEmployee = employeeRepository.save(existingEmployee);
 
             // comment this and uncomment event publisher to enable microserver
-            profileUpdateService.bulkUpdateFollowingsAndFollowers(updatedEmployee.getId(), updatedEmployee.getFirstname(), updatedEmployee.getOccupation(), updatedEmployee.getImage());
+            profileUpdateService.bulkUpdateFollowingsAndFollowers(updatedEmployee.getId(), updatedEmployee.getFirstname() + " " + updatedEmployee.getLastname(), updatedEmployee.getOccupation(), updatedEmployee.getImage());
 
 //            UserProfileUpdatedEvent event = new UserProfileUpdatedEvent(
 //                    existingEmployee.getId(),
