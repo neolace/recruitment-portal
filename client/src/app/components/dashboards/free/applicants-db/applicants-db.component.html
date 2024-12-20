@@ -76,30 +76,31 @@
             <p>Expired! This Ad is no longer available!</p>
           </div>
         </div>
+      </div>
 
-        <div class="list-view" *ngIf="!gridView">
-          <div class="table table-hover table-borderless w-100">
-            <thead class="w-100">
-            <tr>
-              <th>Index</th>
-              <th>Designation</th>
-              <th>Open positions</th>
-              <th>Applicants</th>
-              <th>Date Posted</th>
-            </tr>
-            </thead>
-            <tbody class="w-100">
-            <tr (click)="analyzeJob(p.id)">
-              <td>{{i + 1}}</td>
-              <td>{{p.title ? p.title : 'N/A'}}</td>
-              <td>{{p.totalOpenings ? p.totalOpenings : 'N/A'}}</td>
-              <td>{{getApplicants(p.id)}}</td>
-              <td>{{p.datePosted | dateFormat}}</td>
-            </tr>
-            </tbody>
-          </div>
+      <div class="list-view" *ngIf="!gridView && ongoingPostedJobs.length > 0">
+        <div class="table table-hover table-borderless w-100">
+          <thead class="w-100">
+          <tr>
+            <th>Index</th>
+            <th>Designation</th>
+            <th>Open positions</th>
+            <th>Applicants</th>
+            <th>Date Posted</th>
+          </tr>
+          </thead>
+          <tbody class="w-100">
+          <tr *ngFor="let p of ongoingPostedJobs; let i = index" (click)="analyzeJob(p.id)">
+            <td>{{i + 1}}</td>
+            <td>{{p.title ? p.title : 'N/A'}}</td>
+            <td>{{p.totalOpenings ? p.totalOpenings : 'N/A'}}</td>
+            <td>{{getApplicants(p.id)}}</td>
+            <td>{{p.datePosted | dateFormat}}</td>
+          </tr>
+          </tbody>
         </div>
       </div>
+
       <div class="not-found-posts" *ngIf="ongoingPostedJobs?.length == 0 || !ongoingPostedJobs">
         <p>No results found</p>
       </div>
@@ -168,30 +169,31 @@
             <p>Expired! This Ad is no longer available!</p>
           </div>
         </div>
+      </div>
 
-        <div class="list-view" *ngIf="!gridView">
-          <div class="table table-hover table-borderless w-100">
-            <thead class="w-100">
-            <tr>
-              <th>Index</th>
-              <th>Designation</th>
-              <th>Open positions</th>
-              <th>Applicants</th>
-              <th>Date Posted</th>
-            </tr>
-            </thead>
-            <tbody class="w-100">
-            <tr (click)="analyzeJob(p.id)">
-              <td>{{i + 1}}</td>
-              <td>{{p.title ? p.title : 'N/A'}}</td>
-              <td>{{p.totalOpenings ? p.totalOpenings : 'N/A'}}</td>
-              <td>{{getApplicants(p.id)}}</td>
-              <td>{{p.datePosted | dateFormat}}</td>
-            </tr>
-            </tbody>
-          </div>
+      <div class="list-view" *ngIf="!gridView && closedPostedJobs.length > 0">
+        <div class="table table-hover table-borderless w-100">
+          <thead class="w-100">
+          <tr>
+            <th>Index</th>
+            <th>Designation</th>
+            <th>Open positions</th>
+            <th>Applicants</th>
+            <th>Date Posted</th>
+          </tr>
+          </thead>
+          <tbody class="w-100">
+          <tr *ngFor="let p of closedPostedJobs; let i = index" (click)="analyzeJob(p.id)">
+            <td>{{i + 1}}</td>
+            <td>{{p.title ? p.title : 'N/A'}}</td>
+            <td>{{p.totalOpenings ? p.totalOpenings : 'N/A'}}</td>
+            <td>{{getApplicants(p.id)}}</td>
+            <td>{{p.datePosted | dateFormat}}</td>
+          </tr>
+          </tbody>
         </div>
       </div>
+
       <div class="not-found-posts" *ngIf="closedPostedJobs?.length == 0 || !closedPostedJobs">
         <p>No results found</p>
       </div>
