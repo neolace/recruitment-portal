@@ -1,4 +1,5 @@
 import {AfterViewInit, Component} from '@angular/core';
+import {Utilities} from "../../shared/utilities/utilities";
 
 @Component({
   selector: 'app-terms-conditions',
@@ -6,6 +7,8 @@ import {AfterViewInit, Component} from '@angular/core';
   styleUrls: ['./terms-conditions.component.scss']
 })
 export class TermsConditionsComponent implements AfterViewInit{
+
+  utilities = Utilities;
 
   ngAfterViewInit() {
     const icons = document.querySelectorAll('.material-icons');
