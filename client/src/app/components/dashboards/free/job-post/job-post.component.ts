@@ -54,6 +54,10 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
   downloadURL?: any;
 
   commonErrorMsg = '';
+  whitelistError = '';
+  whitelistSuccess = '';
+  whitelistRequestError = '';
+  redirectError = '';
 
   jobPostForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -81,6 +85,9 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
     state: new FormControl('', [Validators.required]),
     postdate: new FormControl('', [Validators.required]),
     expdate: new FormControl(''),
+    checkWhitelist: new FormControl(''),
+    requestWhitelist: new FormControl(''),
+    customUrl: new FormControl(''),
   })
 
   searchResults: any[] = [];
@@ -496,5 +503,13 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
     link.target = '_blank';
     link.download = 'sample_banner.png';
     link.click();
+  }
+
+  checkWhitelist() {
+
+  }
+
+  requestWhitelist() {
+
   }
 }

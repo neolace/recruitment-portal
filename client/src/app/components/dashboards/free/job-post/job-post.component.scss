@@ -277,3 +277,23 @@
     }
   }
 }
+
+.advanced-btn{
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  p{
+    margin: 0;
+    padding: 0;
+    color: var(--color-text-100);
+    font-weight: 500;
+  }
+
+  &:hover{
+    p{
+      color: var(--color-text-200);
+    }
+  }
+}
