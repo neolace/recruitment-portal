@@ -19,13 +19,13 @@ public class WhitelistDomainsController {
         return whitelistDomainsService.addWhitelistDomain(domain);
     }
 
-    @GetMapping("/get")
-    public WhitelistDomains getWhitelistDomain(@RequestBody String domain) {
+    @GetMapping("/get/{domain}")
+    public WhitelistDomains getWhitelistDomain(@PathVariable String domain) {
         return whitelistDomainsService.getWhitelistDomain(domain);
     }
 
-    @DeleteMapping("/delete")
-    public void deleteWhitelistDomain(@RequestBody String id) {
+    @DeleteMapping("/delete/{id}")
+    public void deleteWhitelistDomain(@PathVariable String id) {
         whitelistDomainsService.deleteWhitelistDomain(id);
     }
 
@@ -35,8 +35,8 @@ public class WhitelistDomainsController {
     }
 
     @GetMapping("/get-active")
-    public List<WhitelistDomains> getWhitelistDomainsByActive(@RequestBody boolean active) {
-        return whitelistDomainsService.getWhitelistDomainsByActive(active);
+    public List<WhitelistDomains> getWhitelistDomainsByActive() {
+        return whitelistDomainsService.getWhitelistDomainsByActive(true);
     }
 
     @PutMapping("/update")
@@ -44,18 +44,23 @@ public class WhitelistDomainsController {
         return whitelistDomainsService.updateWhitelistDomain(domain);
     }
 
-    @PutMapping("/change-active")
-    public WhitelistDomains changeActive(@RequestBody String id) {
+    @PutMapping("/change-active/{id}")
+    public WhitelistDomains changeActive(@PathVariable String id) {
         return whitelistDomainsService.changeActive(id);
     }
 
-    @GetMapping("/get-by-request-by")
-    public List<WhitelistDomains> getByRequestBy(@RequestBody String requestedBy) {
+    @GetMapping("/get-by-request-by/{requestedBy}")
+    public List<WhitelistDomains> getByRequestBy(@PathVariable String requestedBy) {
         return whitelistDomainsService.getByRequestBy(requestedBy);
     }
 
     @GetMapping("/get-by-domain-and-active")
-    public WhitelistDomains getByDomainAndActive(@RequestBody String domain, @RequestBody boolean active) {
-        return whitelistDomainsService.getByDomainAndActive(domain, active);
+    public WhitelistDomains getByDomainAndActive(@RequestBody WhitelistDomains domain) {
+        return whitelistDomainsService.getByDomainAndActive(domain.getDomain(), true);
+    }
+
+    @GetMapping("/get-whitelist")
+    public List<String> getWhitelist() {
+        return whitelistDomainsService.getWhitelistDomains();
     }
 }

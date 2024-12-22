@@ -58,4 +58,8 @@ public class WhitelistDomainsService {
         }
         return null;
     }
+
+    public List<String> getWhitelistDomains() {
+        return whitelistDomainsRepository.findByActive(true).stream().map(WhitelistDomains::getDomain).toList();
+    }
 }
