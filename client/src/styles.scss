@@ -2603,7 +2603,7 @@ $accordion-icon-transform3: rotate(270deg);
 }
 
 // common error msgs in forms
-.error-msg, .success-msg{
+.error-msg, .success-msg, .warn-msg{
   font-size: 10px;
 
   i{
@@ -2615,5 +2615,8 @@ $accordion-icon-transform3: rotate(270deg);
 }
 .success-msg{
   color: green;
+}
+.warn-msg{
+  color: orange;
 }
 

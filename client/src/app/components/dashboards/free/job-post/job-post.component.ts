@@ -381,6 +381,7 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
         this.jobPostForm.get('state')?.setValue(data.location.split(',')[1]);
         this.jobPostForm.get('postdate')?.setValue(data.datePosted);
         this.jobPostForm.get('expdate')?.setValue(data.expiryDate);
+        this.jobPostForm.get('customUrl')?.setValue(data.redirectUrl);
         this.selectedCategory = data.category;
         this.selectedJobType = data.jobType;
       }

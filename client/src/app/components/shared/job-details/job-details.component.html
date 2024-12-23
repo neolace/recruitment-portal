@@ -149,7 +149,8 @@
             </ul>
           </div>
 
-          <button class="btn-1" (click)="navigateToApplyJob()" [disabled]="userAppliedIds.includes(j.id)">{{userAppliedIds.includes(j.id) ? 'Applied' : 'Apply Now'}}</button>
+          <button class="btn-1" (click)="navigateToApplyJob(j.redirectUrl)" [disabled]="userAppliedIds.includes(j.id)">{{userAppliedIds.includes(j.id) ? 'Applied' : 'Apply Now'}}</button>
+          <div class="warn-msg" *ngIf="j.redirectUrl"><i class="material-icons me-1 mt-1">warning</i>This job post will redirect you to a third party website.</div>
         </div>
       </div>
     </div>
