@@ -10,6 +10,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {FileUploadService} from "../../../../services/file-upload.service";
 import {CanComponentDeactivate} from "../../../../guards/can-deactivate.guard";
 import {UnloadService} from "../../../../services/common/unload.service";
+import {CommonService} from "../../../../services/common/common.service";
 
 declare var bootstrap: any;
 
@@ -104,6 +105,7 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
               private unloadService: UnloadService,
               private router: Router,
               private cdr: ChangeDetectorRef,
+              private commonService: CommonService,
               private companyService: CompanyService) {
     this.jobPostForm.valueChanges.subscribe(() => {
       this.unloadService.setUnsavedChanges(this.jobPostForm.dirty);
@@ -242,6 +244,32 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
 
   saveJobPost() {
     this.commonErrorMsg = '';
+    this.redirectError = '';
+    const customUrl = this.jobPostForm.get('customUrl')?.value;
+
+    if (customUrl) {
+      this.commonService.validateRedirectUrl(customUrl).subscribe(
+        (data) => {
+          if (!data) {
+            this.redirectError = 'Invalid Redirect URL (Ex: https://www.example.com)';
+            return;
+          } else {
+            this.proceedJobPosting()
+          }
+        },
+        (error: HttpErrorResponse) => {
+          if (error.status === 403) {
+            this.redirectError = 'You don\'t have permission to create this redirect URL';
+            return;
+          }
+        }
+      )
+    } else {
+      this.proceedJobPosting()
+    }
+  }
+
+  proceedJobPosting(){
     if (this.jobPostForm.invalid) {
       this.commonErrorMsg = 'This field is required';
       this.alertService.warningMessage('Please fill all required fields! (Starred with *)', 'Warning');
@@ -283,7 +311,8 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
       jobBanner: this.downloadURL ? this.downloadURL : null,
       datePosted: postdate,
       expiryDate: expdate,
-      popularityScore: 0
+      popularityScore: 0,
+      redirectUrl: this.jobPostForm.get('customUrl')?.value
     }]
 
     if (this.companyLevel === '2'){
@@ -360,8 +389,33 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
 
   updateJob(){
     this.commonErrorMsg = '';
+    this.redirectError = '';
     this.loading = true;
+    const customUrl = this.jobPostForm.get('customUrl')?.value;
 
+    if (customUrl) {
+      this.commonService.validateRedirectUrl(customUrl).subscribe(
+        (data) => {
+          if (!data) {
+            this.redirectError = 'Invalid Redirect URL (Ex: https://www.example.com)';
+            return;
+          } else {
+            this.proceedJobUpdating()
+          }
+        },
+        (error: HttpErrorResponse) => {
+          if (error.status === 403) {
+            this.redirectError = 'You don\'t have permission to create this redirect URL';
+            return;
+          }
+        }
+      )
+    } else {
+      this.proceedJobUpdating()
+    }
+  }
+
+  proceedJobUpdating(){
     if (this.jobPostForm.invalid) {
       this.commonErrorMsg = 'This field is required';
       this.loading = false;
@@ -394,7 +448,8 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
       location: this.jobPostForm.get('country')?.value + ', ' + this.jobPostForm.get('state')?.value,
       datePosted: this.jobPostForm.get('postdate')?.value,
       expiryDate: this.jobPostForm.get('expdate')?.value,
-      popularityScore: 0
+      popularityScore: 0,
+      redirectUrl: this.jobPostForm.get('customUrl')?.value
     }).subscribe(
       (data) => {
         this.loading = false;
@@ -506,10 +561,55 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
   }
 
   checkWhitelist() {
+    const domain = this.jobPostForm.get('checkWhitelist')?.value;
 
+    if (domain){
+      this.commonService.getByActiveDomain(domain).subscribe(
+        (data) => {
+          if (data) {
+            this.whitelistSuccess = 'Your Domain already whitelisted';
+            this.whitelistError = '';
+          } else {
+            this.whitelistSuccess = '';
+            this.whitelistError = 'Your domain is not whitelisted. Request for whitelisting';
+          }
+        }
+      )
+    } else {
+      this.whitelistSuccess = '';
+      this.whitelistError = 'Add Your Domain to check (www.domain.com)';
+    }
   }
 
   requestWhitelist() {
+    const domain = this.jobPostForm.get('requestWhitelist')?.value;
 
+    if (domain){
+      this.commonService.getWhitelistByDomainName(domain).subscribe(
+        (data) => {
+          if (data) {
+            this.whitelistRequestError = 'Your Domain already whitelisted or Request being processing';
+          } else {
+            this.commonService.addWhitelist({
+              domain: domain,
+              requestBy: this.employee?.employee?.email || 'Anonymous',
+              active: false
+            }).subscribe(
+              (data) => {
+                if (data) {
+                  this.alertService.successMessage('We received your request and will get back to you soon', 'Success');
+                } else {
+                  this.whitelistRequestError = 'Something went wrong. Check domain and try again (www.domain.com)';
+                }
+              },
+              error => {
+                this.whitelistSuccess = '';
+                this.whitelistError = 'Something went wrong. Check domain and try again (www.domain.com)';
+              }
+            )
+          }
+        }
+      )
+    }
   }
 }

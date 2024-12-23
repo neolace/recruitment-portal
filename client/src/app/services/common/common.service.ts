@@ -38,4 +38,36 @@ export class CommonService {
     });
     return this.http.post(`${this.baseUrl}/email/personal-contact`, personalContactDTO, {headers});
   }
+
+  addWhitelist(whitelist: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.post(`${this.baseUrl}/whitelist-domains/add`, {
+      domain: whitelist.domain,
+      requestBy: whitelist.requestBy,
+      active: false
+    }, {headers});
+  }
+
+  getWhitelistByDomainName(domain: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.post(`${this.baseUrl}/whitelist-domains/get`, {domain: domain}, {headers});
+  }
+
+  getByActiveDomain(domain: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.post(`${this.baseUrl}/whitelist-domains/get-by-domain-and-active`, {domain: domain}, {headers});
+  }
+
+  validateRedirectUrl(url: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.post(`${this.baseUrl}/redirect/validate-url`, {domain: url}, {headers});
+  }
 }
