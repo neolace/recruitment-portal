@@ -19,9 +19,9 @@ public class WhitelistDomainsController {
         return whitelistDomainsService.addWhitelistDomain(domain);
     }
 
-    @GetMapping("/get/{domain}")
-    public WhitelistDomains getWhitelistDomain(@PathVariable String domain) {
-        return whitelistDomainsService.getWhitelistDomain(domain);
+    @PostMapping("/get")
+    public WhitelistDomains getWhitelistDomain(@RequestBody WhitelistDomains domain) {
+        return whitelistDomainsService.getWhitelistDomain(domain.getDomain());
     }
 
     @DeleteMapping("/delete/{id}")
@@ -54,7 +54,7 @@ public class WhitelistDomainsController {
         return whitelistDomainsService.getByRequestBy(requestedBy);
     }
 
-    @GetMapping("/get-by-domain-and-active")
+    @PostMapping("/get-by-domain-and-active")
     public WhitelistDomains getByDomainAndActive(@RequestBody WhitelistDomains domain) {
         return whitelistDomainsService.getByDomainAndActive(domain.getDomain(), true);
     }

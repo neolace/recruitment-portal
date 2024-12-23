@@ -35,4 +35,5 @@ public class PostedJobsDTO {
     private String expiryDate;
     private String url;
     private String popularityScore;
+    private String redirectUrl;
 }
