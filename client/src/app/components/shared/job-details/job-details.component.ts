@@ -228,8 +228,16 @@ export class JobDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 500);
   }
 
-  navigateToApplyJob() {
-    this.router.navigate(['/job-apply'], {queryParams: {companyId: this.companyId, jobId: this.jobPostId}});
+  navigateToApplyJob(redirect: any) {
+    console.log(redirect)
+    if (redirect) {
+      const anchorElement = document.createElement('a');
+      anchorElement.href = redirect;
+      anchorElement.target = '_blank';
+      anchorElement.click();
+    } else {
+      this.router.navigate(['/job-apply'], {queryParams: {companyId: this.companyId, jobId: this.jobPostId}});
+    }
   }
 
   generateRandomId() {
