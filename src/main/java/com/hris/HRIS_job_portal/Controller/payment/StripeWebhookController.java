@@ -6,11 +6,12 @@ import com.hris.HRIS_job_portal.Model.payment.PaymentMethodsModel;
 import com.hris.HRIS_job_portal.Repository.payment.BillingHistoryRepository;
 import com.hris.HRIS_job_portal.Repository.payment.InvoiceRepository;
 import com.hris.HRIS_job_portal.Repository.payment.PaymentMethodRepository;
+import com.hris.HRIS_job_portal.Service.payment.BillingHistoryService;
+import com.hris.HRIS_job_portal.Service.payment.PaymentMethodService;
 import com.hris.HRIS_job_portal.Service.payment.StripeService;
+import com.hris.HRIS_job_portal.Service.payment.SubscriptionService;
 import com.stripe.exception.StripeException;
-import com.stripe.model.Event;
-import com.stripe.model.PaymentIntent;
-import com.stripe.model.PaymentMethod;
+import com.stripe.model.*;
 import com.stripe.model.checkout.Session;
 import com.stripe.net.Webhook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ import java.util.Map;
 @RequestMapping("/api/v2/webhook")
 public class StripeWebhookController {
 
+    private static final String STRIPE_SECRET = "whsec_yourWebhookSecret";
+
     @Autowired
     PaymentMethodRepository paymentMethodRepository;
 
@@ -37,11 +40,18 @@ public class StripeWebhookController {
     @Autowired
     StripeService stripeService;
 
+    @Autowired
+    private SubscriptionService subscriptionService;
+
+    @Autowired
+    private BillingHistoryService billingHistoryService;
+
+    @Autowired
+    private PaymentMethodService paymentMethodService;
+
     @PostMapping("/stripe-events")
     public ResponseEntity<String> handleStripeEvent(@RequestBody String payload) {
-        // Handle Stripe event (e.g., payment succeeded, subscription updated)
         Event event = Event.GSON.fromJson(payload, Event.class);
-        // Process the event
         return ResponseEntity.ok("Event processed");
     }
 
@@ -50,7 +60,6 @@ public class StripeWebhookController {
         String companyId = (String) data.get("companyId");
         String planName = (String) data.get("planName");
 
-        // Create a Stripe Checkout Session (existing logic)
         Session session = stripeService.createCheckoutSession(companyId, planName);
 
         Map<String, String> response = new HashMap<>();
@@ -59,56 +68,95 @@ public class StripeWebhookController {
     }
 
     @PostMapping("/stripe")
-    public ResponseEntity<String> handleStripeWebhook(@RequestBody String payload, @RequestHeader("Stripe-Signature") String sigHeader) {
-        String endpointSecret = "whsec_yourWebhookSecret";
+    public ResponseEntity<String> handleStripeWebhook(
+            @RequestBody String payload,
+            @RequestHeader("Stripe-Signature") String sigHeader) {
 
         try {
-            Event event = Webhook.constructEvent(payload, sigHeader, endpointSecret);
+            Event event = Webhook.constructEvent(payload, sigHeader, STRIPE_SECRET);
 
-            if ("checkout.session.completed".equals(event.getType())) {
-                Session session = (Session) event.getDataObjectDeserializer().getObject().get();
+            switch (event.getType()) {
+                case "checkout.session.completed":
+                    handleCheckoutSessionCompleted(event);
+                    break;
 
-                // Retrieve the payment intent ID from the session
-                String paymentIntentId = session.getPaymentIntent();
+                case "invoice.payment_succeeded":
+                    handleInvoicePaymentSucceeded(event);
+                    break;
 
-                // Fetch the Payment Intent object from Stripe
-                PaymentIntent paymentIntent = PaymentIntent.retrieve(paymentIntentId);
+                case "invoice.payment_failed":
+                    handleInvoicePaymentFailed(event);
+                    break;
 
-                // Retrieve the payment method used in the transaction
-                PaymentMethod paymentMethod = PaymentMethod.retrieve(paymentIntent.getPaymentMethod());
+                case "customer.subscription.updated":
+                    handleSubscriptionUpdated(event);
+                    break;
 
-                // Store Payment Method
-                PaymentMethodsModel paymentMethodModel = new PaymentMethodsModel();
-                paymentMethodModel.setCompanyId(session.getClientReferenceId());
-                paymentMethodModel.setType(paymentMethod.getType()); // stripe, card, etc.
-                paymentMethodModel.setLast_four(paymentMethod.getCard().getLast4()); // Get last 4 digits
-                paymentMethodModel.setExpiry_date(paymentMethod.getCard().getExpMonth() + "/" + paymentMethod.getCard().getExpYear());
-                paymentMethodRepository.save(paymentMethodModel);
+                case "customer.subscription.deleted":
+                    handleSubscriptionDeleted(event);
+                    break;
 
-                // Store Billing History
-                BillingHistoryModel billingHistory = new BillingHistoryModel();
-                billingHistory.setCompanyId(session.getClientReferenceId());
-                billingHistory.setAmount(String.valueOf(paymentIntent.getAmountReceived()));
-                billingHistory.setDate(new Date().toString());
-                billingHistory.setInvoice_id(session.getId());
-                billingHistory.setStatus("Completed");
-                billingHistoryRepository.save(billingHistory);
-
-                // Store Invoice (optional)
-                InvoicesModel invoice = new InvoicesModel();
-                invoice.setCompanyId(session.getClientReferenceId());
-                invoice.setInvoice_number(session.getId());
-                invoice.setAmount(String.valueOf(paymentIntent.getAmountReceived()));
-                invoice.setDate_issued(new Date().toString());
-                invoice.setDue_date("N/A"); // If applicable, add due date
-                invoice.setStatus("Paid");
-                invoiceRepository.save(invoice);
+                default:
+                    System.out.println("Unhandled event type: " + event.getType());
             }
-            return ResponseEntity.ok("Webhook received");
+
+            return ResponseEntity.ok("Webhook processed");
+
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Webhook error: " + e.getMessage());
         }
     }
 
+    private void handleCheckoutSessionCompleted(Event event) throws StripeException {
+        Session session = (Session) event.getDataObjectDeserializer().getObject().get();
+        String companyId = session.getMetadata().get("company_id");
+
+        PaymentIntent paymentIntent = PaymentIntent.retrieve(session.getPaymentIntent());
+        PaymentMethod paymentMethod = PaymentMethod.retrieve(paymentIntent.getPaymentMethod());
+
+        // Save payment method
+        PaymentMethodsModel paymentMethodModel = new PaymentMethodsModel();
+        paymentMethodModel.setCompanyId(companyId);
+        paymentMethodModel.setType(paymentMethod.getType());
+        paymentMethodModel.setLast_four(paymentMethod.getCard().getLast4());
+        paymentMethodModel.setExpiry_date(paymentMethod.getCard().getExpMonth() + "/" + paymentMethod.getCard().getExpYear());
+        paymentMethodService.save(paymentMethodModel);
+
+        // Save billing history
+        BillingHistoryModel billingHistory = new BillingHistoryModel();
+        billingHistory.setCompanyId(companyId);
+        billingHistory.setAmount(String.valueOf(paymentIntent.getAmountReceived()));
+        billingHistory.setDate(new Date().toString());
+        billingHistory.setInvoice_id(session.getId());
+        billingHistory.setStatus("Completed");
+        billingHistoryService.save(billingHistory);
+    }
+
+    private void handleInvoicePaymentSucceeded(Event event) {
+        Invoice invoice = (Invoice) event.getDataObjectDeserializer().getObject().get();
+        String subscriptionId = invoice.getSubscription();
+        String amountPaid = String.valueOf(invoice.getAmountPaid());
+
+        // Update subscription billing history
+        subscriptionService.updateBillingHistory(subscriptionId, amountPaid, "Paid");
+    }
+
+    private void handleInvoicePaymentFailed(Event event) {
+        Invoice invoice = (Invoice) event.getDataObjectDeserializer().getObject().get();
+        String subscriptionId = invoice.getSubscription();
+
+        // Update subscription as inactive
+        subscriptionService.markAsInactive(subscriptionId);
+    }
+
+    private void handleSubscriptionUpdated(Event event) {
+        Subscription subscription = (Subscription) event.getDataObjectDeserializer().getObject().get();
+        subscriptionService.updateSubscriptionDetails(subscription);
+    }
+
+    private void handleSubscriptionDeleted(Event event) {
+        Subscription subscription = (Subscription) event.getDataObjectDeserializer().getObject().get();
+        subscriptionService.markAsInactive(subscription.getId());
+    }
 }
 

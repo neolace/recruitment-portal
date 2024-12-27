@@ -16,5 +16,9 @@ public class BillingHistoryService {
     public List<BillingHistoryModel> getBillingHistory(String companyId) {
         return billingHistoryRepository.findByCompanyId(companyId);
     }
+
+    public BillingHistoryModel save(BillingHistoryModel billingHistory) {
+        return billingHistoryRepository.save(billingHistory);
+    }
 }
 

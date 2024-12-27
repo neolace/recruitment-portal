@@ -21,5 +21,9 @@ public class PaymentMethodService {
         paymentMethod.setCompanyId(companyId);
         return paymentMethodRepository.save(paymentMethod);
     }
+
+    public PaymentMethodsModel save(PaymentMethodsModel paymentMethodModel) {
+        return paymentMethodRepository.save(paymentMethodModel);
+    }
 }
 
