@@ -70,22 +70,28 @@ export class CardCheckoutComponent implements OnInit{
     }
 
     this.elements = elements!;
-    const paymentElement = elements.create('payment');
-    paymentElement.mount('#payment-element');
+    const paymentElement = elements?.create('payment');
+    paymentElement?.mount('#payment-element');
   }
 
   async pay() {
-    const { error }: any = await this.stripeService.confirmPayment({
-      elements: this.elements,
-      confirmParams: {
-        return_url: 'https://your-site.com/thank-you', // Optional: Redirect after success
-      }
-    }).toPromise();
+    if (this.billingForm.valid){
+      const { error }: any = await this.stripeService.confirmPayment({
+        elements: this.elements,
+        clientSecret: this.paymentIntentId,
+        confirmParams: {
+          return_url: 'https://your-site.com/thank-you',
+        }
+      }).toPromise();
 
-    if (error) {
-      console.error(error.message);
-    } else {
-      alert('Payment successful!');
+      if (error) {
+        console.error(error.message);
+      } else {
+        alert('Payment successful!');
+      }
+    }
+    else {
+      this.alertService.errorMessage('All Fields are required', 'error');
     }
   }
 
