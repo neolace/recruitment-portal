@@ -57,6 +57,7 @@ const routes: Routes = [
   { path: 'thank-you', loadChildren: () => import('./components/shared/thank-you/thank-you.module').then(m => m.ThankYouModule) },
   { path: 'follow', loadChildren: () => import('./components/shared/emp-follow-wrap/emp-follow-wrap.module').then(m => m.EmpFollowWrapModule) },
   { path: 'soon', loadChildren: () => import('./components/shared/comming-soon/comming-soon.module').then(m => m.CommingSoonModule) },
+  { path: 'pay', loadChildren: () => import('./components/payments/stripe-element/stripe-element.module').then(m => m.StripeElementModule) },
   { path: '**', redirectTo: '/404' }
 ];
 

@@ -2,9 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {AlertsService} from "../../../services/alerts.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {StripeService} from "ngx-stripe";
-import {StripeElements} from "@stripe/stripe-js";
-import {PaymentService} from "../../../services/payment/payment.service";
 
 @Component({
   selector: 'app-card-checkout',
@@ -12,10 +9,6 @@ import {PaymentService} from "../../../services/payment/payment.service";
   styleUrls: ['./card-checkout.component.scss']
 })
 export class CardCheckoutComponent implements OnInit{
-
-  elements!: StripeElements;
-  paymentElementOptions: any = {};
-  paymentIntentId: string = '';
 
   billingForm = new FormGroup({
     fname: new FormControl('', [Validators.required]),
@@ -27,9 +20,7 @@ export class CardCheckoutComponent implements OnInit{
 
   constructor(private alertService: AlertsService,
               private router: Router,
-              private route: ActivatedRoute,
-              private stripeService: StripeService,
-              private paymentService: PaymentService) {
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -39,19 +30,7 @@ export class CardCheckoutComponent implements OnInit{
         setInterval(()=>{
           this.router.navigate(['/cart']);
         }, 5000);
-      } else {
-        this.createPaymentIntent()
       }
-    });
-  }
-
-  createPaymentIntent() {
-    this.paymentService.createPaymentIntent().subscribe((response: any) => {
-      this.paymentIntentId = response.clientSecret;
-
-      this.loadPaymentElement().then();
-    }, error => {
-      console.log(error);
     });
   }
 
@@ -59,50 +38,13 @@ export class CardCheckoutComponent implements OnInit{
     this.router.navigate(['/cart']);
   }
 
-  async loadPaymentElement() {
-    const { error, elements }:any = await this.stripeService.elements({
-      clientSecret: this.paymentIntentId
-    }).toPromise();
-
-    if (error) {
-      console.error(error);
-      return;
-    }
-
-    this.elements = elements!;
-    const paymentElement = elements?.create('payment');
-    paymentElement?.mount('#payment-element');
-  }
-
-  async pay() {
+  pay(){
     if (this.billingForm.valid){
-      const { error }: any = await this.stripeService.confirmPayment({
-        elements: this.elements,
-        clientSecret: this.paymentIntentId,
-        confirmParams: {
-          return_url: 'https://your-site.com/thank-you',
-        }
-      }).toPromise();
-
-      if (error) {
-        console.error(error.message);
-      } else {
-        alert('Payment successful!');
-      }
+      this.router.navigate(['/pay']);
     }
     else {
       this.alertService.errorMessage('All Fields are required', 'error');
     }
   }
-
-  // pay(){
-  //   if (this.billingForm.valid){
-  //     this.router.navigate(['/thank-you']);
-  //     this.alertService.warningMessage('This feature will available soon', 'warning');
-  //   }
-  //   else {
-  //     this.alertService.errorMessage('All Fields are required', 'error');
-  //   }
-  // }
 
 }

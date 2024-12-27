@@ -33,9 +33,12 @@ public class PaymentController {
     @PostMapping("/create-payment-intent")
     public Map<String, String> createPaymentIntent() throws StripeException {
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
-                .setAmount(1099L) // Amount in cents
+                .setAmount(990L) // Amount in cents
                 .setCurrency("usd")
-                .addAllPaymentMethodType(List.of("card"))
+                .setAutomaticPaymentMethods(
+                        PaymentIntentCreateParams.AutomaticPaymentMethods.builder()
+                                .setEnabled(true)
+                                .build())
                 .build();
 
         PaymentIntent paymentIntent = PaymentIntent.create(params);
