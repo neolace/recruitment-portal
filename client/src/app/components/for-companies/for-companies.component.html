@@ -423,7 +423,7 @@
           <div class="product-desc" *ngFor="let pd of p.description.split('\n')">
             {{pd}}
           </div>
-          <div class="product-button">learn more</div>
+          <div class="product-button" routerLink="{{p.redirect || '/404'}}">learn more</div>
         </div>
       </div>
     </div>

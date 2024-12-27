@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../../services/auth.service";
 import {AlertsService} from "../../../services/alerts.service";
+import {CartService} from "../../../services/payment/cart.service";
 
 @Component({
   selector: 'app-cart',
@@ -19,7 +20,9 @@ export class CartComponent implements OnInit{
   userId:any;
   isVerified:boolean = false;
 
-  constructor(private router: Router, private cookieService: AuthService, private alertService: AlertsService) {
+  cart = this.cartService.getCart();
+
+  constructor(private router: Router, private cookieService: AuthService, private alertService: AlertsService, private cartService: CartService) {
   }
 
   ngOnInit() {
@@ -36,6 +39,10 @@ export class CartComponent implements OnInit{
       case 'paypal': this.paypal = true; this.card = false; this.bank = false;break;
       default: this.card = false; this.bank = false; this.paypal = false; break;
     }
+  }
+
+  removeItem(index: number) {
+    this.cartService.removeFromCart(index);
   }
 
   checkout(){

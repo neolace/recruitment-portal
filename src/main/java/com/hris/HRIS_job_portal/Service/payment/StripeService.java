@@ -1,13 +1,10 @@
 package com.hris.HRIS_job_portal.Service.payment;
 
-import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
 import com.stripe.model.Invoice;
 import com.stripe.model.Subscription;
 import com.stripe.model.checkout.Session;
-import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -16,14 +13,6 @@ import java.util.Map;
 
 @Service
 public class StripeService {
-
-    @Value("${stripe.apiKey}")
-    private String stripeApiKey;
-
-    @PostConstruct
-    public void init() {
-        Stripe.apiKey = stripeApiKey;
-    }
 
     public Customer createCustomer(String email, String paymentMethodId) throws StripeException {
         Map<String, Object> params = new HashMap<>();
@@ -46,7 +35,6 @@ public class StripeService {
     public Invoice getInvoice(String invoiceId) throws StripeException {
         return Invoice.retrieve(invoiceId);
     }
-
 
     public Session createCheckoutSession(String companyId, String planName) throws StripeException {
         Map<String, Object> params = new HashMap<>();

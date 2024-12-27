@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SubscriptionModel } from '../shared/data-models/payment/Subscription.model';
-import {UsageDataModel} from "../shared/data-models/payment/UsageData.model";
-import {BillingHistoryModel} from "../shared/data-models/payment/BillingHistory.model";
-import {PaymentMethodsModel} from "../shared/data-models/payment/PaymentMethods.model";
-import {environment} from "../../environments/environment";
+import { SubscriptionModel } from '../../shared/data-models/payment/Subscription.model';
+import {UsageDataModel} from "../../shared/data-models/payment/UsageData.model";
+import {BillingHistoryModel} from "../../shared/data-models/payment/BillingHistory.model";
+import {PaymentMethodsModel} from "../../shared/data-models/payment/PaymentMethods.model";
+import {environment} from "../../../environments/environment";
 
 
 @Injectable({

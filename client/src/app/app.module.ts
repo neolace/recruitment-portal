@@ -28,6 +28,7 @@ import {SharedComponentModule} from "./shared/modules/shared-component.module";
 import {FooterModule} from "./components/shared/footer/footer.module";
 import {HeaderModule} from "./components/shared/header/header.module";
 import {AngularFirePerformanceModule} from "@angular/fire/compat/performance";
+import {NgxStripeModule} from "ngx-stripe";
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import {AngularFirePerformanceModule} from "@angular/fire/compat/performance";
         SharedComponentModule,
         NgOptimizedImage,
         FooterModule,
-        HeaderModule
+        HeaderModule,
+        NgxStripeModule.forRoot(environment.stripe_key)
     ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: SkipXsrfInterceptor, multi: true},

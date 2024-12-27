@@ -7,7 +7,7 @@ import {PaymentMethodsModel} from "../../../../shared/data-models/payment/Paymen
 import {SubscriptionModel} from "../../../../shared/data-models/payment/Subscription.model";
 import {BillingHistoryModel} from "../../../../shared/data-models/payment/BillingHistory.model";
 import {UsageDataModel} from "../../../../shared/data-models/payment/UsageData.model";
-import {BillingUsageService} from "../../../../services/billing-usage.service";
+import {BillingUsageService} from "../../../../services/payment/billing-usage.service";
 import {AuthService} from "../../../../services/auth.service";
 
 @Component({
