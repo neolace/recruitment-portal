@@ -3,12 +3,28 @@ import {AlertsService} from "../../../services/alerts.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {StripeService} from "ngx-stripe";
 import {PaymentService} from "../../../services/payment/payment.service";
-import {StripeCardElementOptions, StripeElements, StripeElementsOptions} from "@stripe/stripe-js";
+import {loadStripe, Stripe, StripeCardElementOptions, StripeElements, StripeElementsOptions} from "@stripe/stripe-js";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-stripe-element',
-  templateUrl: './stripe-element.component.html',
-  styleUrls: ['./stripe-element.component.scss']
+  template: `
+    <div class="container">
+      <div id="payment-element"></div>
+      <button class="btn-1 w-100" (click)="pay()">Pay</button>
+    </div>
+  `,
+  styles: [
+    `
+      .container {
+        max-width: 800px;
+        padding: max(40px, 5vw) 0;
+      }
+      #payment-element {
+        margin: 20px 0;
+      }
+    `,
+  ],
 })
 export class StripeElementComponent implements OnInit, AfterViewInit{
 
@@ -41,6 +57,7 @@ export class StripeElementComponent implements OnInit, AfterViewInit{
     },
   };
   paymentIntentId: string = '';
+  stripe!: Stripe| any;
 
   constructor(private alertService: AlertsService,
               private router: Router,
@@ -49,7 +66,8 @@ export class StripeElementComponent implements OnInit, AfterViewInit{
               private paymentService: PaymentService) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.stripe = await loadStripe(environment.stripe_key);
   }
 
   ngAfterViewInit() {
@@ -60,60 +78,73 @@ export class StripeElementComponent implements OnInit, AfterViewInit{
     this.paymentService.createPaymentIntent().subscribe((response: any) => {
       this.clientSecret = response.clientSecret;
 
-      // this.loadPaymentElement().then(r=>{});
+      this.loadPaymentElement().then(r=>{});
     }, error => {
       console.log(error);
     });
   }
 
   async loadPaymentElement() {
-    try {
-      console.log('Initializing Stripe Elements...');
-      const { elements, error }: any = await this.stripeService.elements({
-        clientSecret: this.clientSecret,
-      }).toPromise();
+    const appearance = {
+      theme: 'flat', // Other themes: 'flat', 'night', 'none'
+      variables: {
+        fontFamily: 'Helvetica, Arial, sans-serif',
+        colorBackground: '#f5f5f5',
+        colorText: '#333',
+      },
+    };
 
-      if (error) {
-        console.error('Stripe Elements initialization error:', error.message);
-        return;
-      }
+    // Initialize Stripe Elements
+    this.elements = this.stripe.elements({ clientSecret: this.clientSecret, appearance });
 
-      this.elements = elements;
-      console.log('Stripe Elements initialized:', this.elements);
+    // Create the payment element
+    const paymentElement = this.elements.create('payment', {
+      layout: {
+        type: 'accordion', // Accordion layout
+        defaultCollapsed: false,
+        radios: true,
+        spacedAccordionItems: true,
+      },
+    });
 
-      const paymentElement = this.elements?.create('payment', this.paymentElementOptions);
-
-      if (!paymentElement) {
-        console.error('Failed to create payment element.');
-        return;
-      }
-
-      paymentElement.mount('#payment-element');
-      console.log('Payment Element mounted successfully.');
-    } catch (err) {
-      console.error('Unexpected error during Stripe Elements initialization:', err);
-    }
+    // Mount the element to the DOM
+    paymentElement.mount('#payment-element');
   }
 
   async pay() {
-    if (!this.clientSecret) {
-      console.error('Client Secret not available.');
-      return;
-    }
-
-    this.stripeService.elements().subscribe((elements) => {
-      this.stripeService.confirmCardPayment(this.clientSecret, {
-        payment_method: {
-          card: elements.getElement('card') as any,
-        },
+    const result = await this.stripe.confirmPayment({
+      elements: this.elements,
+      confirmParams: {
         return_url: 'https://talentboozt.com/thank-you',
-      }).subscribe((result) => {
-        if (result.error) {
-          console.error('Payment failed:', result.error.message);
-        } else {
-          console.log('Payment successful!', result.paymentIntent);
-        }
-      });
+      },
     });
+
+    if (result.error) {
+      console.error('Payment failed:', result.error.message);
+    } else {
+      console.log('Payment successful!');
+    }
   }
+
+  // async pay() {
+  //   if (!this.clientSecret) {
+  //     console.error('Client Secret not available.');
+  //     return;
+  //   }
+  //
+  //   this.stripeService.elements().subscribe((elements) => {
+  //     this.stripeService.confirmCardPayment(this.clientSecret, {
+  //       payment_method: {
+  //         card: elements.getElement('card') as any,
+  //       },
+  //       return_url: 'https://talentboozt.com/thank-you',
+  //     }).subscribe((result) => {
+  //       if (result.error) {
+  //         console.error('Payment failed:', result.error.message);
+  //       } else {
+  //         console.log('Payment successful!', result.paymentIntent);
+  //       }
+  //     });
+  //   });
+  // }
 }
