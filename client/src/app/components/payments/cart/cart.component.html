@@ -17,25 +17,26 @@
         <div class="hr"></div>
         <div class="card-body">
           <div class="cart-items-wrapper">
-            <div class="cart-item">
+            <div class="cart-item" *ngFor="let item of cart; let i = index">
               <div class="image">
                 <img src="./assets/imgs/payments/crown.webp" alt="product">
               </div>
               <div class="product">
-                <div class="product-title">Pro Package</div>
-                <div class="product-desc">Lorem ipsum dolor sit.</div>
+                <div class="product-title">{{item.name}}</div>
+                <div class="product-desc">{{item.description}}</div>
               </div>
-              <div class="price"><span>$9.90</span></div>
-              <div class="action">
+              <div class="price"><span>${{item.price}}</span></div>
+              <div class="action" (click)="removeItem(i)">
                 <i class="material-icons">delete</i>
               </div>
             </div>
+            <p *ngIf="cart.length == 0">Your cart is empty!</p>
           </div>
         </div>
         <div class="hr"></div>
         <div class="card-bottom">
           <p>Total</p>
-          <p>$9.90</p>
+          <p>${{total}}</p>
         </div>
       </div>
     </div>
