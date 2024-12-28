@@ -21,15 +21,19 @@ export class CartComponent implements OnInit{
   isVerified:boolean = false;
 
   cart = this.cartService.getCart();
+  total: any = 0;
 
   constructor(private router: Router, private cookieService: AuthService, private alertService: AlertsService, private cartService: CartService) {
   }
 
   ngOnInit() {
-    this.userId = this.cookieService.userID();
+    this.userId = this.cookieService.organization();
     if (this.userId){
       this.isVerified = true;
     }
+    this.cart.forEach((item: any) => {
+      this.total += item.price
+    })
   }
 
   selectOption(option: string) {
@@ -47,6 +51,10 @@ export class CartComponent implements OnInit{
 
   checkout(){
     this.errorMsg = '';
+    if (this.cart.length == 0 || !this.cart){
+      this.alertService.errorMessage('Cart is Empty', 'error');
+      return
+    }
     if (!this.bank && !this.card && !this.paypal){
       this.errorMsg = 'Please Choose a Valid Payment Option to Checkout';
       return

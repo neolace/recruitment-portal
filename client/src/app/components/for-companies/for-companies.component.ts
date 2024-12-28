@@ -7,6 +7,7 @@ import {PricingUtilities} from "../../shared/utilities/pricing.utilities";
 import {ProductsUtilities} from "../../shared/utilities/products.utilities";
 import _default from "chart.js/dist/plugins/plugin.tooltip";
 import numbers = _default.defaults.animations.numbers;
+import {CartService} from "../../services/payment/cart.service";
 
 @Component({
   selector: 'app-for-companies',
@@ -47,7 +48,7 @@ export class ForCompaniesComponent implements OnInit, AfterViewInit {
   pricingUtilities = PricingUtilities;
   productsUtilities = ProductsUtilities;
 
-  constructor(private router: Router, private companyService: CompanyService) { }
+  constructor(private router: Router, private companyService: CompanyService, private cartService: CartService) { }
 
   async ngOnInit() : Promise<any> {
     // Initialize the pagination
@@ -135,5 +136,10 @@ export class ForCompaniesComponent implements OnInit, AfterViewInit {
     } else {
       this.maxProductsDisplayed = 2;
     }
+  }
+
+  gotoCart(cart: any, url: string) {
+    this.cartService.addToCart(cart);
+    this.router.navigate([url]);
   }
 }
