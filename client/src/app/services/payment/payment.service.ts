@@ -11,10 +11,10 @@ export class PaymentService {
 
   constructor(private http: HttpClient) { }
 
-  public createPaymentIntent() {
+  public createPaymentIntent(companyId: string) {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:password')
     });
-    return this.http.post(`${this.simpleBaseUrl}/api/payments/create-payment-intent`, {}, {headers});
+    return this.http.post(`${this.simpleBaseUrl}/api/payments/create-payment-intent`, {companyId: companyId}, {headers});
   }
 }
