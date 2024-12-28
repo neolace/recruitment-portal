@@ -5,6 +5,7 @@ import {StripeService} from "ngx-stripe";
 import {PaymentService} from "../../../services/payment/payment.service";
 import {loadStripe, Stripe, StripeCardElementOptions, StripeElements, StripeElementsOptions} from "@stripe/stripe-js";
 import {environment} from "../../../../environments/environment";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-stripe-element',
@@ -58,8 +59,10 @@ export class StripeElementComponent implements OnInit, AfterViewInit{
   };
   paymentIntentId: string = '';
   stripe!: Stripe| any;
+  companyId: any;
 
   constructor(private alertService: AlertsService,
+              private cookieService: AuthService,
               private router: Router,
               private route: ActivatedRoute,
               private stripeService: StripeService,
@@ -67,6 +70,7 @@ export class StripeElementComponent implements OnInit, AfterViewInit{
   }
 
   async ngOnInit() {
+    this.companyId = this.cookieService.organization();
     this.stripe = await loadStripe(environment.stripe_key);
   }
 
@@ -75,7 +79,7 @@ export class StripeElementComponent implements OnInit, AfterViewInit{
   }
 
   createPaymentIntent() {
-    this.paymentService.createPaymentIntent().subscribe((response: any) => {
+    this.paymentService.createPaymentIntent(this.companyId).subscribe((response: any) => {
       this.clientSecret = response.clientSecret;
 
       this.loadPaymentElement().then(r=>{});
@@ -112,17 +116,21 @@ export class StripeElementComponent implements OnInit, AfterViewInit{
   }
 
   async pay() {
-    const result = await this.stripe.confirmPayment({
-      elements: this.elements,
-      confirmParams: {
-        return_url: 'https://talentboozt.com/thank-you',
-      },
-    });
+    if (this.companyId){
+      const result = await this.stripe.confirmPayment({
+        elements: this.elements,
+        confirmParams: {
+          return_url: 'https://talentboozt.com/thank-you',
+        },
+      });
 
-    if (result.error) {
-      console.error('Payment failed:', result.error.message);
+      if (result.error) {
+        this.alertService.errorMessage('Failed: '+result.error.message, 'error');
+      } else {
+        this.alertService.successMessage('Payment successful!', 'success');
+      }
     } else {
-      console.log('Payment successful!');
+      this.alertService.errorMessage('You need to register as a company first', 'error');
     }
   }
 

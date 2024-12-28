@@ -60,6 +60,13 @@ public class StripeWebhookController {
         String companyId = (String) data.get("companyId");
         String planName = (String) data.get("planName");
 
+        if (companyId == null || companyId.isEmpty()) {
+            throw new IllegalArgumentException("Company ID is required");
+        }
+        if (planName == null || planName.isEmpty()) {
+            throw new IllegalArgumentException("Plan name is required");
+        }
+
         Session session = stripeService.createCheckoutSession(companyId, planName);
 
         Map<String, String> response = new HashMap<>();

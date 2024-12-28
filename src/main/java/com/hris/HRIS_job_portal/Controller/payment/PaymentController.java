@@ -31,7 +31,8 @@ public class PaymentController {
     }
 
     @PostMapping("/create-payment-intent")
-    public Map<String, String> createPaymentIntent() throws StripeException {
+    public Map<String, String> createPaymentIntent(@RequestBody Map<String, Object> paymentData) throws StripeException {
+        String companyId = (String) paymentData.get("companyId");
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
                 .setAmount(990L) // Amount in cents
                 .setCurrency("usd")
@@ -39,6 +40,7 @@ public class PaymentController {
                         PaymentIntentCreateParams.AutomaticPaymentMethods.builder()
                                 .setEnabled(true)
                                 .build())
+                .putMetadata("company_id", companyId)
                 .build();
 
         PaymentIntent paymentIntent = PaymentIntent.create(params);
