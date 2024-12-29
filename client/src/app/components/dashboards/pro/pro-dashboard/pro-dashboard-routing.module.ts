@@ -17,6 +17,7 @@ import {AdminGuard} from "../../../../guards/admin.guard";
 import {ProApplicantsDbComponent} from "../pro-applicants-db/pro-applicants-db.component";
 import {JobPostComponent} from "../../free/job-post/job-post.component";
 import {ProCompanyAnalysisComponent} from "../pro-company-analysis/pro-company-analysis.component";
+import {BillingAndUsageComponent} from "../../free/billing-and-usage/billing-and-usage.component";
 
 const routes: Routes = [
   {
@@ -32,7 +33,8 @@ const routes: Routes = [
       { path: 'post-job', component: JobPostComponent, canActivate: [AdminProGuard, AuthGuard] },
       { path: 'company-jobs', component: CompanyJobsMyComponent, canActivate: [AdminProGuard, AuthGuard] },
       { path: 'applicants', component: ProApplicantsDbComponent, canActivate: [AdminProGuard, AdminGuard] },
-      { path: 'company-analysis', component: ProCompanyAnalysisComponent, canActivate: [AdminProGuard, AdminGuard] }
+      { path: 'company-analysis', component: ProCompanyAnalysisComponent, canActivate: [AdminProGuard, AdminGuard] },
+      { path: 'billing', component: BillingAndUsageComponent, canActivate: [AdminProGuard, AdminGuard] }
     ],
     canActivate: [AdminProGuard, AuthGuard]
   }

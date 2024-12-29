@@ -7,13 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/usage")
+@RequestMapping("/api/v2/usage")
 public class UsageDataController {
 
     @Autowired
     private UsageDataService usageDataService;
 
-    @GetMapping("/{companyId}")
+    @GetMapping("/get/{companyId}")
     public ResponseEntity<UsageDataModel> getUsageData(@PathVariable String companyId) {
         UsageDataModel usageData = usageDataService.getUsageData(companyId);
         if (usageData != null) {

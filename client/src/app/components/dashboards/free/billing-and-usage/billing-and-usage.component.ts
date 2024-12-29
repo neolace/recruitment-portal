@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
-import {subscriptionDataStore} from "../../../../shared/data-store/payment/subscription-data-store";
-import {usageDataDataStore} from "../../../../shared/data-store/payment/usage-data-data-store";
-import {billingHistoryDataStore} from "../../../../shared/data-store/payment/billing-history-data-srore";
-import {paymentMethodsDataStore} from "../../../../shared/data-store/payment/payment-methods-data-store";
-import {PaymentMethodsModel} from "../../../../shared/data-models/payment/PaymentMethods.model";
-import {SubscriptionModel} from "../../../../shared/data-models/payment/Subscription.model";
-import {BillingHistoryModel} from "../../../../shared/data-models/payment/BillingHistory.model";
-import {UsageDataModel} from "../../../../shared/data-models/payment/UsageData.model";
-import {BillingUsageService} from "../../../../services/payment/billing-usage.service";
 import {AuthService} from "../../../../services/auth.service";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {BillingService} from "../../../../services/payment/billing.service";
+import {HttpErrorResponse} from "@angular/common/http";
+import {AlertsService} from "../../../../services/alerts.service";
+import {CompanyService} from "../../../../services/company.service";
 
 @Component({
   selector: 'app-billing-and-usage',
@@ -17,116 +13,121 @@ import {AuthService} from "../../../../services/auth.service";
 })
 export class BillingAndUsageComponent {
 
-  // subscription: any = subscriptionDataStore;
-  // usage: any = usageDataDataStore;
-  // billingHistory: any = billingHistoryDataStore;
-  // paymentMethods: any = paymentMethodsDataStore;
-
-  subscription: SubscriptionModel | any;
-  usage: UsageDataModel | any;
-  billingHistory: BillingHistoryModel[] | any;
-  paymentMethods: PaymentMethodsModel[] | any;
-
+  subscriptionDetails: any;
+  invoices: any[] = [];
+  usageData: any;
+  billingAddressForm: FormGroup;
   companyId: any;
 
-  constructor(private billingService: BillingUsageService, private cookiesService: AuthService) { }
+  loading = false;
+  company: any;
+  postedJobs: any;
+
+  constructor(private billingService: BillingService,
+              private companyService: CompanyService,
+              private cookieService: AuthService,
+              private alertService: AlertsService,
+              private fb: FormBuilder) {
+    this.billingAddressForm = this.fb.group({
+      street: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      postalCode: ['', Validators.required],
+      country: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {
-    this.companyId = this.cookiesService.organization();
+    this.companyId = this.cookieService.organization();
 
-    this.loadSubscription();
-    this.loadUsage();
-    this.loadBillingHistory();
-    this.loadPaymentMethods();
+    if (!this.companyId) {
+      this.alertService.errorMessage('Company ID not found.', 'Error');
+      return;
+    }
+
+    this.getCompany(this.companyId);
   }
 
-  // Fetch subscription details
-  loadSubscription(): void {
-    this.billingService.getSubscription(this.companyId).subscribe({
-      next: (data: SubscriptionModel) => {
-        this.subscription = data;
+  getCompany(id: any) {
+    this.loading = true;
+    this.companyService.fetchFullCompany(id).subscribe(
+      (data) => {
+        this.company = data;
+        this.postedJobs = data?.postedJobs[0];
+        this.loading = false;
+        console.log(this.postedJobs)
+
+        // Fetch subscription details
+        this.billingService.getSubscriptionDetails(this.companyId).subscribe(
+          (data) => (this.subscriptionDetails = data),
+          (err: HttpErrorResponse) => {
+            if (err.status === 404) {
+              this.subscriptionDetails = null;
+              this.alertService.errorMessage('Subscription details not found.', 'Error');
+            }
+            else {
+              this.alertService.errorMessage('Error fetching subscription details.', 'Error');
+            }
+          }
+        );
+
+        // Fetch invoices
+        this.billingService.getInvoices(this.companyId).subscribe(
+          (data) => (this.invoices = data),
+          (err: HttpErrorResponse) => {
+            if (err.status === 404) {
+              this.invoices = [];
+              this.alertService.errorMessage('Invoices not found.', 'Error');
+            }
+            else {
+              this.alertService.errorMessage('Error fetching invoices.', 'Error');
+            }
+          }
+        );
+
+        // Fetch usage data
+        // this.billingService.getUsageData(this.companyId).subscribe(
+        //   (data) => (this.usageData = data),
+        //   (err: HttpErrorResponse) => {
+        //     if (err.status === 404) {
+        //       this.usageData = null;
+        //       this.alertService.errorMessage('Usage data not found.', 'Error');
+        //     }
+        //     else {
+        //       this.alertService.errorMessage('Error fetching usage data.', 'Error');
+        //     }
+        //   }
+        // );
       },
-      error: (error) => {
-        console.error('Error loading subscription', error);
+      (error: HttpErrorResponse) => {
+        this.loading = false;
+        this.alertService.errorMessage('Error fetching company details.', 'Error');
       }
-    });
+    )
   }
 
-  // Fetch usage data
-  loadUsage(): void {
-    this.billingService.getUsage(this.companyId).subscribe({
-      next: (data: UsageDataModel) => {
-        this.usage = data;
-      },
-      error: (error) => {
-        console.error('Error loading usage', error);
+  updateBillingAddress(): void {
+    const address = this.billingAddressForm.value;
+
+    this.billingService.updateBillingAddress(this.companyId, {
+      companyId: this.companyId,
+      street: address.street,
+      city: address.city,
+      state: address.state,
+      postalCode: address.postalCode,
+      country: address.country
+    }).subscribe(
+      () => this.alertService.successMessage('Billing address updated successfully.', 'Success'),
+      (err) => {
+        this.alertService.errorMessage('Error updating billing address.', 'Error');
       }
-    });
+    );
   }
 
-  // Fetch billing history
-  loadBillingHistory(): void {
-    this.billingService.getBillingHistory(this.companyId).subscribe({
-      next: (data: BillingHistoryModel[]) => {
-        this.billingHistory = data;
-      },
-      error: (error) => {
-        console.error('Error loading billing history', error);
-      }
-    });
-  }
-
-  // Fetch payment methods
-  loadPaymentMethods(): void {
-    this.billingService.getPaymentMethods(this.companyId).subscribe({
-      next: (data: PaymentMethodsModel[]) => {
-        this.paymentMethods = data;
-      },
-      error: (error) => {
-        console.error('Error loading payment methods', error);
-      }
-    });
-  }
-
-  // Example of upgrading or downgrading a plan
-  openUpgradePlan(): void {
-    const updatedSubscription: SubscriptionModel = {
-      ...this.subscription,
-      plan_name: 'Premium', // Simulating plan upgrade
-      cost: 49.99
-    };
-
-    this.billingService.updateSubscription(this.companyId, updatedSubscription).subscribe({
-      next: () => {
-        this.loadSubscription(); // Reload the subscription data after update
-      },
-      error: (error) => {
-        console.error('Error updating subscription', error);
-      }
-    });
-  }
-
-  // Example of managing payment methods
-  openManagePaymentMethods(): void {
-    const newPaymentMethod: PaymentMethodsModel = {
-      id: '2',
-      type: 'Credit Card',
-      last_four: '1234',
-      expiry_date: '2026-01-01'
-    };
-
-    this.billingService.updatePaymentMethod(this.companyId, newPaymentMethod).subscribe({
-      next: () => {
-        this.loadPaymentMethods(); // Reload payment methods after update
-      },
-      error: (error) => {
-        console.error('Error updating payment method', error);
-      }
-    });
-  }
-
-  // Utility function to calculate percentage for progress bars
   calculatePercentage(used: number, allowed: number): number {
+    if(allowed === Infinity) return 100
     return (used / allowed) * 100;
   }
+
+  protected readonly Infinity = Infinity;
 }
