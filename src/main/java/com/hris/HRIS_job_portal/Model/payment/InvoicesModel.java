@@ -6,6 +6,8 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @ToString
@@ -15,9 +17,12 @@ public class InvoicesModel {
     @Id
     private String id;
     private String companyId;
-    private String invoice_number;
-    private String amount;
-    private String date_issued;
-    private String due_date;
+    private String invoiceId;
+    private String subscriptionId;
+    private String amountDue;
+    private Date billingDate;
+    private Date dueDate;
+    private Date periodStart;
+    private Date periodEnd;
     private String status;
 }

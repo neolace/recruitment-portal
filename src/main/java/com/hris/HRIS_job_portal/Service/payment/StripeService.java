@@ -42,10 +42,13 @@ public class StripeService {
     }
 
     public Session createCheckoutSession(String companyId, String planName) throws StripeException {
+        Map<String, Object> subscriptionData = new HashMap<>();
+        subscriptionData.put("metadata", Map.of("company_id", companyId));
+
         Map<String, Object> params = new HashMap<>();
-        params.put("line_items", List.of(Map.of("price", planName)));
-        params.put("metadata", Map.of("company_id", companyId));
+        params.put("line_items", List.of(Map.of("price", planName, "quantity", 1)));
         params.put("mode", "subscription");
+        params.put("subscription_data", subscriptionData);
         params.put("success_url", configUtility.getProperty("STRIPE_SUCCESS_URL"));
         params.put("cancel_url", configUtility.getProperty("STRIPE_CANCEL_URL"));
 

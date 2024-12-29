@@ -32,8 +32,10 @@ public class SubscriptionService {
             existingSubscription.setEnd_date(subscription.getEnd_date());
             existingSubscription.set_active(subscription.is_active());
             return subscriptionRepository.save(existingSubscription);
+        } else {
+            subscription.setCompanyId(companyId);
+            return subscriptionRepository.save(subscription);
         }
-        return null;
     }
 
     public void updateBillingHistory(String subscriptionId, String amountPaid, String status) {
