@@ -7,13 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/subscriptions")
+@RequestMapping("/api/v2/subscriptions")
 public class SubscriptionController {
 
     @Autowired
     private SubscriptionService subscriptionService;
 
-    @GetMapping("/{companyId}")
+    @GetMapping("/get/{companyId}")
     public ResponseEntity<SubscriptionsModel> getSubscription(@PathVariable String companyId) {
         SubscriptionsModel subscription = subscriptionService.getSubscription(companyId);
         if (subscription != null) {
@@ -22,7 +22,7 @@ public class SubscriptionController {
         return ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/{companyId}")
+    @PutMapping("/update/{companyId}")
     public ResponseEntity<SubscriptionsModel> updateSubscription(
             @PathVariable String companyId,
             @RequestBody SubscriptionsModel subscription) {

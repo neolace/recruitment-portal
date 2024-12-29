@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/payment-methods")
+@RequestMapping("/api/v2/payment-methods")
 public class PaymentMethodController {
 
     @Autowired
     private PaymentMethodService paymentMethodService;
 
-    @GetMapping("/{companyId}")
+    @GetMapping("/get/{companyId}")
     public ResponseEntity<List<PaymentMethodsModel>> getPaymentMethods(@PathVariable String companyId) {
         List<PaymentMethodsModel> paymentMethods = paymentMethodService.getPaymentMethods(companyId);
         return ResponseEntity.ok(paymentMethods);
     }
 
-    @PostMapping("/{companyId}")
+    @PostMapping("/update/{companyId}")
     public ResponseEntity<PaymentMethodsModel> addPaymentMethod(
             @PathVariable String companyId,
             @RequestBody PaymentMethodsModel paymentMethod) {
