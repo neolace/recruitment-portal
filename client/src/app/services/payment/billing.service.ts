@@ -24,7 +24,7 @@ export class BillingService {
 
   // 2. Retrieve invoices
   getInvoices(companyId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/invoices/${companyId}`, {
+    return this.http.get(`${this.baseUrl}/invoices/get/${companyId}`, {
       headers: this.headers,
     });
   }
@@ -39,7 +39,7 @@ export class BillingService {
   // 4. Update billing address
   updateBillingAddress(companyId: string, address: any): Observable<any> {
     return this.http.put(
-      `${this.baseUrl}/billing-address/${companyId}`,
+      `${this.baseUrl}/billing-address/update/${companyId}`,
       address,
       { headers: this.headers }
     );
