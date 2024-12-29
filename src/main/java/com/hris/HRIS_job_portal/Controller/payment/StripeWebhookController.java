@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v2/webhook")
+@RequestMapping("/webhook")
 public class StripeWebhookController {
 
     @Autowired
