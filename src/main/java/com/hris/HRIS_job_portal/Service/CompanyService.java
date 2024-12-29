@@ -223,4 +223,13 @@ public class CompanyService {
         CompanyModel company = getCompany(id);
         return CompletableFuture.completedFuture(company);
     }
+
+    public void findAndUpdateCompanyLevel(String id, String companyLevel) {
+        Optional<CompanyModel> companyModel = companyRepository.findById(id);
+        if (companyModel.isPresent()) {
+            CompanyModel existingCompany = companyModel.get();
+            existingCompany.setCompanyLevel(companyLevel);
+            companyRepository.save(existingCompany);
+        }
+    }
 }
