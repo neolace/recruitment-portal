@@ -60,6 +60,7 @@ export class StripeElementComponent implements OnInit, AfterViewInit{
   paymentIntentId: string = '';
   stripe!: Stripe| any;
   companyId: any;
+  planName: any = 'Pro';
 
   constructor(private alertService: AlertsService,
               private cookieService: AuthService,
@@ -79,7 +80,7 @@ export class StripeElementComponent implements OnInit, AfterViewInit{
   }
 
   createPaymentIntent() {
-    this.paymentService.createPaymentIntent(this.companyId).subscribe((response: any) => {
+    this.paymentService.createPaymentIntent(this.companyId, this.planName).subscribe((response: any) => {
       this.clientSecret = response.clientSecret;
 
       this.loadPaymentElement().then(r=>{});
@@ -127,7 +128,7 @@ export class StripeElementComponent implements OnInit, AfterViewInit{
       if (result.error) {
         this.alertService.errorMessage('Failed: '+result.error.message, 'error');
       } else {
-        this.alertService.successMessage('Payment successful!', 'success');
+        this.alertService.successMessage('Payment successful! Logout and login again to see the changes!', 'success');
       }
     } else {
       this.alertService.errorMessage('You need to register as a company first', 'error');

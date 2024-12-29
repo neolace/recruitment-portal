@@ -11,5 +11,7 @@ public interface CredentialsRepository extends MongoRepository<CredentialsModel,
 
     Optional<CredentialsModel> findByEmployeeId(String password);
 
+    Optional<CredentialsModel> findByCompanyId(String companyId);
+
     CredentialsModel deleteByEmployeeId(String employeeIdd);
 }

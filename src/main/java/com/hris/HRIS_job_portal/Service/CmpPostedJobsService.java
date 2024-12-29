@@ -124,4 +124,14 @@ public class CmpPostedJobsService {
 
         return CompletableFuture.completedFuture(cmpPostedJobsList);
     }
+
+    public void findAndUpdateCompanyLevel(String companyId, String companyLevel) {
+        List<CmpPostedJobsModel> company = cmpPostedJobsRepository.findByCompanyId(companyId);
+
+        if (!company.isEmpty()) {
+            CmpPostedJobsModel cmpPostedJobsModel = company.get(0);
+            cmpPostedJobsModel.setCompanyLevel(companyLevel);
+            cmpPostedJobsRepository.save(cmpPostedJobsModel);
+        }
+    }
 }

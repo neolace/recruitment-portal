@@ -129,4 +129,13 @@ public class CredentialsService {
     public CredentialsModel deleteCredentials(String employeeId) {
         return credentialsRepository.deleteByEmployeeId(employeeId);
     }
+
+    public void findAndUpdateCompanyLevel(String companyId, String userLevel) {
+        Optional<CredentialsModel> optionalCredentials = credentialsRepository.findByCompanyId(companyId);
+        if (optionalCredentials.isPresent()) {
+            CredentialsModel credentials1 = optionalCredentials.get();
+            credentials1.setUserLevel(userLevel);
+            credentialsRepository.save(credentials1);
+        }
+    }
 }

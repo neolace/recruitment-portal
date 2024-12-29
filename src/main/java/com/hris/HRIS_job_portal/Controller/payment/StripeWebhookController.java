@@ -7,10 +7,14 @@ import com.hris.HRIS_job_portal.Model.payment.SubscriptionsModel;
 import com.hris.HRIS_job_portal.Repository.payment.BillingHistoryRepository;
 import com.hris.HRIS_job_portal.Repository.payment.InvoiceRepository;
 import com.hris.HRIS_job_portal.Repository.payment.PaymentMethodRepository;
+import com.hris.HRIS_job_portal.Service.CmpPostedJobsService;
+import com.hris.HRIS_job_portal.Service.CompanyService;
+import com.hris.HRIS_job_portal.Service.CredentialsService;
 import com.hris.HRIS_job_portal.Service.payment.BillingHistoryService;
 import com.hris.HRIS_job_portal.Service.payment.PaymentMethodService;
 import com.hris.HRIS_job_portal.Service.payment.StripeService;
 import com.hris.HRIS_job_portal.Service.payment.SubscriptionService;
+import com.hris.HRIS_job_portal.Utils.ConfigUtility;
 import com.stripe.exception.StripeException;
 import com.stripe.model.*;
 import com.stripe.model.checkout.Session;
@@ -27,7 +31,8 @@ import java.util.Map;
 @RequestMapping("/api/v2/webhook")
 public class StripeWebhookController {
 
-    private static final String STRIPE_SECRET = "whsec_yourWebhookSecret";
+    @Autowired
+    ConfigUtility configUtility;
 
     @Autowired
     PaymentMethodRepository paymentMethodRepository;
@@ -49,6 +54,15 @@ public class StripeWebhookController {
 
     @Autowired
     private PaymentMethodService paymentMethodService;
+
+    @Autowired
+    private CredentialsService credentialsService;
+
+    @Autowired
+    private CompanyService companyService;
+
+    @Autowired
+    private CmpPostedJobsService cmpPostedJobsService;
 
     @PostMapping("/stripe-events")
     public ResponseEntity<String> handleStripeEvent(@RequestBody String payload) {
@@ -81,7 +95,7 @@ public class StripeWebhookController {
             @RequestHeader("Stripe-Signature") String sigHeader) {
 
         try {
-            Event event = Webhook.constructEvent(payload, sigHeader, STRIPE_SECRET);
+            Event event = Webhook.constructEvent(payload, sigHeader, configUtility.getProperty("STRIPE_WEBHOOK_SECRET"));
 
             switch (event.getType()) {
                 case "checkout.session.completed":
@@ -158,6 +172,11 @@ public class StripeWebhookController {
         billingHistory.setInvoice_id(session.getId());
         billingHistory.setStatus("Completed");
         billingHistoryService.save(billingHistory);
+
+        // Update company status
+        companyService.findAndUpdateCompanyLevel(companyId, "3");
+        cmpPostedJobsService.findAndUpdateCompanyLevel(companyId, "3");
+        credentialsService.findAndUpdateCompanyLevel(companyId, "3");
     }
 
     private void handleInvoiceCreated(Event event) throws StripeException {
