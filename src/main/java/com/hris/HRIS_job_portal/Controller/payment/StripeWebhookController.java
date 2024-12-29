@@ -3,6 +3,7 @@ package com.hris.HRIS_job_portal.Controller.payment;
 import com.hris.HRIS_job_portal.Model.payment.BillingHistoryModel;
 import com.hris.HRIS_job_portal.Model.payment.InvoicesModel;
 import com.hris.HRIS_job_portal.Model.payment.PaymentMethodsModel;
+import com.hris.HRIS_job_portal.Model.payment.SubscriptionsModel;
 import com.hris.HRIS_job_portal.Repository.payment.BillingHistoryRepository;
 import com.hris.HRIS_job_portal.Repository.payment.InvoiceRepository;
 import com.hris.HRIS_job_portal.Repository.payment.PaymentMethodRepository;
@@ -95,6 +96,14 @@ public class StripeWebhookController {
                     handleInvoicePaymentFailed(event);
                     break;
 
+                case "invoice.created":
+                    handleInvoiceCreated(event);
+                    break;
+
+                case "invoice.updated":
+                    handleInvoiceUpdated(event);
+                    break;
+
                 case "customer.subscription.updated":
                     handleSubscriptionUpdated(event);
                     break;
@@ -129,6 +138,18 @@ public class StripeWebhookController {
         paymentMethodModel.setExpiry_date(paymentMethod.getCard().getExpMonth() + "/" + paymentMethod.getCard().getExpYear());
         paymentMethodService.save(paymentMethodModel);
 
+        // Save subscription details
+        Subscription subscription = Subscription.retrieve(session.getSubscription());
+        SubscriptionsModel subscriptionsModel = new SubscriptionsModel();
+        subscriptionsModel.setCompanyId(companyId);
+        subscriptionsModel.setPlan_name(subscription.getItems().getData().get(0).getPlan().getNickname());
+        subscriptionsModel.setCost(String.valueOf(subscription.getItems().getData().get(0).getPlan().getAmount() / 100.0));
+        subscriptionsModel.setBilling_cycle(subscription.getBillingCycleAnchor().toString());
+        subscriptionsModel.setStart_date(subscription.getCurrentPeriodStart().toString());
+        subscriptionsModel.setEnd_date(subscription.getCurrentPeriodEnd().toString());
+        subscriptionsModel.set_active(true);
+        subscriptionService.updateSubscription(companyId, subscriptionsModel);
+
         // Save billing history
         BillingHistoryModel billingHistory = new BillingHistoryModel();
         billingHistory.setCompanyId(companyId);
@@ -137,6 +158,45 @@ public class StripeWebhookController {
         billingHistory.setInvoice_id(session.getId());
         billingHistory.setStatus("Completed");
         billingHistoryService.save(billingHistory);
+    }
+
+    private void handleInvoiceCreated(Event event) throws StripeException {
+        Invoice invoice = (Invoice) event.getDataObjectDeserializer().getObject().get();
+        String companyId = null;
+
+        // Retrieve the associated customer
+        Customer customer = Customer.retrieve(invoice.getCustomer());
+        if (customer.getMetadata() != null && customer.getMetadata().containsKey("company_id")) {
+            companyId = customer.getMetadata().get("company_id");
+        }
+
+        InvoicesModel invoiceModel = new InvoicesModel();
+        invoiceModel.setInvoiceId(invoice.getId());
+        invoiceModel.setCompanyId(companyId);
+        invoiceModel.setSubscriptionId(invoice.getSubscription());
+        invoiceModel.setAmountDue(String.valueOf(invoice.getAmountDue()));
+        invoiceModel.setStatus(invoice.getStatus());
+        invoiceModel.setBillingDate(new Date(invoice.getCreated() * 1000L));
+        invoiceModel.setDueDate(new Date(invoice.getDueDate() * 1000L));
+        invoiceModel.setPeriodStart(new Date(invoice.getPeriodStart() * 1000L));
+        invoiceModel.setPeriodEnd(new Date(invoice.getPeriodEnd() * 1000L));
+
+        invoiceRepository.save(invoiceModel);
+    }
+
+    private void handleInvoiceUpdated(Event event) {
+        Invoice invoice = (Invoice) event.getDataObjectDeserializer().getObject().get();
+
+        InvoicesModel existingInvoice = invoiceRepository.findByInvoiceId(invoice.getId());
+        if (existingInvoice != null) {
+            existingInvoice.setAmountDue(String.valueOf(invoice.getAmountDue()));
+            existingInvoice.setStatus(invoice.getStatus());
+            existingInvoice.setBillingDate(new Date(invoice.getCreated() * 1000L));
+            existingInvoice.setDueDate(new Date(invoice.getDueDate() * 1000L));
+            existingInvoice.setPeriodStart(new Date(invoice.getPeriodStart() * 1000L));
+            existingInvoice.setPeriodEnd(new Date(invoice.getPeriodEnd() * 1000L));
+            invoiceRepository.save(existingInvoice);
+        }
     }
 
     private void handleInvoicePaymentSucceeded(Event event) {
@@ -158,7 +218,14 @@ public class StripeWebhookController {
 
     private void handleSubscriptionUpdated(Event event) {
         Subscription subscription = (Subscription) event.getDataObjectDeserializer().getObject().get();
-        subscriptionService.updateSubscriptionDetails(subscription);
+        SubscriptionsModel subscriptionsModel = new SubscriptionsModel();
+        subscriptionsModel.setPlan_name(subscription.getItems().getData().get(0).getPlan().getNickname());
+        subscriptionsModel.setCost(String.valueOf(subscription.getItems().getData().get(0).getPlan().getAmount() / 100.0));
+        subscriptionsModel.setBilling_cycle(subscription.getBillingCycleAnchor().toString());
+        subscriptionsModel.setStart_date(subscription.getCurrentPeriodStart().toString());
+        subscriptionsModel.setEnd_date(subscription.getCurrentPeriodEnd().toString());
+        subscriptionsModel.set_active(subscription.getStatus().equals("active"));
+        subscriptionService.updateSubscription(subscription.getCustomer(), subscriptionsModel);
     }
 
     private void handleSubscriptionDeleted(Event event) {
