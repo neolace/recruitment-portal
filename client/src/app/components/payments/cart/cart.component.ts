@@ -55,6 +55,10 @@ export class CartComponent implements OnInit{
       this.alertService.errorMessage('Cart is Empty', 'error');
       return
     }
+    if (!this.isVerified){
+      this.alertService.errorMessage('Please login as an employer to checkout', 'error');
+      return
+    }
     if (!this.bank && !this.card && !this.paypal){
       this.errorMsg = 'Please Choose a Valid Payment Option to Checkout';
       return

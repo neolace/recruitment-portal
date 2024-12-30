@@ -15,12 +15,18 @@ export class CardCheckoutComponent implements OnInit{
     lname: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
     address: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required, Validators.pattern(/^\+\d{1,3}\s?\d{1,14}$/)])
+    phone: new FormControl('', [Validators.required, Validators.pattern(/^(?:\+?\d{1,3})?(?:0\d{1,3})?\d{7,14}$/)])
   })
 
   constructor(private alertService: AlertsService,
               private router: Router,
               private route: ActivatedRoute) {
+    this.billingForm.get('phone')?.valueChanges.subscribe(value => {
+      if (value) {
+        const sanitizedValue = value.replace(/\s+/g, ''); // Remove all spaces
+        this.billingForm.get('phone')?.setValue(sanitizedValue, { emitEvent: false });
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -43,7 +49,7 @@ export class CardCheckoutComponent implements OnInit{
       this.router.navigate(['/pay']);
     }
     else {
-      this.alertService.errorMessage('All Fields are required', 'error');
+      this.alertService.errorMessage('All Fields are required or Phone number is not valid', 'error');
     }
   }
 
