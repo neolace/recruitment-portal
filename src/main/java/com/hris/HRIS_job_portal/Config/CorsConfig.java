@@ -26,12 +26,6 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedHeaders("*")
                 .exposedHeaders("Stripe-Signature")
                 .allowCredentials(true);
-
-        registry.addMapping("/webhook/**")
-                .allowedOrigins("https://api.stripe.com")
-                .allowedMethods("POST")
-                .allowedHeaders("*", "Stripe-Signature")
-                .exposedHeaders("Stripe-Signature");
     }
 
     @Bean
