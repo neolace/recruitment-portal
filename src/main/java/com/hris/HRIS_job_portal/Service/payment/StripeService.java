@@ -18,13 +18,7 @@ import java.util.Map;
 public class StripeService {
 
     @Autowired
-    private ConfigUtility configUtility;
-
-    private final Map<String, String> PLAN_PRICE_MAP = Map.of(
-            "Basic", configUtility.getProperty("STRIPE_TEST_PRICE_ID"),
-            "Pro", configUtility.getProperty("STRIPE_PRO_PRICE_ID"),
-            "Premium", configUtility.getProperty("STRIPE_PREMIUM_PRICE_ID")
-    );
+    ConfigUtility configUtility;
 
     public Customer createCustomer(String email, String paymentMethodId) throws StripeException {
         Map<String, Object> params = new HashMap<>();
@@ -49,6 +43,12 @@ public class StripeService {
     }
 
     public Session createCheckoutSession(String companyId, String planName) throws StripeException {
+        Map<String, String> PLAN_PRICE_MAP = Map.of(
+            "Basic", configUtility.getProperty("STRIPE_TEST_PRICE_ID"),
+            "Pro", configUtility.getProperty("STRIPE_PRO_PRICE_ID"),
+            "Premium", configUtility.getProperty("STRIPE_PREMIUM_PRICE_ID")
+        );
+
         String priceId = PLAN_PRICE_MAP.get(planName);
         if (priceId == null) {
             throw new IllegalArgumentException("Invalid plan name: " + planName);
