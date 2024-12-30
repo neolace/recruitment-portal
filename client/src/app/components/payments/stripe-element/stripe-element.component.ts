@@ -60,7 +60,7 @@ export class StripeElementComponent implements OnInit, AfterViewInit{
   paymentIntentId: string = '';
   stripe!: Stripe| any;
   companyId: any;
-  planName: any = 'prod_RTfEvk2UkyMQ8a';
+  planName: any = 'Pro';
 
   constructor(private alertService: AlertsService,
               private cookieService: AuthService,

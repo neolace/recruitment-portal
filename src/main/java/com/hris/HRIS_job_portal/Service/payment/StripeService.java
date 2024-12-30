@@ -1,6 +1,7 @@
 package com.hris.HRIS_job_portal.Service.payment;
 
 import com.hris.HRIS_job_portal.Utils.ConfigUtility;
+import com.stripe.exception.InvalidRequestException;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
 import com.stripe.model.Invoice;
@@ -15,6 +16,12 @@ import java.util.Map;
 
 @Service
 public class StripeService {
+
+    private static final Map<String, String> PLAN_PRICE_MAP = Map.of(
+            "Basic", "prod_RUnKEGykYAm4op",
+            "Pro", "prod_RTfEvk2UkyMQ8a",
+            "Premium", "price_1HxK7vGHYcK1zXYZ987654"
+    );
 
     @Autowired
     ConfigUtility configUtility;
@@ -42,20 +49,29 @@ public class StripeService {
     }
 
     public Session createCheckoutSession(String companyId, String planName) throws StripeException {
+        String priceId = PLAN_PRICE_MAP.get(planName);
+        if (priceId == null) {
+            throw new IllegalArgumentException("Invalid plan name: " + planName);
+        }
+
         Map<String, Object> subscriptionData = new HashMap<>();
         subscriptionData.put("metadata", Map.of("company_id", companyId));
 
         Map<String, Object> params = new HashMap<>();
-        params.put("line_items", List.of(Map.of("price", planName, "quantity", 1)));
+        params.put("line_items", List.of(Map.of("price", priceId, "quantity", 1)));
         params.put("mode", "subscription");
         params.put("subscription_data", subscriptionData);
         params.put("success_url", configUtility.getProperty("STRIPE_SUCCESS_URL"));
         params.put("cancel_url", configUtility.getProperty("STRIPE_CANCEL_URL"));
 
+        System.out.println("Stripe Params: " + params);
+
         try {
             return Session.create(params);
+        } catch (InvalidRequestException e) {
+            throw new RuntimeException("Stripe error: " + e.getMessage(), e);
         } catch (StripeException e) {
-            throw new RuntimeException("Error creating Stripe Checkout Session: " + e.getMessage(), e);
+            throw new RuntimeException("Unexpected Stripe error occurred: ", e);
         }
     }
 }
