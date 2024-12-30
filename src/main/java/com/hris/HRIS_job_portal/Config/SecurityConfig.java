@@ -41,7 +41,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/actuator/**", "/public/**", "/login", "/oauth2/**", "/oauth/**", "/webhook/**").permitAll()
+                        .requestMatchers("/webhook/**").permitAll()
+                        .requestMatchers("/actuator/**", "/public/**", "/login", "/oauth2/**", "/oauth/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
@@ -62,6 +63,10 @@ public class SecurityConfig {
                         .defaultSuccessUrl(configUtil.getProperty("GOOGLE_CLIENT_REDIRECT"), true)
                         .permitAll()
                 );
+
+        http.csrf(csrf -> csrf
+                .ignoringRequestMatchers("/webhook/**") // Disable CSRF for /webhook
+        );
 
         return http.build();
     }
