@@ -17,14 +17,14 @@ import java.util.Map;
 @Service
 public class StripeService {
 
-    private static final Map<String, String> PLAN_PRICE_MAP = Map.of(
-            "Basic", "prod_RUnKEGykYAm4op",
-            "Pro", "prod_RTfEvk2UkyMQ8a",
-            "Premium", "price_1HxK7vGHYcK1zXYZ987654"
-    );
-
     @Autowired
-    ConfigUtility configUtility;
+    private ConfigUtility configUtility;
+
+    private final Map<String, String> PLAN_PRICE_MAP = Map.of(
+            "Basic", configUtility.getProperty("STRIPE_TEST_PRICE_ID"),
+            "Pro", configUtility.getProperty("STRIPE_PRO_PRICE_ID"),
+            "Premium", configUtility.getProperty("STRIPE_PREMIUM_PRICE_ID")
+    );
 
     public Customer createCustomer(String email, String paymentMethodId) throws StripeException {
         Map<String, Object> params = new HashMap<>();
