@@ -44,7 +44,10 @@
             <div class="col-12 col-md-6">
               <div class="form-group">
                 <label for="phone">Mobile Number *</label>
-                <input type="text" class="form-control" id="phone" placeholder="+1 123 456 7890" formControlName="phone">
+                <input type="number" class="form-control" id="phone" placeholder="+1 123 456 7890" formControlName="phone">
+                <div class="error-msg" *ngIf="billingForm.get('phone')?.invalid && billingForm.get('phone')?.touched">
+                  Invalid phone number format.
+                </div>
               </div>
             </div>
             <div class="col-12">

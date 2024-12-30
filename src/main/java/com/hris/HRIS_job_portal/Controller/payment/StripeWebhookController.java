@@ -96,38 +96,16 @@ public class StripeWebhookController {
 
         try {
             Event event = Webhook.constructEvent(payload, sigHeader, configUtility.getProperty("STRIPE_WEBHOOK_SECRET"));
-
+            System.out.println("Received event: " + event.getType());
             switch (event.getType()) {
-                case "checkout.session.completed":
-                    handleCheckoutSessionCompleted(event);
-                    break;
-
-                case "invoice.payment_succeeded":
-                    handleInvoicePaymentSucceeded(event);
-                    break;
-
-                case "invoice.payment_failed":
-                    handleInvoicePaymentFailed(event);
-                    break;
-
-                case "invoice.created":
-                    handleInvoiceCreated(event);
-                    break;
-
-                case "invoice.updated":
-                    handleInvoiceUpdated(event);
-                    break;
-
-                case "customer.subscription.updated":
-                    handleSubscriptionUpdated(event);
-                    break;
-
-                case "customer.subscription.deleted":
-                    handleSubscriptionDeleted(event);
-                    break;
-
-                default:
-                    System.out.println("Unhandled event type: " + event.getType());
+                case "checkout.session.completed" -> handleCheckoutSessionCompleted(event);
+                case "invoice.payment_succeeded" -> handleInvoicePaymentSucceeded(event);
+                case "invoice.payment_failed" -> handleInvoicePaymentFailed(event);
+                case "invoice.created" -> handleInvoiceCreated(event);
+                case "invoice.updated" -> handleInvoiceUpdated(event);
+                case "customer.subscription.updated" -> handleSubscriptionUpdated(event);
+                case "customer.subscription.deleted" -> handleSubscriptionDeleted(event);
+                default -> System.out.println("Unhandled event type: " + event.getType());
             }
 
             return ResponseEntity.ok("Webhook processed");
@@ -140,6 +118,7 @@ public class StripeWebhookController {
     private void handleCheckoutSessionCompleted(Event event) throws StripeException {
         Session session = (Session) event.getDataObjectDeserializer().getObject().get();
         String companyId = session.getMetadata().get("company_id");
+        System.out.println("Session metadata: " + session.getMetadata());
 
         PaymentIntent paymentIntent = PaymentIntent.retrieve(session.getPaymentIntent());
         PaymentMethod paymentMethod = PaymentMethod.retrieve(paymentIntent.getPaymentMethod());

@@ -55,7 +55,6 @@ export class BillingAndUsageComponent {
         this.company = data;
         this.postedJobs = data?.postedJobs[0];
         this.loading = false;
-        console.log(this.postedJobs)
 
         // Fetch subscription details
         this.billingService.getSubscriptionDetails(this.companyId).subscribe(
