@@ -20,4 +20,12 @@ export class PaymentService {
       planName: planName
     }, {headers});
   }
+
+  public createCheckoutSession(companyId: string, planName: string) {
+    return this.http.post(`${this.simpleBaseUrl}/webhook/create-checkout-session`, {
+      companyId: companyId,
+      planName: planName
+    });
+  }
+
 }

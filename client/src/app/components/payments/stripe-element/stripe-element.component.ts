@@ -60,7 +60,9 @@ export class StripeElementComponent implements OnInit, AfterViewInit{
   paymentIntentId: string = '';
   stripe!: Stripe| any;
   companyId: any;
-  planName: any = 'Pro';
+  planName: any = 'Basic';
+
+  isLoading = false;
 
   constructor(private alertService: AlertsService,
               private cookieService: AuthService,
@@ -80,12 +82,14 @@ export class StripeElementComponent implements OnInit, AfterViewInit{
   }
 
   createPaymentIntent() {
+    this.isLoading = true;
     this.paymentService.createPaymentIntent(this.companyId, this.planName).subscribe((response: any) => {
       this.clientSecret = response.clientSecret;
 
-      this.loadPaymentElement().then(r=>{});
+      this.loadPaymentElement().then(r=>{this.isLoading = false;});
     }, error => {
-      console.log(error);
+      this.isLoading = false;
+      this.alertService.errorMessage(error.error.message, 'Error');
     });
   }
 
@@ -117,43 +121,25 @@ export class StripeElementComponent implements OnInit, AfterViewInit{
   }
 
   async pay() {
-    if (this.companyId){
-      const result = await this.stripe.confirmPayment({
-        elements: this.elements,
-        confirmParams: {
-          return_url: 'https://talentboozt.com/thank-you',
-        },
+    if (this.companyId) {
+      this.paymentService.createCheckoutSession(this.companyId, this.planName).subscribe((response: any) => {
+        if (response) {
+          this.redirectToCheckout(response.id);
+        }
+      }, error => {
+        this.alertService.errorMessage('Failed to initiate payment. Please try again.', 'error');
       });
-
-      if (result.error) {
-        this.alertService.errorMessage('Failed: '+result.error.message, 'error');
-      } else {
-        this.alertService.successMessage('Payment successful! Logout and login again to see the changes!', 'success');
-      }
     } else {
       this.alertService.errorMessage('You need to register as a company first', 'error');
     }
   }
 
-  // async pay() {
-  //   if (!this.clientSecret) {
-  //     console.error('Client Secret not available.');
-  //     return;
-  //   }
-  //
-  //   this.stripeService.elements().subscribe((elements) => {
-  //     this.stripeService.confirmCardPayment(this.clientSecret, {
-  //       payment_method: {
-  //         card: elements.getElement('card') as any,
-  //       },
-  //       return_url: 'https://talentboozt.com/thank-you',
-  //     }).subscribe((result) => {
-  //       if (result.error) {
-  //         console.error('Payment failed:', result.error.message);
-  //       } else {
-  //         console.log('Payment successful!', result.paymentIntent);
-  //       }
-  //     });
-  //   });
-  // }
+  async redirectToCheckout(sessionId: string) {
+    const stripe: any = await loadStripe(environment.stripe_key);
+    stripe.redirectToCheckout({ sessionId }).then((result: any) => {
+      if (result.error) {
+        this.alertService.errorMessage("Error redirecting to Stripe Checkout:" + result.error.message, "error");
+      }
+    });
+  }
 }
