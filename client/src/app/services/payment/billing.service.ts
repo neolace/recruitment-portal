@@ -15,6 +15,12 @@ export class BillingService {
 
   constructor(private http: HttpClient) {}
 
+  savePrePaymentData(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/pre-payment/save`, data, {
+      headers: this.headers,
+    });
+  }
+
   // 1. Retrieve subscription details
   getSubscriptionDetails(companyId: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/subscriptions/get/${companyId}`, {
