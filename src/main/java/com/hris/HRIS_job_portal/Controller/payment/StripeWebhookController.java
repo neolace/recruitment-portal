@@ -118,7 +118,6 @@ public class StripeWebhookController {
     private void handleCheckoutSessionCompleted(Event event) throws StripeException {
         Session session = (Session) event.getDataObjectDeserializer().getObject().get();
         String companyId = session.getMetadata().get("company_id");
-        System.out.println("Session metadata: " + session.getMetadata());
 
         PaymentIntent paymentIntent = PaymentIntent.retrieve(session.getPaymentIntent());
         PaymentMethod paymentMethod = PaymentMethod.retrieve(paymentIntent.getPaymentMethod());
