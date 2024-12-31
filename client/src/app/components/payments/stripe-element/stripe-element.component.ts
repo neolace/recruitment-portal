@@ -73,6 +73,13 @@ export class StripeElementComponent implements OnInit, AfterViewInit{
   }
 
   async ngOnInit() {
+    const isVerified = sessionStorage.getItem('in_payment_progress');
+    if (!isVerified) {
+      this.alertService.errorMessage('We detected some suspicious activity. If you face this trouble again and again please contact support!', 'Error');
+      setInterval(()=>{
+        this.router.navigate(['/cart']);
+      }, 5000);
+    }
     this.companyId = this.cookieService.organization();
     this.stripe = await loadStripe(environment.stripe_key);
   }
@@ -130,6 +137,7 @@ export class StripeElementComponent implements OnInit, AfterViewInit{
         this.alertService.errorMessage('Failed to initiate payment. Please try again.', 'error');
       });
     } else {
+      sessionStorage.removeItem('in_payment_progress');
       this.alertService.errorMessage('You need to register as a company first', 'error');
     }
   }
@@ -137,6 +145,7 @@ export class StripeElementComponent implements OnInit, AfterViewInit{
   async redirectToCheckout(sessionId: string) {
     const stripe: any = await loadStripe(environment.stripe_key);
     stripe.redirectToCheckout({ sessionId }).then((result: any) => {
+      sessionStorage.removeItem('in_payment_progress');
       if (result.error) {
         this.alertService.errorMessage("Error redirecting to Stripe Checkout:" + result.error.message, "error");
       }
