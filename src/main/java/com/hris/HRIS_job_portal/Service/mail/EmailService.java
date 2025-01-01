@@ -1,5 +1,6 @@
 package com.hris.HRIS_job_portal.Service.mail;
 
+import com.hris.HRIS_job_portal.DTO.mail.BankPaymentDTO;
 import com.hris.HRIS_job_portal.Utils.ConfigUtility;
 import com.hris.HRIS_job_portal.DTO.mail.ContactUsDTO;
 import com.hris.HRIS_job_portal.DTO.mail.PersonalContactDTO;
@@ -127,5 +128,14 @@ public class EmailService {
         String subject = "Pre-Order Success";
         String body = "Dear valuable user,\n\nYou have successfully placed your pre-order. If you have any further questions, please don't hesitate to contact us.\n\nPlease ignore this mail if it does not apply to you. \n\nThank You.\nBest regards,\nTeam Talent Boozt.";
         sendSimpleEmail(to, subject, body);
+    }
+
+    public void bankPayment(BankPaymentDTO bankPaymentDTO) {
+        String to = configUtil.getProperty("CONTACT_ME_EMAIL");
+        String mailSubject = "Bank Payment Request - " + bankPaymentDTO.getName();
+        String message = bankPaymentDTO.getCompanyId()+" Requested Bank Payment! \n\nSlip Url: " + bankPaymentDTO.getSlipUrl();
+        String body = "Name: " + bankPaymentDTO.getName() + "\nCountry: " + bankPaymentDTO.getCountry() + "\nPhone: " + bankPaymentDTO.getPhone() + "\n\n" + message;
+
+        sendSimpleEmail(to, mailSubject, body);
     }
 }

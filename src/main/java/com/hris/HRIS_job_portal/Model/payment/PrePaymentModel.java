@@ -24,6 +24,7 @@ public class PrePaymentModel {
     private String paymentMethodId;
     private String billingAddressId;
     private String invoiceId;
+    private String slipUrl;
     private String payType; // card or bank
     private String status; // pending or paid
 }
