@@ -10,10 +10,7 @@ import com.hris.HRIS_job_portal.Repository.payment.PaymentMethodRepository;
 import com.hris.HRIS_job_portal.Service.CmpPostedJobsService;
 import com.hris.HRIS_job_portal.Service.CompanyService;
 import com.hris.HRIS_job_portal.Service.CredentialsService;
-import com.hris.HRIS_job_portal.Service.payment.BillingHistoryService;
-import com.hris.HRIS_job_portal.Service.payment.PaymentMethodService;
-import com.hris.HRIS_job_portal.Service.payment.StripeService;
-import com.hris.HRIS_job_portal.Service.payment.SubscriptionService;
+import com.hris.HRIS_job_portal.Service.payment.*;
 import com.hris.HRIS_job_portal.Utils.ConfigUtility;
 import com.stripe.exception.StripeException;
 import com.stripe.model.*;
@@ -63,6 +60,9 @@ public class StripeWebhookController {
 
     @Autowired
     private CmpPostedJobsService cmpPostedJobsService;
+
+    @Autowired
+    private PrePaymentService prePaymentService;
 
     @PostMapping("/stripe-events")
     public ResponseEntity<String> handleStripeEvent(@RequestBody String payload) {
@@ -155,6 +155,10 @@ public class StripeWebhookController {
         companyService.findAndUpdateCompanyLevel(companyId, "3");
         cmpPostedJobsService.findAndUpdateCompanyLevel(companyId, "3");
         credentialsService.findAndUpdateCompanyLevel(companyId, "3");
+
+        prePaymentService.updateSubscriptionId(subscription.getId(), companyId);
+        prePaymentService.updatePaymentMethodId(paymentMethod.getId(), companyId);
+        prePaymentService.updateStatus(companyId, "Completed");
     }
 
     private void handleInvoiceCreated(Event event) throws StripeException {
@@ -179,10 +183,18 @@ public class StripeWebhookController {
         invoiceModel.setPeriodEnd(new Date(invoice.getPeriodEnd() * 1000L));
 
         invoiceRepository.save(invoiceModel);
+        prePaymentService.updateInvoiceId(invoice.getId(), companyId);
     }
 
-    private void handleInvoiceUpdated(Event event) {
+    private void handleInvoiceUpdated(Event event) throws StripeException {
         Invoice invoice = (Invoice) event.getDataObjectDeserializer().getObject().get();
+
+        String companyId = null;
+
+        Customer customer = Customer.retrieve(invoice.getCustomer());
+        if (customer.getMetadata() != null && customer.getMetadata().containsKey("company_id")) {
+            companyId = customer.getMetadata().get("company_id");
+        }
 
         InvoicesModel existingInvoice = invoiceRepository.findByInvoiceId(invoice.getId());
         if (existingInvoice != null) {
@@ -193,6 +205,8 @@ public class StripeWebhookController {
             existingInvoice.setPeriodStart(new Date(invoice.getPeriodStart() * 1000L));
             existingInvoice.setPeriodEnd(new Date(invoice.getPeriodEnd() * 1000L));
             invoiceRepository.save(existingInvoice);
+
+            prePaymentService.updateInvoiceId(invoice.getId(), companyId);
         }
     }
 
