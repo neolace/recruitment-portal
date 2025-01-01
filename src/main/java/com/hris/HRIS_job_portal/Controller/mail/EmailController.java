@@ -1,6 +1,7 @@
 package com.hris.HRIS_job_portal.Controller.mail;
 
 import com.hris.HRIS_job_portal.DTO.ApiResponse;
+import com.hris.HRIS_job_portal.DTO.mail.BankPaymentDTO;
 import com.hris.HRIS_job_portal.DTO.mail.ContactUsDTO;
 import com.hris.HRIS_job_portal.DTO.mail.PersonalContactDTO;
 import com.hris.HRIS_job_portal.Service.mail.EmailService;
@@ -29,6 +30,12 @@ public class EmailController {
     @PostMapping("/personal-contact")
     public ResponseEntity<ApiResponse> personalContact(@RequestBody PersonalContactDTO personalContactDTO) {
         emailService.personalContact(personalContactDTO);
+        return ResponseEntity.ok(new ApiResponse("Email sent successfully"));
+    }
+
+    @PostMapping("/bank-payment")
+    public ResponseEntity<ApiResponse> bankPayment(@RequestBody BankPaymentDTO bankPaymentDTO) {
+        emailService.bankPayment(bankPaymentDTO);
         return ResponseEntity.ok(new ApiResponse("Email sent successfully"));
     }
 }

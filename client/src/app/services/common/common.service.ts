@@ -39,6 +39,13 @@ export class CommonService {
     return this.http.post(`${this.baseUrl}/email/personal-contact`, personalContactDTO, {headers});
   }
 
+  requestBankPayment(bankPaymentDTO: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.post(`${this.baseUrl}/email/bank-payment`, bankPaymentDTO, {headers});
+  }
+
   addWhitelist(whitelist: any): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:password')

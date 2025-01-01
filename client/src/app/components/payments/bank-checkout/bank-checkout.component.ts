@@ -3,6 +3,9 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AlertsService} from "../../../services/alerts.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FileUploadService} from "../../../services/file-upload.service";
+import {BillingService} from "../../../services/payment/billing.service";
+import {AuthService} from "../../../services/auth.service";
+import {CommonService} from "../../../services/common/common.service";
 
 @Component({
   selector: 'app-bank-checkout',
@@ -20,14 +23,19 @@ export class BankCheckoutComponent {
 
   loading: boolean = false;
   downloadURL?: any;
+  companyId: any
 
   constructor(private alertService: AlertsService,
+              private cookieService: AuthService,
+              private billingService: BillingService,
+              private commonService: CommonService,
               private router: Router,
               private route: ActivatedRoute,
               private fileUploadService: FileUploadService,) {
   }
 
   ngOnInit(): void {
+    this.companyId = this.cookieService.organization();
     this.route.queryParams.subscribe(params => {
       if (params['verified'] !== 'true') {
         this.alertService.errorMessage('We detected some suspicious activity. If you face this trouble again and again please contact support!', 'Error');
@@ -45,8 +53,37 @@ export class BankCheckoutComponent {
   pay(){
     if(this.downloadURL){
       if (this.billingForm.valid){
-        this.router.navigate(['/thank-you']);
-        this.alertService.warningMessage('This feature will available soon', 'warning');
+        this.billingService.savePrePaymentData({
+          companyId: this.companyId,
+          firstname: this.billingForm.get('fname')?.value,
+          lastname: this.billingForm.get('lname')?.value,
+          country: this.billingForm.get('country')?.value,
+          address: this.billingForm.get('address')?.value,
+          phone: this.billingForm.get('phone')?.value,
+          payType: 'bank',
+          status: 'pending',
+          slipUrl: this.downloadURL
+        }).subscribe((res: any) => {
+          if (res){
+            this.commonService.requestBankPayment({
+              companyId: this.companyId,
+              name: this.billingForm.get('fname')?.value + ' ' + this.billingForm.get('lname')?.value,
+              country: this.billingForm.get('country')?.value,
+              address: this.billingForm.get('address')?.value,
+              phone: this.billingForm.get('phone')?.value,
+              slipUrl: this.downloadURL
+            }).subscribe((res: any) => {
+              this.router.navigate(['/thank-you']);
+              this.alertService.successMessage("We Recieved your payment request and will get back to you soon.", "Success");
+            }, (err: any) => {
+              this.alertService.errorMessage('Something went wrong. Please try again.', 'error');
+            })
+          } else {
+            this.alertService.errorMessage('Something went wrong. Please try again.', 'error');
+          }
+        }, (err: any) => {
+          this.alertService.errorMessage('Something went wrong. Please try again.', 'error');
+        })
       }
       else {
         this.alertService.errorMessage('All Fields are required', 'error');
