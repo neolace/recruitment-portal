@@ -189,6 +189,10 @@ export class BusinessProfileComponent implements OnInit, AfterViewInit{
   }
 
   follow(company: any) {
+    if(!this.myId){
+      this.alertService.warningMessage('Please Login First to Follow', 'Follow');
+      return;
+    }
     this.followingsIds.push(company?.id);
     this.followBtn = false;
     if (company) {

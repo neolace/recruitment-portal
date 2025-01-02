@@ -3,7 +3,7 @@ import {AlertsService} from "../../../services/alerts.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {StripeService} from "ngx-stripe";
 import {PaymentService} from "../../../services/payment/payment.service";
-import {loadStripe, Stripe, StripeCardElementOptions, StripeElements, StripeElementsOptions} from "@stripe/stripe-js";
+import {loadStripe, Stripe, StripeElements} from "@stripe/stripe-js";
 import {environment} from "../../../../environments/environment";
 import {AuthService} from "../../../services/auth.service";
 
@@ -28,39 +28,12 @@ import {AuthService} from "../../../services/auth.service";
   ],
 })
 export class StripeElementComponent implements OnInit, AfterViewInit{
-
-  cardOptions: StripeCardElementOptions = {
-    style: {
-      base: {
-        iconColor: '#666EE8',
-        color: '#31325F',
-        lineHeight: '40px',
-        fontWeight: 300,
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-        fontSize: '18px',
-        '::placeholder': {
-          color: '#CFD7E0',
-        },
-      },
-    },
-  };
-
-  elementsOptions: StripeElementsOptions = {
-    locale: 'en',
-  };
-
   clientSecret!: string;
 
   elements!: StripeElements;
-  paymentElementOptions: any = {
-    appearance: {
-      theme: 'stripe',
-    },
-  };
-  paymentIntentId: string = '';
   stripe!: Stripe| any;
   companyId: any;
-  planName: any = 'Basic';
+  planName: any = 'Pro';
 
   isLoading = false;
 

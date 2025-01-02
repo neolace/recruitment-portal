@@ -42,6 +42,10 @@ export class EmpFollowersComponent implements OnInit{
   }
 
   follow(employee: any) {
+    if(!this.myId){
+      this.alertService.warningMessage('Please Login First to Follow', 'Follow');
+      return;
+    }
     this.followingIds.push(employee?.followerId);
     this.followBtn = false;
     if (employee) {

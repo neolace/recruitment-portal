@@ -121,6 +121,10 @@ public class StripeWebhookController {
 
         PaymentIntent paymentIntent = PaymentIntent.retrieve(session.getPaymentIntent());
         PaymentMethod paymentMethod = PaymentMethod.retrieve(paymentIntent.getPaymentMethod());
+        Subscription subscription = Subscription.retrieve(session.getSubscription());
+        if (subscription == null) { System.out.println("Subscription is null."); return; }
+        if (companyId == null) { System.out.println("Company ID is null."); return; }
+        if (paymentMethod == null) { System.out.println("PaymentMethod is null."); return; }
 
         // Save payment method
         PaymentMethodsModel paymentMethodModel = new PaymentMethodsModel();
@@ -131,7 +135,6 @@ public class StripeWebhookController {
         paymentMethodService.save(paymentMethodModel);
 
         // Save subscription details
-        Subscription subscription = Subscription.retrieve(session.getSubscription());
         SubscriptionsModel subscriptionsModel = new SubscriptionsModel();
         subscriptionsModel.setCompanyId(companyId);
         subscriptionsModel.setPlan_name(subscription.getItems().getData().get(0).getPlan().getNickname());
