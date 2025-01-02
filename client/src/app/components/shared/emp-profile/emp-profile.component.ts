@@ -220,6 +220,10 @@ export class EmpProfileComponent implements OnInit, AfterViewInit {
   }
 
   follow(employee: any) {
+    if(!this.myId){
+      this.alertService.warningMessage('Please Login First to Follow', 'Follow');
+      return;
+    }
     this.followersIds.push(this.myId);
     this.followBtn = false;
     if (employee) {

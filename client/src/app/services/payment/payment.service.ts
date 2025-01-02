@@ -22,6 +22,9 @@ export class PaymentService {
   }
 
   public createCheckoutSession(companyId: string, planName: string) {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    })
     return this.http.post(`${this.simpleBaseUrl}/webhook/create-checkout-session`, {
       companyId: companyId,
       planName: planName
