@@ -58,6 +58,7 @@ const routes: Routes = [
   { path: 'follow', loadChildren: () => import('./components/shared/emp-follow-wrap/emp-follow-wrap.module').then(m => m.EmpFollowWrapModule) },
   { path: 'soon', loadChildren: () => import('./components/shared/comming-soon/comming-soon.module').then(m => m.CommingSoonModule) },
   { path: 'pay', loadChildren: () => import('./components/payments/stripe-element/stripe-element.module').then(m => m.StripeElementModule) },
+  { path: 'limited-offer', loadChildren: () => import('./components/shared/limitted-offer/limitted-offer.module').then(m => m.LimittedOfferModule) },
   { path: '**', redirectTo: '/404' }
 ];
 

@@ -26,6 +26,19 @@
       ]
     },
     {
+      "name":"About",
+      "short_name":"About",
+      "description":"Go to the about page",
+      "url":"/about",
+      "icons":[
+        {
+          "src":"./android-chrome-192x192.png",
+          "sizes":"192x192",
+          "type":"image/png"
+        }
+      ]
+    },
+    {
       "name":"Login",
       "short_name":"Login",
       "description":"Go to the login page",
@@ -53,7 +66,7 @@
     },
     {
       "name":"For Companies",
-      "short_name":"Companies",
+      "short_name":"Company",
       "description":"Go to the companies page",
       "url":"/companies",
       "icons":[
@@ -69,6 +82,45 @@
       "short_name":"Jobs",
       "description":"Go to the jobs page",
       "url":"/job",
+      "icons":[
+        {
+          "src":"./android-chrome-192x192.png",
+          "sizes":"192x192",
+          "type":"image/png"
+        }
+      ]
+    },
+    {
+      "name":"Companies",
+      "short_name":"Companies",
+      "description":"Go to the companies page",
+      "url":"/companies",
+      "icons":[
+        {
+          "src":"./android-chrome-192x192.png",
+          "sizes":"192x192",
+          "type":"image/png"
+        }
+      ]
+    },
+    {
+      "name":"Contact",
+      "short_name":"Contact",
+      "description":"Go to the contact page",
+      "url":"/contact",
+      "icons":[
+        {
+          "src":"./android-chrome-192x192.png",
+          "sizes":"192x192",
+          "type":"image/png"
+        }
+      ]
+    },
+    {
+      "name":"Pricing",
+      "short_name":"Pricing",
+      "description":"Go to the pricing page",
+      "url":"/pricing",
       "icons":[
         {
           "src":"./android-chrome-192x192.png",

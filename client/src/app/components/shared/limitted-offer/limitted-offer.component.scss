@@ -1,0 +1,39 @@
+.hero-banner-wrapper{
+  width: 100%;
+  height: auto;
+  position: relative;
+
+  .hero-banner{
+    width: 100%;
+    min-height: calc(100vh - 70px);
+    height: 100%;
+    background-image: url("../../../../assets/imgs/offers/pro-offer.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+
+  .banner-content-top, .banner-content-bottom{
+    width: 100%;
+    padding: 20px 30px;
+    position: absolute;
+    left: 0;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h1,h2,p{
+      color: #fff;
+    }
+  }
+
+  .banner-content-top{
+    top: 0;
+  }
+
+  .banner-content-bottom{
+    bottom: 0;
+  }
+}
