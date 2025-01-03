@@ -15,9 +15,118 @@
     <p>Our way of saying thank you for believing in us early! Don’t miss this limited-time opportunity.</p>
   </div>
   <div class="hero-banner"></div>
-  <div class="banner-content-bottom">
+  <div class="banner-content-bottom" *ngIf="isOfferActive">
     <h2>This Offer Won’t Last Forever!</h2>
     <h1>{{hours}} hours, {{minutes}} minutes, {{seconds}} seconds</h1>
-    <button class="btn-1">Claim!</button>
+    <button class="btn-1">Claim Pro Account!</button>
+  </div>
+  <div class="banner-content-bottom" *ngIf="!isOfferActive">
+    <h2>This Offer Has Expired!</h2>
+    <button class="btn-1">Claim Free Account!</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="sub-topic-section pb-2">
+    <h3>Why Choose Pro Access?</h3>
+    <p>Pro version is powered x10 than Free version</p>
+  </div>
+
+  <div class="card-4-section">
+    <div class="row">
+      <div class="col-12 col-md-4 mb-3">
+        <div class="card-4">
+          <div class="icon-wrapper">
+            <i class="fa fa-gavel" aria-hidden="true"></i>
+          </div>
+          <div class="card-4-title">Lifetime Benefits for Free</div>
+          <div class="card-4-cont">Get all Pro features without any recurring costs.</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 mb-3">
+        <div class="card-4">
+          <div class="icon-wrapper">
+            <i class="fa fa-leaf" aria-hidden="true"></i>
+          </div>
+          <div class="card-4-title">Exclusive Features</div>
+          <div class="card-4-cont">Advanced analytics, priority support, pro tools, and more.</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 mb-3">
+        <div class="card-4">
+          <div class="icon-wrapper">
+            <i class="fa fa-first-order" aria-hidden="true"></i>
+          </div>
+          <div class="card-4-title">Early Adopter Perks</div>
+          <div class="card-4-cont">Your voice shapes the future of our product.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="eligible">
+        <h3>Are You Eligible?</h3>
+        <ul>
+          <li>Be one of the first 30 clients to complete the form.</li>
+          <li>Limited to one entry per person/company.</li>
+          <li>Offer expires when the 30 spots are filled.</li>
+        </ul>
+
+        <div class="form-card-1">
+          <h4>{{seatsLeft || 0}} spots remaining!</h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="form-card-1">
+        <div class="logo" [ngStyle]="{'background-image': themeService.isDarkMode() ? 'url(./assets/imgs/logo/top-w.webp)' : 'url(./assets/imgs/logo/top-b.webp)'}">
+        </div>
+        <h5 class="title">Secure Your Lifetime Access Now!</h5>
+
+        <form [formGroup]="registerForm">
+          <div class="row form-wrapper">
+            <div class="col-12">
+              <label for="name">Name:</label>
+              <input type="text" placeholder="John" id="name" formControlName="name">
+              <div class="error-msg">{{errorMsg}}</div>
+            </div>
+
+            <div class="col-12">
+              <label for="email">Email:</label>
+              <input type="email" placeholder="example@example.com" id="email" formControlName="email">
+              <div class="error-msg">{{errorMsg}}</div>
+            </div>
+
+            <div class="col-12">
+              <label for="password">Password:</label>
+              <div class="input-group w-100 d-flex">
+                <input type="password" placeholder="Password:" id="password" formControlName="password" aria-label="Password:" aria-describedby="button-addon" style="flex:1">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon" (click)="togglePasswordVisibility()"><i [ngClass]="isp1open? 'fa fa-eye-slash':'fa fa-eye'" aria-hidden="true"></i></button>
+              </div>
+              <div class="error-msg">{{errorMsg}}</div>
+            </div>
+
+            <div class="col-12">
+              <div class="d-sm-flex align-items-center justify-content-between">
+                <div class="form-check">
+                  <input class="form-check-input me-2" type="checkbox" formControlName="termsCheck" id="termsCheck">
+                  <label class="form-check-label" for="termsCheck">
+                    I accept <a href="">Terms and Conditions</a>
+                  </label>
+                  <div class="error-msg">{{termsErrorMsg}}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <button class="btn-1 w-100" (click)="registerUser()">Claim My Lifetime Access</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
   </div>
 </div>
