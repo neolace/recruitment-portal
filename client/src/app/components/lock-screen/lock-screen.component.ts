@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {AlertsService} from "../../services/alerts.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {EmployeeService} from "../../services/employee.service";
+import {EncryptionService} from "../../services/encryption.service";
 
 @Component({
   selector: 'app-lock-screen',
@@ -22,6 +23,7 @@ export class LockScreenComponent implements AfterViewInit, OnInit{
   })
   constructor(private cookieService: AuthService,
               private credentialService: CredentialService,
+              private encryptionService: EncryptionService,
               private employeeService: EmployeeService,
               private router: Router,
               private alertService: AlertsService ) {}
@@ -51,10 +53,11 @@ export class LockScreenComponent implements AfterViewInit, OnInit{
   }
 
   unlockUser() {
-    this.credentialService.fetchCredentialByEmployeeId(this.employeeId).subscribe((response: any) => {
+    this.credentialService.fetchCredentialByEmployeeId(this.employeeId).subscribe(async (response: any) => {
       if (response) {
+        const encryptedPassword = await this.encryptionService.decryptPassword(response.password?.toString());
         if (this.unlockForm.valid) {
-          if (this.unlockForm.value.password === response.password) {
+          if (this.unlockForm.value.password === encryptedPassword) {
             this.cookieService.unlock();
             this.alertService.successMessage('Profile Unlocked!', 'Success');
             this.router.navigate(['/']);
