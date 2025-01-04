@@ -109,6 +109,8 @@ export class LimittedOfferComponent implements OnInit{
           this.cookieService.createLevel(response.userLevel);
           this.cookieService.createAdmin(response.email);
           this.cookieService.createOrganizationID(response.companyId);
+
+          this.loadAllUsers();
         }, error => {
           this.alertService.errorMessage('User already exists or an unexpected error has occurred', 'Unexpected Error');
         });
