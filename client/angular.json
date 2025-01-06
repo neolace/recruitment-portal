@@ -18,7 +18,7 @@
           "builder": "ngx-build-plus:browser",
           "options": {
             "extraWebpackConfig": "src/custom-webpack.config.js",
-            "outputPath": "dist/client",
+            "outputPath": "dist/client/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -84,10 +84,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "client:build:production"
+              "buildTarget": "client:build:production"
             },
             "development": {
-              "browserTarget": "client:build:development"
+              "buildTarget": "client:build:development"
             }
           },
           "defaultConfiguration": "development",
@@ -98,7 +98,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "client:build"
+            "buildTarget": "client:build"
           }
         },
         "test": {
@@ -126,6 +126,43 @@
               "src/styles.scss"
             ],
             "scripts": []
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/client/server",
+            "main": "src/main.server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "inlineStyleLanguage": "scss"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            },
+            "development": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ],
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false,
+              "vendorChunk": true,
+              "buildOptimizer": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "browserTarget": "client:build:production",
+            "serverTarget": "client:server:production",
+            "routesFile": "routes.txt",
+            "discoverRoutes": false
           }
         }
       }
