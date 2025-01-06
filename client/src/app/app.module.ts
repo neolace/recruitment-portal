@@ -19,7 +19,7 @@ import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
 import {environment} from "../environments/environment";
 import {AngularFireModule} from "@angular/fire/compat";
 import {SharedPipesModule} from "./shared/modules/shared-pipes.module";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {ToastrModule} from "ngx-toastr";
 import {LocationStrategy, NgOptimizedImage, PathLocationStrategy} from "@angular/common";
 import {OAuthModule} from "angular-oauth2-oidc";
@@ -30,12 +30,10 @@ import {HeaderModule} from "./components/shared/header/header.module";
 import {AngularFirePerformanceModule} from "@angular/fire/compat/performance";
 import {NgxStripeModule} from "ngx-stripe";
 
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-    imports: [
-        BrowserModule.withServerTransition({ appId: 'serverApp' }),
+@NgModule({ declarations: [
+        AppComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule.withServerTransition({ appId: 'serverApp' }),
         AppRoutingModule,
         BrowserAnimationsModule,
         MatIconModule,
@@ -54,7 +52,6 @@ import {NgxStripeModule} from "ngx-stripe";
         AngularFireAuthModule,
         AngularFirePerformanceModule,
         SharedPipesModule,
-        HttpClientModule,
         ToastrModule.forRoot({
             positionClass: 'toast-top-right',
             preventDuplicates: true,
@@ -66,13 +63,10 @@ import {NgxStripeModule} from "ngx-stripe";
         NgOptimizedImage,
         FooterModule,
         HeaderModule,
-        NgxStripeModule.forRoot(environment.stripe_key)
-    ],
-  providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: SkipXsrfInterceptor, multi: true},
-    {provide: LocationStrategy, useClass: PathLocationStrategy}
-  ],
-  bootstrap: [AppComponent]
-})
+        NgxStripeModule.forRoot(environment.stripe_key)], providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: SkipXsrfInterceptor, multi: true },
+        { provide: LocationStrategy, useClass: PathLocationStrategy },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {
 }

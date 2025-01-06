@@ -4,7 +4,7 @@ import {CredentialService} from "../../services/credential.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AlertsService} from "../../services/alerts.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {EmployeeService} from "../../services/employee.service";
 import {EncryptionService} from "../../services/encryption.service";
 

@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {companyDataStore} from "../../shared/data-store/company-data-store";
 import {CompanyService} from "../../services/company.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {filter, Observable, tap} from "rxjs";
 
 @Component({

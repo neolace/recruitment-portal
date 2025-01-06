@@ -7,7 +7,7 @@ import {CredentialService} from "../../../services/credential.service";
 import {AlertsService} from "../../../services/alerts.service";
 import {AuthService} from "../../../services/auth.service";
 import {commonSearchResults} from "../../../shared/data-store/common-search-results";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {LinkedInAuthService} from "../../../services/linked-in-auth.service";
 
 @Component({

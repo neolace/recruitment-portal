@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {EmployeeService} from "../../../services/employee.service";
 import {AuthService} from "../../../services/auth.service";
 import {CompanyService} from "../../../services/company.service";

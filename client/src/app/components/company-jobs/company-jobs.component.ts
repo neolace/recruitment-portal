@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {jobAdDataStrore} from "../../shared/data-store/JobAd-data-strore";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {CompanyService} from "../../services/company.service";
 import {EmployeeService} from "../../services/employee.service";
 import {AlertsService} from "../../services/alerts.service";

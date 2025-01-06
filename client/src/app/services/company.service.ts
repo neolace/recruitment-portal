@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {BehaviorSubject, catchError, Observable, tap, throwError} from "rxjs";
 import {CompanyModel} from "../shared/data-models/Company.model";

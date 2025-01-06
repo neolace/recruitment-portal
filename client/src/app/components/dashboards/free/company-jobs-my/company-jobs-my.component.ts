@@ -4,7 +4,7 @@ import {AuthService} from "../../../../services/auth.service";
 import {EmployeeService} from "../../../../services/employee.service";
 import {CompanyService} from "../../../../services/company.service";
 import {AlertsService} from "../../../../services/alerts.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {Parser} from "@angular/compiler";
 
 @Component({

@@ -6,7 +6,7 @@ import {AuthService} from "../../../services/auth.service";
 import {ToastrService} from "ngx-toastr";
 import {CompanyService} from "../../../services/company.service";
 import {JobApplyService} from "../../../services/job-apply.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 
 
 @Component({

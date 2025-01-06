@@ -3,7 +3,7 @@ import {JobApplyService} from "../../../../services/job-apply.service";
 import {Router} from "@angular/router";
 import {ThemeService} from "../../../../services/theme.service";
 import {AuthService} from "../../../../services/auth.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 
 declare var bootstrap: any;
 

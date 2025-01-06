@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {JobApplyService} from "../../../../services/job-apply.service";
 import {Router} from "@angular/router";
 import {AuthService} from "../../../../services/auth.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {ThemeService} from "../../../../services/theme.service";
 
 declare var bootstrap: any;

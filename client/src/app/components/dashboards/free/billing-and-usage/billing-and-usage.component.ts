@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {AuthService} from "../../../../services/auth.service";
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BillingService} from "../../../../services/payment/billing.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {AlertsService} from "../../../../services/alerts.service";
 import {CompanyService} from "../../../../services/company.service";
 
