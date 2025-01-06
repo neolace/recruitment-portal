@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanDeactivate } from '@angular/router';
+
 
 export interface CanComponentDeactivate {
   canDeactivate: () => boolean | Promise<boolean>;
@@ -8,7 +8,7 @@ export interface CanComponentDeactivate {
 @Injectable({
   providedIn: 'root'
 })
-export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate> {
+export class CanDeactivateGuard  {
   canDeactivate(
     component: CanComponentDeactivate
   ): boolean | Promise<boolean> {

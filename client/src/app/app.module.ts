@@ -35,7 +35,7 @@ import {NgxStripeModule} from "ngx-stripe";
     AppComponent
   ],
     imports: [
-        BrowserModule,
+        BrowserModule.withServerTransition({ appId: 'serverApp' }),
         AppRoutingModule,
         BrowserAnimationsModule,
         MatIconModule,

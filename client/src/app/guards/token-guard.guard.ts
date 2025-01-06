@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import {ApiResponse} from "../DTO/ApiResponse";
 @Injectable({
   providedIn: 'root'
 })
-export class TokenGuard implements CanActivate {
+export class TokenGuard  {
 
   baseUrl = environment.apiUrl
 
