@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {AlertsService} from "../../services/alerts.service";
 

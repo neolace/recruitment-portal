@@ -6,7 +6,7 @@ import {countries} from "../../../shared/data-store/countries";
 import {AlertsService} from "../../../services/alerts.service";
 import {CompanyService} from "../../../services/company.service";
 import {AuthService} from "../../../services/auth.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {EmployeeService} from "../../../services/employee.service";
 

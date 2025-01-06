@@ -4,7 +4,7 @@ import {CredentialService} from "./credential.service";
 import {Router} from "@angular/router";
 import {AlertsService} from "./alerts.service";
 import {AuthService} from "./auth.service";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'

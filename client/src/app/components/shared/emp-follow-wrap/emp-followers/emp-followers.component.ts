@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EmployeeService} from "../../../../services/employee.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {AuthService} from "../../../../services/auth.service";
 import {AlertsService} from "../../../../services/alerts.service";
 

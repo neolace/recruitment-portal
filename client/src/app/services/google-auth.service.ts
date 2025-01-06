@@ -6,7 +6,7 @@ import { Router } from "@angular/router";
 import { AlertsService } from "./alerts.service";
 import { AuthService } from "./auth.service";
 import { Subject } from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'

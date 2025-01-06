@@ -4,7 +4,7 @@ import {EmployeeService} from "../../../../services/employee.service";
 import {CompanyService} from "../../../../services/company.service";
 import {JobApplyService} from "../../../../services/job-apply.service";
 import {AuthService} from "../../../../services/auth.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AlertsService} from "../../../../services/alerts.service";
 

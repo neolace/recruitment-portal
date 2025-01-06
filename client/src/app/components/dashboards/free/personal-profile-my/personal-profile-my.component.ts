@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ProgressSpinnerMode} from "@angular/material/progress-spinner";
 import {EmployeeService} from "../../../../services/employee.service";
 import {AuthService} from "../../../../services/auth.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CommonService} from "../../../../services/common/common.service";
 import {AlertsService} from "../../../../services/alerts.service";

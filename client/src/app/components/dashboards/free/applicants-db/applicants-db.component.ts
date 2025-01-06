@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 import {JobApplyService} from "../../../../services/job-apply.service";
 import {AuthService} from "../../../../services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {AlertsService} from "../../../../services/alerts.service";
 import {EmployeeService} from "../../../../services/employee.service";
 import {ThemeService} from "../../../../services/theme.service";

@@ -3,7 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {DomSanitizer} from "@angular/platform-browser";
 import {NavigationService} from "../../../services/navigation.service";
 import {Observable, tap} from "rxjs";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
 
 @Component({

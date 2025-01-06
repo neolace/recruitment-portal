@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse } from "@angular/common/http";
 import {CompanyService} from "../../services/company.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CommonService} from "../../services/common/common.service";
