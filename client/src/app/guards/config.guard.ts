@@ -1,25 +1,21 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {AuthService} from "../services/auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ConfigGuard  {
-  constructor(private cookieService:AuthService,
-              private route:Router) {
-  }
-
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {
-    if(this.cookieService.level() == '0'){
+export class ConfigGuard {
+  canActivate: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+    if (this.authService.level() === '0') {
       return true;
-    }
-    else{
-      this.route.navigateByUrl('/403');
+    } else {
+      this.router.navigateByUrl('/403');
       return false;
     }
+  };
+
+  constructor(private authService: AuthService, private router: Router) {
   }
 
 }

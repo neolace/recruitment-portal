@@ -1,26 +1,22 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot} from '@angular/router';
 import {AuthService} from "../services/auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard  {
+export class AuthGuard {
 
-  constructor(private cookieService:AuthService,
-              private route:Router) {
-  }
-
-  canActivate(
-      route: ActivatedRouteSnapshot,
-      state: RouterStateSnapshot): boolean {
-    if(this.cookieService.isExists() && !this.cookieService.isLocked()){
+  canActivate: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+    if (this.authService.isExists() && !this.authService.isLocked()) {
       return true;
-    }
-    else{
-      this.route.navigateByUrl('/login');
+    } else {
+      this.router.navigateByUrl('/login');
       return false;
     }
+  };
+
+  constructor(private authService: AuthService, private router: Router) {
   }
 
 }
