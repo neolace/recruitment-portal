@@ -11,6 +11,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CommonService} from "../../services/common/common.service";
 import {Utilities} from "../../shared/utilities/utilities";
 import {WindowService} from "../../services/common/window.service";
+import {Meta, Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-home',
@@ -95,9 +96,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
               private alertService: AlertsService,
               private commonService: CommonService,
               private windowService: WindowService,
+              private meta: Meta, private title: Title,
               private toastr: ToastrService) {}
 
   async ngOnInit(): Promise<any> {
+    this.title.setTitle('Talentboozt -Unlock Your Future with the Perfect Job');
+    this.meta.addTags([
+      { name: 'description', content: 'Explore Thousands of Job Openings & Career Options. Partnered with Top Companies ' +
+          'to help you find the perfect fit.' },
+      { name: 'keywords', content: 'Job search platform, Career opportunities, Explore jobs, Popular job categories, ' +
+          'Digital marketing careers, Business development jobs, Graphic designer hiring, Web developer roles, ' +
+          'Top employers, Job matching system, Hiring solutions, Talent acquisition, Job posting packages, ' +
+          'Career guidance, Flexible hiring plans, Employer branding tools, Personalized career matches, ' +
+          'Streamlined application, Recruitment services' }
+    ]);
     this.employeeId = this.cookieService.userID();
     this.typewriter();
     this.typewriter2();

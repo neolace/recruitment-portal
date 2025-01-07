@@ -7,6 +7,7 @@ import {jobCategories} from "../../shared/data-store/job-categories-data-store";
 import {map, Observable, tap} from "rxjs";
 import {isPlatformBrowser} from "@angular/common";
 import {WindowService} from "../../services/common/window.service";
+import {Meta, Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-employee',
@@ -58,9 +59,19 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
               public cookieService: AuthService,
               private route: ActivatedRoute,
               private windowService: WindowService,
+              private meta: Meta, private title: Title,
               private router: Router) {}
 
   async ngOnInit(): Promise<any> {
+    this.title.setTitle('Talentboozt -Candidates');
+    this.meta.addTags([
+      { name: 'description', content: 'We’re a dedicated team of HR Professional and Tech enthusiasts passionate about ' +
+          'connecting people with opportunity and fulfilling human potential.' },
+      { name: 'keywords', content: 'Employee Directory, Search Employees, Occupation Finder, Employee Profiles, ' +
+          'HR Professionals, Web Developers, Personalized Profiles, Employee Search Tools, Salary Estimates, ' +
+          'Experience Levels, Team Directory, Employee Database, Career Listings, Professional Profiles, ' +
+          'Employee Management, Searchable Profiles, Diverse Occupations, 24/7 Support, Save Time, Quick and Easy Search' }
+    ]);
     this.employeeId = this.cookieService.userID();
     await this.getAllEmployees().subscribe((data) => {
       // Get query parameters from route

@@ -4,6 +4,7 @@ import {CompanyService} from "../../services/company.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import {Observable, tap} from "rxjs";
 import {WindowService} from "../../services/common/window.service";
+import {Meta, Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-companies',
@@ -37,9 +38,20 @@ export class CompaniesComponent implements OnInit, AfterViewInit{
   corsError: boolean = false;
   unexpectedError: boolean = false;
 
-  constructor(private windowService: WindowService, private router: Router, private companyService: CompanyService) { }
+  constructor(private windowService: WindowService,
+              private router: Router,
+              private meta: Meta, private title: Title,
+              private companyService: CompanyService) { }
 
   async ngOnInit() : Promise<any> {
+    this.title.setTitle('Talentboozt -Partners');
+    this.meta.addTags([
+      { name: 'description', content: 'We’re a dedicated team of HR Professional and Tech enthusiasts passionate about ' +
+          'connecting people with opportunity and fulfilling human potential.' },
+      { name: 'keywords', content: 'Talent Matching, Job Search Platform, Company Profiles, Find Employers, Hire Talent, ' +
+          'Explore Opportunities, Recruitment Services, Global Jobs, Corporate Careers, Professional Growth, Job Portal, ' +
+          'Post Job Openings, Local and, International Companies, Employment Solutions, Workforce Connections' }
+    ]);
     // Initialize the pagination
     await this.getAllCompanies().subscribe((data) => {
       this.filteredCompanies = this.companyDataStore;

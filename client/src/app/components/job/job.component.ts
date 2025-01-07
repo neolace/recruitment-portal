@@ -7,6 +7,7 @@ import {CompanyService} from "../../services/company.service";
 import {Observable, tap} from "rxjs";
 import {jobCategories} from "../../shared/data-store/job-categories-data-store";
 import {WindowService} from "../../services/common/window.service";
+import {Meta, Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-job',
@@ -52,10 +53,22 @@ export class JobComponent implements OnInit, AfterViewInit {
               private companyService: CompanyService,
               private cookieService: AuthService,
               private windowService: WindowService,
+              private meta: Meta, private title: Title,
               private alertService: AlertsService) {
   }
 
   async ngOnInit(): Promise<any> {
+    this.title.setTitle('Talentboozt -Job Opportunities');
+    this.meta.addTags([
+      { name: 'description', content: 'Finding the right job shouldn’t be complicated. Our platform is designed to help ' +
+          'you connect with top employers, showcase your skills, and find opportunities that match your career goals.' },
+      { name: 'keywords', content: 'job search, career opportunities, job vacancies, employment platform, hiring, ' +
+          'apply now, digital marketing manager, production executive, quality assurance manager, TPM manager, ' +
+          'procurement manager, sales and marketing, manufacturing operations, software engineering, ' +
+          'business management, personalized job recommendations, career support, easy application process, ' +
+          '24/7 support, tech jobs, startup jobs, Talent Boozt, job portal, find top employers, connect with employers, ' +
+          'explore jobs' }
+    ]);
     this.employeeId = this.cookieService.userID();
     await this.getAllJobs().subscribe((data) => {
       // Get query parameters from route

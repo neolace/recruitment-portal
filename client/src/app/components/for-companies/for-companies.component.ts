@@ -7,6 +7,7 @@ import {PricingUtilities} from "../../shared/utilities/pricing.utilities";
 import {ProductsUtilities} from "../../shared/utilities/products.utilities";
 import {CartService} from "../../services/payment/cart.service";
 import {WindowService} from "../../services/common/window.service";
+import {Meta, Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-for-companies',
@@ -47,9 +48,24 @@ export class ForCompaniesComponent implements OnInit, AfterViewInit {
   pricingUtilities = PricingUtilities;
   productsUtilities = ProductsUtilities;
 
-  constructor(private windowService: WindowService, private router: Router, private companyService: CompanyService, private cartService: CartService) { }
+  constructor(private windowService: WindowService,
+              private router: Router,
+              private companyService: CompanyService,
+              private meta: Meta, private title: Title,
+              private cartService: CartService) { }
 
   async ngOnInit() : Promise<any> {
+    this.title.setTitle('Talentboozt -Partner with Us');
+    this.meta.addTags([
+      { name: 'description', content: 'Talent Boozt empowers companies to overcome hiring challenges with customized ' +
+          'solutions tailored to their unique needs. Our platform streamlines recruitment, offering user-friendly tools ' +
+          'and resources to connect with top talent.' },
+      { name: 'keywords', content: 'Drive Business Growth, Recruitment Simplified, Talent Solutions, Top, Talent Access, ' +
+          'Diverse Candidate Pool, Hiring Made Easy, Customized Hiring Solutions, Recruitment Management System, ' +
+          'HR Solutions, Personalized Hiring Support, Trusted Recruitment Partners, Partner Network, ' +
+          'Comprehensive HR Tools, Business Hiring Support, Talent Acquisition Solutions, User-Friendly Hiring Platform, ' +
+          'All-in-One Hiring Solution, HR Products, Accelerate Hiring, Contact Talent Boozt' }
+    ]);
     // Initialize the pagination
     await this.getAllCompanies().subscribe((data) => {
       this.filteredCompanies = this.companyDataStore ? this.companyDataStore : data;

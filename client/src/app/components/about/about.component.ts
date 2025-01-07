@@ -6,6 +6,7 @@ import {CommonService} from "../../services/common/common.service";
 import {AlertsService} from "../../services/alerts.service";
 import {Utilities} from "../../shared/utilities/utilities";
 import {WindowService} from "../../services/common/window.service";
+import {Meta, Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-about',
@@ -74,6 +75,7 @@ export class AboutComponent implements OnInit, AfterViewInit {
   constructor(private valueIncrementService: ValueIncrementService,
               private commonService: CommonService,
               private windowService: WindowService,
+              private meta: Meta, private title: Title,
               private alertService: AlertsService) { }
 
   ngAfterViewInit(): void {
@@ -87,6 +89,16 @@ export class AboutComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.title.setTitle('Talentboozt -About Us');
+    this.meta.addTags([
+      { name: 'description', content: 'We’re a dedicated team of HR Professional and Tech enthusiasts passionate about ' +
+          'connecting people with opportunity and fulfilling human potential.' },
+      { name: 'keywords', content: 'Talent Connection, HR Professionals, Tech Enthusiasts, Fulfilling Human Potential, ' +
+          'Inclusive Platform, Diversity and Equality, Job Matching, Innovative Hiring Solutions, Seamless Job Search, ' +
+          'Transparency in Recruitment, Streamlined Hiring Process, Smart Tools for Employers, Candidate-Centric Design, ' +
+          'Continuous Learning, 24/7 Support, Personalized Opportunities, Equal Opportunity Hiring, Global Talent Pool, ' +
+          'User-Focused Solutions' }
+    ]);
     if (this.windowService.nativeLocalStorage){
       this.jobsAch = (localStorage as any).getItem('jobsAch') ? Number(localStorage.getItem('jobsAch')) : 0;
       this.branchesAch = (localStorage as any).getItem('branchesAch') ? Number(localStorage.getItem('branchesAch')) : 0;
