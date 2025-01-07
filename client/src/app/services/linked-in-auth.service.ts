@@ -1,15 +1,16 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { CredentialService } from './credential.service';
 import { AlertsService } from "./alerts.service";
 import {environment} from "../../environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import {WindowService} from "./common/window.service";
 
 @Injectable({
   providedIn: 'root',
 })
-export class LinkedInAuthService {
+export class LinkedInAuthService implements OnInit{
   private linkedInSdkLoaded = false;
   baseUrl = environment.apiUrl;
   private clientId = environment.linkedinAuthConfig.clientId
@@ -20,8 +21,16 @@ export class LinkedInAuthService {
     private alertService: AlertsService,
     private authService: AuthService,
     private credentialService: CredentialService,
+    private windowService: WindowService,
     private http: HttpClient
   ) {}
+
+  ngOnInit(): void {
+    const window = this.windowService.nativeWindow;
+    if (window) {
+      this.redirectUri = `${window.location.origin}/oauth-callback/linkedin`;
+    }
+  }
 
   /**
    * Dynamically loads the LinkedIn SDK script

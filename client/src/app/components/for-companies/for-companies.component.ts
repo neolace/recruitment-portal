@@ -5,9 +5,8 @@ import {Observable, tap} from "rxjs";
 import {Utilities} from "../../shared/utilities/utilities";
 import {PricingUtilities} from "../../shared/utilities/pricing.utilities";
 import {ProductsUtilities} from "../../shared/utilities/products.utilities";
-import _default from "chart.js/dist/plugins/plugin.tooltip";
-import numbers = _default.defaults.animations.numbers;
 import {CartService} from "../../services/payment/cart.service";
+import {WindowService} from "../../services/common/window.service";
 
 @Component({
   selector: 'app-for-companies',
@@ -48,7 +47,7 @@ export class ForCompaniesComponent implements OnInit, AfterViewInit {
   pricingUtilities = PricingUtilities;
   productsUtilities = ProductsUtilities;
 
-  constructor(private router: Router, private companyService: CompanyService, private cartService: CartService) { }
+  constructor(private windowService: WindowService, private router: Router, private companyService: CompanyService, private cartService: CartService) { }
 
   async ngOnInit() : Promise<any> {
     // Initialize the pagination
@@ -63,10 +62,12 @@ export class ForCompaniesComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const icons = document.querySelectorAll('.material-icons');
-    icons.forEach((icon) => {
-      icon.setAttribute('translate', 'no');
-    });
+    if (this.windowService.nativeDocument){
+      const icons = (document as any).querySelectorAll('.material-icons');
+      icons.forEach((icon: any) => {
+        icon.setAttribute('translate', 'no');
+      });
+    }
   }
 
   getAllCompanies(): Observable<any> {

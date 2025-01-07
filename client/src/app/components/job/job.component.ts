@@ -6,6 +6,7 @@ import {AlertsService} from "../../services/alerts.service";
 import {CompanyService} from "../../services/company.service";
 import {Observable, tap} from "rxjs";
 import {jobCategories} from "../../shared/data-store/job-categories-data-store";
+import {WindowService} from "../../services/common/window.service";
 
 @Component({
   selector: 'app-job',
@@ -50,6 +51,7 @@ export class JobComponent implements OnInit, AfterViewInit {
               private employeeService: EmployeeService,
               private companyService: CompanyService,
               private cookieService: AuthService,
+              private windowService: WindowService,
               private alertService: AlertsService) {
   }
 
@@ -86,10 +88,12 @@ export class JobComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const icons = document.querySelectorAll('.material-icons');
-    icons.forEach((icon) => {
-      icon.setAttribute('translate', 'no');
-    });
+    if (this.windowService.nativeDocument){
+      const icons = (document as any).querySelectorAll('.material-icons');
+      icons.forEach((icon: any) => {
+        icon.setAttribute('translate', 'no');
+      });
+    }
   }
 
   getAllJobs(): Observable<any> {
@@ -233,7 +237,8 @@ export class JobComponent implements OnInit, AfterViewInit {
 
   focusInput() {
     this.jobSearchInput.nativeElement.focus();
-    document.body.scrollTop = 0;
+    if (this.windowService.nativeDocument)
+      (document as any).body.scrollTop = 0;
   }
 
   onJobSavedOrRemoved() {

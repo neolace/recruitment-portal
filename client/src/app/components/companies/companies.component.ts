@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {companyDataStore} from "../../shared/data-store/company-data-store";
 import {CompanyService} from "../../services/company.service";
 import { HttpErrorResponse } from "@angular/common/http";
-import {filter, Observable, tap} from "rxjs";
+import {Observable, tap} from "rxjs";
+import {WindowService} from "../../services/common/window.service";
 
 @Component({
   selector: 'app-companies',
@@ -37,7 +37,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit{
   corsError: boolean = false;
   unexpectedError: boolean = false;
 
-  constructor(private router: Router, private companyService: CompanyService) { }
+  constructor(private windowService: WindowService, private router: Router, private companyService: CompanyService) { }
 
   async ngOnInit() : Promise<any> {
     // Initialize the pagination
@@ -62,10 +62,12 @@ export class CompaniesComponent implements OnInit, AfterViewInit{
   }
 
   ngAfterViewInit() {
-    const icons = document.querySelectorAll('.material-icons');
-    icons.forEach((icon) => {
-      icon.setAttribute('translate', 'no');
-    });
+    if (this.windowService.nativeDocument){
+      const icons = (document as any).querySelectorAll('.material-icons');
+      icons.forEach((icon: any) => {
+        icon.setAttribute('translate', 'no');
+      });
+    }
   }
 
   getAllCompanies(): Observable<any> {

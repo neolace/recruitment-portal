@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import {Injectable, OnDestroy, OnInit} from '@angular/core';
 import {AuthConfig, NullValidationHandler, OAuthService} from "angular-oauth2-oidc";
 import { environment } from "../../environments/environment";
 import { CredentialService } from "./credential.service";
@@ -7,11 +7,12 @@ import { AlertsService } from "./alerts.service";
 import { AuthService } from "./auth.service";
 import { Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import {WindowService} from "./common/window.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class GoogleAuthService implements OnDestroy {
+export class GoogleAuthService implements OnInit, OnDestroy {
   googleAuthConfig: AuthConfig = environment.googleAuthConfig;
 
   private hasLoggedIn = false;
@@ -23,8 +24,16 @@ export class GoogleAuthService implements OnDestroy {
     private alertService: AlertsService,
     private cookieService: AuthService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private windowService: WindowService
   ) {}
+
+  ngOnInit() {
+    const window = this.windowService.nativeWindow;
+    if (window) {
+      this.googleAuthConfig.redirectUri = `${window.location.origin}/oauth-callback`;
+    }
+  }
 
   ngOnDestroy() {
     this.unsubscribe$.next();

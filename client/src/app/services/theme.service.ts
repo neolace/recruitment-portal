@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {AuthService} from "./auth.service";
+import {WindowService} from "./common/window.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class ThemeService {
   private themeSubject = new BehaviorSubject<boolean>(this.isDarkTheme);
   private colorSubject = new BehaviorSubject<string>(this.currentColorShading);
 
-  constructor(private cookieService: AuthService) {
+  constructor(private cookieService: AuthService, private windowService: WindowService) {
     this.loadUserPreferences();
   }
 
@@ -32,18 +33,21 @@ export class ThemeService {
 
   applyTheme() {
     // Clear previously applied theme
-    document.body.classList.remove(
-      'theme-blue-light', 'theme-blue-dark',
-      'theme-green-light', 'theme-green-dark',
-      'theme-orange-light', 'theme-orange-dark',
-      'theme-red-light', 'theme-red-dark',
-      'theme-purple-light', 'theme-purple-dark',
-      'theme-mixed-light', 'theme-mixed-dark'
-    );
+    const _document = this.windowService.nativeDocument;
+    if (_document) {
+      document.body.classList.remove(
+        'theme-blue-light', 'theme-blue-dark',
+        'theme-green-light', 'theme-green-dark',
+        'theme-orange-light', 'theme-orange-dark',
+        'theme-red-light', 'theme-red-dark',
+        'theme-purple-light', 'theme-purple-dark',
+        'theme-mixed-light', 'theme-mixed-dark'
+      );
 
-    // Add the new theme based on color and mode
-    const themeClass = `theme-${this.currentColorShading}-${this.isDarkTheme ? 'dark' : 'light'}`;
-    document.body.classList.add(themeClass);
+      // Add the new theme based on color and mode
+      const themeClass = `theme-${this.currentColorShading}-${this.isDarkTheme ? 'dark' : 'light'}`;
+      document.body.classList.add(themeClass);
+    }
   }
 
   isDarkMode() {
@@ -89,7 +93,10 @@ export class ThemeService {
    * Detect the browser/system default theme and set it
    */
   private detectDefaultTheme() {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    this.isDarkTheme = prefersDark;
+    const _window = this.windowService.nativeWindow;
+    if (_window) {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      this.isDarkTheme = prefersDark;
+    }
   }
 }

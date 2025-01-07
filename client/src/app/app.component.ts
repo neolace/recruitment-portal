@@ -28,6 +28,7 @@ import {CommonService} from "./services/common/common.service";
 import {Utilities} from "./shared/utilities/utilities";
 import {HomeComponent} from "./components/home/home.component";
 import {LoginService} from "./services/common/login.service";
+import {WindowService} from "./services/common/window.service";
 
 @Component({
   selector: 'app-root',
@@ -77,19 +78,22 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
               private commonService: CommonService,
               private alertService: AlertsService,
               private loginService: LoginService,
+              private windowService: WindowService,
               private cookieService: AuthService) {
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      const loadingScreen = document.getElementById('loading-screen');
-      if (loadingScreen) {
-        loadingScreen.style.display = 'none';
+    if (this.windowService.nativeDocument) {
+      setTimeout(() => {
+        const loadingScreen = document.getElementById('loading-screen');
+        if (loadingScreen) {
+          loadingScreen.style.display = 'none';
+        }
+      },1500);
+      const appRoot = document.querySelector('app-root') as HTMLElement;
+      if (appRoot) {
+        appRoot.style.display = 'block';
       }
-    },1500);
-    const appRoot = document.querySelector('app-root') as HTMLElement;
-    if (appRoot) {
-      appRoot.style.display = 'block';
     }
 
     this.employeeId = this.cookieService.userID();
@@ -101,20 +105,24 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       this.isCookiesAccepted = true;
     }
 
-    if (sessionStorage.getItem('newsLatter') != 'true' && !this.isSubscribe) {
-      setTimeout(() => {
-        const model_open = document.getElementById('news_model_open_main');
-        model_open?.click();
-        sessionStorage.setItem('newsLatter', 'true');
-      }, 10000)
+    if (this.windowService.nativeSessionStorage && this.windowService.nativeDocument) {
+      if (sessionStorage.getItem('newsLatter') != 'true' && !this.isSubscribe) {
+        setTimeout(() => {
+          const model_open = document.getElementById('news_model_open_main');
+          model_open?.click();
+          sessionStorage.setItem('newsLatter', 'true');
+        }, 10000)
+      }
     }
   }
 
   ngAfterViewInit() {
-    const icons = document.querySelectorAll('.material-icons');
-    icons.forEach((icon) => {
-      icon.setAttribute('translate', 'no');
-    });
+    if(this.windowService.nativeDocument){
+      const icons = document.querySelectorAll('.material-icons');
+      icons.forEach((icon) => {
+        icon.setAttribute('translate', 'no');
+      });
+    }
 
     this.markAttendance()
   }
@@ -170,7 +178,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   removeUnwantedSession() {
-    sessionStorage.clear();
+    if (this.windowService.nativeSessionStorage) {
+      sessionStorage.clear();
+    }
   }
 
   clickTranslate() {
@@ -195,8 +205,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
           this.cookieService.newsletter();
           this.loading = false;
           this.newsLetterForm.reset();
-          const model_close = document.getElementById('news_model_close_main');
-          model_close?.click();
+          if (this.windowService.nativeDocument) {
+            const model_close = document.getElementById('news_model_close_main');
+            model_close?.click();
+          }
           return;
         }, (error) => {
           this.newsLetterForm.get('email')?.setValue('Error');
