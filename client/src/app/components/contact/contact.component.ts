@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {GoogleMap, MapInfoWindow, MapMarker} from "@angular/google-maps";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ValueIncrementService} from "../../services/value-increment.service";
+import {Meta, Title} from "@angular/platform-browser";
 import {CommonService} from "../../services/common/common.service";
 import {AlertsService} from "../../services/alerts.service";
 import {Utilities} from "../../shared/utilities/utilities";
@@ -54,9 +54,20 @@ export class ContactComponent implements OnInit, AfterViewInit {
 
   utilities = Utilities;
 
-  constructor(private commonService: CommonService, private alertService: AlertsService) { }
+  constructor(private commonService: CommonService,
+              private meta: Meta, private title: Title,
+              private alertService: AlertsService) { }
 
   ngOnInit() {
+    this.title.setTitle('Talentboozt -Contact Us');
+    this.meta.addTags([
+      { name: 'description', content: 'Send us an email, and we’ll respond to your needs promptly. talentboozt@gmail.com. ' +
+          'Sri Lanka. Finland. +9474 410 4850' },
+      { name: 'keywords', content: 'Contact Talent Boozt, Support and Assistance, Reach Us Anytime, Customer Service, ' +
+          'Phone Support, Email Communication, Office Location, Sri Lanka Office, Immediate Help, Inquiry Form, ' +
+          'Get in Touch, Business Communication, Talent Solutions Support, Navigation Assistance, Help and Feedback, ' +
+          '24/7 Help' }
+    ]);
     this.initMap();
   }
 

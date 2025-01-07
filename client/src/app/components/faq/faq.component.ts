@@ -1,20 +1,21 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef,
+  ElementRef, OnInit,
   QueryList,
   ViewChild,
   ViewChildren
 } from '@angular/core';
 import {FAQUtilities} from "../../shared/utilities/faq.utilities";
 import {WindowService} from "../../services/common/window.service";
+import {Meta, Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-faq',
   templateUrl: './faq.component.html',
   styleUrls: ['./faq.component.scss']
 })
-export class FaqComponent implements AfterViewInit{
+export class FaqComponent implements AfterViewInit, OnInit{
   @ViewChild('buyingSec') buyingSec!: ElementRef;
   @ViewChild('generalSec') generalSec!: ElementRef;
   @ViewChild('paymentsSec') paymentsSec!: ElementRef;
@@ -28,7 +29,17 @@ export class FaqComponent implements AfterViewInit{
 
   utilities = FAQUtilities;
 
-  constructor(private windowService: WindowService) {
+  constructor(private meta: Meta, private title: Title, private windowService: WindowService) {
+  }
+
+  ngOnInit() {
+    this.title.setTitle('Talentboozt -FAQ');
+    this.meta.addTags([
+      { name: 'description', content: 'Talent Boozt Frequently Asked Questions. General Questions, Buying Questions, Payments FAQ' },
+      { name: 'keywords', content: 'Buying Questions, General Questions, Payments FAQ, Account Issues, Support Queries, ' +
+          'Company Information, Legal Inquiries, Other Questions, FAQ Categories, Customer Support, Payment Methods, ' +
+          'Account Management, Buying Process, Company Policies, Legal Terms, Common Questions, Customer Assistance' }
+    ]);
   }
 
   ngAfterViewInit() {
