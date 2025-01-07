@@ -5,6 +5,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CommonService} from "../../services/common/common.service";
 import {AlertsService} from "../../services/alerts.service";
 import {Utilities} from "../../shared/utilities/utilities";
+import {WindowService} from "../../services/common/window.service";
 
 @Component({
   selector: 'app-about',
@@ -70,19 +71,26 @@ export class AboutComponent implements OnInit, AfterViewInit {
 
   utilities = Utilities;
 
-  constructor(private valueIncrementService: ValueIncrementService, private commonService: CommonService, private alertService: AlertsService) { }
+  constructor(private valueIncrementService: ValueIncrementService,
+              private commonService: CommonService,
+              private windowService: WindowService,
+              private alertService: AlertsService) { }
 
   ngAfterViewInit(): void {
     this.setupIntersectionObserver();
-    const icons = document.querySelectorAll('.material-icons');
-    icons.forEach((icon) => {
-      icon.setAttribute('translate', 'no');
-    });
+    if (this.windowService.nativeDocument){
+      const icons = (document as any).querySelectorAll('.material-icons');
+      icons.forEach((icon: any) => {
+        icon.setAttribute('translate', 'no');
+      });
+    }
   }
 
   ngOnInit(): void {
-    this.jobsAch = localStorage.getItem('jobsAch') ? Number(localStorage.getItem('jobsAch')) : 0;
-    this.branchesAch = localStorage.getItem('branchesAch') ? Number(localStorage.getItem('branchesAch')) : 0;
+    if (this.windowService.nativeLocalStorage){
+      this.jobsAch = (localStorage as any).getItem('jobsAch') ? Number(localStorage.getItem('jobsAch')) : 0;
+      this.branchesAch = (localStorage as any).getItem('branchesAch') ? Number(localStorage.getItem('branchesAch')) : 0;
+    }
     this.initMap();
   }
 

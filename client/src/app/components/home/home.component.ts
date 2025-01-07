@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {ValueIncrementService} from "../../services/value-increment.service";
 import {EmployeeService} from "../../services/employee.service";
@@ -10,6 +10,7 @@ import {AlertsService} from "../../services/alerts.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CommonService} from "../../services/common/common.service";
 import {Utilities} from "../../shared/utilities/utilities";
+import {WindowService} from "../../services/common/window.service";
 
 @Component({
   selector: 'app-home',
@@ -93,6 +94,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
               private cookieService: AuthService,
               private alertService: AlertsService,
               private commonService: CommonService,
+              private windowService: WindowService,
               private toastr: ToastrService) {}
 
   async ngOnInit(): Promise<any> {
@@ -115,10 +117,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.setupIntersectionObserver();
-    const icons = document.querySelectorAll('.material-icons');
-    icons.forEach((icon) => {
-      icon.setAttribute('translate', 'no');
-    });
+    if (this.windowService.nativeDocument){
+      const icons = (document as any).querySelectorAll('.material-icons');
+      icons.forEach((icon: any) => {
+        icon.setAttribute('translate', 'no');
+      });
+    }
   }
 
   typewriter(): void {
@@ -199,7 +203,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
       // Convert the map back to an array and update jobAdDataStore
       this.jobAdDataStore = Array.from(uniqueJobsMap.values());
       this.jobsAch = this.jobAdDataStore?.length || 0;
-      localStorage.setItem('jobsAch', this.jobsAch.toString());
+      if (this.windowService.nativeLocalStorage)
+        (localStorage as any).setItem('jobsAch', this.jobsAch.toString());
     });
   }
 
@@ -225,7 +230,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.companyDataStore = data;
         this.companyDataStore = this.companyDataStore?.filter((data:any) => data.name !== null && data.shortDescription !== null || data.companyStory !== null);
         this.branchesAch = this.companyDataStore?.length || 0;
-        localStorage.setItem('branchesAch', this.branchesAch.toString());
+        if (this.windowService.nativeLocalStorage)
+          (localStorage as any).setItem('branchesAch', this.branchesAch.toString());
         this.loading = false;
       })
     )
@@ -329,8 +335,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.cookieService.newsletter();
           this.loading = false;
           this.newsLetterForm.reset();
-          const model_close = document.getElementById('news_model_close');
-          model_close?.click();
+          if (this.windowService.nativeDocument){
+            const model_close = (document as any).getElementById('news_model_close');
+            model_close?.click();
+          }
           return;
         }, (error) => {
           this.newsLetterForm.get('email')?.setValue('Error');
@@ -348,8 +356,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.alertService.successMessage("You have already subscribed to our newsletter :)", "Subscribed!");
       return;
     } else {
-      const model = document.getElementById('news_model_open');
-      model?.click();
+      if (this.windowService.nativeDocument){
+        const model = (document as any).getElementById('news_model_open');
+        model?.click();
+      }
     }
   }
 

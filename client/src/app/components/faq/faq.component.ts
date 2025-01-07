@@ -1,5 +1,13 @@
-import {AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  QueryList,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
 import {FAQUtilities} from "../../shared/utilities/faq.utilities";
+import {WindowService} from "../../services/common/window.service";
 
 @Component({
   selector: 'app-faq',
@@ -20,11 +28,16 @@ export class FaqComponent implements AfterViewInit{
 
   utilities = FAQUtilities;
 
+  constructor(private windowService: WindowService) {
+  }
+
   ngAfterViewInit() {
-    const icons = document.querySelectorAll('.material-icons');
-    icons.forEach((icon) => {
-      icon.setAttribute('translate', 'no');
-    });
+    if (this.windowService.nativeDocument){
+      const icons = (document as any).querySelectorAll('.material-icons');
+      icons.forEach((icon: any) => {
+        icon.setAttribute('translate', 'no');
+      });
+    }
   }
 
   private resetActiveClass() {

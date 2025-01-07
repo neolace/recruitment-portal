@@ -1,10 +1,12 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {EmployeeService} from "../../services/employee.service";
 import {AuthService} from "../../services/auth.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import {jobCategories} from "../../shared/data-store/job-categories-data-store";
 import {map, Observable, tap} from "rxjs";
+import {isPlatformBrowser} from "@angular/common";
+import {WindowService} from "../../services/common/window.service";
 
 @Component({
   selector: 'app-employee',
@@ -55,6 +57,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   constructor(private employeeService: EmployeeService,
               public cookieService: AuthService,
               private route: ActivatedRoute,
+              private windowService: WindowService,
               private router: Router) {}
 
   async ngOnInit(): Promise<any> {
@@ -76,10 +79,12 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const icons = document.querySelectorAll('.material-icons');
-    icons.forEach((icon) => {
-      icon.setAttribute('translate', 'no');
-    });
+    if (this.windowService.nativeDocument){
+      const icons = (document as any).querySelectorAll('.material-icons');
+      icons.forEach((icon: any) => {
+        icon.setAttribute('translate', 'no');
+      });
+    }
   }
 
   getEmployee(id: any) {
@@ -195,7 +200,8 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
     if (id) {
       this.router.navigate(['/candidate-profile'], {queryParams: {id: id}});
       setTimeout(() => {
-        window.location.reload();
+        if (this.windowService.nativeWindow)
+          (window as any).location.reload();
       }, 500)
     }
   }
@@ -251,6 +257,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
 
   focusInput() {
     this.employeeSearchInput.nativeElement.focus();
-    document.body.scrollTop = 0;
+    if (this.windowService.nativeDocument)
+      (document as any).body.scrollTop = 0;
   }
 }

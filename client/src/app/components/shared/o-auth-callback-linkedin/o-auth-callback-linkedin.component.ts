@@ -11,10 +11,10 @@ export class OAuthCallbackLinkedinComponent implements OnInit {
   constructor(private linkedInAuthService: LinkedInAuthService) {}
 
   ngOnInit() {
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams((window as any).location.search);
     const code = urlParams.get('code');
     const state = urlParams.get('state');
-    const storedState = localStorage.getItem('linkedin_auth_state');
+    const storedState = (localStorage as any).getItem('linkedin_auth_state');
 
     this.linkedInAuthService.handleLinkedInCallback(urlParams, code, state, storedState);
   }
