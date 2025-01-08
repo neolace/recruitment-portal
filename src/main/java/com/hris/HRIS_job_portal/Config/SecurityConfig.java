@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,6 +25,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -40,30 +42,40 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .headers(headers -> headers
+                        .contentSecurityPolicy(policy -> policy
+                                .policyDirectives("default-src 'self'; " +
+                                        "script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; " +
+                                        "style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline'; " +
+                                        "font-src 'self' https://fonts.gstatic.com https://kit.fontawesome.com; " +
+                                        "img-src 'self' data:; " +
+                                        "connect-src 'self' https://firebaseinstallations.googleapis.com; " +
+                                        "frame-src 'none'; " +
+                                        "object-src 'none'; " +
+                                        "base-uri 'self'; " +
+                                        "form-action 'self'; " +
+                                        "script-src-elem 'self' https://cdn.jsdelivr.net 'unsafe-inline'; " +
+                                        "style-src-elem 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline'")
+                        )
+                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
+                        .xssProtection(HeadersConfigurer.XXssConfig::disable)
+                        .referrerPolicy(referrerPolicy -> referrerPolicy.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN))
+                        .httpStrictTransportSecurity(
+                                httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer
+                                        .includeSubDomains(false)
+                                        .maxAgeInSeconds(31536000)
+                        )
+                )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/webhook/**",
-                                "/actuator/**",
-                                "/public/**",
-                                "/login",
-                                "/oauth2/**",
-                                "/oauth/**",
-                                "/sitemap.xml",
-                                "/home",
-                                "/about",
-                                "/job",
-                                "/companies",
-                                "/privacy-policy",
-                                "/terms-and-conditions",
-                                "/pricing",
-                                "/faq",
-                                "/for-companies",
-                                "/employees",
-                                "/styles.*.css",
-                                "/polyfills.*.js",
-                                "/runtime.*.js",
-                                "/main.*.js",
-                                "/assets/**"
+                                "/webhook/**", "/actuator/**", "/public/**",
+                                "/login", "/oauth2/**", "/oauth/**",
+                                "/sitemap.xml", "/home", "/about", "/job",
+                                "/companies", "/privacy-policy",
+                                "/terms-and-conditions", "/pricing", "/faq",
+                                "/for-companies", "/employees", "/*.ico",
+                                "/*.png", "/*.jpg", "/*.jpeg", "/*.svg",
+                                "/*.webp", "/*.gif", "/assets/**", "/*.css", "/*.js"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

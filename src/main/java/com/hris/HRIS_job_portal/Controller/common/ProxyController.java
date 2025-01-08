@@ -10,11 +10,10 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class ProxyController {
 
-    @GetMapping(value = "/**", produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping(value = "/static/**", produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<String> proxyToSSR(HttpServletRequest request) {
-        String angularSSRUrl = "https://talentboozt.com/" + request.getRequestURI();
+        String apiUrl = "https://talentboozt.com" + request.getRequestURI();
         RestTemplate restTemplate = new RestTemplate();
-        String html = restTemplate.getForObject(angularSSRUrl, String.class);
-        return ResponseEntity.ok(html);
+        return restTemplate.getForEntity(apiUrl, String.class);
     }
 }
