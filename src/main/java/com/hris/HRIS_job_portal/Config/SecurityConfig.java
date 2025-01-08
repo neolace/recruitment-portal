@@ -48,7 +48,22 @@ public class SecurityConfig {
                                 "/login",
                                 "/oauth2/**",
                                 "/oauth/**",
-                                "/sitemap.xml"
+                                "/sitemap.xml",
+                                "/home",
+                                "/about",
+                                "/job",
+                                "/companies",
+                                "/privacy-policy",
+                                "/terms-and-conditions",
+                                "/pricing",
+                                "/faq",
+                                "/for-companies",
+                                "/employees",
+                                "/styles.*.css",
+                                "/polyfills.*.js",
+                                "/runtime.*.js",
+                                "/main.*.js",
+                                "/assets/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
