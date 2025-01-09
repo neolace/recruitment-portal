@@ -1,6 +1,6 @@
 <div class="container">
   <div *ngFor="let j of jobData">
-    <h3>Job Post Analysis: {{ j?.jobId }}</h3>
+    <h3>Job Post Analysis: {{ j?.jobTitle || 'N/A' }}</h3>
 
     <div class="job-details">
       <p><strong>Applicants:</strong> {{ j?.applicants?.length || 0 }}</p>
@@ -20,7 +20,7 @@
                  data-bs-title="Check the job details"></i>
             </div>
             <div class="d-flex align-items-center justify-content-between">
-              <button class="see-more-btn me-1"*ngIf="j.applicants?.length > maxApplicantsDisplayed" (click)="toggleApplicants(j)">
+              <button class="see-more-btn me-1" *ngIf="j.applicants?.length > maxApplicantsDisplayed" (click)="toggleApplicants(j)">
                 <p class="d-none d-sm-block m-0">See {{ j.showAllApplicants ? 'less' : 'all' }}</p>
                 <i class="d-block d-sm-none material-icons">{{ j.showAllApplicants ? 'expand' : 'compress' }}</i>
               </button>
@@ -28,13 +28,17 @@
                 <button class="see-more-btn pb-0" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_horiz</i></button>
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" routerLink="/job-details/{{j.jobId}}">View ad</a></li>
-                  <li><a class="dropdown-item" (click)="exportToCsv(j.jobId, j.applicants)">Export</a></li>
+                  <li><a class="dropdown-item" (click)="exportToCsv(j.jobId, j.applicants)">Export Ad Data</a></li>
                   <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#viewsModel" [attr.data-bs-whatever]="j.jobId">Viewers</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item danger" (click)="openDeleteModal(j.id, j, 'deleteJob')" data-bs-toggle="modal" data-bs-target="#deleteJobModel">Delete</a></li>
                 </ul>
               </div>
             </div>
+          </div>
+
+          <div class="title-1">
+            Job Title: {{j.jobTitle ? j.jobTitle : 'N/A'}}
           </div>
 
           <table class="table table-hover table-borderless w-100">

@@ -60,7 +60,9 @@ export class JobDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     icons.forEach((icon) => {
       icon.setAttribute('translate', 'no');
     });
-    this.addViewer();
+    setTimeout(() => {
+      this.addViewer();
+    }, 1500);
   }
 
   ngOnDestroy() {

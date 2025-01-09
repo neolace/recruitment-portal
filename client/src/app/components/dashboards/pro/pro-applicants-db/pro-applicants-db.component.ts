@@ -103,10 +103,10 @@ export class ProApplicantsDbComponent implements AfterViewInit, OnInit {
     job.showAllApplicants = !job.showAllApplicants;
   }
 
-  analyzeJob(jobId: any) {
-    if (jobId) {
+  analyzeJob(jobId: any, jobTitle: any) {
+    if (jobId && jobTitle) {
       const url = this.router.serializeUrl(
-        this.router.createUrlTree(['/job-analysis', jobId])
+        this.router.createUrlTree(['/job-analysis', jobId,jobTitle])
       );
       window.open(url, '_blank');
     }

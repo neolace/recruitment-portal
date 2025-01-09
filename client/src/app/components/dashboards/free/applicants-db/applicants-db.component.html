@@ -39,7 +39,7 @@
                   <i class="material-icons">more_horiz</i>
                 </div>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" (click)="analyzeJob(p.id)">Analyze</a></li>
+                  <li><a class="dropdown-item" (click)="analyzeJob(p.id, p.title)">Analyze Applicants</a></li>
                   <li *ngIf="!isExpired(p.expiryDate)"><a class="dropdown-item" routerLink="/job-details/{{p.id}}">View</a></li>
                   <li *ngIf="!isExpired(p.expiryDate)"><a class="dropdown-item" (click)="edit(p.id)">Edit and Update</a></li>
                   <li><a class="dropdown-item" (click)="isExpired(p.expiryDate) ? reopen(p.id) : close(p.id, p)">{{isExpired(p.expiryDate) ? 'Reopen' : 'Close'}} the Job</a></li>
@@ -52,7 +52,7 @@
             </div>
           </div>
           <hr>
-          <div class="card-content" (click)="analyzeJob(p.id)">
+          <div class="card-content" (click)="analyzeJob(p.id, p.title)">
             <div class="card-content-left">
               <div class="d-flex flex-column align-items-start">
                 <div class="job-title">{{p.title ? p.title : 'N/A'}}</div>
@@ -90,7 +90,7 @@
           </tr>
           </thead>
           <tbody class="w-100">
-          <tr *ngFor="let p of ongoingPostedJobs; let i = index" (click)="analyzeJob(p.id)">
+          <tr *ngFor="let p of ongoingPostedJobs; let i = index" (click)="analyzeJob(p.id, p.title)">
             <td>{{i + 1}}</td>
             <td>{{p.title ? p.title : 'N/A'}}</td>
             <td>{{p.totalOpenings ? p.totalOpenings : 'N/A'}}</td>
@@ -132,7 +132,7 @@
                   <i class="material-icons">more_horiz</i>
                 </div>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" (click)="analyzeJob(p.id)">Analyze</a></li>
+                  <li><a class="dropdown-item" (click)="analyzeJob(p.id, p.title)">Analyze Applicants</a></li>
                   <li *ngIf="!isExpired(p.expiryDate)"><a class="dropdown-item" routerLink="/job-details/{{p.id}}">View</a></li>
                   <li *ngIf="!isExpired(p.expiryDate)"><a class="dropdown-item" (click)="edit(p.id)">Edit and Update</a></li>
                   <li><a class="dropdown-item" (click)="isExpired(p.expiryDate) ? reopen(p.id) : close(p.id, p)">{{isExpired(p.expiryDate) ? 'Reopen' : 'Close'}} the Job</a></li>
@@ -145,7 +145,7 @@
             </div>
           </div>
           <hr>
-          <div class="card-content" (click)="analyzeJob(p.id)">
+          <div class="card-content" (click)="analyzeJob(p.id, p.title)">
             <div class="card-content-left">
               <div class="d-flex flex-column align-items-start">
                 <div class="job-title">{{p.title ? p.title : 'N/A'}}</div>
@@ -183,7 +183,7 @@
           </tr>
           </thead>
           <tbody class="w-100">
-          <tr *ngFor="let p of closedPostedJobs; let i = index" (click)="analyzeJob(p.id)">
+          <tr *ngFor="let p of closedPostedJobs; let i = index" (click)="analyzeJob(p.id, p.title)">
             <td>{{i + 1}}</td>
             <td>{{p.title ? p.title : 'N/A'}}</td>
             <td>{{p.totalOpenings ? p.totalOpenings : 'N/A'}}</td>
