@@ -39,8 +39,8 @@ export class AboutComponent implements OnInit, AfterViewInit {
   markers:any = [
     {
       position: {
-        lat: 6.918604,
-        lng: 79.865564,
+        lat: 60.170457948013656,
+        lng: 24.668426188871543
       },
       label: {
         color: '#fff',
@@ -108,8 +108,8 @@ export class AboutComponent implements OnInit, AfterViewInit {
 
   initMap(){
     this.center = {
-      lat: 6.918604,
-      lng: 79.865564,
+      lat: 60.170457948013656,
+      lng: 24.668426188871543
     };
   }
 

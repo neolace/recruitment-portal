@@ -28,8 +28,8 @@ export class ContactComponent implements OnInit, AfterViewInit {
   markers:any = [
     {
       position: {
-        lat: 6.918604,
-        lng: 79.865564,
+        lat: 60.170457948013656,
+        lng: 24.668426188871543
       },
       label: {
         color: '#5faee3',
@@ -73,8 +73,8 @@ export class ContactComponent implements OnInit, AfterViewInit {
 
   initMap(){
     this.center = {
-      lat: 6.918604,
-      lng: 79.865564,
+      lat: 60.170457948013656,
+      lng: 24.668426188871543
     };
   }
 
