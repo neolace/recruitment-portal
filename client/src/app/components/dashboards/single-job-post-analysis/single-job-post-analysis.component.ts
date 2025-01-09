@@ -21,12 +21,14 @@ export class SingleJobPostAnalysisComponent implements AfterViewInit, OnInit {
   @ViewChild('closeModal2') closeModal2!: ElementRef;
 
   jobId: any;
+  jobTitle: string | undefined;
   jobData: any[] = [{
     applicants : [],
     companyId: '',
     jobDescription: '',
     id: '',
     jobId:'',
+    jobTitle:'',
     viewers: [],
   }];
 
@@ -64,6 +66,7 @@ export class SingleJobPostAnalysisComponent implements AfterViewInit, OnInit {
     this.companyId = this.cookieService.organization();
     this.route.params.subscribe(params => {
       this.jobId = params['id'];
+      this.jobTitle = params['title'];
     })
     this.fetchJobData();
   }
@@ -84,6 +87,7 @@ export class SingleJobPostAnalysisComponent implements AfterViewInit, OnInit {
     this.jobApplyService.fetchJobApplyByJobId(this.jobId).subscribe((data: any) => {
       this.jobData = data?.filter((data: any) => data != null).map((job: any) => ({
         ...job,
+        jobTitle: this.jobTitle,
         showAllApplicants: false
       }));
     }, (error: HttpErrorResponse) => {
