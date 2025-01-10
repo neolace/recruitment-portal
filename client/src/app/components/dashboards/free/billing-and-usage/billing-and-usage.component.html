@@ -20,7 +20,7 @@
       <p class="m-0"><strong>Job Posts Used:</strong> {{ postedJobs?.postedJobs?.length }}</p>
       <p><strong>Job Post Limit:</strong> {{ company?.company?.companyLevel == 2 ? 3 : company?.company?.companyLevel == 3 ? 10 : company?.company?.companyLevel == 4 ? 'Unlimited' : 'Not Initialized' }}</p>
     </div>
-    <mat-progress-bar [value]="calculatePercentage(postedJobs?.postedJobs?.length, company?.company?.companyLevel == 2 ? 3 : company?.company?.companyLevel == 3 ? 10 : company?.company?.companyLevel == 4 ? Infinity : Infinity)"></mat-progress-bar>
+    <progress [value]="calculatePercentage(postedJobs?.postedJobs?.length, company?.company?.companyLevel == 2 ? 3 : company?.company?.companyLevel == 3 ? 10 : company?.company?.companyLevel == 4 ? Infinity : Infinity)" max="100"></progress>
     <ng-template #usageLoading>
       <p>Loading usage data...</p>
     </ng-template>
