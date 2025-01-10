@@ -2,8 +2,9 @@
   <div class="row">
     <div class="col-12 col-md-6">
       <h2 class="h2-1 mt-5">Hi,</h2>
-      <h2 class="h2-2">{{employee?.employee?.firstname ? employee?.employee?.firstname : 'User'}}</h2>
+      <h2 class="h2-2">{{employee?.employee?.firstname ? employee?.employee?.firstname : 'User'}},</h2>
 
+      <h2 class="h2-3" *ngIf="formLocked">Post your First Job ad! You are<span> 2 steps </span>away!</h2>
       <div class="d-flex align-items-center justify-content-center w-100 my-5 c-j-progress" *ngIf="formLocked">
         <div class="check-ball" [ngClass]="'active'" title="Account Creation">
           <i class="material-icons">check</i>
@@ -17,7 +18,7 @@
         </div>
         <div class="check-line"></div>
         <div class="check-ball ready" [ngClass]="formLocked?'':'active'" title="Post Your Job">
-          <i class="material-icons">{{formLocked?'lock_outline':'lock_open'}}</i>
+          <i class="material-icons">{{formLocked ? 'lock_outline' : 'lock_open'}}</i>
           <div class="tag">Post Your Job</div>
           <button class="btn-1" [disabled]="formLocked" routerLink="/pro/post-job">Post Job</button>
         </div>
@@ -113,7 +114,8 @@
   <app-forbidden></app-forbidden>
 </div>
 
-<button type="button" id="quick_details_model_open" class="d-none" data-bs-toggle="modal" data-bs-target="#quick_details"></button>
+<button type="button" id="quick_details_model_open" class="d-none" data-bs-toggle="modal"
+        data-bs-target="#quick_details"></button>
 <div class="modal fade" id="quick_details" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="quick_detailsLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
@@ -170,12 +172,13 @@
               </div>
             </div>
           </form>
-          <p class="mb-0">These are the minimalistic details required to unlock your profile. Please complete all information
-          to better looking from business settings page :)</p>
+          <p class="mb-0">These are the minimum details required to unlock your profile. Don't forget to complete your
+            profile through the business settings Page!</p>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" id="quick_details_model_close" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" id="quick_details_model_close" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+        </button>
         <button type="button" class="btn-1" [disabled]="loading"
                 (click)="completeActivation()">{{loading ? 'Saving...' : 'Save'}}</button>
       </div>

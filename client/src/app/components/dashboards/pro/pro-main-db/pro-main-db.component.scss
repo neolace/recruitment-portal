@@ -7,6 +7,15 @@
   font-weight: 700;
 }
 
+.h2-3{
+  font-size: 22px;
+  color: var(--color-text-300);
+
+  span{
+    color: #FF6347FF;
+  }
+}
+
 .notification-area{
   padding: max(20px, 3vw) 0;
 
