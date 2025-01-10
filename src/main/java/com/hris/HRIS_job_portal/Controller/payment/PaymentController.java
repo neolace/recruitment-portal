@@ -33,8 +33,16 @@ public class PaymentController {
     @PostMapping("/create-payment-intent")
     public Map<String, String> createPaymentIntent(@RequestBody Map<String, Object> paymentData) throws StripeException {
         String companyId = (String) paymentData.get("companyId");
+        String planName = (String) paymentData.get("planName");
+        Long amount = switch (planName) {
+            case "Pro" -> 990L;
+            case "Pro-Onetime" -> 2990L;
+            case "Premium" -> 1990L;
+            case "Premium-Onetime" -> 5990L;
+            default -> throw new IllegalArgumentException("Invalid plan name: " + planName);
+        };
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
-                .setAmount(990L) // Amount in cents
+                .setAmount(amount) // Amount in cents
                 .setCurrency("usd")
                 .setAutomaticPaymentMethods(
                         PaymentIntentCreateParams.AutomaticPaymentMethods.builder()
