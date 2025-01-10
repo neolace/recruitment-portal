@@ -13,20 +13,33 @@
         <div class="h-100" [ngClass]="p.recommended?'ribbon':''">
           <span *ngIf="p.recommended">Recommended</span>
           <div class="pricing-card" [ngClass]="p.name == 'Premium' ? 'gold-shade': p.name == 'Free'?'blue-shade':''">
+            <div class="offer-wrapper" *ngIf="p.onetimePayment.available">
+              <div id="burst-12">
+                <div class="offer-content">
+                  <div class="offer-name">{{p.onetimePayment.offerName}}</div>
+                  <div class="offer-description">{{p.onetimePayment.offerDescription}}</div>
+                  <div class="offer-price">
+                    <sup class="sup">$</sup>
+                    <span class="price">{{p.onetimePayment.price}}</span>
+                    <span class="currency">&nbsp;/USD</span>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="title" [ngClass]="p.name == 'Premium' ? 'gold-title':''">{{p.name}}</div>
             <div class="desc">{{p.shortDescription}}</div>
             <div class="d-flex align-items center justify-content-center w-100">
             <span class="d-flex align-items-center">
-            <sup class="sup">$</sup>
-            <span class="price">{{p.price}}</span>
-            <sub class="currency">{{p.currency}}</sub>
-            <span class="duration">&nbsp;/{{p.payPeriod}}</span>
+            <sup class="sup" [ngClass]="p.onetimePayment.available ? 'struck' : ''">$</sup>
+            <span class="price" [ngClass]="p.onetimePayment.available ? 'struck' : ''">{{p.price}}</span>
+            <sub class="currency" [ngClass]="p.onetimePayment.available ? 'struck' : ''">{{p.currency}}</sub>
+            <span class="duration" [ngClass]="p.onetimePayment.available ? 'struck' : ''">&nbsp;/{{p.payPeriod}}</span>
             </span>
             </div>
 
             <div class="row">
               <div *ngFor="let b of p.buttons" class="{{p.buttons.length > 1 ? 'col-6' : 'col-12'}}">
-                <button class="{{b.class}}" (click)="gotoCart(p.cart, b.link)">{{b.text}}</button>
+                <button class="{{b.class}}" (click)="gotoCart(p.onetimePayment.available ? p.onetimePayment : p.cart, b.link)">{{b.text}}</button>
               </div>
             </div>
 
