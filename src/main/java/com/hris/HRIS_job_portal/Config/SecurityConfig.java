@@ -68,7 +68,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/webhook/**", "/actuator/**", "/public/**",
+                                "/stripe/**", "/actuator/**", "/public/**",
                                 "/login", "/oauth2/**", "/oauth/**",
                                 "/sitemap.xml", "/home", "/about", "/job",
                                 "/companies", "/privacy-policy",

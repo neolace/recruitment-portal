@@ -56,12 +56,15 @@ public class StripeService {
             throw new IllegalArgumentException("Invalid plan name: " + planName);
         }
 
+        boolean isOneTimePayment = planName.endsWith("-Onetime");
+        String sessionMode = isOneTimePayment ? "payment" : "subscription";
+
         Map<String, Object> subscriptionData = new HashMap<>();
         subscriptionData.put("metadata", Map.of("company_id", companyId));
 
         Map<String, Object> params = new HashMap<>();
         params.put("line_items", List.of(Map.of("price", priceId, "quantity", 1)));
-        params.put("mode", "subscription");
+        params.put("mode", sessionMode);
         params.put("subscription_data", subscriptionData);
         params.put("success_url", configUtility.getProperty("STRIPE_SUCCESS_URL"));
         params.put("cancel_url", configUtility.getProperty("STRIPE_CANCEL_URL"));
