@@ -74,7 +74,7 @@ export class BankCheckoutComponent {
               slipUrl: this.downloadURL
             }).subscribe((res: any) => {
               this.router.navigate(['/thank-you']);
-              this.alertService.successMessage("We Recieved your payment request and will get back to you soon.", "Success");
+              this.alertService.successMessage("We Received your payment request and will get back to you soon.", "Success");
             }, (err: any) => {
               this.alertService.errorMessage('Something went wrong. Please try again.', 'error');
             })
