@@ -1,14 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ChartOptions, ChartType, ChartData } from 'chart.js';
-import * as moment from 'moment';
+import {Component, Input} from '@angular/core';
+import {ChartData, ChartOptions, ChartType} from "chart.js";
 import {ThemeService} from "../../../../services/theme.service";
+import * as moment from "moment/moment";
 
 @Component({
-  selector: 'app-job-viewers-over-time-line-chart',
-  templateUrl: './job-viewers-over-time-line-chart.component.html',
-  styleUrls: ['./job-viewers-over-time-line-chart.component.scss']
+  selector: 'app-applicants-over-time-line-chart',
+  templateUrl: './applicants-over-time-line-chart.component.html',
+  styleUrl: './applicants-over-time-line-chart.component.scss'
 })
-export class JobViewersOverTimeLineChartComponent implements OnInit {
+export class ApplicantsOverTimeLineChartComponent {
   @Input() jobData: any[] = [];
 
   public lineChartOptions: ChartOptions<'line'> = {
@@ -45,28 +45,28 @@ export class JobViewersOverTimeLineChartComponent implements OnInit {
       return;
     }
 
-    const dateViewMap: { [date: string]: number } = {};
+    const dateApplyMap: { [date: string]: number } = {};
 
-    // Loop through each job's viewers and count views per date
+    // Loop through each job's applicants and count views per date
     this.jobData.forEach(job => {
-      job.viewers.forEach((viewer: any) => {
-        const viewDate = viewer.date ? moment(viewer.date).format('MM-DD') : 'Unknown';
-        if (!dateViewMap[viewDate]) {
-          dateViewMap[viewDate] = 1;
+      job.applicants.forEach((applicant: any) => {
+        const applyDate = applicant.date ? moment(applicant.date).format('MM-DD') : 'Unknown';
+        if (!dateApplyMap[applyDate]) {
+          dateApplyMap[applyDate] = 1;
         } else {
-          dateViewMap[viewDate]++;
+          dateApplyMap[applyDate]++;
         }
       });
     });
 
     // Extract dates and counts
-    const dates = Object.keys(dateViewMap).sort(); // Sort by date
-    const counts = dates.map(date => dateViewMap[date]);
+    const dates = Object.keys(dateApplyMap).sort(); // Sort by date
+    const counts = dates.map(date => dateApplyMap[date]);
 
     // Update chart data
     this.lineChartData.labels = dates;
     this.lineChartData.datasets = [{
-      label: 'Job Viewers Over Time',
+      label: 'Job Applicants Over Time',
       data: counts,
       borderColor: '#3e95cd',
       fill: false

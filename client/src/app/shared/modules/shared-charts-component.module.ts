@@ -28,6 +28,9 @@ import {
 import {
   ApplicantsEmailDomainsChartComponent
 } from "../../components/dashboards/charts/applicants-email-domains-chart/applicants-email-domains-chart.component";
+import {
+  ApplicantsOverTimeLineChartComponent
+} from "../../components/dashboards/charts/applicants-over-time-line-chart/applicants-over-time-line-chart.component";
 
 @NgModule({
   declarations: [
@@ -39,7 +42,8 @@ import {
     ApplicantSubmissionDatesChartComponent,
     ViewerTypesPieChartComponent,
     ResumeDownloadRatesChartComponent,
-    ApplicantsEmailDomainsChartComponent
+    ApplicantsEmailDomainsChartComponent,
+    ApplicantsOverTimeLineChartComponent
   ],
   imports: [
     NgChartsModule,
@@ -54,7 +58,8 @@ import {
     ApplicantSubmissionDatesChartComponent,
     ViewerTypesPieChartComponent,
     ResumeDownloadRatesChartComponent,
-    ApplicantsEmailDomainsChartComponent
+    ApplicantsEmailDomainsChartComponent,
+    ApplicantsOverTimeLineChartComponent
   ]
 })
 export class SharedChartsComponentModule {}
