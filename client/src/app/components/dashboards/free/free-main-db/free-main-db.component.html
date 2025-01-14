@@ -24,22 +24,6 @@
         </div>
       </div>
 
-      <h2 class="h2-3" *ngIf="!formLocked"> </h2>
-      <div class="row w-100" *ngIf="!formLocked">
-        <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">
-          <div class="card-1">
-            <div class="title-1">Job Viewers Over Time</div>
-            <app-job-viewers-over-time-line-chart [jobData]="jobApplicants"></app-job-viewers-over-time-line-chart>
-          </div>
-        </div>
-        <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">
-          <div class="card-1">
-            <div class="title-1">Job Applicants Over Time</div>
-            <app-applicants-over-time-line-chart [jobData]="jobApplicants"></app-applicants-over-time-line-chart>
-          </div>
-        </div>
-      </div>
-
       <div class="notification-area">
         <div>
           <p class="not-title-1">See what's new!</p>
