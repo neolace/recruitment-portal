@@ -50,7 +50,7 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
   cLogo: any = '';
   formLocked: boolean = false;
 
-  postedJobs: any = [];
+  postedJobs: any[] = [];
 
   downloadURL?: any;
 
@@ -315,14 +315,14 @@ export class JobPostComponent implements AfterViewInit, OnInit, CanComponentDeac
       redirectUrl: this.jobPostForm.get('customUrl')?.value
     }]
 
-    if (this.companyLevel === '2'){
+    if (this.companyLevel === '2' && this.postedJobs){
       if (this.postedJobs[0]?.postedJobs?.length >= 3) {
         this.alertService.warningMessage('You Reached Maximum Job Post Limit. Upgrade to Add More!', 'Warning');
         return;
       }
     }
 
-    if (this.companyLevel === '3'){
+    if (this.companyLevel === '3' && this.postedJobs){
       if (this.postedJobs[0]?.postedJobs?.length >= 10) {
         this.alertService.warningMessage('You Reached Maximum Job Post Limit. Upgrade to Add More!', 'Warning');
         return;
