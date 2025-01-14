@@ -21,9 +21,7 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
   personalProgressMode: ProgressSpinnerMode = 'determinate';
 
   applicants: any[] = [];
-  filteredApplicants: any[] = [];
   views: any[] = [];
-  filteredViews: any[] = [];
   applicantsMap: any = {}; // Store applicants by jobPostId
   viewsMap: any = {}; // Store viewers by jobPostId
 
@@ -44,8 +42,6 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
   cphone: any = '';
   chq: any = '';
   formLocked: boolean = true;
-
-  jobApplicants: any[] = [];
 
   profileCompletionForm = new FormGroup({
     cname: new FormControl('', [Validators.required]),
@@ -75,7 +71,6 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
       icon.setAttribute('translate', 'no');
     });
     this.fetchJobPostData();
-    this.fetchApplicants();
   }
 
   getEmployee(id: any) {
@@ -225,31 +220,5 @@ export class FreeMainDbComponent implements AfterViewInit, OnInit {
     } else {
       this.profileCompletionForm.markAllAsTouched();
     }
-  }
-
-  fetchApplicants() {
-    this.loading = true;
-    this.jobApplyService.fetchJobApplyByCompanyId(this.companyId).subscribe((data: any) => {
-      this.jobApplicants = data?.map((job: any) => ({
-        ...job,
-        showAllApplicants: false
-      }));
-      this.loading = false;
-    }, (error: HttpErrorResponse) => {
-      // Check for different error types
-      if (error.status === 404) {
-        this.notFound = true;
-      } else if (error.status === 500) {
-        this.serverError = true;
-      } else if (error.status === 0) {
-        this.corsError = true;
-      } else if (error.status === 403) {
-        this.forbidden = true;
-      } else {
-        this.unexpectedError = true;
-      }
-
-      this.loading = false;
-    });
   }
 }

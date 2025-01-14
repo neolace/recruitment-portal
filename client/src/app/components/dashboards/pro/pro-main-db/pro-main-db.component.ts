@@ -22,9 +22,7 @@ export class ProMainDbComponent implements AfterViewInit{
   personalProgressMode: ProgressSpinnerMode = 'determinate';
 
   applicants: any[] = [];
-  filteredApplicants: any[] = [];
   views: any[] = [];
-  filteredViews: any[] = [];
   applicantsMap: any = {}; // Store applicants by jobPostId
   viewsMap: any = {}; // Store viewers by jobPostId
 
@@ -46,6 +44,8 @@ export class ProMainDbComponent implements AfterViewInit{
   chq: any = '';
   formLocked: boolean = true;
 
+  jobApplicants: any[] = [];
+
   profileCompletionForm = new FormGroup({
     cname: new FormControl('', [Validators.required]),
     cemail: new FormControl('', [Validators.required, Validators.email]),
@@ -66,7 +66,6 @@ export class ProMainDbComponent implements AfterViewInit{
     this.companyId = this.cookieService.organization();
     this.getEmployee(this.employeeId)
     this.getCompany(this.companyId);
-    this.fetchJobPostData();
   }
 
   ngAfterViewInit() {
@@ -74,6 +73,8 @@ export class ProMainDbComponent implements AfterViewInit{
     icons.forEach((icon) => {
       icon.setAttribute('translate', 'no');
     });
+    this.fetchApplicants();
+    this.fetchJobPostData();
   }
 
   getEmployee(id: any) {
@@ -222,5 +223,36 @@ export class ProMainDbComponent implements AfterViewInit{
     } else {
       this.profileCompletionForm.markAllAsTouched();
     }
+  }
+
+  fetchApplicants() {
+    this.loading = true;
+    this.jobApplyService.fetchJobApplyByCompanyId(this.companyId).subscribe((data: any) => {
+      this.jobApplicants = data?.map((job: any) => ({
+        ...job,
+        showAllApplicants: false
+      }));
+      this.loading = false;
+    }, (error: HttpErrorResponse) => {
+      // Check for different error types
+      if (error.status === 404) {
+        this.notFound = true;
+      } else if (error.status === 500) {
+        this.serverError = true;
+      } else if (error.status === 0) {
+        this.corsError = true;
+      } else if (error.status === 403) {
+        this.forbidden = true;
+      } else {
+        this.unexpectedError = true;
+      }
+
+      this.loading = false;
+    });
+  }
+
+  conversionRate(viewers: number = 0, applicants: number = 0): number {
+    const rate = (applicants / viewers) * 100;
+    return parseFloat(String(rate.toFixed(2)));
   }
 }
