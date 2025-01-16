@@ -10,7 +10,7 @@ import {WindowService} from "./common/window.service";
 @Injectable({
   providedIn: 'root',
 })
-export class LinkedInAuthService implements OnInit{
+export class LinkedInAuthService{
   private linkedInSdkLoaded = false;
   baseUrl = environment.apiUrl;
   private clientId = environment.linkedinAuthConfig.clientId
@@ -25,12 +25,12 @@ export class LinkedInAuthService implements OnInit{
     private http: HttpClient
   ) {}
 
-  ngOnInit(): void {
-    const window = this.windowService.nativeWindow;
-    if (window) {
-      this.redirectUri = `${window.location.origin}/oauth-callback/linkedin`;
-    }
-  }
+  // ngOnInit(): void {
+  //   const window = this.windowService.nativeWindow;
+  //   if (window) {
+  //     this.redirectUri = `${window.location.origin}/oauth-callback/linkedin`;
+  //   }
+  // }
 
   /**
    * Dynamically loads the LinkedIn SDK script

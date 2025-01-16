@@ -9,7 +9,7 @@
       <div class="form-card-1">
         <div class="logo" [ngStyle]="{'background-image': themeService.isDarkMode() ? 'url(./assets/imgs/logo/top-w.webp)' : 'url(./assets/imgs/logo/top-b.webp)'}">
         </div>
-        <h5 class="title">Login to your account</h5>
+        <h5 class="title">Sign in to your account</h5>
 
         <form [formGroup]="loginForm">
           <div class="row form-wrapper">
@@ -40,7 +40,7 @@
             </div>
 
             <div class="col-12">
-              <button class="btn-1 w-100" (click)="loginUser()" [disabled]="disabled">Login</button>
+              <button class="btn-1 w-100" (click)="loginUser()" [disabled]="disabled">Sign In</button>
             </div>
 
             <div class="d-flex align-items-center justify-content-center">
