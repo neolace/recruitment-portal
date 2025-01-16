@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CredentialService} from "../../../services/credential.service";
@@ -13,7 +13,7 @@ import {AuthService} from "../../../services/auth.service";
   styleUrls: ['./limitted-offer.component.scss']
 })
 export class LimittedOfferComponent implements OnInit{
-
+  @ViewChild('applyOffer') applyOffer!: ElementRef;
   hours = 10;
   minutes = 25;
   seconds = 50;
@@ -145,5 +145,9 @@ export class LimittedOfferComponent implements OnInit{
       this.minutes = 59;
       this.seconds = 59;
     }
+  }
+
+  applyOfferNavigate() {
+    this.applyOffer?.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
 }
