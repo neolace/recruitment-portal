@@ -11,7 +11,7 @@
 
 <div class="hero-banner-wrapper">
   <div class="banner-content-top">
-    <h1>Be Among the First 30 to Get Pro Access for Life — Free!</h1>
+    <h1>Be Among the First 30 Employers to Get Pro Access for Life — Free!</h1>
     <p>Our way of saying thank you for believing in us early! Don’t miss this limited-time opportunity.</p>
   </div>
   <div class="hero-banner"></div>
@@ -22,7 +22,9 @@
   </div>
   <div class="banner-content-bottom" *ngIf="!isOfferActive">
     <h2>This Offer Has Expired!</h2>
-    <button class="btn-1" routerLink="/register">Claim Free Account!</button>
+    <a href="/limited-offer#apply-offer">
+      <button class="btn-1">Claim Free Account!</button>
+    </a>
   </div>
 </div>
 
@@ -80,7 +82,7 @@
       </div>
     </div>
     <div class="col-12 col-md-6">
-      <div class="form-card-1">
+      <div class="form-card-1" id="apply-offer">
         <div class="logo" [ngStyle]="{'background-image': themeService.isDarkMode() ? 'url(./assets/imgs/logo/top-w.webp)' : 'url(./assets/imgs/logo/top-b.webp)'}">
         </div>
         <h5 class="title">Secure Your Lifetime Access Now!</h5>
