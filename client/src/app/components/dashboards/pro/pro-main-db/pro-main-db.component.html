@@ -24,48 +24,69 @@
         </div>
       </div>
 
-      <div class="row w-100" *ngIf="!formLocked">
-        <div class="col-6 col-md-4">
-          <div class="card-1">
-            <div class="icon-lg">
-              <i class="material-icons">remove_red_eye</i>
-            </div>
-            <p class="mb-0">Number of Views</p>
-            <div class="title-1">{{jobApplicants[0]?.viewers?.length || 0}}</div>
+      <div class="short-cuts" *ngIf="!formLocked">
+        <div class="shortcut-wrapper">
+          <div class="shortcut" routerLink="/pro/post-job">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
           </div>
+          <p>Post a Job</p>
         </div>
-        <div class="col-6 col-md-4">
-          <div class="card-1">
-            <div class="icon-lg">
-              <i class="material-icons">people_alt</i>
-            </div>
-            <p class="mb-0">Number of Applicants</p>
-            <div class="title-1">{{jobApplicants[0]?.applicants?.length || 0}}</div>
+        <div class="shortcut-wrapper">
+          <div class="shortcut" routerLink="/pro/company-jobs">
+            <i class="fa fa-eye" aria-hidden="true"></i>
           </div>
+          <p>View Ads</p>
         </div>
-        <div class="col-6 col-md-4">
-          <div class="card-1">
-            <div class="icon-lg">
-              <i class="material-icons">check_circle_outline</i>
-            </div>
-            <p class="mb-0">Conversion Rate</p>
-            <div class="title-1">{{conversionRate(jobApplicants[0]?.viewers?.length, jobApplicants[0]?.applicants?.length)}}%</div>
+        <div class="shortcut-wrapper">
+          <div class="shortcut" routerLink="/pro/company-analysis">
+            <i class="fa fa-bar-chart" aria-hidden="true"></i>
           </div>
-        </div>
-
-        <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">
-          <div class="card-1">
-            <div class="title-1">Job Viewers Over Time</div>
-            <app-job-viewers-over-time-line-chart [jobData]="jobApplicants"></app-job-viewers-over-time-line-chart>
-          </div>
-        </div>
-        <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">
-          <div class="card-1">
-            <div class="title-1">Job Applicants Over Time</div>
-            <app-applicants-over-time-line-chart [jobData]="jobApplicants"></app-applicants-over-time-line-chart>
-          </div>
+          <p>Recruitment Analysis</p>
         </div>
       </div>
+
+<!--      <div class="row w-100" *ngIf="!formLocked">-->
+<!--        <div class="col-6 col-md-4">-->
+<!--          <div class="card-1">-->
+<!--            <div class="icon-lg">-->
+<!--              <i class="material-icons">remove_red_eye</i>-->
+<!--            </div>-->
+<!--            <p class="mb-0">Number of Views</p>-->
+<!--            <div class="title-1">{{jobApplicants[0]?.viewers?.length || 0}}</div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-6 col-md-4">-->
+<!--          <div class="card-1">-->
+<!--            <div class="icon-lg">-->
+<!--              <i class="material-icons">people_alt</i>-->
+<!--            </div>-->
+<!--            <p class="mb-0">Number of Applicants</p>-->
+<!--            <div class="title-1">{{jobApplicants[0]?.applicants?.length || 0}}</div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-6 col-md-4">-->
+<!--          <div class="card-1">-->
+<!--            <div class="icon-lg">-->
+<!--              <i class="material-icons">check_circle_outline</i>-->
+<!--            </div>-->
+<!--            <p class="mb-0">Conversion Rate</p>-->
+<!--            <div class="title-1">{{conversionRate(jobApplicants[0]?.viewers?.length, jobApplicants[0]?.applicants?.length)}}%</div>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">-->
+<!--          <div class="card-1">-->
+<!--            <div class="title-1">Job Viewers Over Time</div>-->
+<!--            <app-job-viewers-over-time-line-chart [jobData]="jobApplicants"></app-job-viewers-over-time-line-chart>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-12 col-md-6" *ngIf="jobApplicants && jobApplicants.length > 0">-->
+<!--          <div class="card-1">-->
+<!--            <div class="title-1">Job Applicants Over Time</div>-->
+<!--            <app-applicants-over-time-line-chart [jobData]="jobApplicants"></app-applicants-over-time-line-chart>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
 
       <div class="notification-area">
         <div>

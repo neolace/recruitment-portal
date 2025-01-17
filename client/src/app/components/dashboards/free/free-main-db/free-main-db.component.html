@@ -24,6 +24,27 @@
         </div>
       </div>
 
+      <div class="short-cuts" *ngIf="!formLocked">
+        <div class="shortcut-wrapper">
+          <div class="shortcut" routerLink="/dashboard/post-job">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+          </div>
+          <p>Post a Job</p>
+        </div>
+        <div class="shortcut-wrapper">
+          <div class="shortcut" routerLink="/dashboard/company-jobs">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+          </div>
+          <p>View Ads</p>
+        </div>
+        <div class="shortcut-wrapper">
+          <div class="shortcut" routerLink="/dashboard/company-analysis">
+            <i class="fa fa-bar-chart" aria-hidden="true"></i>
+          </div>
+          <p>Recruitment Analysis</p>
+        </div>
+      </div>
+
       <div class="notification-area">
         <div>
           <p class="not-title-1">See what's new!</p>

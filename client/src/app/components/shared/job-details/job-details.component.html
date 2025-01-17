@@ -168,13 +168,12 @@
     <app-forbidden></app-forbidden>
   </div>
 
-  <div class="sub-topic-section">
+  <div class="sub-topic-section" *ngIf="filterJobsAds().length > 0">
     <h3>Related Vacancies</h3>
-    <p>Search all the open positions on the web. Get your own personalized salary estimate. Read reviews on over 30000+
-      companies worldwide.</p>
+    <p>Discover opportunities around the world. Get salary insights and company reviews from trusted sources.</p>
   </div>
 
-  <div class="container popular-jobs">
+  <div class="container popular-jobs" *ngIf="filterJobsAds().length > 0">
     <div class="container">
       <div class="row">
         <div class="col-12 col-md-6 mb-4" *ngFor="let p of filterJobsAds() | truncateComments: 2; let i = index">
