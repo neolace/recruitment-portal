@@ -18,13 +18,11 @@
   <div class="banner-content-bottom" *ngIf="isOfferActive">
     <h2>This Offer Won’t Last Forever!</h2>
     <h1>{{hours}} hours, {{minutes}} minutes, {{seconds}} seconds</h1>
-    <button class="btn-1">Claim Pro Account!</button>
+    <button class="btn-1" (click)="applyOfferNavigate()">Claim Pro Account!</button>
   </div>
   <div class="banner-content-bottom" *ngIf="!isOfferActive">
     <h2>This Offer Has Expired!</h2>
-    <a href="/limited-offer#apply-offer">
-      <button class="btn-1">Claim Free Account!</button>
-    </a>
+    <button class="btn-1" routerLink="/register">Claim Free Account!</button>
   </div>
 </div>
 
@@ -66,7 +64,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" #applyOffer>
     <div class="col-12 col-md-6">
       <div class="eligible">
         <h3>Are You Eligible?</h3>
@@ -82,7 +80,7 @@
       </div>
     </div>
     <div class="col-12 col-md-6">
-      <div class="form-card-1" id="apply-offer">
+      <div class="form-card-1">
         <div class="logo" [ngStyle]="{'background-image': themeService.isDarkMode() ? 'url(./assets/imgs/logo/top-w.webp)' : 'url(./assets/imgs/logo/top-b.webp)'}">
         </div>
         <h5 class="title">Secure Your Lifetime Access Now!</h5>
