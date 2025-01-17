@@ -22,6 +22,7 @@ export class JobDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   jobPostId: any;
   jobPostTitle: any;
   companyName: any;
+  jobExpiryDate: any;
 
   employee: any;
   employeeId: any; //66e5a9836f5a4f722e9e97cf || 66e31aa7217eb911ad764373
@@ -136,6 +137,7 @@ export class JobDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.jobPostTitle = this.filteredJobDataStore[0]?.title;
     this.companyName = this.filteredJobDataStore[0]?.companyName;
     this.companyId = this.filteredJobDataStore[0]?.companyId;
+    this.jobExpiryDate = this.filteredJobDataStore[0]?.expiryDate;
     this.notFound = this.filteredJobDataStore.length === 0;
     return this.filteredJobDataStore;
   }
@@ -176,6 +178,10 @@ export class JobDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   saveFav(id: string) {
+    if (new Date(this.jobExpiryDate) < new Date()) {
+      this.errorMessage('Job Expired', 'Error');
+      return;
+    }
     this.employeeService.saveFavJobs(this.employeeId, {
       jobId: id,
       status: 'saved'
@@ -231,7 +237,10 @@ export class JobDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   navigateToApplyJob(redirect: any) {
-    console.log(redirect)
+    if (new Date(this.jobExpiryDate) < new Date()) {
+      this.errorMessage('Job Expired', 'Error');
+      return;
+    }
     if (redirect) {
       const anchorElement = document.createElement('a');
       anchorElement.href = redirect;
