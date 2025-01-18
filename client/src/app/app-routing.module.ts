@@ -59,6 +59,7 @@ const routes: Routes = [
   { path: 'soon', loadChildren: () => import('./components/shared/comming-soon/comming-soon.module').then(m => m.CommingSoonModule) },
   { path: 'pay', loadChildren: () => import('./components/payments/stripe-element/stripe-element.module').then(m => m.StripeElementModule) },
   { path: 'limited-offer', loadChildren: () => import('./components/shared/limitted-offer/limitted-offer.module').then(m => m.LimittedOfferModule) },
+  { path: 'resume-builder', loadChildren: () => import('./components/shared/emp-resume-builder/emp-resume-builder.module').then(m => m.EmpResumeBuilderModule) },
   { path: '**', redirectTo: '/404' }
 ];
 
