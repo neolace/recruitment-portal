@@ -2697,18 +2697,3 @@ $accordion-icon-transform3: rotate(270deg);
 .warn-msg{
   color: orange;
 }
-
-@media print {
-  body {
-    visibility: hidden;
-  }
-  #cv {
-    visibility: visible;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    display: block;
-    left: 0;
-    top: 0;
-  }
-}
