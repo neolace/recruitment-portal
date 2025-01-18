@@ -64,6 +64,9 @@ export class EmpResumeBuilderComponent implements OnInit {
   }
 
   printCV() {
-    window.print();
+    const content = document.getElementById('cv');
+    if (content) {
+      window.print();
+    }
   }
 }
