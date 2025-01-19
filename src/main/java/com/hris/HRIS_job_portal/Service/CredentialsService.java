@@ -46,6 +46,7 @@ public class CredentialsService {
             profileCompleted.put("skills", false);
             profileCompleted.put("experiences", false);
             profileCompleted.put("education", false);
+            profileCompleted.put("projects", false);
             profileCompleted.put("contactInfo", false);
             profileCompleted.put("socialLinks", false);
             emp.setProfileCompleted(profileCompleted);
