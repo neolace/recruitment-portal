@@ -34,6 +34,9 @@ public class BatchController {
     private EmpProjectsService empProjectsService;
 
     @Autowired
+    private EmpCertificatesService empCertificatesService;
+
+    @Autowired
     private EmpFollowersService empFollowersService;
 
     @Autowired
@@ -60,6 +63,7 @@ public class BatchController {
         response.put("empSkills", empSkillsService.getEmpSkillsByEmployeeId(id));
         response.put("empExperiences", empExperiencesService.getEmpExperiencesByEmployeeId(id));
         response.put("empProjects", empProjectsService.getEmpProjectsByEmployeeId(id));
+        response.put("empCertificates", empCertificatesService.getEmpCertificatesByEmployeeId(id));
         response.put("auth", credentialsService.getCredentialsByEmployeeId(id));
         response.put("empFollowers", empFollowersService.getEmpFollowersByEmployeeId(id));
         response.put("empFollowing", empFollowingService.getEmpFollowingByEmployeeId(id));
@@ -74,6 +78,7 @@ public class BatchController {
         CompletableFuture<List<EmpSkillsModel>> skillsFuture = empSkillsService.getEmpSkillsByEmployeeIdAsync(id);
         CompletableFuture<List<EmpExperiencesModel>> experiencesFuture = empExperiencesService.getEmpExperiencesByEmployeeIdAsync(id);
         CompletableFuture<List<EmpProjectsModel>> projectsFuture = empProjectsService.getEmpProjectsByEmployeeIdAsync(id);
+        CompletableFuture<List<EmpCertificatesModel>> certificatesFuture = empCertificatesService.getEmpCertificatesByEmployeeIdAsync(id);
         Optional<CredentialsModel> credentialsFuture = credentialsService.getCredentialsByEmployeeId(id);
         CompletableFuture<List<EmpFollowersModel>> followersFuture = empFollowersService.getEmpFollowersByEmployeeIdAsync(id);
         CompletableFuture<List<EmpFollowingModel>> followingFuture = empFollowingService.getEmpFollowingByEmployeeIdAsync(id);
@@ -88,6 +93,7 @@ public class BatchController {
                     response.put("empSkills", skillsFuture.join());
                     response.put("empExperiences", experiencesFuture.join());
                     response.put("empProjects", projectsFuture.join());
+                    response.put("empCertificates", certificatesFuture.join());
                     response.put("auth", credentialsFuture);
                     response.put("empFollowers", followersFuture.join());
                     response.put("empFollowing", followingFuture.join());

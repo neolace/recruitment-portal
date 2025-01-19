@@ -34,6 +34,7 @@ public class EmployeeModel {
     private String experiences; //id
     private String education; //id
     private String projects; //id
+    private String certificates; //id
     private String contactInfo; //id
     private String followings;
     private String followers;
