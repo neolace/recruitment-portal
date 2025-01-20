@@ -302,6 +302,96 @@ export class EmployeeService {
     );
   }
 
+  addProject(project: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.post(`${this.baseUrl}/emp_projects/add` , project, {headers}).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullEmployee(project.employeeId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    )
+  }
+
+  deleteProject(employeeId: string, projectId: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.delete(`${this.baseUrl}/emp_projects/delete-single/${employeeId}/${projectId}`, { headers }).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullEmployee(employeeId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    );
+  }
+
+  editProject(employeeId: string, updatedProject: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.put(`${this.baseUrl}/emp_projects/edit-single/${employeeId}`, updatedProject, { headers }).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullEmployee(employeeId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    );
+  }
+
+  addCertificate(certificate: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.post(`${this.baseUrl}/emp_certificates/add` , certificate, {headers}).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullEmployee(certificate.employeeId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    )
+  }
+
+  deleteCertificate(employeeId: string, certificateId: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.delete(`${this.baseUrl}/emp_certificates/delete-single/${employeeId}/${certificateId}`, { headers }).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullEmployee(employeeId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    );
+  }
+
+  editCertificate(employeeId: string, updatedCertificate: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:password')
+    });
+    return this.http.put(`${this.baseUrl}/emp_certificates/edit-single/${employeeId}`, updatedCertificate, { headers }).pipe(
+      tap((data) => {
+        this.clearCache(); // Invalidate the cache
+        this.fetchFullEmployee(employeeId); // Refresh the cache after updating
+      }),
+      catchError((error) => {
+        return throwError(error); // Re-throw the error so that the component can handle it
+      })
+    );
+  }
+
   addContact(contact: any): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:password')
