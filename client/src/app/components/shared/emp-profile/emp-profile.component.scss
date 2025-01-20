@@ -208,6 +208,44 @@
         font-size: 16px;
         color: var(--color-text-300);
       }
+
+      .certificate{
+        width: 100%;
+        min-height: 150px;
+        background-color: var(--color-surface-mixed-400);
+        padding: 12px;
+
+        .organization{
+          font-size: 17px;
+          font-weight: 550;
+          color: var(--color-text-100);
+        }
+
+        .title, .date{
+          color: var(--color-text-100);
+          font-size: 15px;
+        }
+
+        .date{
+          color: var(--color-text-200);
+        }
+
+        .view, .id{
+          font-size: 13px;
+          color: var(--color-text-100);
+
+          a{
+            text-decoration: none;
+            font-size: 13px;
+            color: var(--color-primary-200);
+            transition: all .3s ease-in;
+
+            &:hover{
+              color: var(--color-primary-100);
+            }
+          }
+        }
+      }
     }
 
     .contact-form-wrapper{
