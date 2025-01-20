@@ -36,6 +36,8 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
   editExperienceId: any;
   editEducations: boolean = false;
   editEducationId: any;
+  editProjects: boolean = false;
+  editProjectId: any;
   editContactId: any = null;
   editSocialLinksId: any = null;
 
@@ -78,6 +80,18 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
     start: new FormControl('', [Validators.required]),
     end: new FormControl(''),
     currentCheck: new FormControl(false),
+    description: new FormControl('', [Validators.required])
+  });
+
+  projectsFormGroup = new FormGroup({
+    project: new FormControl('', [Validators.required]),
+    company: new FormControl('', [Validators.required, Validators.email]),
+    role: new FormControl('', [Validators.required]),
+    start: new FormControl('', [Validators.required]),
+    end: new FormControl(''),
+    currentCheck: new FormControl(false),
+    demo: new FormControl(''),
+    source: new FormControl(''),
     description: new FormControl('', [Validators.required])
   });
 
@@ -431,7 +445,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
     }).subscribe((data) => {
       this.clear('education');
       this.getEmployee(this.employeeId);
-      this.alertService.successMessage('Educatoin updated successfully', 'Success');
+      this.alertService.successMessage('Education updated successfully', 'Success');
     }, (error) => {
       this.clear('education');
       this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
@@ -449,6 +463,79 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
       this.educationFormGroup.get('description')?.setValue(education?.description ? education?.description : '');
       this.educationFormGroup.get('currentCheck')?.setValue(education?.endDate === 'Present');
       this.editEducationId = education?.id ? education?.id : '';
+    }
+  }
+
+  saveProject() {
+    this.loading = true;
+    const project: any[] = [{
+      id: this.generateRandomId(),
+      title: this.projectsFormGroup.get('project')?.value,
+      company: this.projectsFormGroup.get('company')?.value,
+      role: this.projectsFormGroup.get('role')?.value,
+      startDate: this.projectsFormGroup.get('start')?.value,
+      endDate: this.projectsFormGroup.get('currentCheck')?.value ? 'Present' : this.projectsFormGroup.get('end')?.value,
+      demo: this.projectsFormGroup.get('demo')?.value,
+      source: this.projectsFormGroup.get('source')?.value,
+      description: this.projectsFormGroup.get('description')?.value,
+    }];
+    this.employeeService.addProject({
+      employeeId: this.employeeId,
+      project: project
+    }).subscribe((data) => {
+      this.clear('project');
+      this.getEmployee(this.employeeId);
+      this.loading = false;
+      this.alertService.successMessage('Project updated successfully', 'Success');
+    }, (error) => {
+      this.loading = false;
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  deleteProject(projectId: string) {
+    this.employeeService.deleteProject(this.employeeId, projectId).subscribe((data) => {
+      this.getEmployee(this.employeeId);
+      this.alertService.successMessage('Project deleted successfully', 'Success');
+    }, (error) => {
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  editProject() {
+    this.employeeService.editProject(this.employeeId, {
+      id: this.editProjectId,
+      title: this.projectsFormGroup.get('project')?.value,
+      company: this.projectsFormGroup.get('company')?.value,
+      role: this.projectsFormGroup.get('role')?.value,
+      startDate: this.projectsFormGroup.get('start')?.value,
+      endDate: this.projectsFormGroup.get('currentCheck')?.value ? 'Present' : this.projectsFormGroup.get('end')?.value,
+      demo: this.projectsFormGroup.get('demo')?.value,
+      source: this.projectsFormGroup.get('source')?.value,
+      description: this.projectsFormGroup.get('description')?.value,
+    }).subscribe((data) => {
+      this.clear('project');
+      this.getEmployee(this.employeeId);
+      this.alertService.successMessage('Project updated successfully', 'Success');
+    }, (error) => {
+      this.clear('project');
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  patchValuesToProjectForm(project: any) {
+    this.editProjects = true;
+    if (this.employee) {
+      this.projectsFormGroup.get('project')?.setValue(project?.title ? project?.title : '');
+      this.projectsFormGroup.get('company')?.setValue(project?.company ? project?.company : '');
+      this.projectsFormGroup.get('role')?.setValue(project?.role ? project?.role : '');
+      this.projectsFormGroup.get('start')?.setValue(project?.startDate ? project?.startDate : '');
+      this.projectsFormGroup.get('end')?.setValue(project?.endDate ? project?.endDate : '');
+      this.projectsFormGroup.get('demo')?.setValue(project?.demo ? project?.demo : '');
+      this.projectsFormGroup.get('source')?.setValue(project?.source ? project?.source : '');
+      this.projectsFormGroup.get('description')?.setValue(project?.description ? project?.description : '');
+      this.projectsFormGroup.get('currentCheck')?.setValue(project?.endDate === 'Present');
+      this.editProjectId = project?.id ? project?.id : '';
     }
   }
 
@@ -724,6 +811,11 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
         this.educationFormGroup.reset();
         this.editEducations = false;
         this.editEducationId = '';
+        break;
+      case 'project':
+        this.projectsFormGroup.reset();
+        this.editProjects = false;
+        this.editProjectId = '';
         break;
       case 'contact':
         this.contactFormGroup.reset();
