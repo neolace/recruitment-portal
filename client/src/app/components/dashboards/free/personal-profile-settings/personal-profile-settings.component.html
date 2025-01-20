@@ -321,6 +321,99 @@
       </div>
     </div>
 
+    <div class="form-card-1">
+      <h5>Projects :</h5>
+
+      <form [formGroup]="projectsFormGroup">
+        <div class="row form-wrapper">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="PName">Project Title</label>
+              <input type="text" class="form-control" id="PName" formControlName="project">
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="PCompany">Company</label>
+              <input type="text" class="form-control" id="PCompany" formControlName="company">
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="PRole">Your Role</label>
+              <input type="text" class="form-control" id="PRole" formControlName="role">
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="PStart">Start Year/Month</label>
+              <input type="number" class="form-control" id="PStart" formControlName="start">
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="PEnd">End Year/Month</label>
+              <input type="number" class="form-control" id="PEnd" formControlName="end">
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="PDemo">Demo Link</label>
+              <input type="text" class="form-control" id="PDemo" formControlName="demo">
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="PSource">Source Link</label>
+              <input type="text" class="form-control" id="PSource" formControlName="source">
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label for="PDesc">Project Description</label>
+              <textarea type="text" class="form-control" id="PDesc" formControlName="description" rows="5"></textarea>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="d-flex align-items-center justify-content-between w-100">
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="form-check me-2">
+                  <input class="form-check-input" type="checkbox" value="" id="PPresent" formControlName="currentCheck">
+                </div>
+                <p class="notification-text">I'm currently working on this project.</p>
+              </div>
+              <div class="form-group">
+                <div class="d-flex align-items-center">
+                  <button type="submit" (click)="editProjects?editProject() : saveProject()" class="btn-1">{{editProjects ? 'Update' : 'Add'}}</button>
+                  <i class="material-icons ml-2" *ngIf="editProjects" style="color:var(--color-text-300); cursor: pointer" translate="no" (click)="clear('project')">close</i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="projects-set" *ngIf="employee?.empProjects?.length > 0">
+        <hr>
+        <div *ngFor="let sp of employee?.empProjects;">
+          <div class="row my-2" *ngFor="let p of sp?.projects; index as i">
+            <div class="col-6">
+              <p>{{p.title}}</p>
+            </div>
+            <div class="col-3">
+              <p>{{p.company}}</p>
+            </div>
+            <div class="col-3">
+              <div class="d-flex align-items-center">
+                <button class="btn-2"><i class="material-icons" translate="no" (click)="patchValuesToProjectForm(p)">edit</i></button>
+                <button class="btn-3"><i class="material-icons" translate="no" (click)="deleteProject(p.id)">delete</i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="d-md-flex">
       <div class="form-card-1">
         <h5>Contact Info :</h5>
