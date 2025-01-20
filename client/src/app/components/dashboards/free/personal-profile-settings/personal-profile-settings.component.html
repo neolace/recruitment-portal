@@ -414,6 +414,73 @@
       </div>
     </div>
 
+    <div class="form-card-1">
+      <h5>Certifications :</h5>
+
+      <form [formGroup]="certificatesFormGroup">
+        <div class="row form-wrapper">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="CName">Certification Name</label>
+              <input type="text" class="form-control" id="CName" formControlName="name">
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="COrg">Organization</label>
+              <input type="text" class="form-control" id="COrg" formControlName="organization">
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="CDate">Date</label>
+              <input type="text" class="form-control" id="CDate" formControlName="date">
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="CCID">Certificate ID</label>
+              <input type="text" class="form-control" id="CCID" formControlName="certificateId">
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="CCUrl">Certificate Url</label>
+              <input type="text" class="form-control" id="CCUrl" formControlName="certificateUrl">
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <div class="d-flex align-items-center">
+                <button type="submit" (click)="editCertificates?editCertificate() : saveCertificate()" class="btn-1">{{editCertificates ? 'Update' : 'Add'}}</button>
+                <i class="material-icons ml-2" *ngIf="editCertificates" style="color:var(--color-text-300); cursor: pointer" translate="no" (click)="clear('certificate')">close</i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="certificates-set" *ngIf="employee?.empCertificates?.length > 0">
+        <hr>
+        <div *ngFor="let sc of employee?.empCertificates;">
+          <div class="row my-2" *ngFor="let c of sc?.certificates; index as i">
+            <div class="col-6">
+              <p>{{c.name}}</p>
+            </div>
+            <div class="col-3">
+              <p>{{c.organization}}</p>
+            </div>
+            <div class="col-3">
+              <div class="d-flex align-items-center">
+                <button class="btn-2"><i class="material-icons" translate="no" (click)="patchValuesToCertificateForm(c)">edit</i></button>
+                <button class="btn-3"><i class="material-icons" translate="no" (click)="deleteCertificate(c.id)">delete</i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="d-md-flex">
       <div class="form-card-1">
         <h5>Contact Info :</h5>
