@@ -38,6 +38,8 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
   editEducationId: any;
   editProjects: boolean = false;
   editProjectId: any;
+  editCertificates: boolean = false;
+  editCertificateId: any;
   editContactId: any = null;
   editSocialLinksId: any = null;
 
@@ -66,7 +68,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
   experienceFormGroup = new FormGroup({
     occupation: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
-    company: new FormControl('', [Validators.required, Validators.email]),
+    company: new FormControl('', [Validators.required]),
     start: new FormControl('', [Validators.required]),
     end: new FormControl(''),
     currentCheck: new FormControl(false),
@@ -76,7 +78,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
   educationFormGroup = new FormGroup({
     degree: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
-    school: new FormControl('', [Validators.required, Validators.email]),
+    school: new FormControl('', [Validators.required]),
     start: new FormControl('', [Validators.required]),
     end: new FormControl(''),
     currentCheck: new FormControl(false),
@@ -85,7 +87,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
 
   projectsFormGroup = new FormGroup({
     project: new FormControl('', [Validators.required]),
-    company: new FormControl('', [Validators.required, Validators.email]),
+    company: new FormControl('', [Validators.required]),
     role: new FormControl('', [Validators.required]),
     start: new FormControl('', [Validators.required]),
     end: new FormControl(''),
@@ -93,6 +95,14 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
     demo: new FormControl(''),
     source: new FormControl(''),
     description: new FormControl('', [Validators.required])
+  });
+
+  certificatesFormGroup = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    organization: new FormControl('', [Validators.required]),
+    date: new FormControl('', [Validators.required]),
+    certificateId: new FormControl(''),
+    certificateUrl: new FormControl(false),
   });
 
   contactFormGroup = new FormGroup({
@@ -539,6 +549,69 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
+  saveCertificate() {
+    this.loading = true;
+    const certificate: any[] = [{
+      id: this.generateRandomId(),
+      title: this.certificatesFormGroup.get('name')?.value,
+      organization: this.certificatesFormGroup.get('organization')?.value,
+      date: this.certificatesFormGroup.get('date')?.value,
+      certificateId: this.certificatesFormGroup.get('certificateId')?.value,
+      certificateUrl: this.certificatesFormGroup.get('certificateUrl')?.value,
+    }];
+    this.employeeService.addCertificate({
+      employeeId: this.employeeId,
+      certificate: certificate
+    }).subscribe((data) => {
+      this.clear('certificate');
+      this.getEmployee(this.employeeId);
+      this.loading = false;
+      this.alertService.successMessage('Certificate updated successfully', 'Success');
+    }, (error) => {
+      this.loading = false;
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  deleteCertificate(certificateId: string) {
+    this.employeeService.deleteCertificate(this.employeeId, certificateId).subscribe((data) => {
+      this.getEmployee(this.employeeId);
+      this.alertService.successMessage('Certificate deleted successfully', 'Success');
+    }, (error) => {
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  editCertificate() {
+    this.employeeService.editCertificate(this.employeeId, {
+      id: this.editCertificateId,
+      title: this.certificatesFormGroup.get('name')?.value,
+      organization: this.certificatesFormGroup.get('organization')?.value,
+      date: this.certificatesFormGroup.get('date')?.value,
+      certificateId: this.certificatesFormGroup.get('certificateId')?.value,
+      certificateUrl: this.certificatesFormGroup.get('certificateUrl')?.value,
+    }).subscribe((data) => {
+      this.clear('certificate');
+      this.getEmployee(this.employeeId);
+      this.alertService.successMessage('Certificate updated successfully', 'Success');
+    }, (error) => {
+      this.clear('certificate');
+      this.alertService.errorMessage('Something went wrong. Please try again', 'Error');
+    });
+  }
+
+  patchValuesToCertificateForm(certificate: any) {
+    this.editCertificates = true;
+    if (this.employee) {
+      this.certificatesFormGroup.get('name')?.setValue(certificate?.title ? certificate?.title : '');
+      this.certificatesFormGroup.get('organization')?.setValue(certificate?.organization ? certificate?.organization : '');
+      this.certificatesFormGroup.get('date')?.setValue(certificate?.date ? certificate?.date : '');
+      this.certificatesFormGroup.get('certificateId')?.setValue(certificate?.certificateId ? certificate?.certificateId : '');
+      this.certificatesFormGroup.get('certificateUrl')?.setValue(certificate?.certificateUrl ? certificate?.certificateUrl : '');
+      this.editCertificateId = certificate?.id ? certificate?.id : '';
+    }
+  }
+
   addContact() {
     this.loading = true;
     const contact: any[] = [{
@@ -816,6 +889,11 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
         this.projectsFormGroup.reset();
         this.editProjects = false;
         this.editProjectId = '';
+        break;
+      case 'certificate':
+        this.certificatesFormGroup.reset();
+        this.editCertificates = false;
+        this.editCertificateId = '';
         break;
       case 'contact':
         this.contactFormGroup.reset();
