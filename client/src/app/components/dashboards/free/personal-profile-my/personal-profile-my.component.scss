@@ -312,6 +312,23 @@
         justify-content: center;
       }
     }
+
+    .resume-btn{
+      width: 100%;
+      padding: 10px 16px;
+      border: 2px solid var(--color-primary-100);
+      margin: 12px 0;
+      text-align: center;
+      font-weight: bold;
+      color: var(--color-text-100);
+      background-color: transparent;
+      transition: all .3s ease-in-out;
+
+      &:hover{
+        background-color: var(--color-primary-200);
+        color: #fff;
+      }
+    }
   }
 }
 
