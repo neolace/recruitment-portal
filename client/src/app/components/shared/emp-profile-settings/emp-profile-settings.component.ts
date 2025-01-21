@@ -101,8 +101,8 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
     name: new FormControl('', [Validators.required]),
     organization: new FormControl('', [Validators.required]),
     date: new FormControl('', [Validators.required]),
-    certificateId: new FormControl(''),
-    certificateUrl: new FormControl(false),
+    certificateId: new FormControl('', [Validators.required]),
+    certificateUrl: new FormControl('', [Validators.required]),
   });
 
   contactFormGroup = new FormGroup({
@@ -491,7 +491,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
     }];
     this.employeeService.addProject({
       employeeId: this.employeeId,
-      project: project
+      projects: project
     }).subscribe((data) => {
       this.clear('project');
       this.getEmployee(this.employeeId);
@@ -553,7 +553,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
     this.loading = true;
     const certificate: any[] = [{
       id: this.generateRandomId(),
-      title: this.certificatesFormGroup.get('name')?.value,
+      name: this.certificatesFormGroup.get('name')?.value,
       organization: this.certificatesFormGroup.get('organization')?.value,
       date: this.certificatesFormGroup.get('date')?.value,
       certificateId: this.certificatesFormGroup.get('certificateId')?.value,
@@ -561,7 +561,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
     }];
     this.employeeService.addCertificate({
       employeeId: this.employeeId,
-      certificate: certificate
+      certificates: certificate
     }).subscribe((data) => {
       this.clear('certificate');
       this.getEmployee(this.employeeId);
@@ -585,7 +585,7 @@ export class EmpProfileSettingsComponent implements OnInit, AfterViewInit, OnDes
   editCertificate() {
     this.employeeService.editCertificate(this.employeeId, {
       id: this.editCertificateId,
-      title: this.certificatesFormGroup.get('name')?.value,
+      name: this.certificatesFormGroup.get('name')?.value,
       organization: this.certificatesFormGroup.get('organization')?.value,
       date: this.certificatesFormGroup.get('date')?.value,
       certificateId: this.certificatesFormGroup.get('certificateId')?.value,

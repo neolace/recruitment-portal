@@ -128,6 +128,58 @@
             </div>
           </div>
 
+          <div *ngIf="employee.empProjects[0].projects.length > 0">
+            <h5>Portfolio :</h5>
+            <div class="row experience" *ngFor="let ep of employee.empProjects[0].projects">
+              <div class="col-3 col-lg-2">
+                <div class="d-flex flex-column align-items-center justify-content-center">
+                  <div class="org-wrapper">
+                    <img
+                      src="./assets/imgs/shared/default_project_logo.svg"
+                      alt="project">
+                  </div>
+                </div>
+              </div>
+              <div class="col-9 col-lg-10">
+                <div class="d-flex flex-column align-items-start justify-content-center w-100 gap-2">
+                  <div class="title">{{ep.title}}</div>
+                  <div class="year">{{ep.startDate}} - {{ep.endDate}}</div>
+                  <div class="location">{{ep.company}} {{' - '+ep.role}}</div>
+                  <div class="description"><p>{{ep.description}}</p></div>
+                  <div class="d-flex align-items-center justify-content-start gap-3 w-100">
+                    <a *ngIf="ep.source" href="{{ep.source}}" class="m-0 p-0" style="text-decoration: none">
+                      <button class="btn-1">Source</button>
+                    </a>
+                    <a *ngIf="ep.demo" href="{{ep.demo}}" class="m-0 p-0" style="text-decoration: none">
+                      <button class="btn-1">Demo</button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="employee.empCertificates[0].certificates.length > 0">
+            <h5>Certificates :</h5>
+            <div class="row experience">
+              <div class="col-12 col-md-6" *ngFor="let ec of employee.empCertificates[0].certificates">
+                <div class="certificate">
+                  <div class="d-flex flex-column align-items-start justify-content-start w-100 gap-2 mb-3">
+                    <div class="organization">{{ec.organization}}</div>
+                    <div class="title">{{ec.name}}</div>
+                    <div class="date">{{ec.date}}</div>
+                  </div>
+                  <div class="d-flex flex-column align-items-end justify-content-end w-100 gap-2">
+                    <div class="view">
+                      <a href="{{ec.certificateUrl}}">view certificate</a>
+                    </div>
+                    <div class="id">{{ec.certificateId}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="container">
             <app-year-view></app-year-view>
           </div>
