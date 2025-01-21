@@ -176,4 +176,11 @@ export class PersonalProfileMyComponent implements OnInit, AfterViewInit {
     const tooltip: HTMLSpanElement = document.getElementById("myTooltip") as HTMLSpanElement;
     tooltip.innerHTML = "Copy to clipboard";
   }
+
+  generateCV(){
+    const anchor = document.createElement("a") as HTMLAnchorElement;
+    anchor.href = `https://cv.talentboozt.com/resume-builder?id=${this.employeeId}`;
+    anchor.target = '_blank';
+    anchor.click();
+  }
 }

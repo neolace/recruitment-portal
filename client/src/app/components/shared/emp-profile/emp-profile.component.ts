@@ -302,4 +302,12 @@ export class EmpProfileComponent implements OnInit, AfterViewInit {
   closeFollowWrapper() {
     this.showFollowWrapper = false;
   }
+
+  generateCV(){
+    const anchor = document.createElement("a") as HTMLAnchorElement;
+    anchor.href = `https://cv.talentboozt.com/resume-builder?id=${this.employeeId}`;
+    // anchor.href = `http://localhost:4200/resume-builder?id=${this.employeeId}`;
+    anchor.target = '_blank';
+    anchor.click();
+  }
 }
