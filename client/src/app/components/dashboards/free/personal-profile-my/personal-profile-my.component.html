@@ -215,7 +215,7 @@
             </div>
           </div>
 
-          <button class="resume-btn" (click)="generateCV()">Generate CV</button>
+          <button *ngIf="employee.employee.id === cookieService.userID()" class="resume-btn" (click)="generateCV()">Generate CV</button>
 
           <div class="details-card-1">
             <div class="d-flex align-items-center justify-content-between w-100">
