@@ -6,7 +6,7 @@ import {
   ViewChild,
   ViewChildren
 } from '@angular/core';
-import {FAQUtilities} from "../../shared/utilities/faq.utilities";
+// import {FAQUtilities} from "../../shared/utilities/faq.utilities";
 import {WindowService} from "../../services/common/window.service";
 import {Meta, Title} from "@angular/platform-browser";
 
@@ -27,7 +27,7 @@ export class FaqComponent implements AfterViewInit, OnInit{
 
   @ViewChildren('buying, general, payments, support, account, company, legal, other') sectionButtons!: QueryList<ElementRef>;
 
-  utilities = FAQUtilities;
+  // utilities = FAQUtilities;
 
   constructor(private meta: Meta, private title: Title, private windowService: WindowService) {
   }

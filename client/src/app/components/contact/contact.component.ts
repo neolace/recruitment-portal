@@ -35,7 +35,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
         color: '#5faee3',
         text: 'We are here',
       },
-      title: 'SPARKC pvt ltd',
+      title: 'Talentboozt pvt ltd',
       info: 'Visit our location',
       options: {
         animation: google.maps.Animation.BOUNCE,

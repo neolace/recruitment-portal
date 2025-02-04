@@ -33,7 +33,7 @@
 
         <div class="profile-btn" routerLink="/candidate-profile-setting"
              *ngIf="employee.employee.id === cookieService.userID()">
-          <button><i class="material-icons">edit</i><span class="d-none d-sm-block">_edit_</span></button>
+          <button><i class="material-icons">edit</i><span class="d-none d-sm-block"> complete profile</span></button>
         </div>
       </div>
 
@@ -247,7 +247,7 @@
             </div>
           </div>
 
-          <button *ngIf="employee.employee.id === cookieService.userID()" class="resume-btn" (click)="generateCV()">Generate CV</button>
+          <button *ngIf="employee.employee.id === cookieService.userID()" class="resume-btn" (click)="generateCV()" title="Complete your profile to generate CV">Generate CV</button>
 
           <div class="details-card-1">
             <div class="d-flex align-items-center justify-content-between w-100">
