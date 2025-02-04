@@ -1,6 +1,7 @@
 package com.hris.HRIS_job_portal.Service.mail;
 
 import com.hris.HRIS_job_portal.DTO.mail.BankPaymentDTO;
+import com.hris.HRIS_job_portal.DTO.mail.CVRequestDTO;
 import com.hris.HRIS_job_portal.Utils.ConfigUtility;
 import com.hris.HRIS_job_portal.DTO.mail.ContactUsDTO;
 import com.hris.HRIS_job_portal.DTO.mail.PersonalContactDTO;
@@ -135,6 +136,14 @@ public class EmailService {
         String mailSubject = "Bank Payment Request - " + bankPaymentDTO.getName();
         String message = bankPaymentDTO.getCompanyId()+" Requested Bank Payment! \n\nSlip Url: " + bankPaymentDTO.getSlipUrl();
         String body = "Name: " + bankPaymentDTO.getName() + "\nCountry: " + bankPaymentDTO.getCountry() + "\nPhone: " + bankPaymentDTO.getPhone() + "\n\n" + message;
+
+        sendSimpleEmail(to, mailSubject, body);
+    }
+
+    public void requestResume(CVRequestDTO cvRequestDTO) {
+        String to = configUtil.getProperty("CONTACT_ME_EMAIL");
+        String mailSubject = "CV Request - " + cvRequestDTO.getName();
+        String body = "Name: " + cvRequestDTO.getName() + "\nEmail: " + cvRequestDTO.getEmail() + "\nDOB:" + cvRequestDTO.getDob() + "\nCareer Stage: " + cvRequestDTO.getCareerStage() + "\nJob Title: " + cvRequestDTO.getJobTitle() + "\nJob Link: " + cvRequestDTO.getLink() + "\n\n" + cvRequestDTO.getMessage();
 
         sendSimpleEmail(to, mailSubject, body);
     }
