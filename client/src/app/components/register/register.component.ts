@@ -86,7 +86,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             return;
           }
           if (formData.role === 'candidate') {
-            this.router.navigate(['/']);
+            this.router.navigate(['/candidate-profile']);
             this.cookieService.createUserID(response.employeeId);
             this.cookieService.createLevel(response.userLevel);
           } else if (formData.role === 'employer') {

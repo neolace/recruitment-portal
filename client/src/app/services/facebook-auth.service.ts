@@ -118,7 +118,7 @@ export class FacebookAuthService {
     this.authService.unlock();
     setTimeout(() => {
       if (user.role === 'candidate') {
-        this.router.navigate(['/']);
+        this.router.navigate(['/candidate-profile']);
         this.alertService.successMessage('Login successful', 'Success');
       } else if (user.role === 'employer') {
         this.handleEmployerLogin(user);

@@ -104,7 +104,7 @@ export class LoginComponent implements AfterViewInit, OnInit {
               this.cookieService.createUserID(response.employeeId);
               this.cookieService.createLevel(response.userLevel);
               this.cookieService.unlock();
-              this.router.navigate(['/']);
+              this.router.navigate(['/candidate-profile']);
               this.alertService.successMessage('Login successful', 'Success');
             } else if (response.role === 'employer') {
               if (response.userLevel === "2") {
