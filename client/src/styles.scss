@@ -2050,6 +2050,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background: var(--color-surface-mixed-200);
 }
 .mat-expansion-panel-header:not([aria-disabled=true]), .mat-expansion-panel-header{
+  color: var(--color-text-200);
   background-color: var(--color-surface-mixed-200);
   padding: 12px 18px!important;
 }

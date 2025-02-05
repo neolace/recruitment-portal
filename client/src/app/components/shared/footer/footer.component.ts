@@ -39,6 +39,8 @@ export class FooterComponent implements OnInit{
     email: new FormControl('', [Validators.required, Validators.email]),
   })
 
+  thisYear: any = new Date().getFullYear();
+
   constructor(public themeService: ThemeService,
               private router: Router,
               private fileUploadService: FileUploadService,
