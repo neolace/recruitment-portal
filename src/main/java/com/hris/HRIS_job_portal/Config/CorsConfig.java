@@ -24,7 +24,7 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedOrigins(configUtility.getProperty("ALLOWED_ORIGIN_1"), configUtility.getProperty("ALLOWED_ORIGIN_2"), configUtility.getProperty("ALLOWED_ORIGIN_3"), configUtility.getProperty("ALLOWED_ORIGIN_4"), configUtility.getProperty("ALLOWED_ORIGIN_5"), configUtility.getProperty("ALLOWED_ORIGIN_6"))
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
-                .exposedHeaders("Stripe-Signature")
+                .exposedHeaders("Stripe-Signature", "X-Demo-Mode")
                 .allowCredentials(true);
     }
 

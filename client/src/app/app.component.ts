@@ -83,6 +83,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    localStorage.setItem('demoMode', 'false');
     if (this.windowService.nativeDocument) {
       setTimeout(() => {
         const loadingScreen = document.getElementById('loading-screen');
