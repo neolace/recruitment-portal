@@ -6,6 +6,7 @@ import {AuthService} from "../../services/auth.service";
 import {AlertsService} from "../../services/alerts.service";
 import {ThemeService} from "../../services/theme.service";
 import {EncryptionService} from "../../services/encryption.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-register',
@@ -63,6 +64,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     if (this.registerForm.valid) {
       const formData = this.registerForm.value;
       const password = formData.password;
+      const referer = this.cookieService.getReferer();
+      const platform = this.cookieService.getPlatform();
+      const promotion = this.cookieService.getPromotion();
 
       if (password && password.length >= 6) {
         const isPwned = await this.encryptionService.checkLeakedPassword(password);
@@ -80,9 +84,16 @@ export class RegisterComponent implements OnInit, AfterViewInit {
           password: encryptedPassword,
           role: formData.role,
           userLevel: formData.role === 'candidate' ? "1" : "2",
+          referrerId: referer,
+          platform: platform,
+          promotion: promotion
         }).subscribe((response: any) => {
           if (!response) {
-            this.alertService.errorMessage('User already exists or an unexpected error has occurred', 'Unexpected Error');
+            this.alertService.errorMessage('An unexpected error has occurred', 'Unexpected Error');
+            return;
+          }
+          if (response.accessedPlatforms.includes(platform) && response.accessedPlatforms.includes('TrainingPlatform')) {
+            this.alertService.errorMessage('This email has already been registered', 'Email Already Exists');
             return;
           }
           if (formData.role === 'candidate') {
@@ -96,8 +107,20 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             this.cookieService.createAdmin(response.email);
             this.cookieService.createOrganizationID(response.companyId);
           }
-        }, error => {
-          this.alertService.errorMessage('User already exists or an unexpected error has occurred', 'Unexpected Error');
+        }, (error: HttpErrorResponse) => {
+          switch (error.status) {
+            case 409:
+              this.alertService.errorMessage('This email has already been registered', 'Email Already Exists');
+              break;
+            case 400:
+              this.alertService.errorMessage('Please fill in all the required fields', 'Missing Fields');
+              break;
+            case 500:
+              this.alertService.errorMessage('An unexpected error has occurred', 'Unexpected Error');
+              break;
+            default:
+              this.alertService.errorMessage('An unexpected error has occurred', 'Unexpected Error');
+          }
         });
       } else {
         this.alertService.errorMessage('Password must be at least 6 characters long', 'Weak Password');

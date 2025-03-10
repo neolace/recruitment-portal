@@ -94,12 +94,18 @@ export class FacebookAuthService {
   }
 
   private registerFacebookUser(profile: any) {
+    const referer = this.authService.getReferer();
+    const platform = this.authService.getPlatform();
+    const promotion = this.authService.getPromotion();
     const newUser = {
       email: profile.email,
       firstname: profile.firstName,
       lastname: profile.lastName,
       role: 'candidate',
       userLevel: '1',
+      referrerId: referer,
+      platform: platform,
+      promotion: promotion
     };
 
     this.credentialService.addCredential(newUser).subscribe(

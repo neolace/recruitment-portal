@@ -130,4 +130,28 @@ export class AuthService {
     return newsletter.length !== 0;
   }
 
+  public createReferer(referer: string) {
+    this.cookieService.set('referer', referer, 60*60*24*30);
+  }
+
+  public createPlatform(platform: string) {
+    this.cookieService.set('platform', platform, 60*60*24*30);
+  }
+
+  public createPromotion(promotion: string) {
+    this.cookieService.set('promotion', promotion, 60*60*24*30);
+  }
+
+  public getReferer() {
+    return this.cookieService.get('referer');
+  }
+
+  public getPlatform() {
+    return this.cookieService.get('platform');
+  }
+
+  public getPromotion() {
+    return this.cookieService.get('promotion');
+  }
+
 }

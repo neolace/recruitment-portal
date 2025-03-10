@@ -9,7 +9,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {ThemeService} from "./services/theme.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {LockScreenComponent} from "./components/lock-screen/lock-screen.component";
 import {LoginComponent} from "./components/login/login.component";
 import {RegisterComponent} from "./components/register/register.component";
@@ -70,6 +70,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(public themeService: ThemeService,
               private router: Router,
+              private route: ActivatedRoute,
               private renderer: Renderer2,
               private employeeService: EmployeeService,
               private credentialsService: CredentialService,
@@ -96,6 +97,15 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         appRoot.style.display = 'block';
       }
     }
+
+    this.route.queryParams.subscribe(params => {
+      const platform = params['platform'] || 'TrainingPlatform';
+      const ref = params['ref'] || '';
+      const promo = params['promo'] || '';
+      this.cookieService.createPlatform(platform);
+      this.cookieService.createReferer(ref);
+      this.cookieService.createPromotion(promo);
+    });
 
     this.employeeId = this.cookieService.userID();
     this.employeeLevel = this.cookieService.level();
