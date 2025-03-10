@@ -1,6 +1,9 @@
 package com.hris.HRIS_job_portal.Controller.common;
 
+import com.hris.HRIS_job_portal.DTO.common.LoginMetaDTO;
 import com.hris.HRIS_job_portal.Service.common.LoginService;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +19,8 @@ public class LoginController {
 
     // Record daily login
     @PostMapping("/{userId}/record")
-    public ResponseEntity<String> recordLogin(@PathVariable String userId) {
-        loginService.recordLogin(userId);
+    public ResponseEntity<String> recordLogin(@PathVariable String userId, @RequestBody LoginMetaDTO metaData) {
+        loginService.recordLogin(userId, metaData);
         return ResponseEntity.ok("Login recorded successfully!");
     }
 
