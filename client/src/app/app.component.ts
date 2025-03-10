@@ -99,7 +99,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.route.queryParams.subscribe(params => {
-      const platform = params['platform'] || 'TrainingPlatform';
+      const platform = params['platform'] || 'jobPortal';
       const ref = params['ref'] || '';
       const promo = params['promo'] || '';
       this.cookieService.createPlatform(platform);
@@ -144,7 +144,12 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   markAttendance(){
     if (this.employeeId){
-      this.loginService.recordLogin(this.employeeId).subscribe(data => {
+      const meta = {
+        referrer: this.cookieService.getReferer(),
+        platform: this.cookieService.getPlatform(),
+        promotion: this.cookieService.getPromotion()
+      }
+      this.loginService.recordLogin(this.employeeId, meta).subscribe(data => {
         this.alertService.successMessage('Good to see you back :)', 'Welcome')
       }, error => {
         // do nothing

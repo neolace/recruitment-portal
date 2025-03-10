@@ -92,9 +92,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             this.alertService.errorMessage('An unexpected error has occurred', 'Unexpected Error');
             return;
           }
-          if (response.accessedPlatforms.includes(platform) && response.accessedPlatforms.includes('TrainingPlatform')) {
-            this.alertService.errorMessage('This email has already been registered', 'Email Already Exists');
-            return;
+          if (response.accessedPlatforms.includes(platform) && response.accessedPlatforms.includes('jobPortal')) {
+            const platformsList = response.accessedPlatforms.join(', ');
+            this.alertService.successMessage(`This email has been registered on the following platforms: ${platformsList}`, 'Email Already Exists');
           }
           if (formData.role === 'candidate') {
             this.router.navigate(['/candidate-profile']);
