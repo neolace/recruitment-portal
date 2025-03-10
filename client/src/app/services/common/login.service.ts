@@ -10,8 +10,8 @@ export class LoginService {
 
   constructor(private http: HttpClient) {}
 
-  recordLogin(userId: string) {
-    return this.http.post(`${this.baseUrl}/${userId}/record`, null);
+  recordLogin(userId: string, metadata?: any) {
+    return this.http.post(`${this.baseUrl}/${userId}/record`, metadata);
   }
 
   getLoginDates(userId: string, year: number) {
