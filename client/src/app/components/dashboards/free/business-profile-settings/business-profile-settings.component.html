@@ -21,8 +21,8 @@
               </div>
             </div>
             <div class="left-cont">
-              <button class="btn-1" (click)="saveEverything()">Profile</button>
-              <button class="btn-2">See Jobs</button>
+              <button class="btn-1"  id="PJB_DB_BPS_Profile" type="button" (click)="saveEverything()">Profile</button>
+              <button class="btn-2" id="PJB_DB_BPS_SeJobs" type="button">See Jobs</button>
             </div>
           </div>
         </div>
@@ -97,7 +97,7 @@
           </div>
           <div class="col-12">
             <div class="form-group">
-              <button type="submit" class="btn-1" (click)="updateVisualDetails()">Save Changes</button>
+              <button id="PJB_DB_BPS_SvChanges" type="submit" class="btn-1" (click)="updateVisualDetails()">Save Changes</button>
             </div>
           </div>
         </div>
@@ -163,7 +163,7 @@
             </div>
             <div class="col-12">
               <div class="form-group">
-                <button type="submit" class="btn-1" (click)="updateContactDetails()">Add</button>
+                <button id="PJB_DB_BPS_UpContDet" type="submit" class="btn-1" (click)="updateContactDetails()">Add</button>
               </div>
             </div>
           </div>
@@ -276,7 +276,7 @@
           </div>
           <div class="col-12">
             <div class="form-group">
-              <button type="submit" class="btn-1" (click)="editSocialLinksId ? updateSocial(editSocialLinksId) : addSocial()">{{editSocialLinksId ? 'Update' : 'Save'}} Changes</button>
+              <button id="PJB_DB_BPS_UpSocial" type="submit" class="btn-1" (click)="editSocialLinksId ? updateSocial(editSocialLinksId) : addSocial()">{{editSocialLinksId ? 'Update' : 'Save'}} Changes</button>
             </div>
           </div>
         </div>
@@ -358,7 +358,7 @@
           <p>Do you want to delete the account? Please press below "Delete" button</p>
         </div>
         <div class="col-12">
-          <button type="submit" class="btn-3" data-bs-toggle="modal" data-bs-target="#deleteModel">Delete</button>
+          <button  type="submit" class="btn-3" data-bs-toggle="modal" data-bs-target="#deleteModel">Delete</button>
         </div>
       </div>
     </div>
@@ -376,8 +376,8 @@
         Are you sure you want to delete your account? This action cannot be undone!
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger" (click)="deleteCompany()">Delete</button>
+        <button id="_PJB_DB_BPS_close" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button id="_PJB_DB_BPS_DelAcc" type="button" class="btn btn-danger" (click)="deleteCompany()">Delete</button>
       </div>
     </div>
   </div>
