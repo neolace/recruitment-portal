@@ -179,7 +179,7 @@ export class PersonalProfileMyComponent implements OnInit, AfterViewInit {
 
   generateCV(){
     const anchor = document.createElement("a") as HTMLAnchorElement;
-    anchor.href = `https://cv.talentboozt.com/resume-builder?id=${this.employeeId}`;
+    anchor.href = `https://cv.talentboozt.com/resume-builder?id=${this.employeeId}&replaced=true&view=8`;
     anchor.target = '_blank';
     anchor.click();
   }

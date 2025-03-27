@@ -128,9 +128,9 @@
             </div>
           </div>
 
-          <div *ngIf="employee.empProjects[0].projects.length > 0">
+          <div *ngIf="employee?.empProjects[0]?.projects.length > 0">
             <h5>Portfolio :</h5>
-            <div class="row experience" *ngFor="let ep of employee.empProjects[0].projects">
+            <div class="row experience" *ngFor="let ep of employee?.empProjects[0]?.projects">
               <div class="col-3 col-lg-2">
                 <div class="d-flex flex-column align-items-center justify-content-center">
                   <div class="org-wrapper">
@@ -159,10 +159,10 @@
             </div>
           </div>
 
-          <div *ngIf="employee.empCertificates[0].certificates.length > 0">
+          <div *ngIf="employee?.empCertificates[0]?.certificates?.length > 0">
             <h5>Certificates :</h5>
             <div class="row experience">
-              <div class="col-12 col-md-6" *ngFor="let ec of employee.empCertificates[0].certificates">
+              <div class="col-12 col-md-6" *ngFor="let ec of employee?.empCertificates[0]?.certificates">
                 <div class="certificate">
                   <div class="d-flex flex-column align-items-start justify-content-start w-100 gap-2 mb-3">
                     <div class="organization">{{ec.organization}}</div>

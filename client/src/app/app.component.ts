@@ -9,7 +9,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {ThemeService} from "./services/theme.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {LockScreenComponent} from "./components/lock-screen/lock-screen.component";
 import {LoginComponent} from "./components/login/login.component";
 import {RegisterComponent} from "./components/register/register.component";
@@ -70,6 +70,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(public themeService: ThemeService,
               private router: Router,
+              private route: ActivatedRoute,
               private renderer: Renderer2,
               private employeeService: EmployeeService,
               private credentialsService: CredentialService,
@@ -83,6 +84,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    localStorage.setItem('demoMode', 'false');
     if (this.windowService.nativeDocument) {
       setTimeout(() => {
         const loadingScreen = document.getElementById('loading-screen');
@@ -95,6 +97,15 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         appRoot.style.display = 'block';
       }
     }
+
+    this.route.queryParams.subscribe(params => {
+      const platform = params['platform'] || 'jobPortal';
+      const ref = params['ref'] || 'talentboozt';
+      const promo = params['promo'] || 'no';
+      this.cookieService.createPlatform(platform);
+      this.cookieService.createReferer(ref);
+      this.cookieService.createPromotion(promo);
+    });
 
     this.employeeId = this.cookieService.userID();
     this.employeeLevel = this.cookieService.level();
@@ -131,12 +142,62 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.removeUnwantedSession()
   }
 
-  markAttendance(){
-    if (this.employeeId){
-      this.loginService.recordLogin(this.employeeId).subscribe(data => {
-        this.alertService.successMessage('Good to see you back :)', 'Welcome')
+  markAttendance() {
+    if (this.windowService.nativeDocument) {
+      const meta = {
+        referrer: this.cookieService.getReferer(),
+        platform: this.cookieService.getPlatform(),
+        promotion: this.cookieService.getPromotion(),
+        provider: document.referrer,
+        userAgent: navigator.userAgent,
+        language: navigator.language,
+        languages: navigator.languages.join(', '),  // A comma-separated string of preferred languages
+        platformDetails: navigator.platform,
+        hardwareConcurrency: navigator.hardwareConcurrency,  // Number of logical processor cores
+        deviceMemory: 0,  // Available memory in GB
+        cookiesEnabled: navigator.cookieEnabled,  // Whether cookies are enabled
+        onlineStatus: navigator.onLine,  // Whether the browser is online
+        location: { latitude: 0, longitude: 0 },
+      };
+
+      // If device memory is available, collect it
+      if ("deviceMemory" in navigator) {
+        meta.deviceMemory = navigator.deviceMemory as number;
+      }
+
+      // If geolocation is available and allowed, collect it
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            meta.location = {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            };
+            this.recordLogin(meta);  // Continue the login process with geolocation
+          },
+          (error) => {
+            console.error("Geolocation permission denied or failed", error);
+            this.recordLogin(meta);  // Proceed with the login process even if geolocation fails
+          }
+        );
+      } else {
+        this.recordLogin(meta);  // Proceed without geolocation if not available
+      }
+    }
+  }
+
+  private recordLogin(meta: any) {
+    if (this.employeeId) {
+      this.loginService.recordLogin(this.employeeId, meta).subscribe(data => {
+        this.alertService.successMessage('Good to see you back :)', 'Welcome');
       }, error => {
-        // do nothing
+        // Handle error (maybe show an alert to the user)
+      });
+    } else {
+      this.loginService.recordLogin('unknown', meta).subscribe(data => {
+        this.alertService.successMessage('Hey there :)', 'Welcome');
+      }, error => {
+        // Handle error (maybe show an alert to the user)
       });
     }
   }

@@ -131,12 +131,18 @@ export class GoogleAuthService implements OnInit, OnDestroy {
   }
 
   private registerGoogleUser(profile: any) {
+    const referer = this.cookieService.getReferer();
+    const platform = this.cookieService.getPlatform();
+    const promotion = this.cookieService.getPromotion();
     const newUser = {
       email: profile.email,
       firstname: profile.firstName,
       lastname: profile.lastName,
       role: 'candidate',
       userLevel: '1',
+      referrerId: referer,
+      platform: platform,
+      promotion: promotion
     };
 
     this.credentialService.addCredential(newUser).subscribe(

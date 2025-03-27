@@ -10,8 +10,23 @@ export class LoginService {
 
   constructor(private http: HttpClient) {}
 
-  recordLogin(userId: string) {
-    return this.http.post(`${this.baseUrl}/${userId}/record`, null);
+  recordLogin(userId: string, metadata?: any) {
+    const meta = {
+      referrer: metadata.referrer,
+      platform: metadata.platform,
+      promotion: metadata.promotion,
+      provider: metadata.provider,
+      userAgent: metadata.userAgent,
+      language: metadata.language,
+      languages: metadata.languages,
+      platformDetails: metadata.platformDetails,
+      hardwareConcurrency: metadata.hardwareConcurrency,
+      deviceMemory: metadata.deviceMemory,
+      cookiesEnabled: metadata.cookiesEnabled,
+      onlineStatus: metadata.onlineStatus,
+      location: metadata.location
+    }
+    return this.http.post(`${this.baseUrl}/${userId}/record`, meta);
   }
 
   getLoginDates(userId: string, year: number) {
