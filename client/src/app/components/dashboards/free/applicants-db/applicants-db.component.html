@@ -14,7 +14,7 @@
               <li class="dropdown-item" (click)="sortJobs('alpha')">Alphabetical</li>
             </ul>
           </div>
-          <button class="btn-1" (click)="exportToCsv('posted jobs', postedJobs?.postedJobs)">Export</button>
+          <button id="PJB_DB_APL_Export" type="button" class="btn-1" (click)="exportToCsv('posted jobs', postedJobs?.postedJobs)">Export</button>
         </div>
       </div>
       <div [ngClass]="gridView ? 'col-12 col-md-4 mb-3' : 'col-12'" *ngFor="let p of ongoingPostedJobs; let i = index">
@@ -46,7 +46,7 @@
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item danger" (click)="deleteJobPost(p.id)">Delete</a></li>
+                  <li><a  class="dropdown-item danger" (click)="deleteJobPost(p.id)">Delete</a></li>
                 </ul>
               </div>
             </div>

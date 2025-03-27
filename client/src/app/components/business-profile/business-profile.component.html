@@ -23,11 +23,11 @@
               </div>
             </div>
             <div class="left-cont">
-              <button class="btn-1" [disabled]="!followBtn"
+              <button id="PJB_BP_Follow" type="button" class="btn-1" [disabled]="!followBtn"
                       (click)="followingsIds.includes(c.id) ? unfollow(c) : follow(c)">
                 {{followingsIds.includes(c.id) ? 'Unfollow' : 'Follow'}}
               </button>
-              <button class="btn-2" routerLink="/company-jobs/{{c.id}}">See Jobs</button>
+              <button id="PJB_BP_SeeJob" type="button" class="btn-2" routerLink="/company-jobs/{{c.id}}">See Jobs</button>
             </div>
           </div>
         </div>
@@ -187,7 +187,7 @@
 
               <div class="col-12">
                 <div class="form-group">
-                  <button type="submit" class="btn-1" [disabled]="mailLoading" (click)="contact()">{{mailLoading?'Sending...':'Send Message'}}</button>
+                  <button id="PJB_BP_SeMessage" type="submit" class="btn-1" [disabled]="mailLoading" (click)="contact()">{{mailLoading?'Sending...':'Send Message'}}</button>
                 </div>
               </div>
             </div>
@@ -224,7 +224,7 @@
           <div *ngFor="let sl of filterSocialsData()">
             <div class="item-set" *ngFor="let s of sl.socialLinks">
               <div class="social-item" *ngIf="s.linkedin">
-                <a href="{{s.linkedin}}" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                <a  href="{{s.linkedin}}" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
               </div>
               <div class="social-item" *ngIf="s.facebook">
                 <a href="{{s.facebook}}" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
