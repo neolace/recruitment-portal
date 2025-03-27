@@ -452,7 +452,7 @@
           <div class="col-12">
             <div class="form-group">
               <div class="d-flex align-items-center">
-                <button type="submit" (click)="editCertificates?editCertificate() : saveCertificate()" class="btn-1">{{editCertificates ? 'Update' : 'Add'}}</button>
+                <button id="PJB_DB_PPS_SvCertificate" type="submit" (click)="editCertificates?editCertificate() : saveCertificate()" class="btn-1">{{editCertificates ? 'Update' : 'Add'}}</button>
                 <i class="material-icons ml-2" *ngIf="editCertificates" style="color:var(--color-text-300); cursor: pointer" translate="no" (click)="clear('certificate')">close</i>
               </div>
             </div>
@@ -472,8 +472,8 @@
             </div>
             <div class="col-3">
               <div class="d-flex align-items-center">
-                <button class="btn-2"><i class="material-icons" translate="no" (click)="patchValuesToCertificateForm(c)">edit</i></button>
-                <button class="btn-3"><i class="material-icons" translate="no" (click)="deleteCertificate(c.id)">delete</i></button>
+                <button id="PJB_DB_PPS_EdCertificate" type="button" class="btn-2"><i class="material-icons" translate="no" (click)="patchValuesToCertificateForm(c)">edit</i></button>
+                <button id="PJB_DB_PPS_DelCertification" type="button" class="btn-3"><i class="material-icons" translate="no" (click)="deleteCertificate(c.id)">delete</i></button>
               </div>
             </div>
           </div>
@@ -534,7 +534,7 @@
             </div>
             <div class="col-12">
               <div class="form-group">
-                <button type="submit" class="btn-1" (click)="editContactId?updateContact(editContactId) : addContact()">{{editContactId ? 'Update' : 'Add'}}</button>
+                <button id="PJB_DB_PPS_ContactIn" type="submit" class="btn-1" (click)="editContactId?updateContact(editContactId) : addContact()">{{editContactId ? 'Update' : 'Add'}}</button>
               </div>
             </div>
           </div>
@@ -567,7 +567,7 @@
             </div>
             <div class="col-12">
               <div class="form-group">
-                <button type="submit" (click)="changePass()" class="btn-1">Save Password</button>
+                <button id=""PJB_DB_PPS_SvPassword" type="submit" (click)="changePass()" class="btn-1">Save Password</button>
               </div>
             </div>
           </div>
@@ -671,7 +671,7 @@
           </div>
           <div class="col-12">
             <div class="form-group">
-              <button type="submit" class="btn-1" (click)="editSocialLinksId ? updateSocial(editSocialLinksId) : addSocial()">{{editSocialLinksId ? 'Update' : 'Save'}} Changes</button>
+              <button id="PJB_DB_PPS_SvSocial" type="button"  type="submit" class="btn-1" (click)="editSocialLinksId ? updateSocial(editSocialLinksId) : addSocial()">{{editSocialLinksId ? 'Update' : 'Save'}} Changes</button>
             </div>
           </div>
         </div>
@@ -753,7 +753,7 @@
           <p>Do you want to delete the account? Please press below "Delete" button</p>
         </div>
         <div class="col-12">
-          <button type="submit" class="btn-3" data-bs-toggle="modal" data-bs-target="#deleteModel">Delete</button>
+          <button id="PJB_DB_PPS_DelAcc" type="button"  type="submit" class="btn-3" data-bs-toggle="modal" data-bs-target="#deleteModel">Delete</button>
         </div>
       </div>
     </div>
@@ -784,8 +784,8 @@
         Are you sure you want to delete your account? This action cannot be undone!
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger" (click)="deleteEmployee()">Delete</button>
+        <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button id="PJB_DB_PPS_ConDelete" type="button"  type="button" class="btn btn-danger" (click)="deleteEmployee()">Delete</button>
       </div>
     </div>
   </div>
