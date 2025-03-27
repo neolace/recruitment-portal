@@ -69,7 +69,7 @@
           </div>
           <div class="col-12">
             <div class="form-group">
-              <button type="submit" class="btn-1" (click)="savePersonalDetails()">Save Changes</button>
+              <button id="PJB_DB_PPS_SvPerDetails" type="submit" class="btn-1" (click)="savePersonalDetails()">Save Changes</button>
             </div>
           </div>
         </div>
@@ -104,7 +104,7 @@
           </div>
           <div class="col-12">
             <div class="form-group">
-              <button type="submit" class="btn-1" (click)="saveSearchAppearance()">Save Changes</button>
+              <button id="PJB_DB_PPS_SvChanges" type="submit" class="btn-1" (click)="saveSearchAppearance()">Save Changes</button>
             </div>
           </div>
         </div>
@@ -131,7 +131,7 @@
             </div>
             <div class="col-12 col-md-6 col-lg-3">
               <div class="form-group d-flex align-items-end w-100 h-100">
-                <button type="submit" class="btn-1" translate="no" (click)="editSkills?editSkill():saveSkills()">{{editSkills ? 'Update' : 'Add'}}</button>
+                <button id="PJB_DB_PPS_Close" type="submit" class="btn-1" translate="no" (click)="editSkills?editSkill():saveSkills()">{{editSkills ? 'Update' : 'Add'}}</button>
                 <i class="material-icons ml-2" *ngIf="editSkills" style="color:var(--color-text-300); cursor: pointer" translate="no" (click)="clear('skills')">close</i>
               </div>
             </div>
@@ -150,8 +150,8 @@
               </div>
               <div class="col-3">
                 <div class="d-flex align-items-center">
-                  <button class="btn-2"><i class="material-icons" translate="no" (click)="patchValuesToSkillsForm(s)">edit</i></button>
-                  <button class="btn-3"><i class="material-icons" translate="no" (click)="deleteSkill(s.id)">delete</i></button>
+                  <button id="PJB_DB_PPS_EdSkill" type="button" class="btn-2"><i class="material-icons" translate="no" (click)="patchValuesToSkillsForm(s)">edit</i></button>
+                  <button id="PJB_DB_PPS_DelSkill" type="button" class="btn-3"><i class="material-icons" translate="no" (click)="deleteSkill(s.id)">delete</i></button>
                 </div>
               </div>
             </div>
@@ -209,7 +209,7 @@
                 </div>
                 <div class="form-group">
                   <div class="d-flex align-items-center">
-                    <button type="submit" (click)="editExperiences?editExperience() : saveExperience()" class="btn-1">{{editExperiences ? 'Update' : 'Add'}}</button>
+                    <button id="PJB_DB_PPS_SvExperiences" type="submit" (click)="editExperiences?editExperience() : saveExperience()" class="btn-1">{{editExperiences ? 'Update' : 'Add'}}</button>
                     <i class="material-icons ml-2" *ngIf="editExperiences" style="color:var(--color-text-300); cursor: pointer" translate="no" (click)="clear('experience')">close</i>
                   </div>
                 </div>
@@ -230,8 +230,8 @@
               </div>
               <div class="col-3">
                 <div class="d-flex align-items-center">
-                  <button class="btn-2"><i class="material-icons" translate="no" (click)="patchValuesToExperienceForm(e)">edit</i></button>
-                  <button class="btn-3"><i class="material-icons" translate="no" (click)="deleteExperience(e.id)">delete</i></button>
+                  <button  id="PJB_DB_PPS_EdExper" type="button" class="btn-2"><i class="material-icons" translate="no" (click)="patchValuesToExperienceForm(e)">edit</i></button>
+                  <button id="PJB_DB_PPS_DelExper" type="button"  class="btn-3"><i class="material-icons" translate="no" (click)="deleteExperience(e.id)">delete</i></button>
                 </div>
               </div>
             </div>
@@ -291,7 +291,7 @@
               </div>
               <div class="form-group">
                 <div class="d-flex align-items-center">
-                  <button type="submit" (click)="editEducations?editEducation() : saveEducation()" class="btn-1">{{editEducations ? 'Update' : 'Add'}}</button>
+                  <button id="PJB_DB_PPS_SvEdu" type="submit" (click)="editEducations?editEducation() : saveEducation()" class="btn-1">{{editEducations ? 'Update' : 'Add'}}</button>
                   <i class="material-icons ml-2" *ngIf="editEducations" style="color:var(--color-text-300); cursor: pointer" translate="no" (click)="clear('education')">close</i>
                 </div>
               </div>
@@ -312,8 +312,8 @@
             </div>
             <div class="col-3">
               <div class="d-flex align-items-center">
-                <button class="btn-2"><i class="material-icons" translate="no" (click)="patchValuesToEducationForm(e)">edit</i></button>
-                <button class="btn-3"><i class="material-icons" translate="no" (click)="deleteEducation(e.id)">delete</i></button>
+                <button id="PJB_DB_PPS_EdEdu" type="button" class="btn-2"><i class="material-icons" translate="no" (click)="patchValuesToEducationForm(e)">edit</i></button>
+                <button id="PJB_DB_PPS_DelEdu" type="button" class="btn-3"><i class="material-icons" translate="no" (click)="deleteEducation(e.id)">delete</i></button>
               </div>
             </div>
           </div>
@@ -384,7 +384,7 @@
               </div>
               <div class="form-group">
                 <div class="d-flex align-items-center">
-                  <button type="submit" (click)="editProjects?editProject() : saveProject()" class="btn-1">{{editProjects ? 'Update' : 'Add'}}</button>
+                  <button id="PJB_DB_PPS_SvProject" type="submit" (click)="editProjects?editProject() : saveProject()" class="btn-1">{{editProjects ? 'Update' : 'Add'}}</button>
                   <i class="material-icons ml-2" *ngIf="editProjects" style="color:var(--color-text-300); cursor: pointer" translate="no" (click)="clear('project')">close</i>
                 </div>
               </div>
@@ -405,8 +405,8 @@
             </div>
             <div class="col-3">
               <div class="d-flex align-items-center">
-                <button class="btn-2"><i class="material-icons" translate="no" (click)="patchValuesToProjectForm(p)">edit</i></button>
-                <button class="btn-3"><i class="material-icons" translate="no" (click)="deleteProject(p.id)">delete</i></button>
+                <button id="PJB_DB_PPS_EdProject" type="button" class="btn-2"><i class="material-icons" translate="no" (click)="patchValuesToProjectForm(p)">edit</i></button>
+                <button id="PJB_DB_PPS_DelProject" type="button" class="btn-3"><i class="material-icons" translate="no" (click)="deleteProject(p.id)">delete</i></button>
               </div>
             </div>
           </div>

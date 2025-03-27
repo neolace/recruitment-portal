@@ -23,8 +23,8 @@
                 </div>
               </div>
               <div class="left-cont">
-                <button class="btn-1" (click)="goProfileSettings()">Edit</button>
-                <button class="btn-2" (click)="goSeeJobs()">See Jobs</button>
+                <button class="btn-1" id="PJB_DB_BPM_Edit" type="button" (click)="goProfileSettings()">Edit</button>
+                <button class="btn-2" id="PJB_DB_BPM_SeJobs" type="button" (click)="goSeeJobs()">See Jobs</button>
               </div>
             </div>
           </div>
@@ -58,7 +58,7 @@
 
         <div class="d-flex flex-column align-items-center justify-content-center mb-4 mb-md-0" *ngIf="progressValue < 10">
           <p>Please setup your company profile</p>
-          <button class="btn-1" (click)="goProfileSettings()">Setup Profile</button>
+          <button class="btn-1" id="PJB_DB_BPM_StProfile" type="button" (click)="goProfileSettings()">Setup Profile</button>
         </div>
       </div>
 
