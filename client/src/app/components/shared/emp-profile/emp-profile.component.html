@@ -148,7 +148,7 @@
                   <div class="description"><p>{{ep.description}}</p></div>
                   <div class="d-flex align-items-center justify-content-start gap-3 w-100">
                     <a *ngIf="ep.source" href="{{ep.source}}" class="m-0 p-0" style="text-decoration: none">
-                      <button class="btn-1">Source</button>
+                      <button id="PJB_EP_Source" type="button" class="btn-1">Source</button>
                     </a>
                     <a *ngIf="ep.demo" href="{{ep.demo}}" class="m-0 p-0" style="text-decoration: none">
                       <button class="btn-1">Demo</button>
@@ -222,7 +222,7 @@
 
                   <div class="col-12">
                     <div class="form-group">
-                      <button type="submit" class="btn-1" [disabled]="mailLoading"
+                      <button id="PJB_EP_C0ntactMe" type="submit" class="btn-1" [disabled]="mailLoading"
                               (click)="contact()">{{mailLoading ? 'Sending...' : 'Send Message'}}</button>
                     </div>
                   </div>
@@ -333,7 +333,7 @@
                     <p>{{employee?.employee.firstname}}-resume.pdf</p>
                   </div>
                   <a href="{{employee?.employee.resume}}" download="{{employee?.employee.resume}}" class="w-100">
-                    <button class="btn-1">
+                    <button id="PJB_EP_DwladCv" type="button" class="btn-1">
                       <i class="fa fa-download" aria-hidden="true"></i>
                       Download CV
                     </button>
@@ -382,7 +382,7 @@
               </div>
             </div>
 
-            <button class="btn-1" (click)="viewProfile(re?.id)">Profile</button>
+            <button id="PJB_EP_ViProfile" type="button" class="btn-1" (click)="viewProfile(re?.id)">Profile</button>
           </div>
         </div>
       </div>
