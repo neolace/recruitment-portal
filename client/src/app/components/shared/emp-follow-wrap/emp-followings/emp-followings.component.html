@@ -11,7 +11,7 @@
       <div class="location-tag">{{f.followingLocation || ' '}}</div>
     </div>
     <div class="button-wrapper">
-      <button *ngIf="f.followingId != myId" class="follow-btn" [disabled]="!followBtn"
+      <button id="PJB_EMF_Follow" type="button" *ngIf="f.followingId != myId" class="follow-btn" [disabled]="!followBtn"
               (click)="followingsIds.includes(f.followingId) ? unfollow(f) : follow(f)">
         {{followingsIds.includes(f.followingId) ? 'Unfollow' : 'Follow'}}</button>
     </div>
