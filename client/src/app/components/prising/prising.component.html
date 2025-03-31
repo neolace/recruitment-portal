@@ -45,7 +45,7 @@
 
             <div class="row">
               <div *ngFor="let b of p.buttons" class="{{p.buttons.length > 1 ? 'col-6' : 'col-12'}}">
-                <button class="{{b.class}}" (click)="gotoCart(p.onetimePayment.available ? p.onetimePayment : p.cart, b.link)">{{b.text}}</button>
+                <button  class="{{b.class}}" (click)="gotoCart(p.onetimePayment.available ? p.onetimePayment : p.cart, b.link)">{{b.text}}</button>
               </div>
             </div>
 

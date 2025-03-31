@@ -21,8 +21,8 @@
       </div>
       <hr>
       <div class="d-flex align-items-center justify-content-end w-100 gap-2 py-2 px-3">
-        <button class="btn-1" *ngIf="!isExpired(employee?.employee?.savedJobs, j.id, j.expiryDate)" routerLink="/job-details/{{j.id}}">View Details</button>
-        <button class="btn-3" (click)="removeFav(j.id)">Remove</button>
+        <button id="PJB_ESAR_ViDetails" type="button" class="btn-1" *ngIf="!isExpired(employee?.employee?.savedJobs, j.id, j.expiryDate)" routerLink="/job-details/{{j.id}}">View Details</button>
+        <button id="PJB_ESAR_RemFv" type="button" class="btn-3" (click)="removeFav(j.id)">Remove</button>
       </div>
     </div>
   </div>
