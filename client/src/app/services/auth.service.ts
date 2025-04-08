@@ -34,11 +34,6 @@ export class AuthService {
   }
 
   public logout(){
-    this.cookieService.delete('user-token-id');
-    this.cookieService.delete('pro-admin-token');
-    this.cookieService.delete('organization');
-    this.cookieService.delete('admin-token');
-    this.cookieService.delete('level');
     this.cookieService.deleteAll();
     sessionStorage.clear();
   }
@@ -154,4 +149,27 @@ export class AuthService {
     return this.cookieService.get('promotion');
   }
 
+  public createAuthToken(token: string) {
+    this.cookieService.set('jwtToken', token, { path: '/', secure: true, sameSite: 'Strict' });
+  }
+
+  getAuthToken(): string | null {
+    return this.cookieService.get('jwtToken');
+  }
+
+  isAuthToken(): boolean {
+    return !!this.getAuthToken();
+  }
+
+  public createRefreshToken(refreshToken: string) {
+    this.cookieService.set('refreshToken', refreshToken, { path: '/', secure: true, sameSite: 'Strict' });
+  }
+
+  public getRefreshToken(): string | null {
+    return this.cookieService.get('refreshToken');
+  }
+
+  public isRefreshToken(): boolean {
+    return !!this.getRefreshToken();
+  }
 }

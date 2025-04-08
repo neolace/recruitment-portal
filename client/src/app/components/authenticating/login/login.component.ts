@@ -1,16 +1,16 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {CredentialService} from "../../services/credential.service";
+import {CredentialService} from "../../../services/credential.service";
 import {Router} from "@angular/router";
-import {AuthService} from "../../services/auth.service";
-import {AlertsService} from "../../services/alerts.service";
-import {GoogleAuthService} from "../../services/google-auth.service";
-import {SocialAuthApiService} from "../../services/social-auth-api.service";
-import {GitHubAuthService} from "../../services/git-hub-auth.service";
-import {ThemeService} from "../../services/theme.service";
-import {EncryptionService} from "../../services/encryption.service";
-import {FacebookAuthService} from "../../services/facebook-auth.service";
-import {LinkedInAuthService} from "../../services/linked-in-auth.service";
+import {AuthService} from "../../../services/auth.service";
+import {AlertsService} from "../../../services/alerts.service";
+import {GoogleAuthService} from "../../../services/authentication/google-auth.service";
+import {SocialAuthApiService} from "../../../services/authentication/social-auth-api.service";
+import {GitHubAuthService} from "../../../services/authentication/git-hub-auth.service";
+import {ThemeService} from "../../../services/theme.service";
+import {EncryptionService} from "../../../services/encryption.service";
+import {FacebookAuthService} from "../../../services/authentication/facebook-auth.service";
+import {LinkedInAuthService} from "../../../services/authentication/linked-in-auth.service";
 
 @Component({
   selector: 'app-login',
@@ -80,59 +80,66 @@ export class LoginComponent implements AfterViewInit, OnInit {
       }
 
       const formData = this.loginForm.value;
-      this.credentialService.fetchCredentialByEmail(formData.email).subscribe(async (response: any) => {
+      this.credentialService.login(formData.email, formData.password).subscribe(async (response: any) => {
         if (!response) {
           this.alertService.errorMessage('User doesn\'t exist or something went wrong', 'Error');
           return;
         }
-
-        const encryptedPassword = await this.encryptionService.decryptPassword(response.password?.toString());
+        if (response.disabled){
+          this.alertService.errorMessage('Your account is disabled', 'Error');
+          return;
+        }
 
         if (sessionStorage.getItem('LgnAtT') != '0'){
-          if (formData.password == encryptedPassword) {
-            this.cookieService.createSession(response);
+          this.cookieService.createSession(response);
 
-            if (this.loginForm.get('remember')?.value) {
-              localStorage.setItem('email', <string>this.loginForm.get('email')?.value);
-              localStorage.setItem('password', <string>this.loginForm.get('password')?.value);
-            } else {
-              localStorage.removeItem('email');
-              localStorage.removeItem('password');
-            }
+          if (this.loginForm.get('remember')?.value) {
+            localStorage.setItem('email', <string>this.loginForm.get('email')?.value);
+            localStorage.setItem('password', <string>this.loginForm.get('password')?.value);
+          } else {
+            localStorage.removeItem('email');
+            localStorage.removeItem('password');
+          }
 
-            if (response.role === 'candidate') {
+          if (response.role === 'candidate') {
+            this.cookieService.createUserID(response.employeeId);
+            this.cookieService.createLevel(response.userLevel);
+            this.cookieService.createAuthToken(response.token);
+            this.cookieService.createRefreshToken(response.refreshToken);
+            this.cookieService.unlock();
+            this.router.navigate(['/candidate-profile']);
+            this.alertService.successMessage('Login successful', 'Success');
+          } else if (response.role === 'employer') {
+            if (response.userLevel === "2") {
               this.cookieService.createUserID(response.employeeId);
+              this.cookieService.createAdmin(response.email);
+              this.cookieService.createAuthToken(response.token);
+              this.cookieService.createRefreshToken(response.refreshToken);
+              response.organizations?.forEach((organization: any) => {
+                this.cookieService.createOrganizationID(organization.jobPortal || '');
+              })
               this.cookieService.createLevel(response.userLevel);
               this.cookieService.unlock();
-              this.router.navigate(['/candidate-profile']);
-              this.alertService.successMessage('Login successful', 'Success');
-            } else if (response.role === 'employer') {
-              if (response.userLevel === "2") {
-                this.cookieService.createUserID(response.employeeId);
-                this.cookieService.createAdmin(response.email);
-                this.cookieService.createOrganizationID(response.companyId);
-                this.cookieService.createLevel(response.userLevel);
-                this.cookieService.unlock();
-                this.router.navigate(['/dashboard']);
-              }
-              else if (response.userLevel === "3") {
-                this.cookieService.createUserID(response.employeeId);
-                this.cookieService.createProAdmin(response.email);
-                this.cookieService.createOrganizationID(response.companyId);
-                this.cookieService.createLevel(response.userLevel);
-                this.cookieService.unlock();
-                this.router.navigate(['/pro']);
-              }
+              this.router.navigate(['/dashboard']);
             }
-          } else {
-            this.alertService.errorMessage('Wrong password', 'Error');
+            else if (response.userLevel === "3") {
+              this.cookieService.createUserID(response.employeeId);
+              this.cookieService.createProAdmin(response.email);
+              this.cookieService.createAuthToken(response.token);
+              this.cookieService.createRefreshToken(response.refreshToken);
+              response.organizations?.forEach((organization: any) => {
+                this.cookieService.createOrganizationID(organization.jobPortal || '');
+              })
+              this.cookieService.createLevel(response.userLevel);
+              this.cookieService.unlock();
+              this.router.navigate(['/pro']);
+            }
           }
         } else {
           this.alertService.errorMessage('Too many attempts! Try again in 5 minutes', 'Warning');
         }
-
       }, error => {
-        this.alertService.errorMessage('Something went wrong', 'Error');
+        this.alertService.errorMessage(error.error.message, "Code: "+error.status);
       });
     } else {
       this.alertService.errorMessage('Form is not valid', 'Error');

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {LinkedInAuthService} from "../../../services/linked-in-auth.service";
+import {LinkedInAuthService} from "../../../../services/authentication/linked-in-auth.service";
 
 @Component({
   selector: 'app-o-auth-callback-linkedin',

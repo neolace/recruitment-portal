@@ -1,12 +1,12 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {AuthService} from "../../services/auth.service";
-import {CredentialService} from "../../services/credential.service";
+import {AuthService} from "../../../services/auth.service";
+import {CredentialService} from "../../../services/credential.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {AlertsService} from "../../services/alerts.service";
+import {AlertsService} from "../../../services/alerts.service";
 import { HttpErrorResponse } from "@angular/common/http";
-import {EmployeeService} from "../../services/employee.service";
-import {EncryptionService} from "../../services/encryption.service";
+import {EmployeeService} from "../../../services/employee.service";
+import {EncryptionService} from "../../../services/encryption.service";
 
 @Component({
   selector: 'app-lock-screen',

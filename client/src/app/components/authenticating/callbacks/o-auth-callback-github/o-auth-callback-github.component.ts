@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {GitHubAuthService} from "../../../services/git-hub-auth.service";
+import {GitHubAuthService} from "../../../../services/authentication/git-hub-auth.service";
 
 @Component({
   selector: 'app-o-auth-callback-github',
