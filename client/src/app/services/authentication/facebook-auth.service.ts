@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
-import { CredentialService } from './credential.service';
-import { AlertsService } from './alerts.service';
-import { AuthService } from './auth.service';
+import { CredentialService } from '../credential.service';
+import { AlertsService } from '../alerts.service';
+import { AuthService } from '../auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -105,10 +105,11 @@ export class FacebookAuthService {
       userLevel: '1',
       referrerId: referer,
       platform: platform,
-      promotion: promotion
+      promotion: promotion,
+      active: true
     };
 
-    this.credentialService.addCredential(newUser).subscribe(
+    this.credentialService.register(newUser).subscribe(
       (response: any) => {
         this.processLogin(response);
       },
@@ -121,6 +122,8 @@ export class FacebookAuthService {
   private processLogin(user: any) {
     this.authService.createUserID(user.employeeId.toString());
     this.authService.createLevel(user.userLevel.toString());
+    this.authService.createAuthToken(user.token);
+    this.authService.createRefreshToken(user.refreshToken);
     this.authService.unlock();
     setTimeout(() => {
       if (user.role === 'candidate') {
@@ -134,6 +137,10 @@ export class FacebookAuthService {
 
   private handleEmployerLogin(user: any) {
     const route = user.userLevel === '2' ? '/dashboard' : '/home';
+    this.authService.createAdmin(user.email);
+    user.organizations?.forEach((organization: any) => {
+      this.authService.createOrganizationID(organization.jobPortal || '');
+    });
     this.router.navigate([route]);
     this.alertService.successMessage('Employer login successful', 'Success');
   }

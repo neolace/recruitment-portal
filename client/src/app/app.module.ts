@@ -30,6 +30,7 @@ import {HeaderModule} from "./components/shared/header/header.module";
 import {AngularFirePerformanceModule} from "@angular/fire/compat/performance";
 import {NgxStripeModule} from "ngx-stripe";
 import {DemoModeInterceptor} from "./Config/DemoModeInterceptor";
+import {AuthInterceptor} from "./Config/AuthInterceptor";
 
 @NgModule({ declarations: [
         AppComponent
@@ -67,6 +68,7 @@ import {DemoModeInterceptor} from "./Config/DemoModeInterceptor";
         NgxStripeModule.forRoot(environment.stripe_key)], providers: [
         { provide: HTTP_INTERCEPTORS, useClass: SkipXsrfInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: DemoModeInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         { provide: LocationStrategy, useClass: PathLocationStrategy },
         provideHttpClient(withInterceptorsFromDi())
     ] })

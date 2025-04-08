@@ -1,6 +1,6 @@
 import {AfterViewInit, Component} from '@angular/core';
-import {ThemeService} from "../../services/theme.service";
-import {CredentialService} from "../../services/credential.service";
+import {ThemeService} from "../../../services/theme.service";
+import {CredentialService} from "../../../services/credential.service";
 
 @Component({
   selector: 'app-reset-password',

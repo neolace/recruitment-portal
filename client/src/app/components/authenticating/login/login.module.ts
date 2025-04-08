@@ -3,9 +3,9 @@ import {LoginComponent} from "./login.component";
 import {CommonModule} from "@angular/common";
 import {LoginRoutingModule} from "./login-routing.module";
 import {ReactiveFormsModule} from "@angular/forms";
-import {GoogleAuthService} from "../../services/google-auth.service";
+import {GoogleAuthService} from "../../../services/authentication/google-auth.service";
 import {OAuthLogger, OAuthModule, OAuthService, UrlHelperService} from "angular-oauth2-oidc";
-import {MyOAuthLogger} from "../../Config/MyOAuthLogger";
+import {MyOAuthLogger} from "../../../Config/MyOAuthLogger";
 
 @NgModule({
   declarations: [

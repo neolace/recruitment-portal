@@ -1,13 +1,13 @@
 import {Injectable, OnDestroy, OnInit} from '@angular/core';
 import {AuthConfig, NullValidationHandler, OAuthService} from "angular-oauth2-oidc";
-import { environment } from "../../environments/environment";
-import { CredentialService } from "./credential.service";
+import { environment } from "../../../environments/environment";
+import { CredentialService } from "../credential.service";
 import { Router } from "@angular/router";
-import { AlertsService } from "./alerts.service";
-import { AuthService } from "./auth.service";
+import { AlertsService } from "../alerts.service";
+import { AuthService } from "../auth.service";
 import { Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
-import {WindowService} from "./common/window.service";
+import {WindowService} from "../common/window.service";
 
 @Injectable({
   providedIn: 'root'
@@ -142,10 +142,11 @@ export class GoogleAuthService implements OnInit, OnDestroy {
       userLevel: '1',
       referrerId: referer,
       platform: platform,
-      promotion: promotion
+      promotion: promotion,
+      active: true
     };
 
-    this.credentialService.addCredential(newUser).subscribe(
+    this.credentialService.register(newUser).subscribe(
       (response: any) => {
         this.processLogin(response);
       },
@@ -158,6 +159,8 @@ export class GoogleAuthService implements OnInit, OnDestroy {
   private processLogin(user: any) {
     this.cookieService.createUserID(user.employeeId);
     this.cookieService.createLevel(user.userLevel);
+    this.cookieService.createAuthToken(user.token);
+    this.cookieService.createRefreshToken(user.refreshToken);
     this.cookieService.unlock();
     setTimeout(() => {
       if (user.role === 'candidate') {
@@ -175,11 +178,10 @@ export class GoogleAuthService implements OnInit, OnDestroy {
   }
 
   private setEmployerSession(user: any, route: string) {
-    this.cookieService.createUserID(user.employeeId);
     this.cookieService.createAdmin(user.email);
-    this.cookieService.createOrganizationID(user.companyId);
-    this.cookieService.createLevel(user.userLevel);
-    this.cookieService.unlock();
+    user.organizations?.forEach((organization: any) => {
+      this.cookieService.createOrganizationID(organization.jobPortal || '');
+    });
     this.router.navigate([route]);
   }
 

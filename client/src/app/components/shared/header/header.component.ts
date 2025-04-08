@@ -8,7 +8,7 @@ import {AlertsService} from "../../../services/alerts.service";
 import {AuthService} from "../../../services/auth.service";
 import {commonSearchResults} from "../../../shared/data-store/common-search-results";
 import { HttpErrorResponse } from "@angular/common/http";
-import {LinkedInAuthService} from "../../../services/linked-in-auth.service";
+import {LinkedInAuthService} from "../../../services/authentication/linked-in-auth.service";
 
 @Component({
   selector: 'app-header',
@@ -27,6 +27,7 @@ export class HeaderComponent {
   employeeId: any;
   employeeLevel: any;
   employeeType: any;
+  isTokenFound: boolean = false;
 
   utilities = Utilities;
 
@@ -43,6 +44,7 @@ export class HeaderComponent {
   ngOnInit() {
     this.employeeId = this.cookieService.userID();
     this.employeeLevel = this.cookieService.level();
+    this.isTokenFound = this.cookieService.isRefreshToken();
     this.themeService.applyTheme();
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {

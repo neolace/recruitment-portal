@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {CredentialService} from "../../services/credential.service";
-import {EncryptionService} from "../../services/encryption.service";
+import {CredentialService} from "../../../services/credential.service";
+import {EncryptionService} from "../../../services/encryption.service";
 
 @Component({
   selector: 'app-reset-password-form',

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {GoogleAuthService} from "../../../services/google-auth.service";
+import {GoogleAuthService} from "../../../../services/authentication/google-auth.service";
 
 @Component({
   selector: 'app-o-auth-callback',

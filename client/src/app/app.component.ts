@@ -10,10 +10,10 @@ import {
 } from '@angular/core';
 import {ThemeService} from "./services/theme.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {LockScreenComponent} from "./components/lock-screen/lock-screen.component";
-import {LoginComponent} from "./components/login/login.component";
-import {RegisterComponent} from "./components/register/register.component";
-import {ResetPasswordComponent} from "./components/reset-password/reset-password.component";
+import {LockScreenComponent} from "./components/authenticating/lock-screen/lock-screen.component";
+import {LoginComponent} from "./components/authenticating/login/login.component";
+import {RegisterComponent} from "./components/authenticating/register/register.component";
+import {ResetPasswordComponent} from "./components/authenticating/reset-password/reset-password.component";
 import {FreeDashboardComponent} from "./components/dashboards/free/free-dashboard/free-dashboard.component";
 import {ProDashboardComponent} from "./components/dashboards/pro/pro-dashboard/pro-dashboard.component";
 import {commonSearchResults} from "./shared/data-store/common-search-results";

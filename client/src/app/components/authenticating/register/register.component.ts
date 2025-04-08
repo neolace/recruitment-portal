@@ -1,11 +1,11 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {CredentialService} from "../../services/credential.service";
+import {CredentialService} from "../../../services/credential.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../services/auth.service";
-import {AlertsService} from "../../services/alerts.service";
-import {ThemeService} from "../../services/theme.service";
-import {EncryptionService} from "../../services/encryption.service";
+import {AuthService} from "../../../services/auth.service";
+import {AlertsService} from "../../../services/alerts.service";
+import {ThemeService} from "../../../services/theme.service";
+import {EncryptionService} from "../../../services/encryption.service";
 import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
@@ -64,9 +64,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     if (this.registerForm.valid) {
       const formData = this.registerForm.value;
       const password = formData.password;
-      const referer = this.cookieService.getReferer();
+      const referer = this.cookieService.getReferer() || null;
       const platform = this.cookieService.getPlatform();
-      const promotion = this.cookieService.getPromotion();
+      const promotion = this.cookieService.getPromotion() || null;
 
       if (password && password.length >= 6) {
         const isPwned = await this.encryptionService.checkLeakedPassword(password);
@@ -75,24 +75,23 @@ export class RegisterComponent implements OnInit, AfterViewInit {
           return;
         }
 
-        const encryptedPassword = await this.encryptionService.encryptPassword(password);
-
-        this.credentialService.addCredential({
+        this.credentialService.register({
           firstname: formData.name?.split(' ')[0],
           lastname: formData.name?.split(' ')[1] || '',
           email: formData.email,
-          password: encryptedPassword,
+          password: password,
           role: formData.role,
           userLevel: formData.role === 'candidate' ? "1" : "2",
           referrerId: referer,
           platform: platform,
-          promotion: promotion
+          promotion: promotion,
+          active: true
         }).subscribe((response: any) => {
           if (!response) {
             this.alertService.errorMessage('An unexpected error has occurred', 'Unexpected Error');
             return;
           }
-          if (response.accessedPlatforms.includes(platform) && response.accessedPlatforms.includes('jobPortal')) {
+          if (response.accessedPlatforms?.includes(platform) && response.accessedPlatforms.includes('jobPortal')) {
             const platformsList = response.accessedPlatforms.join(', ');
             this.alertService.successMessage(`This email has been registered on the following platforms: ${platformsList}`, 'Email Already Exists');
           }
@@ -100,12 +99,18 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             this.router.navigate(['/candidate-profile']);
             this.cookieService.createUserID(response.employeeId);
             this.cookieService.createLevel(response.userLevel);
+            this.cookieService.createAuthToken(response.token);
+            this.cookieService.createRefreshToken(response.refreshToken);
           } else if (formData.role === 'employer') {
             this.router.navigate(['/dashboard']);
             this.cookieService.createUserID(response.employeeId);
             this.cookieService.createLevel(response.userLevel);
             this.cookieService.createAdmin(response.email);
-            this.cookieService.createOrganizationID(response.companyId);
+            this.cookieService.createAuthToken(response.token);
+            this.cookieService.createRefreshToken(response.refreshToken);
+            response.organizations?.forEach((organization: any) => {
+              this.cookieService.createOrganizationID(organization.jobPortal || '');
+            })
           }
         }, (error: HttpErrorResponse) => {
           switch (error.status) {
@@ -119,7 +124,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
               this.alertService.errorMessage('An unexpected error has occurred', 'Unexpected Error');
               break;
             default:
-              this.alertService.errorMessage('An unexpected error has occurred', 'Unexpected Error');
+              this.alertService.errorMessage(error.error.message, "Code: "+error.status);
           }
         });
       } else {
