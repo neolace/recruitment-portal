@@ -22,7 +22,7 @@
     "@angular/platform-browser": "^18.2.13",
     "@angular/platform-browser-dynamic": "^18.2.14",
     "@angular/platform-server": "^18.2.13",
-    "@angular/router": "^18.2.13",
+    "@angular/router": "^18.2.14",
     "@angular/ssr": "^18.2.20",
     "@stripe/stripe-js": "^4.10.0",
     "@types/gsap": "^3.0.0",
